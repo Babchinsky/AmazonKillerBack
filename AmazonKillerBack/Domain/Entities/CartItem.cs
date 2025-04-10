@@ -1,4 +1,4 @@
-﻿namespace AmazonKillerBack.Models;
+﻿namespace AmazonKillerBack.Domain.Entities;
 
 public class CartItem
 {
