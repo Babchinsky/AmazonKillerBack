@@ -20,7 +20,9 @@
         <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore" Version="9.0.0"/>
         <PackageReference Include="Npgsql" Version="9.0.3"/>
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4"/>
-        <PackageReference Include="Scalar.AspNetCore" Version="2.1.9"/>
+        <PackageReference Include="NSwag.AspNetCore" Version="14.3.0" />
+        <PackageReference Include="NSwag.Generation.AspNetCore" Version="14.3.0" />
+        <PackageReference Include="Scalar.AspNetCore" Version="2.1.11" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="8.1.0"/>
     </ItemGroup>
 
