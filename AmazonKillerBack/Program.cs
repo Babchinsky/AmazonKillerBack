@@ -7,10 +7,11 @@ using AmazonKillerBack.Infrastructure.Repositories;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Настройка хоста
+// Настройка хоста (для работы в Docker)
 builder.WebHost.UseUrls("http://0.0.0.0:80");
 
 // Контроллеры и инфраструктура
@@ -30,13 +31,33 @@ builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddFluentValidationClientsideAdapters();
 builder.Services.AddValidatorsFromAssemblyContaining<CreateProductValidator>();
 
-// ✅ Swagger
+// OpenAPI / Scalar
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddOpenApi();
+
+// CORS
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+        policy.AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader());
+});
+
+// Настройка Scalar (тема, сервер)
+builder.Services.Configure<ScalarOptions>(options =>
+{
+    options.Servers = new List<ScalarServer>
+    {
+        new("http://localhost:8080", "Local Dev Server")
+    };
+    options.Theme = ScalarTheme.Purple;
+    options.DynamicBaseServerUrl = false;
+});
 
 var app = builder.Build();
 
-// Автомиграции
+// Авто-миграции
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AmazonDbContext>();
@@ -46,16 +67,15 @@ using (var scope = app.Services.CreateScope())
 // Middleware
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI(); // Swagger доступен на /swagger
+    app.MapOpenApi();
+    app.MapScalarApiReference();
+}
+else
+{
+    app.UseHttpsRedirection();
 }
 
-// CORS
-app.UseCors(policy =>
-    policy.AllowAnyOrigin()
-        .AllowAnyMethod()
-        .AllowAnyHeader());
-
+app.UseCors();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();
