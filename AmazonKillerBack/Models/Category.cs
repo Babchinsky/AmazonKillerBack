@@ -1,8 +1,14 @@
-﻿namespace AmazonKillerBack.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace AmazonKillerBack.Models;
 
 public class Category
 {
     public Guid Id { get; set; }
-    public string Name { get; set; } = string.Empty;
+    
+    [Required]
+    [StringLength(20, MinimumLength = 1)]  
+    public string Name { get; set; }
+    
     public ICollection<Product> Products { get; set; } = new List<Product>();
 }

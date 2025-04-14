@@ -1,12 +1,23 @@
-﻿namespace AmazonKillerBack.Models;
+﻿using System.ComponentModel.DataAnnotations;
 
-public class OrderItem
+namespace AmazonKillerBack.Models;
+
+public class OrderItem 
 {
     public Guid Id { get; set; }
-    public Guid OrderId { get; set; }
-    public Order Order { get; set; } = null!;
-    public Guid ProductId { get; set; }
-    public Product Product { get; set; } = null!;
+
+    [Required]
+    public uint OrderId { get; set; }
+
+    [Required]
+    public OrderStatus Status { get; set; }
+
+    [Range(1, int.MaxValue)]
+    public int Price { get; set; }
+
+    [Range(1, int.MaxValue)]
     public int Quantity { get; set; }
-    public decimal UnitPrice { get; set; }
+
+    [Required]
+    public DateTime OrderedAt { get; set; }
 }
