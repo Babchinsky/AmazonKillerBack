@@ -1,14 +1,34 @@
-﻿namespace AmazonKillerBack.Domain.Entities;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace AmazonKillerBack.Domain.Entities;
 
 public class Order
 {
     public Guid Id { get; set; }
-    public Guid UserId { get; set; }
-    public User User { get; set; } = null!;
-    public DateTime OrderDate { get; set; } = DateTime.UtcNow;
-    public ICollection<OrderItem> Items { get; set; } = new List<OrderItem>();
-    public Guid AddressId { get; set; }
-    public Address Address { get; set; } = null!;
-    public decimal TotalAmount { get; set; }
-    public string Status { get; set; } = "Pending";
+
+    [Required]
+    public uint OrderId { get; set; }
+
+    [Required]
+    public OrderStatus Status { get; set; }
+
+    [Range(1, int.MaxValue)]
+    public int Price { get; set; }
+
+    [Required]
+    public ICollection<Product> Products { get; set; } = new List<Product>();
+
+    [Required]
+    public Address Address { get; set; } = new Address();
+
+    public static Order FromOrderItem(OrderItem item)
+    {
+        return new Order
+        {
+            OrderId = item.OrderId,
+            Status = item.Status,
+            Price = item.Price
+        };
+    }
 }
+

@@ -1,16 +1,33 @@
-﻿namespace AmazonKillerBack.Domain.Entities;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+
+namespace AmazonKillerBack.Domain.Entities;
 
 public class User
 {
     public Guid Id { get; set; }
-    public string UserName { get; set; } = string.Empty;
-    public string Email { get; set; } = string.Empty;
-    public string PasswordHash { get; set; } = string.Empty;
+    
+    public string? ProfilePicUrl { get; set; } 
+
+    [Required]  
+    [EmailAddress]  
+    public string Email { get; set; } 
+
+    [Required]  
+    [PasswordPropertyText]  
+    public string PasswordHash { get; set; }
+    
+    [Required]  
     public Role Role { get; set; }
-    public string? FirstName { get; set; }
-    public string? LastName { get; set; }
-    public ICollection<Address> Addresses { get; set; } = new List<Address>();
+
+    [Required]  
+    [StringLength(20, MinimumLength = 1)]  
+    public static string FirstName { get; set; }
+
+    [Required]  
+    [StringLength(20, MinimumLength = 1)] 
+    public static string LastName { get; set; }
+    
     public ICollection<Order> Orders { get; set; } = new List<Order>();
-    public ICollection<CartItem> Cart { get; set; } = new List<CartItem>();
-    public ICollection<Review> Reviews { get; set; } = new List<Review>();
+    public ICollection<Wishlist> WishlistsItems { get; set; } = new List<Wishlist>();
 }

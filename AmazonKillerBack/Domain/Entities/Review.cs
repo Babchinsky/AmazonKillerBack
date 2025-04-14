@@ -1,13 +1,24 @@
 ﻿namespace AmazonKillerBack.Domain.Entities;
 
+using System;
+using System.ComponentModel.DataAnnotations;
+
 public class Review
 {
     public Guid Id { get; set; }
-    public string Content { get; set; } = string.Empty;
-    public int Rating { get; set; }
+    
+    [Required]
+    public ReviewContent Content { get; set; } = new ReviewContent();  
+    
+    public Rating Rating { get; set; }
+    
+    [Required]
     public Guid ProductId { get; set; }
-    public Product Product { get; set; } = null!;
+    
+    [Required]
     public Guid UserId { get; set; }
-    public User User { get; set; } = null!;
+    
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    
+    public int Likes { get; set; }
 }
