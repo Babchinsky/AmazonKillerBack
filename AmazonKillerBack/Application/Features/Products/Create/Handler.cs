@@ -1,4 +1,6 @@
-﻿namespace AmazonKillerBack.Application.Features.Products.Create;
+﻿using AmazonKillerBack.Domain.Entities.Products;
+
+namespace AmazonKillerBack.Application.Features.Products.Create;
 
 using DTOs;
 using Interfaces;

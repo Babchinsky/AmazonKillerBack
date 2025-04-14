@@ -9,26 +9,26 @@
       - db
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=amazonkillerdb;Username=postgres;Password=postgres
+      - ConnectionStrings__DefaultConnection=Server=db;Database=amazonkillerdb;User Id=sa;Password=YourStrong@Password1;Encrypt=False
     networks:
       - app-network
 
   db:
-    image: postgres:15
+    image: mcr.microsoft.com/mssql/server:2022-latest
     restart: always
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: amazonkillerdb
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "YourStrong@Password1"
+      MSSQL_PID: "Express"
     ports:
-      - "5432:5432"
+      - "1433:1433"
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - sqlserverdata:/var/opt/mssql
     networks:
       - app-network
 
 volumes:
-  pgdata:
+  sqlserverdata:
 
 networks:
   app-network:

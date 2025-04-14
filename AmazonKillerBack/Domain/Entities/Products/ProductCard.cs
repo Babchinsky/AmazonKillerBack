@@ -1,9 +1,11 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace AmazonKillerBack.Domain.Entities;
+namespace AmazonKillerBack.Domain.Entities.Products;
 
 public class ProductCard
 {
+    public int Id { get; set; }
+    
     [Required]
     public string ImageUrl { get; set; } 
 

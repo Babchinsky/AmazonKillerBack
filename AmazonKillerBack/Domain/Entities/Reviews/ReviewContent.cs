@@ -1,10 +1,12 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace AmazonKillerBack.Domain.Entities;
+namespace AmazonKillerBack.Domain.Entities.Reviews;
 
 public class ReviewContent
 {
+    public Guid Id { get; set; }
+    
     [Required]
     [StringLength(40, MinimumLength = 10)]
     public string Article { get; set; }

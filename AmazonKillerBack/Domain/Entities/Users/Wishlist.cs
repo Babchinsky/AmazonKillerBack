@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
+using AmazonKillerBack.Domain.Entities.Products;
 
-namespace AmazonKillerBack.Domain.Entities;
+namespace AmazonKillerBack.Domain.Entities.Users;
 
 public class Wishlist
 {

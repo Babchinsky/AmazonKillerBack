@@ -1,5 +1,6 @@
 ﻿using AmazonKillerBack.Application.Interfaces;
 using AmazonKillerBack.Domain.Entities;
+using AmazonKillerBack.Domain.Entities.Products;
 using AmazonKillerBack.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 

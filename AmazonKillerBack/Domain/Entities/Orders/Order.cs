@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using AmazonKillerBack.Domain.Entities.Products;
 
-namespace AmazonKillerBack.Domain.Entities;
+namespace AmazonKillerBack.Domain.Entities.Orders;
 
 public class Order
 {
@@ -19,7 +20,7 @@ public class Order
     public ICollection<Product> Products { get; set; } = new List<Product>();
 
     [Required]
-    public Address Address { get; set; } = new Address();
+    public Address Address { get; set; }
 
     public static Order FromOrderItem(OrderItem item)
     {

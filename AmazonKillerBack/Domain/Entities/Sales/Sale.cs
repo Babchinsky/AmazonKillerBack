@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace AmazonKillerBack.Domain.Entities;
+namespace AmazonKillerBack.Domain.Entities.Sales;
 
 public class Sale
 {

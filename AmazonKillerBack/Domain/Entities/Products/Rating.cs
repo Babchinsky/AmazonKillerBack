@@ -1,4 +1,4 @@
-namespace AmazonKillerBack.Domain.Entities;
+namespace AmazonKillerBack.Domain.Entities.Products;
 
 public enum Rating
 {

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AmazonKillerBack.Domain.Entities;
+namespace AmazonKillerBack.Domain.Entities.Orders;
 
 public class Address
 {
@@ -8,24 +8,24 @@ public class Address
 
     [Required]
     [StringLength(100)]
-    public string Country { get; set; }
+    public string Country { get; set; } = string.Empty;
 
     [Required]
     [StringLength(100)]
-    public string City { get; set; }
+    public string City { get; set; } = string.Empty;
 
     [Required]
     [StringLength(100)]
-    public string Street { get; set; }
+    public string Street { get; set; } = string.Empty;
 
     [Required]
     [StringLength(20)]
-    public string HouseNumber { get; set; }
+    public string HouseNumber { get; set; } = string.Empty;
 
     [StringLength(20)]
     public string? ApartmentNumber { get; set; }
 
     [Required]
     [StringLength(20)]
-    public string PostCode { get; set; }
+    public string PostCode { get; set; } = string.Empty;
 }

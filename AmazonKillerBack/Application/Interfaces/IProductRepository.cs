@@ -1,4 +1,5 @@
 ﻿using AmazonKillerBack.Domain.Entities;
+using AmazonKillerBack.Domain.Entities.Products;
 
 namespace AmazonKillerBack.Application.Interfaces;
 

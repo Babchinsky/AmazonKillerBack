@@ -19,7 +19,7 @@ builder.Services.AddControllers();
 
 // База данных
 builder.Services.AddDbContext<AmazonDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Репозитории и маппинг
 builder.Services.AddScoped<IProductRepository, ProductRepository>();

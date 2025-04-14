@@ -1,7 +1,7 @@
-﻿namespace AmazonKillerBack.Domain.Entities;
+﻿using System.ComponentModel.DataAnnotations;
+using AmazonKillerBack.Domain.Entities.Products;
 
-using System;
-using System.ComponentModel.DataAnnotations;
+namespace AmazonKillerBack.Domain.Entities.Reviews;
 
 public class Review
 {

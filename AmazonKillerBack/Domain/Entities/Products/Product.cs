@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AmazonKillerBack.Domain.Entities;
+namespace AmazonKillerBack.Domain.Entities.Products;
 
 public class Product
 {
@@ -9,12 +9,9 @@ public class Product
     [Required]
     [StringLength(100, MinimumLength = 2)]
     public string Name { get; set; } = string.Empty;
-    
+
     public Rating Rating { get; set; }
 
-    // dotnet add package Ulid
-    // public string Code { get; set; } = Ulid.NewUlid().ToString();
-    
     [Range(0, int.MaxValue)]
     public int ReviewsCount { get; set; }
 
@@ -22,8 +19,11 @@ public class Product
     public List<string> ProductPics { get; set; } = [];
 
     [Required]
-    public ProductDetails Details { get; set; } = new ProductDetails();
-    
+    public Guid DetailsId { get; set; }
+
+    [Required]
+    public ProductDetails Details { get; set; }
+
     [Required]
     public Guid CategoryId { get; set; }
 
@@ -35,8 +35,8 @@ public class Product
 
     [Range(1, int.MaxValue)]
     public int Quantity { get; set; }
-    
-    public bool inWishlist { get; set; }
-    
-    public bool inCartList { get; set; }
+
+    public bool InWishlist { get; set; }
+
+    public bool InCartList { get; set; }
 }

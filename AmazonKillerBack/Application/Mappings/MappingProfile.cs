@@ -1,6 +1,7 @@
 ﻿using AmazonKillerBack.Application.DTOs;
 using AmazonKillerBack.Application.Features.Products.Create;
 using AmazonKillerBack.Domain.Entities;
+using AmazonKillerBack.Domain.Entities.Products;
 using AutoMapper;
 
 namespace AmazonKillerBack.Application.Mappings;
