@@ -32,7 +32,7 @@ This will:
 - Apply EF Core migrations automatically on startup
 
 App will be available at:
-- Swagger UI: [http://localhost:8080/swagger](http://localhost:8080/swagger)
+- Scalar: [http://localhost:8080/scalar](http://localhost:8080/swagger)
 - API: [http://localhost:8080/api/Product](http://localhost:8080/api/Product)
 
 ---
