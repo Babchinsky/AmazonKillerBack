@@ -1,13 +1,13 @@
-using AmazonKillerBack.Application.Features.Products.Commands.Create;
-using AmazonKillerBack.Application.Features.Products.Queries.GetAll;
-using AmazonKillerBack.Application.Interfaces;
-using AmazonKillerBack.Application.Mappings;
-using AmazonKillerBack.Infrastructure.Data;
-using AmazonKillerBack.Infrastructure.Repositories;
+using AmazonKiller.Application.Features.Products.Commands.Create;
+using AmazonKiller.Application.Features.Products.Queries.GetAll;
+using AmazonKiller.Application.Interfaces;
+using AmazonKiller.Application.Mappings;
+using AmazonKiller.Infrastructure.Data;
+using AmazonKiller.Infrastructure.Repositories;
+using Scalar.AspNetCore;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
-using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 

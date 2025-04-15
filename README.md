@@ -39,15 +39,12 @@ App will be available at:
 
 ## 📁 Project Structure
 ```
-AmazonKillerBack/
-├── Application/           # Application layer with CQRS features
-├── Domain/                # Domain entities and enums
-├── Infrastructure/        # EF Core DbContext, Repositories, Controllers
-├── Dockerfile             # For building ASP.NET Core image
-├── docker-compose.yml     # For starting full app with PostgreSQL
-├── appsettings.json       # Base config
-├── appsettings.Development.json # Local dev config
-└── Program.cs             # App entry point
+AmazonKiller/
+├── AmazonKiller.Domain/
+├── AmazonKiller.Application/
+├── AmazonKiller.Infrastructure/
+└── AmazonKiller.WebApi/
+
 ```
 
 ---

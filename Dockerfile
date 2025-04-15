@@ -2,21 +2,21 @@
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /app
 
-# Копируем csproj и восстанавливаем зависимости
+# Копируем sln и csproj, восстанавливаем зависимости
 COPY *.sln .
-COPY AmazonKillerBack/*.csproj ./AmazonKillerBack/
-RUN dotnet restore
+COPY AmazonKiller.WebApi/*.csproj ./AmazonKiller.WebApi/
+RUN dotnet restore ./AmazonKiller.WebApi/AmazonKiller.WebApi.csproj
 
 # Копируем остальной код
-COPY AmazonKillerBack/. ./AmazonKillerBack/
-WORKDIR /app/AmazonKillerBack
+COPY . .
+WORKDIR /app/AmazonKiller.WebApi
 
-# Собираем
-RUN dotnet publish -c Release -o out
+# Публикуем приложение
+RUN dotnet publish -c Release -o /app/out
 
 # Используем рантайм
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
 WORKDIR /app
-COPY --from=build /app/AmazonKillerBack/out ./
+COPY --from=build /app/out .
 
-ENTRYPOINT ["dotnet", "AmazonKillerBack.dll"]
+ENTRYPOINT ["dotnet", "AmazonKiller.WebApi.dll"]
