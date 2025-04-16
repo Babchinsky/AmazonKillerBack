@@ -16,7 +16,7 @@ public class Product
     public int ReviewsCount { get; set; }
 
     [Required]
-    public List<string> ProductPics { get; set; } = [];
+    public List<string> ProductPics { get; set; } = new();
 
     [Required]
     public Guid DetailsId { get; set; }

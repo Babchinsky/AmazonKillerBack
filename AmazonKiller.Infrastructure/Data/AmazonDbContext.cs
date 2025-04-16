@@ -24,58 +24,25 @@ public class AmazonDbContext(DbContextOptions<AmazonDbContext> options) : DbCont
     public DbSet<Sale> Sales => Set<Sale>();
     public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
 
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        // Настройка точности decimal для цены
-        modelBuilder.Entity<Product>().Property(p => p.Price).HasPrecision(18, 2);
-        modelBuilder.Entity<ProductCard>().Property(p => p.Price).HasPrecision(18, 2);
-        modelBuilder.Entity<Sale>().Property(p => p.OldPrice).HasPrecision(18, 2);
-        modelBuilder.Entity<Sale>().Property(p => p.NewPrice).HasPrecision(18, 2);
+        // Указываем precision для нужных полей
         modelBuilder.Entity<Product>()
-            .HasOne(p => p.Details)
-            .WithMany()
-            .HasForeignKey(p => p.DetailsId);
+            .Property(p => p.Price)
+            .HasPrecision(18, 2);
 
-        // Пример сидинга Category
-        var categoryId = new Guid("11111111-1111-1111-1111-111111111111");
-        modelBuilder.Entity<Category>().HasData(new Category
-        {
-            Id = categoryId,
-            Name = "Books"
-        });
+        modelBuilder.Entity<ProductCard>()
+            .Property(p => p.Price)
+            .HasPrecision(18, 2);
 
-        // Сидинг ProductDetails
-        var detailsId = new Guid("33333333-3333-3333-3333-333333333333");
-        modelBuilder.Entity<ProductDetails>().HasData(new ProductDetails
-        {
-            Id = detailsId,
-            FabricType = "Paper",
-            CareInstructions = "Keep dry",
-            Origin = "USA",
-            ClosureType = "None",
-            Brand = Brands.ASOS,
-            Color = Colors.White,
-            ClothesSize = null,
-            ShoesSize = null
-        });
+        modelBuilder.Entity<Sale>()
+            .Property(s => s.OldPrice)
+            .HasPrecision(18, 2);
 
-        // Сидинг Product (без списка картинок)
-        var productId = new Guid("22222222-2222-2222-2222-222222222222");
-        modelBuilder.Entity<Product>().HasData(new Product
-        {
-            Id = productId,
-            Name = "C# in Depth",
-            Price = 39.99m,
-            ReviewsCount = 0,
-            Quantity = 10,
-            Status = ProductStatus.InStock,
-            Rating = Rating.Five,
-            CategoryId = categoryId,
-            InWishlist = false,
-            InCartList = false,
-            DetailsId = detailsId 
-        });
+        modelBuilder.Entity<Sale>()
+            .Property(s => s.NewPrice)
+            .HasPrecision(18, 2);
 
+        SeedData.Seed(modelBuilder);
     }
 }

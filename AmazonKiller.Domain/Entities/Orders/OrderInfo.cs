@@ -1,6 +1,6 @@
 namespace AmazonKiller.Domain.Entities.Orders;
 
-public class AddInfo
+public class OrderInfo
 {
     public Guid Id { get; set; }
     

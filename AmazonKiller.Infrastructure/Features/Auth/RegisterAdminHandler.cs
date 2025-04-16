@@ -5,10 +5,11 @@ using AmazonKiller.Infrastructure.Exceptions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using AmazonKiller.Application.Interfaces;
 
 namespace AmazonKiller.Infrastructure.Features.Auth;
 
-public class RegisterAdminHandler(AmazonDbContext db, IConfiguration config)
+public class RegisterAdminHandler(AmazonDbContext db, IConfiguration config, IAuthService authService)
     : IRequestHandler<RegisterAdminCommand, string>
 {
     public async Task<string> Handle(RegisterAdminCommand command, CancellationToken cancellationToken)
@@ -32,9 +33,8 @@ public class RegisterAdminHandler(AmazonDbContext db, IConfiguration config)
         };
 
         db.Users.Add(admin);
-        await db.SaveChangesAsync();
+        await db.SaveChangesAsync(cancellationToken);
 
-        // Генерация токена — можешь использовать AuthService.GenerateJwtToken(admin)
-        return "Admin registered (тут лучше вызвать токен генерацию)";
+        return await authService.GenerateJwtTokenAsync(admin);
     }
 }
