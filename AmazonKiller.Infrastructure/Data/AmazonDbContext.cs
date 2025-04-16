@@ -22,6 +22,8 @@ public class AmazonDbContext(DbContextOptions<AmazonDbContext> options) : DbCont
     public DbSet<Wishlist> Wishlists => Set<Wishlist>();
     public DbSet<CartList> CartLists => Set<CartList>();
     public DbSet<Sale> Sales => Set<Sale>();
+    public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

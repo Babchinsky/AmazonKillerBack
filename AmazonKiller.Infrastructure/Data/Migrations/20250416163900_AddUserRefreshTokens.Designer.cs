@@ -4,6 +4,7 @@ using AmazonKiller.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AmazonKiller.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AmazonDbContext))]
-    partial class AmazonDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250416163900_AddUserRefreshTokens")]
+    partial class AddUserRefreshTokens
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -445,7 +448,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("RefreshTokens");
+                    b.ToTable("RefreshToken");
                 });
 
             modelBuilder.Entity("AmazonKiller.Domain.Entities.Users.User", b =>
@@ -559,13 +562,11 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("AmazonKiller.Domain.Entities.Users.RefreshToken", b =>
                 {
-                    b.HasOne("AmazonKiller.Domain.Entities.Users.User", "User")
+                    b.HasOne("AmazonKiller.Domain.Entities.Users.User", null)
                         .WithMany("RefreshTokens")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("AmazonKiller.Domain.Entities.Users.Wishlist", b =>

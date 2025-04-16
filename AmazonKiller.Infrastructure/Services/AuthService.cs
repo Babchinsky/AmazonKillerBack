@@ -8,7 +8,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
+using AmazonKiller.Infrastructure.Exceptions;
 
 namespace AmazonKiller.Infrastructure.Services;
 
@@ -17,7 +19,8 @@ public class AuthService(AmazonDbContext context, IConfiguration config) : IAuth
     public async Task<string> RegisterAsync(RegisterUserCommand command)
     {
         if (await context.Users.AnyAsync(u => u.Email == command.Email))
-            throw new Exception("User already exists");
+            throw new AppException("User already exists", 400);
+
 
         var user = new User
         {
@@ -37,14 +40,35 @@ public class AuthService(AmazonDbContext context, IConfiguration config) : IAuth
 
     public async Task<string> LoginAsync(LoginUserCommand command)
     {
-        var user = await context.Users.FirstOrDefaultAsync(u => u.Email == command.Email);
+        var user = await context.Users
+            .FirstOrDefaultAsync(u => u.Email == command.Email);
 
         if (user == null || !BCrypt.Net.BCrypt.Verify(command.Password, user.PasswordHash))
-            throw new Exception("Invalid credentials");
+            throw new AppException("Invalid credentials", 401);
+
+        // Удаляем токены напрямую
+        var oldTokens = await context.RefreshTokens
+            .Where(t => t.UserId == user.Id)
+            .ToListAsync();
+
+        if (oldTokens.Count > 0)
+            context.RefreshTokens.RemoveRange(oldTokens);
+
+        var refreshToken = new RefreshToken
+        {
+            Token = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64)),
+            ExpiresAt = DateTime.UtcNow.AddDays(7),
+            UserId = user.Id
+        };
+
+        // Добавляем тоже напрямую
+        context.RefreshTokens.Add(refreshToken);
+
+        await context.SaveChangesAsync();
 
         return GenerateJwtToken(user);
     }
-
+    
     private string GenerateJwtToken(User user)
     {
         var claims = new[]
@@ -66,5 +90,23 @@ public class AuthService(AmazonDbContext context, IConfiguration config) : IAuth
         );
 
         return new JwtSecurityTokenHandler().WriteToken(token);
+    }
+
+    public async Task<string> GenerateRefreshTokenAsync(User user)
+    {
+        var refreshToken = new RefreshToken
+        {
+            Token = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64)),
+            ExpiresAt = DateTime.UtcNow.AddDays(7),
+            UserId = user.Id
+        };
+        user.RefreshTokens.Add(refreshToken);
+        await context.SaveChangesAsync();
+        return refreshToken.Token;
+    }
+
+    public Task<string> GenerateJwtTokenAsync(User user)
+    {
+        return Task.FromResult(GenerateJwtToken(user));
     }
 }

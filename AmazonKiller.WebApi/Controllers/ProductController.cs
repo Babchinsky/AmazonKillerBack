@@ -1,6 +1,7 @@
 ﻿using AmazonKiller.Application.Features.Products.Commands.Create;
 using AmazonKiller.Application.Features.Products.Queries.GetAll;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AmazonKiller.WebApi.Controllers;
@@ -16,6 +17,7 @@ public class ProductController(IMediator mediator) : ControllerBase
         return Ok(products);
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     public async Task<IActionResult> Create(CreateProductCommand command)
     {
