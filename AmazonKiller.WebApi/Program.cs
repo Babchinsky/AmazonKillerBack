@@ -1,5 +1,3 @@
-// FILE: AmazonKiller.WebApi/Program.cs
-
 using System.Text;
 using AmazonKiller.Application.DependencyInjection;
 using AmazonKiller.Infrastructure.Data;
@@ -8,6 +6,7 @@ using AmazonKiller.Infrastructure.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,15 +16,16 @@ builder.WebHost.UseUrls("http://0.0.0.0:80");
 builder.Services.AddControllers();
 builder.Services.AddHttpContextAccessor();
 
-builder.Services.AddPersistence(builder.Configuration) // БД
-    .AddInfrastructure() // репозитории/сервисы
-    .AddApplication(); // MediatR / Automapper / валидаторы
+builder.Services
+    .AddPersistence(builder.Configuration) // БД
+    .AddInfrastructure() // Репозитории/сервисы
+    .AddApplication(); // MediatR / AutoMapper / валидаторы
 
-// --- JWT ---
+// ---------- JWT ----------
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(o =>
+    .AddJwtBearer(options =>
     {
-        o.TokenValidationParameters = new()
+        options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuerSigningKey = true,
             ValidateIssuer = true,
@@ -39,26 +39,64 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 builder.Services.AddAuthorization();
+
+// ---------- Swagger / Scalar ----------
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "AmazonKiller API", Version = "v1" });
+
+    // --- JWT авторизация в Swagger ---
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Description = @"Введите токен как: Bearer {токен}",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.Http,
+        Scheme = "Bearer"
+    });
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
+});
+
 builder.Services.Configure<ScalarOptions>(_ =>
 {
-    /* theme / servers */
+    // Опционально: кастомизация Scalar UI
 });
-builder.Services.AddCors(p => p.AddDefaultPolicy(b => b.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
 
-// ----------  App ----------
+builder.Services.AddCors(p => p
+    .AddDefaultPolicy(b =>
+        b.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
+
+// ---------- App ----------
 var app = builder.Build();
 
+// --- Автоматическая миграция БД ---
 using (var scope = app.Services.CreateScope())
     scope.ServiceProvider.GetRequiredService<AmazonDbContext>().Database.Migrate();
 
+// --- Middleware ---
 app.UseMiddleware<ExceptionHandlingMiddleware>();
+
+// --- Swagger/Scalar UI ---
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-    app.MapScalarApiReference(o => o.OpenApiRoutePattern = "/swagger/{documentName}/swagger.json");
+    app.MapScalarApiReference(o => { o.OpenApiRoutePattern = "/swagger/{documentName}/swagger.json"; });
 }
 else app.UseHttpsRedirection();
 
@@ -66,4 +104,5 @@ app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+
 app.Run();

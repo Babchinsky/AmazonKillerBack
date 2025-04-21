@@ -5,6 +5,7 @@ using AmazonKiller.Application.Features.Products.GetById;
 using AmazonKiller.Application.Features.Products.IsExists;
 using AmazonKiller.Application.Features.Products.Update;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AmazonKiller.WebApi.Controllers;
@@ -20,13 +21,21 @@ public class ProductController(IMediator mediator) : ControllerBase
         return Ok(products);
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetById(Guid id)
     {
         var product = await mediator.Send(new GetProductByIdQuery(id));
         return Ok(product);
     }
 
+    [HttpGet("{id:guid}/exists")]
+    public async Task<IActionResult> IsExists(Guid id)
+    {
+        var exists = await mediator.Send(new IsProductExistsQuery(id));
+        return Ok(exists);
+    }
+    
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateProductCommand command)
     {
@@ -34,14 +43,8 @@ public class ProductController(IMediator mediator) : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
     }
 
-    [HttpGet("{id}/exists")]
-    public async Task<IActionResult> IsExists(Guid id)
-    {
-        var exists = await mediator.Send(new IsProductExistsQuery(id));
-        return Ok(exists);
-    }
-
-    [HttpDelete("{id}")]
+    [Authorize(Roles = "Admin")]
+    [HttpDelete("{id:guid}")]
     public async Task<IActionResult> Delete(Guid id)
     {
         var isExists = await mediator.Send(new IsProductExistsQuery(id));
@@ -52,13 +55,18 @@ public class ProductController(IMediator mediator) : ControllerBase
         return NoContent();
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpPut("{id:guid}")]
     public async Task<IActionResult> Update(Guid id, [FromBody] UpdateProductCommand cmd)
     {
-        if (id != cmd.Id) return BadRequest("Id mismatch");
+        if (id != cmd.Id)
+            return BadRequest("Id mismatch");
+
+        var isExists = await mediator.Send(new IsProductExistsQuery(id));
+        if (!isExists)
+            return NotFound();
 
         var updated = await mediator.Send(cmd);
         return Ok(updated);
     }
-
 }
