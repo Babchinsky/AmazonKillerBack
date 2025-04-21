@@ -150,6 +150,10 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                     b.Property<Guid>("CategoryId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<Guid>("DetailsId")
                         .HasColumnType("uniqueidentifier");
 
@@ -184,12 +188,21 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                     b.Property<int>("ReviewsCount")
                         .HasColumnType("int");
 
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("Code")
+                        .IsUnique();
 
                     b.HasIndex("DetailsId");
 
@@ -202,6 +215,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         {
                             Id = new Guid("22222222-2222-2222-2222-222222222222"),
                             CategoryId = new Guid("11111111-1111-1111-1111-111111111111"),
+                            Code = "01JS9QNDAYKK2CFRT5AKZF1YAA",
                             DetailsId = new Guid("33333333-3333-3333-3333-333333333333"),
                             InCartList = false,
                             InWishlist = false,
@@ -209,8 +223,9 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                             Price = 39.99m,
                             ProductPics = "[]",
                             Quantity = 10,
-                            Rating = 4,
+                            Rating = 5,
                             ReviewsCount = 0,
+                            RowVersion = new byte[0],
                             Status = 0
                         });
                 });

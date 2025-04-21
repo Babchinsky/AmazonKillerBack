@@ -1,24 +1,27 @@
-﻿using AmazonKiller.Application.Features.Auth.Commands.Refresh;
+﻿using AmazonKiller.Application.DTOs.Auth;
+using AmazonKiller.Application.Features.Auth.Commands.Refresh;
 using AmazonKiller.Application.Interfaces;
-using AmazonKiller.Domain.Entities.Users;
 using AmazonKiller.Infrastructure.Data;
+using AmazonKiller.Infrastructure.Exceptions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace AmazonKiller.Infrastructure.Features.Auth;
 
-public class RefreshTokenHandler(IAuthService authService, AmazonDbContext db)
-    : IRequestHandler<RefreshTokenCommand, string>
+public class RefreshTokenHandler(IAuthService auth, AmazonDbContext db)
+    : IRequestHandler<RefreshTokenCommand, AuthTokensDto>
 {
-    public async Task<string> Handle(RefreshTokenCommand request, CancellationToken cancellationToken)
+    public async Task<AuthTokensDto> Handle(RefreshTokenCommand req, CancellationToken ct)
     {
-        var token = await db.Set<RefreshToken>()
-            .Include(t => t.User)
-            .FirstOrDefaultAsync(t => t.Token == request.RefreshToken, cancellationToken);
+        var old = await db.RefreshTokens.Include(t => t.User)
+            .SingleOrDefaultAsync(t => t.Token == req.RefreshToken, ct);
 
-        if (token == null || token.ExpiresAt < DateTime.UtcNow)
-            throw new Exception("Invalid or expired refresh token");
+        if (old is null || old.ExpiresAt < DateTime.UtcNow)
+            throw new AppException("Invalid/expired refresh token", 401);
 
-        return await authService.GenerateJwtTokenAsync(token.User);
+        db.RefreshTokens.Remove(old);                       // revoke
+        var newR = await auth.GenerateRefreshTokenAsync(old.User);
+
+        return new AuthTokensDto(await auth.GenerateJwtTokenAsync(old.User), newR);
     }
 }

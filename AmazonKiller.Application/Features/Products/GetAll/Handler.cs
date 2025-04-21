@@ -3,7 +3,7 @@ using AmazonKiller.Application.Interfaces;
 using AutoMapper;
 using MediatR;
 
-namespace AmazonKiller.Application.Features.Products.Queries.GetAll;
+namespace AmazonKiller.Application.Features.Products.GetAll;
 
 public class GetAllProductsHandler(IProductRepository repo, IMapper mapper)
     : IRequestHandler<GetAllProductsQuery, List<ProductDto>>

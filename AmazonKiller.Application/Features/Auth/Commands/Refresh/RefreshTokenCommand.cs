@@ -1,5 +1,6 @@
-﻿using MediatR;
+﻿using AmazonKiller.Application.DTOs.Auth;
+using MediatR;
 
 namespace AmazonKiller.Application.Features.Auth.Commands.Refresh;
 
-public record RefreshTokenCommand(string RefreshToken) : IRequest<string>;
+public record RefreshTokenCommand(string RefreshToken) : IRequest<AuthTokensDto>;

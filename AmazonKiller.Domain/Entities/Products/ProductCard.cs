@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 
 namespace AmazonKiller.Domain.Entities.Products;
 
@@ -13,7 +14,7 @@ public class ProductCard
     [StringLength(100, MinimumLength = 1)]  
     public string Name { get; set; } 
 
-    [Range(0.01, double.MaxValue)]  
+    [Precision(18, 2)]
     public decimal Price { get; set; }
 
     public Rating Rating { get; set; }

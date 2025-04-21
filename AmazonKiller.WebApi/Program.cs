@@ -1,148 +1,69 @@
+// FILE: AmazonKiller.WebApi/Program.cs
+
 using System.Text;
-using AmazonKiller.Application.Features.Products.Commands.Create;
-using AmazonKiller.Application.Features.Products.Queries.GetAll;
-using AmazonKiller.Application.Interfaces;
-using AmazonKiller.Application.Mappings;
+using AmazonKiller.Application.DependencyInjection;
 using AmazonKiller.Infrastructure.Data;
-using AmazonKiller.Infrastructure.Features.Auth;
 using AmazonKiller.Infrastructure.Middleware;
-using AmazonKiller.Infrastructure.Repositories;
-using AmazonKiller.Infrastructure.Services;
-using FluentValidation;
-using FluentValidation.AspNetCore;
+using AmazonKiller.Infrastructure.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// === Хост для Docker ===
 builder.WebHost.UseUrls("http://0.0.0.0:80");
 
-// === Сервисы ===
+// ----------  DI ----------
 builder.Services.AddControllers();
 builder.Services.AddHttpContextAccessor();
 
-// === БД ===
-builder.Services.AddDbContext<AmazonDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddPersistence(builder.Configuration) // БД
+    .AddInfrastructure() // репозитории/сервисы
+    .AddApplication(); // MediatR / Automapper / валидаторы
 
-// === JWT Аутентификация ===
+// --- JWT ---
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
+    .AddJwtBearer(o =>
     {
-        options.TokenValidationParameters = new()
+        o.TokenValidationParameters = new()
         {
+            ValidateIssuerSigningKey = true,
             ValidateIssuer = true,
             ValidateAudience = true,
             ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            ValidIssuer = builder.Configuration["Jwt:Issuer"],
-            ValidAudience = builder.Configuration["Jwt:Audience"],
             IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
+                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)),
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidAudience = builder.Configuration["Jwt:Audience"]
         };
     });
 
 builder.Services.AddAuthorization();
-
-// === Репозитории, Сервисы, Маппинг ===
-builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddScoped<IProductRepository, ProductRepository>();
-builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
-
-builder.Services.AddAutoMapper(typeof(MappingProfile));
-builder.Services.AddMediatR(cfg =>
-{
-    cfg.RegisterServicesFromAssemblyContaining<GetAllProductsQuery>();
-    cfg.RegisterServicesFromAssemblyContaining<RefreshTokenHandler>();
-});
-
-
-// === Валидация ===
-builder.Services.AddFluentValidationAutoValidation();
-builder.Services.AddFluentValidationClientsideAdapters();
-builder.Services.AddValidatorsFromAssemblyContaining<CreateProductValidator>();
-
-// === OpenAPI / Swagger / Scalar ===
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c =>
+builder.Services.AddSwaggerGen();
+builder.Services.Configure<ScalarOptions>(_ =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "AmazonKiller API", Version = "v1" });
-
-    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-    {
-        Description = "JWT в формате Bearer {token}",
-        Name = "Authorization",
-        In = ParameterLocation.Header,
-        Type = SecuritySchemeType.Http,
-        Scheme = "bearer",
-        BearerFormat = "JWT"
-    });
-
-    c.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
-                {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "Bearer"
-                }
-            },
-            Array.Empty<string>()
-        }
-    });
+    /* theme / servers */
 });
+builder.Services.AddCors(p => p.AddDefaultPolicy(b => b.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
 
-builder.Services.Configure<ScalarOptions>(options =>
-{
-    options.Servers = new List<ScalarServer>
-    {
-        new("http://localhost:8080", "Local Dev Server")
-    };
-    options.Theme = ScalarTheme.Purple;
-    options.DynamicBaseServerUrl = false;
-});
-
-// === CORS ===
-builder.Services.AddCors(options =>
-{
-    options.AddDefaultPolicy(policy =>
-        policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-});
-
-// === Приложение ===
+// ----------  App ----------
 var app = builder.Build();
 
-// --- Миграции
 using (var scope = app.Services.CreateScope())
-{
-    var db = scope.ServiceProvider.GetRequiredService<AmazonDbContext>();
-    db.Database.Migrate();
-}
+    scope.ServiceProvider.GetRequiredService<AmazonDbContext>().Database.Migrate();
 
-// === Middleware ===
 app.UseMiddleware<ExceptionHandlingMiddleware>();
-
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger(); // обязательно, иначе swagger.json не сгенерится
-    app.UseSwaggerUI(); // не обязательно для Scalar, но удобно
-
-    app.MapScalarApiReference(options => { options.OpenApiRoutePattern = "/swagger/{documentName}/swagger.json"; });
+    app.UseSwagger();
+    app.UseSwaggerUI();
+    app.MapScalarApiReference(o => o.OpenApiRoutePattern = "/swagger/{documentName}/swagger.json");
 }
-else
-{
-    app.UseHttpsRedirection();
-}
+else app.UseHttpsRedirection();
 
 app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
 app.Run();

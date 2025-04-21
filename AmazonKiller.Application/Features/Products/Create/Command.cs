@@ -1,14 +1,13 @@
 ﻿using AmazonKiller.Application.DTOs;
 using MediatR;
 
-namespace AmazonKiller.Application.Features.Products.Commands.Create;
+namespace AmazonKiller.Application.Features.Products.Create;
 
 public record CreateProductCommand(
     string Name,
-    string Description,
+    List<string> ProductPics,
     decimal Price,
-    string? ImageUrl,
-    int Stock,
+    int Quantity,
     Guid CategoryId,
     Guid DetailsId
 ) : IRequest<ProductDto>;

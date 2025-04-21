@@ -24,25 +24,39 @@ public class AmazonDbContext(DbContextOptions<AmazonDbContext> options) : DbCont
     public DbSet<Sale> Sales => Set<Sale>();
     public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    protected override void OnModelCreating(ModelBuilder b)
     {
-        // Указываем precision для нужных полей
-        modelBuilder.Entity<Product>()
-            .Property(p => p.Price)
-            .HasPrecision(18, 2);
+        // ----- ProductCard -----
+        b.Entity<ProductCard>(e =>
+        {
+            e.Property(pc => pc.Price).HasPrecision(18, 2);
+        });
 
-        modelBuilder.Entity<ProductCard>()
-            .Property(p => p.Price)
-            .HasPrecision(18, 2);
+        // ----- Sale -----
+        b.Entity<Sale>(e =>
+        {
+            e.Property(s => s.OldPrice).HasPrecision(18, 2);
+            e.Property(s => s.NewPrice).HasPrecision(18, 2);
+        });
+        
+        // ---------- Product ----------
+        b.Entity<Product>(e =>
+        {
+            e.HasIndex(p => p.Code).IsUnique();
+            // хранение List<string> в JSON‑столбце (EFCore>=8)
+            e.PrimitiveCollection(p => p.ProductPics);
 
-        modelBuilder.Entity<Sale>()
-            .Property(s => s.OldPrice)
-            .HasPrecision(18, 2);
+            e.Property(p => p.Price).HasPrecision(18, 2);
+            e.Property(p => p.RowVersion).IsRowVersion();
+        });
 
-        modelBuilder.Entity<Sale>()
-            .Property(s => s.NewPrice)
-            .HasPrecision(18, 2);
+        // ---------- ReviewContent ----------
+        b.Entity<ReviewContent>(e =>
+        {
+            e.PrimitiveCollection(r => r.FilePaths);   // ← одной строчки достаточно
+        });
 
-        SeedData.Seed(modelBuilder);
+        // ---------- seed ----------
+        SeedData.Seed(b);
     }
 }

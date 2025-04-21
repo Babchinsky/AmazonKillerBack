@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 
 namespace AmazonKiller.Domain.Entities.Sales;
 
@@ -10,10 +11,10 @@ public class Sale
 
     public Guid? CategoryId { get; set; } 
 
-    [Range(0.01, double.MaxValue)]
+    [Precision(18, 2)]
     public decimal OldPrice { get; set; }
 
-    [Range(0.01, double.MaxValue)]
+    [Precision(18, 2)]
     public decimal NewPrice { get; set; }
 
     public int DiscountPercent => OldPrice == 0 ? 0 : (int)Math.Round((OldPrice - NewPrice) / OldPrice * 100);
