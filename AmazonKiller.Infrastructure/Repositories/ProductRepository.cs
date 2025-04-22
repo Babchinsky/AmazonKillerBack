@@ -1,34 +1,31 @@
 ﻿using AmazonKiller.Application.Interfaces;
 using AmazonKiller.Domain.Entities.Products;
 using AmazonKiller.Infrastructure.Data;
-using AmazonKiller.Infrastructure.Exceptions;
+using AmazonKiller.Shared.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
 namespace AmazonKiller.Infrastructure.Repositories;
 
-public class ProductRepository : IProductRepository
+public class ProductRepository(AmazonDbContext db) : IProductRepository
 {
-    private readonly AmazonDbContext _db;
-    public ProductRepository(AmazonDbContext db) => _db = db;
-
     public Task<List<Product>> GetAllAsync() =>
-        _db.Products.Include(p => p.Details).AsNoTracking().ToListAsync();
+        db.Products.Include(p => p.Details).AsNoTracking().ToListAsync();
 
     public Task<Product?> GetByIdAsync(Guid id) =>
-        _db.Products.Include(p => p.Details).FirstOrDefaultAsync(p => p.Id == id);
+        db.Products.Include(p => p.Details).FirstOrDefaultAsync(p => p.Id == id);
 
     public async Task AddAsync(Product product)
     {
-        _db.Products.Add(product);
-        await _db.SaveChangesAsync();
+        db.Products.Add(product);
+        await db.SaveChangesAsync();
     }
 
     public async Task UpdateAsync(Product product)
     {
         try
         {
-            _db.Products.Update(product);
-            await _db.SaveChangesAsync();
+            db.Products.Update(product);
+            await db.SaveChangesAsync();
         }
         catch (DbUpdateConcurrencyException)
         {
@@ -38,15 +35,15 @@ public class ProductRepository : IProductRepository
 
     public async Task DeleteAsync(Guid id)
     {
-        var p = await _db.Products.FindAsync(id);
+        var p = await db.Products.FindAsync(id);
         if (p is null) return;
-        _db.Products.Remove(p);
-        await _db.SaveChangesAsync();
+        db.Products.Remove(p);
+        await db.SaveChangesAsync();
     }
 
     public Task<bool> IsExistsAsync(Guid id) =>
-        _db.Products.AnyAsync(p => p.Id == id);
+        db.Products.AnyAsync(p => p.Id == id);
     
     public IQueryable<Product> Queryable() =>
-        _db.Products.Include(p => p.Details);
+        db.Products.Include(p => p.Details);
 }

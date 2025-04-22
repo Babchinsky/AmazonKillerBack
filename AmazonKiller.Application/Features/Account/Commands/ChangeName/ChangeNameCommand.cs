@@ -1,0 +1,5 @@
+﻿using MediatR;
+
+namespace AmazonKiller.Application.Features.Account.Commands.ChangeName;
+
+public record ChangeNameCommand(string FirstName, string LastName) : IRequest<Unit>, IRequest;

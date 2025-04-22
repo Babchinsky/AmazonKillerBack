@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmazonKiller.Infrastructure
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmazonKiller.WebApi", "AmazonKiller.WebApi\AmazonKiller.WebApi.csproj", "{27E1878B-1ED3-4586-A828-6776E2F48D3A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmazonKiller.Shared", "AmazonKiller.Shared\AmazonKiller.Shared.csproj", "{13C681B4-39EE-4238-AFE8-84BF49542395}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{27E1878B-1ED3-4586-A828-6776E2F48D3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27E1878B-1ED3-4586-A828-6776E2F48D3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{27E1878B-1ED3-4586-A828-6776E2F48D3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13C681B4-39EE-4238-AFE8-84BF49542395}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13C681B4-39EE-4238-AFE8-84BF49542395}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13C681B4-39EE-4238-AFE8-84BF49542395}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13C681B4-39EE-4238-AFE8-84BF49542395}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

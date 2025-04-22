@@ -13,7 +13,8 @@ public class AuthController(IAuthService authService, IMediator mediator) : Cont
 {
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterUserCommand cmd)
-        => Ok(await authService.RegisterAsync(cmd));
+        => Ok(await mediator.Send(cmd));
+
 
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginUserCommand cmd)

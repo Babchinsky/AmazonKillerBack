@@ -1,5 +1,5 @@
 ﻿using System.Text.Json;
-using AmazonKiller.Infrastructure.Exceptions;
+using AmazonKiller.Shared.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 

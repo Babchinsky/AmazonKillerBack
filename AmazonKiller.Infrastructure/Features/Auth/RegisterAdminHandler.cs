@@ -1,11 +1,11 @@
 ﻿using AmazonKiller.Application.Features.Auth.Commands.Register;
 using AmazonKiller.Domain.Entities.Users;
 using AmazonKiller.Infrastructure.Data;
-using AmazonKiller.Infrastructure.Exceptions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using AmazonKiller.Application.Interfaces;
+using AmazonKiller.Shared.Exceptions;
 
 namespace AmazonKiller.Infrastructure.Features.Auth;
 

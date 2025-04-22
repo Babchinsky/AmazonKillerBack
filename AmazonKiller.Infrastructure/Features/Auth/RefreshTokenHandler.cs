@@ -2,7 +2,7 @@
 using AmazonKiller.Application.Features.Auth.Commands.Refresh;
 using AmazonKiller.Application.Interfaces;
 using AmazonKiller.Infrastructure.Data;
-using AmazonKiller.Infrastructure.Exceptions;
+using AmazonKiller.Shared.Exceptions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
