@@ -46,4 +46,7 @@ public class ProductRepository : IProductRepository
 
     public Task<bool> IsExistsAsync(Guid id) =>
         _db.Products.AnyAsync(p => p.Id == id);
+    
+    public IQueryable<Product> Queryable() =>
+        _db.Products.Include(p => p.Details);
 }

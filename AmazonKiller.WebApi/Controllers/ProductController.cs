@@ -14,13 +14,13 @@ namespace AmazonKiller.WebApi.Controllers;
 [Route("api/[controller]")]
 public class ProductController(IMediator mediator) : ControllerBase
 {
-    [HttpGet]
-    public async Task<IActionResult> GetAll()
+    [HttpGet("search")]
+    public async Task<IActionResult> Search([FromQuery] GetAllProductsQuery query)
     {
-        var products = await mediator.Send(new GetAllProductsQuery());
-        return Ok(products);
+        var result = await mediator.Send(query);
+        return Ok(result);
     }
-
+    
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetById(Guid id)
     {
