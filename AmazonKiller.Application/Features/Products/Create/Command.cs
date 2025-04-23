@@ -1,4 +1,5 @@
 ﻿using AmazonKiller.Application.DTOs;
+using AmazonKiller.Application.DTOs.Products;
 using MediatR;
 
 namespace AmazonKiller.Application.Features.Products.Create;

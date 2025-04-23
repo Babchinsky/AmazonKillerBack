@@ -4,7 +4,7 @@ using System.Security.Cryptography;
 using System.Text;
 using AmazonKiller.Application.DTOs.Auth;
 using AmazonKiller.Application.Features.Auth.Commands.Login;
-using AmazonKiller.Application.Interfaces;
+using AmazonKiller.Application.Interfaces.Auth;
 using AmazonKiller.Domain.Entities.Users;
 using AmazonKiller.Infrastructure.Data;
 using AmazonKiller.Shared.Exceptions;
@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
-namespace AmazonKiller.Infrastructure.Services;
+namespace AmazonKiller.Infrastructure.Services.Auth;
 
 public class AuthService(AmazonDbContext db, IConfiguration cfg) : IAuthService
 {

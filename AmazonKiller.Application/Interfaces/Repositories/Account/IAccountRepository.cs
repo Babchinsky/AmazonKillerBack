@@ -1,6 +1,6 @@
 ﻿using AmazonKiller.Domain.Entities.Users;
 
-namespace AmazonKiller.Application.Interfaces;
+namespace AmazonKiller.Application.Interfaces.Repositories.Account;
 
 public interface IAccountRepository
 {

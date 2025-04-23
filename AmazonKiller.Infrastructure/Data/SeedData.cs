@@ -38,7 +38,7 @@ public static class SeedData
             ShoesSize        = null
         });
 
-        // ----------- Product -----------
+        // ----------- Products -----------
         modelBuilder.Entity<Product>().HasData(new Product
         {
             Id           = productId,

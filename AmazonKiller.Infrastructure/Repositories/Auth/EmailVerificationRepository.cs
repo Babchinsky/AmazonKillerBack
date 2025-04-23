@@ -1,9 +1,9 @@
-﻿using AmazonKiller.Application.Interfaces;
+﻿using AmazonKiller.Application.Interfaces.Repositories.Auth;
 using AmazonKiller.Domain.Entities.Users;
 using AmazonKiller.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace AmazonKiller.Infrastructure.Repositories;
+namespace AmazonKiller.Infrastructure.Repositories.Auth;
 
 public class EmailVerificationRepository(AmazonDbContext db) : IEmailVerificationRepository
 {

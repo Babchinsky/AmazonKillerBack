@@ -4,6 +4,7 @@ using AmazonKiller.Application.Features.Auth.Commands.Refresh;
 using AmazonKiller.Application.Features.Auth.Commands.RegisterAdmin;
 using AmazonKiller.Application.Features.Auth.Commands.StartRegistration;
 using AmazonKiller.Application.Interfaces;
+using AmazonKiller.Application.Interfaces.Auth;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

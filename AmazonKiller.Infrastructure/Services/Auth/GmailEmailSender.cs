@@ -1,9 +1,9 @@
-﻿using AmazonKiller.Application.Interfaces;
-using Microsoft.Extensions.Configuration;
-using System.Net;
+﻿using System.Net;
 using System.Net.Mail;
+using AmazonKiller.Application.Interfaces.Auth;
+using Microsoft.Extensions.Configuration;
 
-namespace AmazonKiller.Infrastructure.Services;
+namespace AmazonKiller.Infrastructure.Services.Auth;
 
 public class GmailEmailSender(IConfiguration cfg) : IEmailSender
 {

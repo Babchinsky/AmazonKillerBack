@@ -1,4 +1,4 @@
-﻿namespace AmazonKiller.Application.DTOs;
+﻿namespace AmazonKiller.Application.DTOs.Products;
 
 public class ProductDto
 {

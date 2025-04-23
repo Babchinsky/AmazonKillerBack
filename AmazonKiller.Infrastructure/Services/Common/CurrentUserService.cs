@@ -1,8 +1,8 @@
 ﻿using System.Security.Claims;
-using AmazonKiller.Application.Interfaces;
+using AmazonKiller.Application.Interfaces.Common;
 using Microsoft.AspNetCore.Http;
 
-namespace AmazonKiller.Infrastructure.Services;
+namespace AmazonKiller.Infrastructure.Services.Common;
 
 public class CurrentUserService(IHttpContextAccessor accessor) : ICurrentUserService
 {

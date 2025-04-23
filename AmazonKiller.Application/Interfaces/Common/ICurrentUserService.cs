@@ -1,4 +1,4 @@
-﻿namespace AmazonKiller.Application.Interfaces;
+﻿namespace AmazonKiller.Application.Interfaces.Common;
 
 public interface ICurrentUserService
 {

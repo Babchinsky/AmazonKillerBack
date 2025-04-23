@@ -141,7 +141,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("AmazonKiller.Domain.Entities.Products.Product", b =>
+            modelBuilder.Entity("AmazonKiller.Domain.Entities.Products.Products", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -555,7 +555,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                     b.Navigation("Address");
                 });
 
-            modelBuilder.Entity("AmazonKiller.Domain.Entities.Products.Product", b =>
+            modelBuilder.Entity("AmazonKiller.Domain.Entities.Products.Products", b =>
                 {
                     b.HasOne("AmazonKiller.Domain.Entities.Products.Category", null)
                         .WithMany("Products")

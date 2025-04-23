@@ -40,7 +40,7 @@ public class AmazonDbContext(DbContextOptions<AmazonDbContext> options) : DbCont
             e.Property(s => s.NewPrice).HasPrecision(18, 2);
         });
         
-        // ---------- Product ----------
+        // ---------- Products ----------
         b.Entity<Product>(e =>
         {
             e.HasIndex(p => p.Code).IsUnique();

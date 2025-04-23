@@ -1,4 +1,5 @@
 ﻿using AmazonKiller.Application.DTOs;
+using AmazonKiller.Application.DTOs.Products;
 using AmazonKiller.Application.Features.Products.Create;
 using AmazonKiller.Application.Features.Products.Update;
 using AmazonKiller.Domain.Entities.Products;

@@ -1,4 +1,7 @@
 ﻿using AmazonKiller.Application.Interfaces;
+using AmazonKiller.Application.Interfaces.Common;
+using AmazonKiller.Application.Interfaces.Repositories;
+using AmazonKiller.Application.Interfaces.Repositories.Account;
 using AmazonKiller.Shared.Exceptions;
 using MediatR;
 

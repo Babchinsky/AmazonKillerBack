@@ -1,8 +1,8 @@
-﻿using AmazonKiller.Application.Interfaces;
+﻿using AmazonKiller.Application.Interfaces.Auth;
 using Microsoft.Extensions.Configuration;
 using RestSharp;
 
-namespace AmazonKiller.Infrastructure.Services;
+namespace AmazonKiller.Infrastructure.Services.Auth;
 
 public class ResendEmailSender(IConfiguration cfg) : IEmailSender
 {

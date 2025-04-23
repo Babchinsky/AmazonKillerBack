@@ -1,6 +1,6 @@
 ﻿using AmazonKiller.Domain.Entities.Products;
 
-namespace AmazonKiller.Application.Interfaces;
+namespace AmazonKiller.Application.Interfaces.Repositories.Products;
 
 public interface IProductRepository
 {

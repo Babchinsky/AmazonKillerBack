@@ -1,7 +1,7 @@
-﻿using AmazonKiller.Application.Interfaces;
+﻿using AmazonKiller.Application.Interfaces.Auth;
 using Microsoft.Extensions.Configuration;
 
-namespace AmazonKiller.Infrastructure.Services;
+namespace AmazonKiller.Infrastructure.Services.Auth;
 
 public class AdminSecretValidator(IConfiguration config) : IAdminSecretValidator
 {

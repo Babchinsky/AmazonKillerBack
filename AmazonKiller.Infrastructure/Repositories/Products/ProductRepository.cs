@@ -1,10 +1,10 @@
-﻿using AmazonKiller.Application.Interfaces;
+﻿using AmazonKiller.Application.Interfaces.Repositories.Products;
 using AmazonKiller.Domain.Entities.Products;
 using AmazonKiller.Infrastructure.Data;
 using AmazonKiller.Shared.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
-namespace AmazonKiller.Infrastructure.Repositories;
+namespace AmazonKiller.Infrastructure.Repositories.Products;
 
 public class ProductRepository(AmazonDbContext db) : IProductRepository
 {

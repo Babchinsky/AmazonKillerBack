@@ -1,6 +1,17 @@
 ﻿using AmazonKiller.Application.Interfaces;
+using AmazonKiller.Application.Interfaces.Auth;
+using AmazonKiller.Application.Interfaces.Common;
+using AmazonKiller.Application.Interfaces.Repositories;
+using AmazonKiller.Application.Interfaces.Repositories.Account;
+using AmazonKiller.Application.Interfaces.Repositories.Auth;
+using AmazonKiller.Application.Interfaces.Repositories.Products;
 using AmazonKiller.Infrastructure.Repositories;
+using AmazonKiller.Infrastructure.Repositories.Account;
+using AmazonKiller.Infrastructure.Repositories.Auth;
+using AmazonKiller.Infrastructure.Repositories.Products;
 using AmazonKiller.Infrastructure.Services;
+using AmazonKiller.Infrastructure.Services.Auth;
+using AmazonKiller.Infrastructure.Services.Common;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace AmazonKiller.Infrastructure.DependencyInjection;

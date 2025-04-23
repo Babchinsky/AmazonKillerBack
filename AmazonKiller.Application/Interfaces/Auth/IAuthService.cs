@@ -2,7 +2,7 @@
 using AmazonKiller.Application.Features.Auth.Commands.Login;
 using AmazonKiller.Domain.Entities.Users;
 
-namespace AmazonKiller.Application.Interfaces;
+namespace AmazonKiller.Application.Interfaces.Auth;
 
 public interface IAuthService
 {
