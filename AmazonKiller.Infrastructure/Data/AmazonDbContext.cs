@@ -28,10 +28,7 @@ public class AmazonDbContext(DbContextOptions<AmazonDbContext> options) : DbCont
     protected override void OnModelCreating(ModelBuilder b)
     {
         // ----- ProductCard -----
-        b.Entity<ProductCard>(e =>
-        {
-            e.Property(pc => pc.Price).HasPrecision(18, 2);
-        });
+        b.Entity<ProductCard>(e => { e.Property(pc => pc.Price).HasPrecision(18, 2); });
 
         // ----- Sale -----
         b.Entity<Sale>(e =>
@@ -39,7 +36,7 @@ public class AmazonDbContext(DbContextOptions<AmazonDbContext> options) : DbCont
             e.Property(s => s.OldPrice).HasPrecision(18, 2);
             e.Property(s => s.NewPrice).HasPrecision(18, 2);
         });
-        
+
         // ---------- Products ----------
         b.Entity<Product>(e =>
         {
@@ -54,7 +51,7 @@ public class AmazonDbContext(DbContextOptions<AmazonDbContext> options) : DbCont
         // ---------- ReviewContent ----------
         b.Entity<ReviewContent>(e =>
         {
-            e.PrimitiveCollection(r => r.FilePaths);   // ← одной строчки достаточно
+            e.PrimitiveCollection(r => r.FilePaths); // ← одной строчки достаточно
         });
 
         // ---------- seed ----------

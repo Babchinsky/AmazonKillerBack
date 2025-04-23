@@ -32,7 +32,10 @@ public class AuthService(AmazonDbContext db, IConfiguration cfg) : IAuthService
         return new AuthTokensDto(GenerateJwt(user), refresh);
     }
 
-    public Task<string> GenerateJwtTokenAsync(User u) => Task.FromResult(GenerateJwt(u));
+    public Task<string> GenerateJwtTokenAsync(User u)
+    {
+        return Task.FromResult(GenerateJwt(u));
+    }
 
     public async Task<string> GenerateRefreshTokenAsync(User u)
     {

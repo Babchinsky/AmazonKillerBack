@@ -29,7 +29,6 @@ public class GetAllProductsHandler(IProductRepository repo, IMapper mapper)
             query = query.Where(p => p.Price <= q.MaxPrice);
 
         if (!string.IsNullOrEmpty(q.SortBy))
-        {
             query = (q.SortBy.ToLower(), q.SortDesc) switch
             {
                 ("price", true) => query.OrderByDescending(p => p.Price),
@@ -38,7 +37,6 @@ public class GetAllProductsHandler(IProductRepository repo, IMapper mapper)
                 ("rating", false) => query.OrderBy(p => p.Rating),
                 _ => query
             };
-        }
 
         query = query
             .Skip((q.Page - 1) * q.PageSize)

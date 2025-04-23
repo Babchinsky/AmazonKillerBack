@@ -8,11 +8,15 @@ namespace AmazonKiller.Infrastructure.Repositories.Products;
 
 public class ProductRepository(AmazonDbContext db) : IProductRepository
 {
-    public Task<List<Product>> GetAllAsync() =>
-        db.Products.Include(p => p.Details).AsNoTracking().ToListAsync();
+    public Task<List<Product>> GetAllAsync()
+    {
+        return db.Products.Include(p => p.Details).AsNoTracking().ToListAsync();
+    }
 
-    public Task<Product?> GetByIdAsync(Guid id) =>
-        db.Products.Include(p => p.Details).FirstOrDefaultAsync(p => p.Id == id);
+    public Task<Product?> GetByIdAsync(Guid id)
+    {
+        return db.Products.Include(p => p.Details).FirstOrDefaultAsync(p => p.Id == id);
+    }
 
     public async Task AddAsync(Product product)
     {
@@ -41,9 +45,13 @@ public class ProductRepository(AmazonDbContext db) : IProductRepository
         await db.SaveChangesAsync();
     }
 
-    public Task<bool> IsExistsAsync(Guid id) =>
-        db.Products.AnyAsync(p => p.Id == id);
-    
-    public IQueryable<Product> Queryable() =>
-        db.Products.Include(p => p.Details);
+    public Task<bool> IsExistsAsync(Guid id)
+    {
+        return db.Products.AnyAsync(p => p.Id == id);
+    }
+
+    public IQueryable<Product> Queryable()
+    {
+        return db.Products.Include(p => p.Details);
+    }
 }

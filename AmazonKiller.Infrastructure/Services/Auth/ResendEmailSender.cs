@@ -17,7 +17,7 @@ public class ResendEmailSender(IConfiguration cfg) : IEmailSender
             .AddHeader("Content-Type", "application/json")
             .AddJsonBody(new
             {
-                from = "onboarding@resend.dev", 
+                from = "onboarding@resend.dev",
                 to,
                 subject,
                 html = htmlBody

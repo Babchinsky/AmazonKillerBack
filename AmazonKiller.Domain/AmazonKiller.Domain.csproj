@@ -7,9 +7,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.3.0" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="9.0.4" />
-      <PackageReference Include="NUlid" Version="1.7.2" />
+        <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.3.0"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="9.0.4"/>
+        <PackageReference Include="NUlid" Version="1.7.2"/>
     </ItemGroup>
 
 </Project>

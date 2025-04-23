@@ -7,4 +7,4 @@ public record RegisterAdminCommand(
     string Password,
     string FirstName,
     string LastName,
-    string Secret) : IRequest<string>; 
+    string Secret) : IRequest<string>;

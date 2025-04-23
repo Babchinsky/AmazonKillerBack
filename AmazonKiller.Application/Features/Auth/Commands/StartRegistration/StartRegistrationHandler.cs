@@ -24,7 +24,7 @@ public class StartRegistrationHandler(IEmailSender sender, IEmailVerificationRep
             Email = cmd.Email,
             Code = code,
             TempPasswordHash = hashedPassword,
-            ExpiresAt = DateTime.UtcNow.AddMinutes(10),
+            ExpiresAt = DateTime.UtcNow.AddMinutes(10)
         };
 
         await repo.AddAsync(entry, ct);

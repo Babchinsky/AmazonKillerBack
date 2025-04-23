@@ -8,15 +8,24 @@ namespace AmazonKiller.Infrastructure.Repositories.Account;
 public class AccountRepository(AmazonDbContext db) : IAccountRepository
 {
     public Task<User?> GetCurrentUserAsync(Guid userId, CancellationToken ct)
-        => db.Users.FindAsync([userId], ct).AsTask();
+    {
+        return db.Users.FindAsync([userId], ct).AsTask();
+    }
 
     public Task<User?> GetCurrentUserWithTokensAsync(Guid userId, CancellationToken ct)
-        => db.Users.Include(u => u.RefreshTokens).FirstOrDefaultAsync(u => u.Id == userId, ct);
+    {
+        return db.Users.Include(u => u.RefreshTokens).FirstOrDefaultAsync(u => u.Id == userId, ct);
+    }
 
     public Task<bool> IsEmailTakenAsync(string email, Guid currentUserId, CancellationToken ct)
-        => db.Users.AnyAsync(u => u.Email == email && u.Id != currentUserId, ct);
+    {
+        return db.Users.AnyAsync(u => u.Email == email && u.Id != currentUserId, ct);
+    }
 
-    public Task SaveChangesAsync(CancellationToken ct) => db.SaveChangesAsync(ct);
+    public Task SaveChangesAsync(CancellationToken ct)
+    {
+        return db.SaveChangesAsync(ct);
+    }
 
     public Task DeleteUserAsync(User user, CancellationToken ct)
     {

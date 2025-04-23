@@ -20,7 +20,7 @@ public class ProductController(IMediator mediator) : ControllerBase
         var result = await mediator.Send(query);
         return Ok(result);
     }
-    
+
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetById(Guid id)
     {
@@ -34,7 +34,7 @@ public class ProductController(IMediator mediator) : ControllerBase
         var exists = await mediator.Send(new IsProductExistsQuery(id));
         return Ok(exists);
     }
-    
+
     [Authorize(Roles = "Admin")]
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateProductCommand command)

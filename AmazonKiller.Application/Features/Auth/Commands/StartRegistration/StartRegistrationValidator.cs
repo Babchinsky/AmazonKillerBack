@@ -1,4 +1,5 @@
 ﻿// FILE: StartRegistrationValidator.cs
+
 using AmazonKiller.Application.Validators.Common;
 using FluentValidation;
 

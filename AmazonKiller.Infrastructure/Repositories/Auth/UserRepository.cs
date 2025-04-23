@@ -21,5 +21,7 @@ public class UserRepository(AmazonDbContext db) : IUserRepository
     }
 
     public Task<bool> IsEmailTakenAsync(string email, CancellationToken ct)
-        => db.Users.AnyAsync(u => u.Email == email, ct);
+    {
+        return db.Users.AnyAsync(u => u.Email == email, ct);
+    }
 }

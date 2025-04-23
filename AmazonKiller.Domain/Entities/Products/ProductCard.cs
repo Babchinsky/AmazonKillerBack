@@ -6,24 +6,20 @@ namespace AmazonKiller.Domain.Entities.Products;
 public class ProductCard
 {
     public int Id { get; set; }
-    
-    [Required]
-    public string ImageUrl { get; set; } 
+
+    [Required] public string ImageUrl { get; set; }
 
     [Required]
-    [StringLength(100, MinimumLength = 1)]  
-    public string Name { get; set; } 
+    [StringLength(100, MinimumLength = 1)]
+    public string Name { get; set; }
 
-    [Precision(18, 2)]
-    public decimal Price { get; set; }
+    [Precision(18, 2)] public decimal Price { get; set; }
 
     public Rating Rating { get; set; }
 
     public bool Sale { get; set; }
 
-    [Required]  
-    public Guid ProductId { get; set; }
+    [Required] public Guid ProductId { get; set; }
 
-    [Range(0, int.MaxValue)] 
-    public int ReviewsCount { get; set; }
+    [Range(0, int.MaxValue)] public int ReviewsCount { get; set; }
 }

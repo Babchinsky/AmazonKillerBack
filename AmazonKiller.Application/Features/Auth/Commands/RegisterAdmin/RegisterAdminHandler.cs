@@ -28,7 +28,7 @@ public class RegisterAdminHandler(
             Email = cmd.Email,
             PasswordHash = BCrypt.Net.BCrypt.HashPassword(cmd.Password),
             FirstName = cmd.FirstName,
-            LastName = cmd.LastName,
+            LastName = cmd.LastName
         };
 
         await userRepo.AddAdminAsync(admin, ct);

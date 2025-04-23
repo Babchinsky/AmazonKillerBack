@@ -10,16 +10,11 @@ public class User
 
     public string? ProfilePicUrl { get; set; }
 
-    [Required]
-    [EmailAddress]
-    public string Email { get; set; } = string.Empty;
+    [Required] [EmailAddress] public string Email { get; set; } = string.Empty;
 
-    [Required]
-    [PasswordPropertyText]
-    public string PasswordHash { get; set; } = string.Empty;
+    [Required] [PasswordPropertyText] public string PasswordHash { get; set; } = string.Empty;
 
-    [Required]
-    public Role Role { get; set; }
+    [Required] public Role Role { get; set; }
 
     [Required]
     [StringLength(20, MinimumLength = 1)]

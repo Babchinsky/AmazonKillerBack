@@ -86,7 +86,9 @@ var app = builder.Build();
 
 // --- Автоматическая миграция БД ---
 using (var scope = app.Services.CreateScope())
+{
     scope.ServiceProvider.GetRequiredService<AmazonDbContext>().Database.Migrate();
+}
 
 // --- Middleware ---
 app.UseMiddleware<ExceptionHandlingMiddleware>();
@@ -98,7 +100,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
     app.MapScalarApiReference(o => { o.OpenApiRoutePattern = "/swagger/{documentName}/swagger.json"; });
 }
-else app.UseHttpsRedirection();
+else
+{
+    app.UseHttpsRedirection();
+}
 
 app.UseCors();
 app.UseAuthentication();

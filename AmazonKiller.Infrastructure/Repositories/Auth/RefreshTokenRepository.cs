@@ -8,7 +8,9 @@ namespace AmazonKiller.Infrastructure.Repositories.Auth;
 public class RefreshTokenRepository(AmazonDbContext db) : IRefreshTokenRepository
 {
     public Task<RefreshToken?> GetWithUserByTokenAsync(string token, CancellationToken ct)
-        => db.RefreshTokens.Include(t => t.User).SingleOrDefaultAsync(t => t.Token == token, ct);
+    {
+        return db.RefreshTokens.Include(t => t.User).SingleOrDefaultAsync(t => t.Token == token, ct);
+    }
 
     public Task RevokeAsync(RefreshToken token, CancellationToken ct)
     {
@@ -16,5 +18,8 @@ public class RefreshTokenRepository(AmazonDbContext db) : IRefreshTokenRepositor
         return Task.CompletedTask;
     }
 
-    public Task SaveAsync(CancellationToken ct) => db.SaveChangesAsync(ct);
+    public Task SaveAsync(CancellationToken ct)
+    {
+        return db.SaveChangesAsync(ct);
+    }
 }

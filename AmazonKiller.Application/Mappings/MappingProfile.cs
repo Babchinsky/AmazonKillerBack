@@ -22,6 +22,6 @@ public class MappingProfile : Profile
             .ForMember(dest => dest.Details, opt => opt.Ignore())
             .ForMember(dest => dest.DetailsId, opt => opt.MapFrom(src => src.DetailsId));
 
-        CreateMap<Product, ProductDto>(); 
+        CreateMap<Product, ProductDto>();
     }
 }

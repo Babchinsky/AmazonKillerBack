@@ -24,17 +24,25 @@ public class AuthController(IAuthService authService, IMediator mediator) : Cont
 
     [HttpPost("confirm-registration")]
     public async Task<IActionResult> Confirm([FromBody] ConfirmRegistrationCommand cmd)
-        => Ok(await mediator.Send(cmd));
+    {
+        return Ok(await mediator.Send(cmd));
+    }
 
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginUserCommand cmd)
-        => Ok(await authService.LoginAsync(cmd));
+    {
+        return Ok(await authService.LoginAsync(cmd));
+    }
 
     [HttpPost("refresh")]
     public async Task<IActionResult> Refresh([FromBody] RefreshTokenCommand cmd)
-        => Ok(await mediator.Send(cmd));
+    {
+        return Ok(await mediator.Send(cmd));
+    }
 
     [HttpPost("register-admin")]
     public async Task<IActionResult> RegisterAdmin([FromBody] RegisterAdminCommand command)
-        => Ok(await mediator.Send(command));
+    {
+        return Ok(await mediator.Send(command));
+    }
 }
