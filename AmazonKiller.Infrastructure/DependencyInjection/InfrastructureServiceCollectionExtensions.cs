@@ -17,6 +17,8 @@ public static class InfrastructureServiceCollectionExtensions
         services.AddScoped<IEmailSender, GmailEmailSender>();
         services.AddScoped<IEmailVerificationRepository, EmailVerificationRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IAdminSecretValidator, AdminSecretValidator>();
+        services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 
         return services;
     }

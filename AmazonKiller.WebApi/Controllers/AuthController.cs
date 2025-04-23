@@ -1,7 +1,7 @@
 ﻿using AmazonKiller.Application.Features.Auth.Commands.ConfirmRegistration;
 using AmazonKiller.Application.Features.Auth.Commands.Login;
 using AmazonKiller.Application.Features.Auth.Commands.Refresh;
-using AmazonKiller.Application.Features.Auth.Commands.Register;
+using AmazonKiller.Application.Features.Auth.Commands.RegisterAdmin;
 using AmazonKiller.Application.Features.Auth.Commands.StartRegistration;
 using AmazonKiller.Application.Interfaces;
 using MediatR;
