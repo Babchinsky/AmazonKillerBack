@@ -1,0 +1,14 @@
+﻿// FILE: StartRegistrationValidator.cs
+using AmazonKiller.Application.Validators.Common;
+using FluentValidation;
+
+namespace AmazonKiller.Application.Features.Auth.Commands.StartRegistration;
+
+public class StartRegistrationValidator : AbstractValidator<StartRegistrationCommand>
+{
+    public StartRegistrationValidator()
+    {
+        RuleFor(x => x.Email).ValidEmail();
+        RuleFor(x => x.Password).SecurePassword(); // ← Тебе нужно добавить Password в команду
+    }
+}

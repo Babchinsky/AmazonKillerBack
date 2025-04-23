@@ -20,7 +20,7 @@ public class RegisterAdminHandler(AmazonDbContext db, IConfiguration config, IAu
             throw new AppException("Invalid admin registration secret", 403);
 
         if (await db.Users.AnyAsync(u => u.Email == command.Email, cancellationToken))
-            throw new AppException("User already exists", 400);
+            throw new AppException("User already exists");
 
         var admin = new User
         {

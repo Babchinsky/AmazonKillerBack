@@ -13,6 +13,8 @@ public static class InfrastructureServiceCollectionExtensions
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<ICurrentUserService, CurrentUserService>();
         services.AddScoped<IAccountRepository, AccountRepository>();
+        services.AddScoped<IEmailSender, ResendEmailSender>();
+        services.AddScoped<IEmailVerificationRepository, EmailVerificationRepository>();
 
         return services;
     }

@@ -17,7 +17,7 @@ namespace AmazonKiller.Infrastructure.Services;
 
 public class AuthService(AmazonDbContext db, IConfiguration cfg) : IAuthService
 {
-    public async Task<AuthTokensDto> RegisterAsync(RegisterUserCommand cmd)
+    public async Task<AuthTokensDto> RegisterAsync(RegisterUserCommand cmd, bool isPasswordHashed = false)
     {
         if (await db.Users.AnyAsync(u => u.Email == cmd.Email))
             throw new AppException("User exists", 400);
@@ -26,13 +26,17 @@ public class AuthService(AmazonDbContext db, IConfiguration cfg) : IAuthService
         {
             Id = Guid.NewGuid(),
             Email = cmd.Email,
-            PasswordHash = BCrypt.Net.BCrypt.HashPassword(cmd.Password),
-            FirstName  = cmd.FirstName,
-            LastName   = cmd.LastName,
-            Role       = Role.Customer
+            PasswordHash = isPasswordHashed
+                ? cmd.Password
+                : BCrypt.Net.BCrypt.HashPassword(cmd.Password),
+            FirstName = cmd.FirstName,
+            LastName = cmd.LastName,
+            Role = Role.Customer
         };
+
         db.Users.Add(user);
         await db.SaveChangesAsync();
+
         return await IssueTokensAsync(user);
     }
 
