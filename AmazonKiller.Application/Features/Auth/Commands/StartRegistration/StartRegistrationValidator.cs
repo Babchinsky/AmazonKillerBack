@@ -9,6 +9,6 @@ public class StartRegistrationValidator : AbstractValidator<StartRegistrationCom
     public StartRegistrationValidator()
     {
         RuleFor(x => x.Email).ValidEmail();
-        RuleFor(x => x.Password).SecurePassword(); // ← Тебе нужно добавить Password в команду
+        RuleFor(x => x.Password).SecurePassword();
     }
 }

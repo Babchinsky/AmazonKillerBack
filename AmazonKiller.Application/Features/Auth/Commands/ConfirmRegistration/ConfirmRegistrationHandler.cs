@@ -1,6 +1,6 @@
 ﻿using AmazonKiller.Application.DTOs.Auth;
-using AmazonKiller.Application.Features.Auth.Commands.Register;
 using AmazonKiller.Application.Interfaces;
+using AmazonKiller.Domain.Entities.Users;
 using AmazonKiller.Shared.Exceptions;
 using MediatR;
 
@@ -8,6 +8,7 @@ namespace AmazonKiller.Application.Features.Auth.Commands.ConfirmRegistration;
 
 public class ConfirmRegistrationHandler(
     IEmailVerificationRepository repo,
+    IUserRepository userRepo,
     IAuthService auth)
     : IRequestHandler<ConfirmRegistrationCommand, AuthTokensDto>
 {
@@ -20,16 +21,19 @@ public class ConfirmRegistrationHandler(
         if (await repo.IsEmailTakenAsync(cmd.Email, ct))
             throw new AppException("Email already in use");
 
-        var register = new RegisterUserCommand(
-            cmd.Email,
-            entry.TempPasswordHash, 
-            cmd.FirstName,
-            cmd.LastName
-        );
+        var user = new User
+        {
+            Id = Guid.NewGuid(),
+            Email = cmd.Email,
+            PasswordHash = entry.TempPasswordHash,
+            Role = Role.Customer
+        };
 
-        var tokens = await auth.RegisterAsync(register, isPasswordHashed: true);
+        await userRepo.AddAsync(user, ct);
+        await repo.DeleteAsync(entry, ct);
 
-        await repo.MarkAsUsedAsync(entry, ct);
-        return tokens;
+        var jwt = await auth.GenerateJwtTokenAsync(user);
+        var refresh = await auth.GenerateRefreshTokenAsync(user);
+        return new AuthTokensDto(jwt, refresh);
     }
 }

@@ -1,29 +1,32 @@
 ﻿using AmazonKiller.Application.Interfaces;
 using AmazonKiller.Domain.Entities.Users;
+using AmazonKiller.Shared.Exceptions;
 using MediatR;
 
 namespace AmazonKiller.Application.Features.Auth.Commands.StartRegistration;
 
-public class StartRegistrationHandler(IEmailVerificationRepository repo, IEmailSender sender)
-    : IRequestHandler<StartRegistrationCommand, Unit>
+public class StartRegistrationHandler(IEmailSender sender, IEmailVerificationRepository repo)
+    : IRequestHandler<StartRegistrationCommand>
 {
-    public async Task<Unit> Handle(StartRegistrationCommand cmd, CancellationToken ct)
+    public async Task Handle(StartRegistrationCommand cmd, CancellationToken ct)
     {
-        var code = Random.Shared.Next(100_000, 999_999).ToString();
+        if (await repo.IsEmailTakenAsync(cmd.Email, ct))
+            throw new AppException("Email is already taken");
+
+        var code = new Random().Next(100000, 999999).ToString();
+        var hashedPassword = BCrypt.Net.BCrypt.HashPassword(cmd.Password);
 
         var entry = new EmailVerification
         {
             Email = cmd.Email,
             Code = code,
-            ExpiresAt = DateTime.UtcNow.AddMinutes(15),
-            IsUsed = false
+            TempPasswordHash = hashedPassword,
+            ExpiresAt = DateTime.UtcNow.AddMinutes(10),
         };
 
         await repo.AddAsync(entry, ct);
 
-        var html = $"<h3>Your verification code is:</h3><h1>{code}</h1>";
-        await sender.SendEmailAsync(cmd.Email, "Email Verification", html);
-
-        return Unit.Value;
+        var html = $"<h1>Код подтверждения: {code}</h1>";
+        await sender.SendEmailAsync(cmd.Email, "Код подтверждения регистрации", html);
     }
 }

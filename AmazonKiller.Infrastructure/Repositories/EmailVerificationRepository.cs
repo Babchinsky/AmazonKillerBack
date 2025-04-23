@@ -17,7 +17,7 @@ public class EmailVerificationRepository(AmazonDbContext db) : IEmailVerificatio
     {
         return db.EmailVerifications
             .FirstOrDefaultAsync(x =>
-                x.Email == email && x.Code == code && !x.IsUsed && x.ExpiresAt > DateTime.UtcNow, ct);
+                x.Email == email && x.Code == code && x.ExpiresAt > DateTime.UtcNow, ct);
     }
 
     public Task<bool> IsEmailTakenAsync(string email, CancellationToken ct)
@@ -25,9 +25,9 @@ public class EmailVerificationRepository(AmazonDbContext db) : IEmailVerificatio
         return db.Users.AnyAsync(u => u.Email == email, ct);
     }
 
-    public Task MarkAsUsedAsync(EmailVerification entry, CancellationToken ct)
+    public Task DeleteAsync(EmailVerification entry, CancellationToken ct)
     {
-        entry.IsUsed = true;
+        db.EmailVerifications.Remove(entry);
         return db.SaveChangesAsync(ct);
     }
 }

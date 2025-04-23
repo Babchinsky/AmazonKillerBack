@@ -13,10 +13,17 @@ namespace AmazonKiller.WebApi.Controllers;
 [Route("api/[controller]")]
 public class AuthController(IAuthService authService, IMediator mediator) : ControllerBase
 {
-    [HttpPost("register")]
-    public async Task<IActionResult> Register([FromBody] RegisterUserCommand cmd)
-        => Ok(await mediator.Send(cmd));
+    [HttpPost("start-registration")]
+    public async Task<IActionResult> Start([FromBody] StartRegistrationCommand cmd)
+    {
+        await mediator.Send(cmd);
+        return NoContent();
+    }
 
+
+    [HttpPost("confirm-registration")]
+    public async Task<IActionResult> Confirm([FromBody] ConfirmRegistrationCommand cmd)
+        => Ok(await mediator.Send(cmd));
 
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginUserCommand cmd)
@@ -29,12 +36,4 @@ public class AuthController(IAuthService authService, IMediator mediator) : Cont
     [HttpPost("register-admin")]
     public async Task<IActionResult> RegisterAdmin([FromBody] RegisterAdminCommand command)
         => Ok(await mediator.Send(command));
-    
-    [HttpPost("start-registration")]
-    public async Task<IActionResult> Start([FromBody] StartRegistrationCommand cmd)
-        => Ok(await mediator.Send(cmd));
-
-    [HttpPost("confirm-registration")]
-    public async Task<IActionResult> Confirm([FromBody] ConfirmRegistrationCommand cmd)
-        => Ok(await mediator.Send(cmd));
 }

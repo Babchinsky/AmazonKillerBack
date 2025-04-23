@@ -4,7 +4,6 @@ using System.Security.Cryptography;
 using System.Text;
 using AmazonKiller.Application.DTOs.Auth;
 using AmazonKiller.Application.Features.Auth.Commands.Login;
-using AmazonKiller.Application.Features.Auth.Commands.Register;
 using AmazonKiller.Application.Interfaces;
 using AmazonKiller.Domain.Entities.Users;
 using AmazonKiller.Infrastructure.Data;
@@ -17,29 +16,6 @@ namespace AmazonKiller.Infrastructure.Services;
 
 public class AuthService(AmazonDbContext db, IConfiguration cfg) : IAuthService
 {
-    public async Task<AuthTokensDto> RegisterAsync(RegisterUserCommand cmd, bool isPasswordHashed = false)
-    {
-        if (await db.Users.AnyAsync(u => u.Email == cmd.Email))
-            throw new AppException("User exists", 400);
-
-        var user = new User
-        {
-            Id = Guid.NewGuid(),
-            Email = cmd.Email,
-            PasswordHash = isPasswordHashed
-                ? cmd.Password
-                : BCrypt.Net.BCrypt.HashPassword(cmd.Password),
-            FirstName = cmd.FirstName,
-            LastName = cmd.LastName,
-            Role = Role.Customer
-        };
-
-        db.Users.Add(user);
-        await db.SaveChangesAsync();
-
-        return await IssueTokensAsync(user);
-    }
-
     public async Task<AuthTokensDto> LoginAsync(LoginUserCommand cmd)
     {
         var user = await db.Users.SingleOrDefaultAsync(u => u.Email == cmd.Email);

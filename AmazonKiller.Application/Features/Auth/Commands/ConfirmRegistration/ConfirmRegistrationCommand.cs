@@ -1,11 +1,9 @@
-﻿using AmazonKiller.Application.DTOs.Auth;
-using MediatR;
+﻿using MediatR;
+using AmazonKiller.Application.DTOs.Auth;
 
 namespace AmazonKiller.Application.Features.Auth.Commands.ConfirmRegistration;
 
 public record ConfirmRegistrationCommand(
     string Email,
-    string Code,
-    string Password,
-    string FirstName,
-    string LastName) : IRequest<AuthTokensDto>;
+    string Code
+) : IRequest<AuthTokensDto>;
