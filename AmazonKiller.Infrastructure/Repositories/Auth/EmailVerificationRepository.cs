@@ -30,4 +30,14 @@ public class EmailVerificationRepository(AmazonDbContext db) : IEmailVerificatio
         db.EmailVerifications.Remove(entry);
         return db.SaveChangesAsync(ct);
     }
+
+    public Task<EmailVerification?> GetValidEntryByUserIdAsync(Guid userId, string code, CancellationToken ct)
+    {
+        return db.EmailVerifications
+            .FirstOrDefaultAsync(x =>
+                    x.UserId == userId &&
+                    x.Code == code &&
+                    x.ExpiresAt > DateTime.UtcNow,
+                ct);
+    }
 }

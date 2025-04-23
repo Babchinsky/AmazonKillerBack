@@ -1,8 +1,9 @@
-﻿using AmazonKiller.Application.Features.Account.Commands.ChangeEmail;
-using AmazonKiller.Application.Features.Account.Commands.ChangeName;
+﻿using AmazonKiller.Application.Features.Account.Commands.ChangeName;
 using AmazonKiller.Application.Features.Account.Commands.ChangePassword;
+using AmazonKiller.Application.Features.Account.Commands.ConfirmEmailChange;
 using AmazonKiller.Application.Features.Account.Commands.DeleteAccount;
 using AmazonKiller.Application.Features.Account.Commands.Logout;
+using AmazonKiller.Application.Features.Account.Commands.StartEmailChange;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -14,15 +15,22 @@ namespace AmazonKiller.WebApi.Controllers;
 [Authorize]
 public class AccountController(IMediator mediator) : ControllerBase
 {
-    [HttpPut("name")]
-    public async Task<IActionResult> ChangeName([FromBody] ChangeNameCommand cmd)
+    [HttpPost("email-change/start")]
+    public async Task<IActionResult> StartEmailChange([FromBody] StartEmailChangeCommand cmd)
     {
         await mediator.Send(cmd);
         return NoContent();
     }
 
-    [HttpPut("email")]
-    public async Task<IActionResult> ChangeEmail([FromBody] ChangeEmailCommand cmd)
+    [HttpPost("email-change/confirm")]
+    public async Task<IActionResult> ConfirmEmailChange([FromBody] ConfirmEmailChangeCommand cmd)
+    {
+        await mediator.Send(cmd);
+        return NoContent();
+    }
+
+    [HttpPut("name")]
+    public async Task<IActionResult> ChangeName([FromBody] ChangeNameCommand cmd)
     {
         await mediator.Send(cmd);
         return NoContent();

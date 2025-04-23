@@ -7,4 +7,5 @@ public class EmailVerification
     public string Code { get; set; } = string.Empty;
     public DateTime ExpiresAt { get; set; }
     public string TempPasswordHash { get; set; } = string.Empty;
+    public Guid? UserId { get; set; }
 }
