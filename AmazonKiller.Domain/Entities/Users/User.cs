@@ -25,6 +25,6 @@ public class User
     public string LastName { get; set; } = string.Empty;
 
     public ICollection<Order> Orders { get; set; } = new List<Order>();
-    public ICollection<Wishlist> WishlistsItems { get; set; } = new List<Wishlist>();
+    public ICollection<Wishlist> Wishlists { get; set; } = new List<Wishlist>();
     public ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
 }

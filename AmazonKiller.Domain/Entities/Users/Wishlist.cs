@@ -1,13 +1,14 @@
-using System.ComponentModel.DataAnnotations;
 using AmazonKiller.Domain.Entities.Products;
 
 namespace AmazonKiller.Domain.Entities.Users;
 
 public class Wishlist
 {
-    public Guid Id { get; set; }
+    public Guid UserId { get; set; }
+    public User User { get; set; } = null!;
 
-    [Required] public Guid UserId { get; set; }
+    public Guid ProductId { get; set; }
+    public Product Product { get; set; } = null!;
 
-    public ICollection<ProductCard> Products { get; set; } = new List<ProductCard>();
+    public DateTime AddedAt { get; set; } = DateTime.UtcNow;
 }

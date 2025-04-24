@@ -266,14 +266,9 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                     b.Property<bool>("Sale")
                         .HasColumnType("bit");
 
-                    b.Property<Guid?>("WishlistId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CartListId");
-
-                    b.HasIndex("WishlistId");
 
                     b.ToTable("ProductCards");
                 });
@@ -417,6 +412,10 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ProductId")
+                        .IsUnique()
+                        .HasFilter("[ProductId] IS NOT NULL");
+
                     b.ToTable("Sales");
                 });
 
@@ -529,18 +528,20 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("AmazonKiller.Domain.Entities.Users.Wishlist", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.HasIndex("UserId");
+                    b.Property<DateTime>("AddedAt")
+                        .HasColumnType("datetime2");
 
-                    b.ToTable("Wishlists");
+                    b.HasKey("UserId", "ProductId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("WishlistItems");
                 });
 
             modelBuilder.Entity("AmazonKiller.Domain.Entities.Orders.Order", b =>
@@ -584,10 +585,6 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                     b.HasOne("AmazonKiller.Domain.Entities.Users.CartList", null)
                         .WithMany("Products")
                         .HasForeignKey("CartListId");
-
-                    b.HasOne("AmazonKiller.Domain.Entities.Users.Wishlist", null)
-                        .WithMany("Products")
-                        .HasForeignKey("WishlistId");
                 });
 
             modelBuilder.Entity("AmazonKiller.Domain.Entities.Reviews.Review", b =>
@@ -599,6 +596,15 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Content");
+                });
+
+            modelBuilder.Entity("AmazonKiller.Domain.Entities.Sales.Sale", b =>
+                {
+                    b.HasOne("AmazonKiller.Domain.Entities.Products.Product", "Product")
+                        .WithOne("Sale")
+                        .HasForeignKey("AmazonKiller.Domain.Entities.Sales.Sale", "ProductId");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("AmazonKiller.Domain.Entities.Users.RefreshToken", b =>
@@ -614,11 +620,21 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("AmazonKiller.Domain.Entities.Users.Wishlist", b =>
                 {
-                    b.HasOne("AmazonKiller.Domain.Entities.Users.User", null)
-                        .WithMany("WishlistsItems")
+                    b.HasOne("AmazonKiller.Domain.Entities.Products.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AmazonKiller.Domain.Entities.Users.User", "User")
+                        .WithMany("Wishlists")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("AmazonKiller.Domain.Entities.Orders.Order", b =>
@@ -629,6 +645,11 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
             modelBuilder.Entity("AmazonKiller.Domain.Entities.Products.Category", b =>
                 {
                     b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("AmazonKiller.Domain.Entities.Products.Product", b =>
+                {
+                    b.Navigation("Sale");
                 });
 
             modelBuilder.Entity("AmazonKiller.Domain.Entities.Users.CartList", b =>
@@ -642,12 +663,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
 
                     b.Navigation("RefreshTokens");
 
-                    b.Navigation("WishlistsItems");
-                });
-
-            modelBuilder.Entity("AmazonKiller.Domain.Entities.Users.Wishlist", b =>
-                {
-                    b.Navigation("Products");
+                    b.Navigation("Wishlists");
                 });
 #pragma warning restore 612, 618
         }

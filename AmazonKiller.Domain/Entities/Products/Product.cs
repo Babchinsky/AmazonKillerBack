@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using AmazonKiller.Domain.Entities.Sales;
 using NUlid;
 
 namespace AmazonKiller.Domain.Entities.Products;
@@ -25,5 +26,6 @@ public class Product
     public ProductStatus Status { get; set; } = ProductStatus.InStock;
     public bool InWishlist { get; set; }
     public bool InCartList { get; set; }
+    public Sale? Sale { get; set; }
     [Timestamp] public byte[] RowVersion { get; set; } = []; // optimistic concurrency
 }

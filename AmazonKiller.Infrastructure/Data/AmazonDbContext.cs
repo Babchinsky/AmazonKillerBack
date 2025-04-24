@@ -19,11 +19,12 @@ public class AmazonDbContext(DbContextOptions<AmazonDbContext> options) : DbCont
     public DbSet<ProductCard> ProductCards => Set<ProductCard>();
     public DbSet<ProductDetails> ProductDetails => Set<ProductDetails>();
     public DbSet<ReviewContent> ReviewContents => Set<ReviewContent>();
-    public DbSet<Wishlist> Wishlists => Set<Wishlist>();
+    public DbSet<Wishlist> WishlistItems => Set<Wishlist>();
     public DbSet<CartList> CartLists => Set<CartList>();
     public DbSet<Sale> Sales => Set<Sale>();
     public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
     public DbSet<EmailVerification> EmailVerifications => Set<EmailVerification>();
+
 
     protected override void OnModelCreating(ModelBuilder b)
     {
@@ -52,6 +53,22 @@ public class AmazonDbContext(DbContextOptions<AmazonDbContext> options) : DbCont
         b.Entity<ReviewContent>(e =>
         {
             e.PrimitiveCollection(r => r.FilePaths); // ← одной строчки достаточно
+        });
+
+        // ---------- Wishlist ----------
+        b.Entity<Wishlist>(e =>
+        {
+            e.HasKey(w => new { w.UserId, w.ProductId });
+
+            e.HasOne(w => w.User)
+                .WithMany(u => u.Wishlists)
+                .HasForeignKey(w => w.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            e.HasOne(w => w.Product)
+                .WithMany()
+                .HasForeignKey(w => w.ProductId)
+                .OnDelete(DeleteBehavior.Cascade);
         });
 
         // ---------- seed ----------

@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
+using AmazonKiller.Domain.Entities.Products;
 
 namespace AmazonKiller.Domain.Entities.Sales;
 
@@ -8,6 +9,7 @@ public class Sale
     public Guid Id { get; set; }
 
     public Guid? ProductId { get; set; }
+    public Product? Product { get; set; } 
 
     public Guid? CategoryId { get; set; }
 
