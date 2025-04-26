@@ -1,4 +1,5 @@
 ﻿using AmazonKiller.Application.DTOs.Account;
+using AmazonKiller.Application.DTOs.Account.Wishlist;
 using AmazonKiller.Application.Interfaces.Repositories.Account;
 using AmazonKiller.Domain.Entities.Users;
 using AmazonKiller.Infrastructure.Data;

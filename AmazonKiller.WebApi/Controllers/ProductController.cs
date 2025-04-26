@@ -1,9 +1,9 @@
-﻿using AmazonKiller.Application.Features.Products.Commands.Create;
-using AmazonKiller.Application.Features.Products.Commands.Delete;
-using AmazonKiller.Application.Features.Products.Commands.Update;
-using AmazonKiller.Application.Features.Products.Queries.GetAll;
-using AmazonKiller.Application.Features.Products.Queries.GetById;
-using AmazonKiller.Application.Features.Products.Queries.IsExists;
+﻿using AmazonKiller.Application.Features.Products.Commands.CreateProduct;
+using AmazonKiller.Application.Features.Products.Commands.DeleteProduct;
+using AmazonKiller.Application.Features.Products.Commands.UpdateProduct;
+using AmazonKiller.Application.Features.Products.Queries.GetAllProducts;
+using AmazonKiller.Application.Features.Products.Queries.GetProductById;
+using AmazonKiller.Application.Features.Products.Queries.IsProductExists;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

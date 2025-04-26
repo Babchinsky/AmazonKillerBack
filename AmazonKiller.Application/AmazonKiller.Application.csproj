@@ -22,4 +22,12 @@
         <ProjectReference Include="..\AmazonKiller.Shared\AmazonKiller.Shared.csproj"/>
     </ItemGroup>
 
+    <ItemGroup>
+        <Folder Include="Features\Account\Orders\Commands\"/>
+        <Folder Include="Features\Account\Orders\Queries\"/>
+        <Folder Include="Features\Account\Profile\Commands\"/>
+        <Folder Include="Features\Account\Wishlist\Commands\"/>
+        <Folder Include="Features\Account\Wishlist\Queries\"/>
+    </ItemGroup>
+
 </Project>

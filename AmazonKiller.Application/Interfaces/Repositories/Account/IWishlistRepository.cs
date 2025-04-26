@@ -1,4 +1,5 @@
 ﻿using AmazonKiller.Application.DTOs.Account;
+using AmazonKiller.Application.DTOs.Account.Wishlist;
 
 namespace AmazonKiller.Application.Interfaces.Repositories.Account;
 
