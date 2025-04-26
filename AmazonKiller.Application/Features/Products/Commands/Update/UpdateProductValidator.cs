@@ -1,11 +1,12 @@
 ﻿using FluentValidation;
 
-namespace AmazonKiller.Application.Features.Products.Create;
+namespace AmazonKiller.Application.Features.Products.Commands.Update;
 
-public class CreateProductValidator : AbstractValidator<CreateProductCommand>
+public class UpdateProductValidator : AbstractValidator<UpdateProductCommand>
 {
-    public CreateProductValidator()
+    public UpdateProductValidator()
     {
+        RuleFor(x => x.Id).NotEmpty();
         RuleFor(x => x.ProductPics).Must(p => p.Count <= 20);
         RuleFor(x => x.Name).NotEmpty().Length(2, 100);
         RuleFor(x => x.Price).GreaterThan(0).ScalePrecision(2, 18);

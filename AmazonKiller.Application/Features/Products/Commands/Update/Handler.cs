@@ -1,12 +1,9 @@
-using AmazonKiller.Application.DTOs;
 using AmazonKiller.Application.DTOs.Products;
-using AmazonKiller.Application.Interfaces;
-using AmazonKiller.Application.Interfaces.Repositories;
 using AmazonKiller.Application.Interfaces.Repositories.Products;
 using AutoMapper;
 using MediatR;
 
-namespace AmazonKiller.Application.Features.Products.Update;
+namespace AmazonKiller.Application.Features.Products.Commands.Update;
 
 public class UpdateProductHandler(IProductRepository repo, IMapper mapper)
     : IRequestHandler<UpdateProductCommand, ProductDto>

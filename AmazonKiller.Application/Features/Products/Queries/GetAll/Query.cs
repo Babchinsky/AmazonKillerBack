@@ -1,8 +1,7 @@
-﻿using AmazonKiller.Application.DTOs;
-using AmazonKiller.Application.DTOs.Products;
+﻿using AmazonKiller.Application.DTOs.Products;
 using MediatR;
 
-namespace AmazonKiller.Application.Features.Products.GetAll;
+namespace AmazonKiller.Application.Features.Products.Queries.GetAll;
 
 public record GetAllProductsQuery(
     string? SearchTerm,

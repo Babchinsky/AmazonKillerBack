@@ -1,9 +1,7 @@
-using AmazonKiller.Application.Interfaces;
-using AmazonKiller.Application.Interfaces.Repositories;
 using AmazonKiller.Application.Interfaces.Repositories.Products;
 using MediatR;
 
-namespace AmazonKiller.Application.Features.Products.IsExists;
+namespace AmazonKiller.Application.Features.Products.Queries.IsExists;
 
 public class IsProductExistsHandler(IProductRepository repo)
     : IRequestHandler<IsProductExistsQuery, bool>

@@ -1,10 +1,10 @@
-﻿using AmazonKiller.Application.DTOs;
 using AmazonKiller.Application.DTOs.Products;
 using MediatR;
 
-namespace AmazonKiller.Application.Features.Products.Create;
+namespace AmazonKiller.Application.Features.Products.Commands.Update;
 
-public record CreateProductCommand(
+public record UpdateProductCommand(
+    Guid Id,
     string Name,
     List<string> ProductPics,
     decimal Price,

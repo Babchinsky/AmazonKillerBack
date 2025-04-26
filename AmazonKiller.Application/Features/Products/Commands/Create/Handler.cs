@@ -1,13 +1,10 @@
-﻿using AmazonKiller.Application.DTOs;
-using AmazonKiller.Application.DTOs.Products;
-using AmazonKiller.Application.Interfaces;
-using AmazonKiller.Application.Interfaces.Repositories;
+﻿using AmazonKiller.Application.DTOs.Products;
 using AmazonKiller.Application.Interfaces.Repositories.Products;
 using AmazonKiller.Domain.Entities.Products;
 using AutoMapper;
 using MediatR;
 
-namespace AmazonKiller.Application.Features.Products.Create;
+namespace AmazonKiller.Application.Features.Products.Commands.Create;
 
 public class CreateProductHandler(IProductRepository repo, IMapper mapper)
     : IRequestHandler<CreateProductCommand, ProductDto>

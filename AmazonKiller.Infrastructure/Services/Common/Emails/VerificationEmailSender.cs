@@ -6,7 +6,9 @@ namespace AmazonKiller.Infrastructure.Services.Common.Emails;
 
 public class VerificationEmailSender(IEmailSender emailSender) : IVerificationEmailSender
 {
-    private const string TemplatePath = "AmazonKiller.Infrastructure.Services.Common.Emails.Templates.VerificationCodeTemplate.html";
+    private const string TemplatePath =
+        "AmazonKiller.Infrastructure.Services.Common.Emails.Templates.VerificationCodeTemplate.html";
+
     private const string LogoUrl = "https://i.imgur.com/580gOlL.png";
     private const string WebsiteUrl = "http://localhost:8080/scalar/";
 
@@ -28,7 +30,8 @@ public class VerificationEmailSender(IEmailSender emailSender) : IVerificationEm
         await using var stream = assembly.GetManifestResourceStream(TemplatePath);
 
         if (stream == null)
-            throw new InvalidOperationException($"Embedded resource '{TemplatePath}' not found. Check if the file exists and Build Action is set to Embedded Resource.");
+            throw new InvalidOperationException(
+                $"Embedded resource '{TemplatePath}' not found. Check if the file exists and Build Action is set to Embedded Resource.");
 
         using var reader = new StreamReader(stream);
         return await reader.ReadToEndAsync();
