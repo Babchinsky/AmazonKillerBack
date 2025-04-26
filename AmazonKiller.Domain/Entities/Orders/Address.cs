@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AmazonKiller.Domain.Entities.Orders;
 
+[Table("Addresses")]
 public class Address
 {
     public Guid Id { get; set; }
@@ -9,6 +11,8 @@ public class Address
     [Required] [StringLength(100)] public string Country { get; set; } = string.Empty;
 
     [Required] [StringLength(100)] public string City { get; set; } = string.Empty;
+
+    [StringLength(100)] public string? State { get; set; } // Optional: for countries with states/provinces
 
     [Required] [StringLength(100)] public string Street { get; set; } = string.Empty;
 

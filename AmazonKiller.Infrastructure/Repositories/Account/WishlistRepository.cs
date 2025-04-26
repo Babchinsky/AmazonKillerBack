@@ -19,7 +19,7 @@ public class WishlistRepository(AmazonDbContext db, IMapper mapper) : IWishlistR
 
         return mapper.Map<List<ProductInWishlistDto>>(wishlist);
     }
-    
+
     public async Task ToggleAsync(Guid userId, Guid productId, CancellationToken ct)
     {
         var item = await db.WishlistItems

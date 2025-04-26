@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using AmazonKiller.Domain.Entities.Products;
+﻿using AmazonKiller.Domain.Entities.Users;
+using Microsoft.EntityFrameworkCore;
 
 namespace AmazonKiller.Domain.Entities.Orders;
 
@@ -7,23 +7,13 @@ public class Order
 {
     public Guid Id { get; set; }
 
-    [Required] public uint OrderId { get; set; }
+    public OrderInfo Info { get; set; } = new();
+    public ICollection<OrderItem> Items { get; set; } = new List<OrderItem>();
 
-    [Required] public OrderStatus Status { get; set; }
+    public OrderStatus Status { get; set; } = OrderStatus.Received;
 
-    [Range(1, int.MaxValue)] public int Price { get; set; }
+    [Precision(18, 2)] public decimal TotalPrice { get; set; }
 
-    [Required] public ICollection<Product> Products { get; set; } = new List<Product>();
-
-    [Required] public Address Address { get; set; }
-
-    public static Order FromOrderItem(OrderItem item)
-    {
-        return new Order
-        {
-            OrderId = item.OrderId,
-            Status = item.Status,
-            Price = item.Price
-        };
-    }
+    public Guid UserId { get; set; }
+    public User User { get; set; } = null!;
 }

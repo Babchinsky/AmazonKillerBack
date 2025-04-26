@@ -25,7 +25,6 @@ public class AmazonDbContext(DbContextOptions<AmazonDbContext> options) : DbCont
     public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
     public DbSet<EmailVerification> EmailVerifications => Set<EmailVerification>();
 
-
     protected override void OnModelCreating(ModelBuilder b)
     {
         // ----- ProductCard -----
@@ -42,18 +41,25 @@ public class AmazonDbContext(DbContextOptions<AmazonDbContext> options) : DbCont
         b.Entity<Product>(e =>
         {
             e.HasIndex(p => p.Code).IsUnique();
-            // хранение List<string> в JSON‑столбце (EFCore>=8)
             e.PrimitiveCollection(p => p.ProductPics);
-
             e.Property(p => p.Price).HasPrecision(18, 2);
             e.Property(p => p.RowVersion).IsRowVersion();
         });
 
-        // ---------- ReviewContent ----------
-        b.Entity<ReviewContent>(e =>
+        // ---------- Order ----------
+        b.Entity<Order>(e =>
         {
-            e.PrimitiveCollection(r => r.FilePaths); // ← одной строчки достаточно
+            e.Property(o => o.TotalPrice).HasPrecision(18, 2); // ← добавь это
         });
+
+        // ---------- OrderItem ----------
+        b.Entity<OrderItem>(e =>
+        {
+            e.Property(oi => oi.Price).HasPrecision(18, 2); // ← и это
+        });
+
+        // ---------- ReviewContent ----------
+        b.Entity<ReviewContent>(e => { e.PrimitiveCollection(r => r.FilePaths); });
 
         // ---------- Wishlist ----------
         b.Entity<Wishlist>(e =>
@@ -69,6 +75,14 @@ public class AmazonDbContext(DbContextOptions<AmazonDbContext> options) : DbCont
                 .WithMany()
                 .HasForeignKey(w => w.ProductId)
                 .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        // Order -> OrderInfo (owned)
+        b.Entity<Order>().OwnsOne(o => o.Info, info =>
+        {
+            info.OwnsOne(i => i.Delivery, delivery => { delivery.OwnsOne(d => d.Address); });
+
+            info.OwnsOne(i => i.Payment);
         });
 
         // ---------- seed ----------

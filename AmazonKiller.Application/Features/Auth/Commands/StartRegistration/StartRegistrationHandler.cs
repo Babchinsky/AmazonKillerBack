@@ -1,6 +1,4 @@
-﻿using AmazonKiller.Application.Interfaces;
-using AmazonKiller.Application.Interfaces.Auth;
-using AmazonKiller.Application.Interfaces.Repositories;
+﻿using AmazonKiller.Application.Interfaces.Common;
 using AmazonKiller.Application.Interfaces.Repositories.Auth;
 using AmazonKiller.Domain.Entities.Users;
 using AmazonKiller.Shared.Exceptions;
@@ -8,8 +6,10 @@ using MediatR;
 
 namespace AmazonKiller.Application.Features.Auth.Commands.StartRegistration;
 
-public class StartRegistrationHandler(IEmailSender sender, IEmailVerificationRepository repo)
-    : IRequestHandler<StartRegistrationCommand>
+public class StartRegistrationHandler(
+    IVerificationEmailSender verificationEmailSender,
+    IEmailVerificationRepository repo
+) : IRequestHandler<StartRegistrationCommand>
 {
     public async Task Handle(StartRegistrationCommand cmd, CancellationToken ct)
     {
@@ -29,7 +29,6 @@ public class StartRegistrationHandler(IEmailSender sender, IEmailVerificationRep
 
         await repo.AddAsync(entry, ct);
 
-        var html = $"<h1>Код подтверждения: {code}</h1>";
-        await sender.SendEmailAsync(cmd.Email, "Код подтверждения регистрации", html);
+        await verificationEmailSender.SendVerificationCodeAsync(cmd.Email, "Confirm your registration", code);
     }
 }

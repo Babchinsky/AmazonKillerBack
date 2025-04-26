@@ -4,11 +4,8 @@ public class OrderInfo
 {
     public Guid Id { get; set; }
 
-    public string FullName { get; set; } = string.Empty;
-
-    public Address Address { get; set; } = new();
-
-    public PaymentType PaymentType { get; set; }
+    public DeliveryInfo Delivery { get; set; } = new();
+    public PaymentInfo Payment { get; set; } = new();
 
     public DateTime OrderedAt { get; set; }
 }

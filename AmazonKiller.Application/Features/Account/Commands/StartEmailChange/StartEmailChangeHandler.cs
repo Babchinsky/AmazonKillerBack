@@ -1,5 +1,4 @@
-﻿using AmazonKiller.Application.Interfaces.Auth;
-using AmazonKiller.Application.Interfaces.Common;
+﻿using AmazonKiller.Application.Interfaces.Common;
 using AmazonKiller.Application.Interfaces.Repositories.Auth;
 using AmazonKiller.Domain.Entities.Users;
 using AmazonKiller.Shared.Exceptions;
@@ -8,7 +7,7 @@ using MediatR;
 namespace AmazonKiller.Application.Features.Account.Commands.StartEmailChange;
 
 public class StartEmailChangeHandler(
-    IEmailSender emailSender,
+    IVerificationEmailSender verificationEmailSender,
     IEmailVerificationRepository repo,
     ICurrentUserService currentUserService
 ) : IRequestHandler<StartEmailChangeCommand>
@@ -19,7 +18,7 @@ public class StartEmailChangeHandler(
 
         var code = new Random().Next(100000, 999999).ToString();
 
-        var request = new EmailVerification
+        var entry = new EmailVerification
         {
             Email = cmd.NewEmail,
             Code = code,
@@ -27,9 +26,8 @@ public class StartEmailChangeHandler(
             UserId = userId
         };
 
-        await repo.AddAsync(request, ct);
+        await repo.AddAsync(entry, ct);
 
-        var html = $"<h1>Email change code: {code}</h1>";
-        await emailSender.SendEmailAsync(cmd.NewEmail, "Confirm your new email", html);
+        await verificationEmailSender.SendVerificationCodeAsync(cmd.NewEmail, "Confirm your new email", code);
     }
 }

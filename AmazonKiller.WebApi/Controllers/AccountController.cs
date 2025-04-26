@@ -1,12 +1,17 @@
-﻿using AmazonKiller.Application.Features.Account.Commands.AddToWishlist;
+﻿using AmazonKiller.Application.Features.Account.Commands.AddProductToOrder;
+using AmazonKiller.Application.Features.Account.Commands.AddToWishlist;
 using AmazonKiller.Application.Features.Account.Commands.ChangeName;
 using AmazonKiller.Application.Features.Account.Commands.ChangePassword;
 using AmazonKiller.Application.Features.Account.Commands.ConfirmEmailChange;
+using AmazonKiller.Application.Features.Account.Commands.CreateOrder;
 using AmazonKiller.Application.Features.Account.Commands.DeleteAccount;
 using AmazonKiller.Application.Features.Account.Commands.DeleteFromWishlist;
 using AmazonKiller.Application.Features.Account.Commands.Logout;
+using AmazonKiller.Application.Features.Account.Commands.RemoveProductFromOrder;
 using AmazonKiller.Application.Features.Account.Commands.StartEmailChange;
 using AmazonKiller.Application.Features.Account.Commands.ToggleWishlist;
+using AmazonKiller.Application.Features.Account.Queries.GetOrderDetails;
+using AmazonKiller.Application.Features.Account.Queries.GetOrders;
 using AmazonKiller.Application.Features.Account.Queries.GetWishlist;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -62,14 +67,16 @@ public class AccountController(IMediator mediator) : ControllerBase
     }
 
     [HttpGet("wishlist")]
+    [Tags("Wishlist")]
     public async Task<IActionResult> GetWishlist()
     {
         var result = await mediator.Send(new GetWishlistQuery());
         return Ok(result);
     }
-    
+
     [Authorize]
     [HttpPost("wishlist/toggle")]
+    [Tags("Wishlist")]
     public async Task<IActionResult> ToggleWishlist([FromBody] ToggleWishlistCommand cmd)
     {
         await mediator.Send(cmd);
@@ -77,6 +84,7 @@ public class AccountController(IMediator mediator) : ControllerBase
     }
 
     [HttpPost("wishlist")]
+    [Tags("Wishlist")]
     public async Task<IActionResult> AddToWishlist([FromBody] AddToWishlistCommand cmd)
     {
         await mediator.Send(cmd);
@@ -84,9 +92,52 @@ public class AccountController(IMediator mediator) : ControllerBase
     }
 
     [HttpDelete("wishlist/{productId:guid}")]
+    [Tags("Wishlist")]
     public async Task<IActionResult> DeleteFromWishlist(Guid productId)
     {
         await mediator.Send(new DeleteFromWishlistCommand(productId));
+        return NoContent();
+    }
+
+    [Authorize]
+    [HttpGet("orders")]
+    [Tags("Orders")]
+    public async Task<IActionResult> GetOrders()
+    {
+        var orders = await mediator.Send(new GetOrdersQuery());
+        return Ok(orders);
+    }
+
+    [Authorize]
+    [HttpGet("orders/{id:guid}")]
+    [Tags("Orders")]
+    public async Task<IActionResult> GetOrderDetails(Guid id)
+    {
+        var details = await mediator.Send(new GetOrderDetailsQuery(id));
+        return Ok(details);
+    }
+
+    [HttpPost("orders")]
+    [Tags("Orders")]
+    public async Task<IActionResult> CreateOrder([FromBody] CreateOrderCommand command)
+    {
+        var id = await mediator.Send(command);
+        return Ok(id);
+    }
+
+    [HttpPost("{orderId:guid}/products/{productId:guid}")]
+    [Tags("Orders")]
+    public async Task<IActionResult> AddProductToOrder(Guid orderId, Guid productId, int quantity, CancellationToken ct)
+    {
+        await mediator.Send(new AddProductToOrderCommand(orderId, productId, quantity), ct);
+        return NoContent();
+    }
+
+    [HttpDelete("{orderId:guid}/products/{productId:guid}")]
+    [Tags("Orders")]
+    public async Task<IActionResult> RemoveProductFromOrder(Guid orderId, Guid productId, CancellationToken ct)
+    {
+        await mediator.Send(new RemoveProductFromOrderCommand(orderId, productId), ct);
         return NoContent();
     }
 }

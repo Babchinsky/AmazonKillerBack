@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AmazonKiller.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AmazonDbContext))]
-    [Migration("20250423182026_AddProductSaleRelation")]
-    partial class AddProductSaleRelation
+    [Migration("20250426130343_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,70 +25,23 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("AmazonKiller.Domain.Entities.Orders.Address", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ApartmentNumber")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("Country")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("HouseNumber")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<string>("PostCode")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<string>("Street")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Addresses");
-                });
-
             modelBuilder.Entity("AmazonKiller.Domain.Entities.Orders.Order", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("AddressId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<long>("OrderId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Price")
-                        .HasColumnType("int");
-
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("UserId")
+                    b.Property<decimal>("TotalPrice")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AddressId");
 
                     b.HasIndex("UserId");
 
@@ -101,14 +54,18 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<long>("OrderId")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("OrderId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("OrderedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Price")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Price")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
@@ -117,6 +74,10 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductId");
 
                     b.ToTable("OrderItems");
                 });
@@ -171,9 +132,6 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<Guid?>("OrderId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<decimal>("Price")
                         .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
@@ -208,8 +166,6 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         .IsUnique();
 
                     b.HasIndex("DetailsId");
-
-                    b.HasIndex("OrderId");
 
                     b.ToTable("Products");
 
@@ -549,17 +505,160 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("AmazonKiller.Domain.Entities.Orders.Order", b =>
                 {
-                    b.HasOne("AmazonKiller.Domain.Entities.Orders.Address", "Address")
-                        .WithMany()
-                        .HasForeignKey("AddressId")
+                    b.HasOne("AmazonKiller.Domain.Entities.Users.User", "User")
+                        .WithMany("Orders")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AmazonKiller.Domain.Entities.Users.User", null)
-                        .WithMany("Orders")
-                        .HasForeignKey("UserId");
+                    b.OwnsOne("AmazonKiller.Domain.Entities.Orders.OrderInfo", "Info", b1 =>
+                        {
+                            b1.Property<Guid>("OrderId")
+                                .HasColumnType("uniqueidentifier");
 
-                    b.Navigation("Address");
+                            b1.Property<Guid>("Id")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<DateTime>("OrderedAt")
+                                .HasColumnType("datetime2");
+
+                            b1.HasKey("OrderId");
+
+                            b1.ToTable("Orders");
+
+                            b1.WithOwner()
+                                .HasForeignKey("OrderId");
+
+                            b1.OwnsOne("AmazonKiller.Domain.Entities.Orders.DeliveryInfo", "Delivery", b2 =>
+                                {
+                                    b2.Property<Guid>("OrderInfoOrderId")
+                                        .HasColumnType("uniqueidentifier");
+
+                                    b2.Property<string>("Email")
+                                        .IsRequired()
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.Property<string>("FirstName")
+                                        .IsRequired()
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.Property<string>("LastName")
+                                        .IsRequired()
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.HasKey("OrderInfoOrderId");
+
+                                    b2.ToTable("Orders");
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("OrderInfoOrderId");
+
+                                    b2.OwnsOne("AmazonKiller.Domain.Entities.Orders.Address", "Address", b3 =>
+                                        {
+                                            b3.Property<Guid>("DeliveryInfoOrderInfoOrderId")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("ApartmentNumber")
+                                                .HasMaxLength(20)
+                                                .HasColumnType("nvarchar(20)");
+
+                                            b3.Property<string>("City")
+                                                .IsRequired()
+                                                .HasMaxLength(100)
+                                                .HasColumnType("nvarchar(100)");
+
+                                            b3.Property<string>("Country")
+                                                .IsRequired()
+                                                .HasMaxLength(100)
+                                                .HasColumnType("nvarchar(100)");
+
+                                            b3.Property<string>("HouseNumber")
+                                                .IsRequired()
+                                                .HasMaxLength(20)
+                                                .HasColumnType("nvarchar(20)");
+
+                                            b3.Property<Guid>("Id")
+                                                .HasColumnType("uniqueidentifier");
+
+                                            b3.Property<string>("PostCode")
+                                                .IsRequired()
+                                                .HasMaxLength(20)
+                                                .HasColumnType("nvarchar(20)");
+
+                                            b3.Property<string>("State")
+                                                .HasMaxLength(100)
+                                                .HasColumnType("nvarchar(100)");
+
+                                            b3.Property<string>("Street")
+                                                .IsRequired()
+                                                .HasMaxLength(100)
+                                                .HasColumnType("nvarchar(100)");
+
+                                            b3.HasKey("DeliveryInfoOrderInfoOrderId");
+
+                                            b3.ToTable("Addresses");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("DeliveryInfoOrderInfoOrderId");
+                                        });
+
+                                    b2.Navigation("Address")
+                                        .IsRequired();
+                                });
+
+                            b1.OwnsOne("AmazonKiller.Domain.Entities.Orders.PaymentInfo", "Payment", b2 =>
+                                {
+                                    b2.Property<Guid>("OrderInfoOrderId")
+                                        .HasColumnType("uniqueidentifier");
+
+                                    b2.Property<string>("CardNumber")
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.Property<string>("Cvv")
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.Property<string>("ExpirationDate")
+                                        .HasColumnType("nvarchar(max)");
+
+                                    b2.Property<int>("PaymentType")
+                                        .HasColumnType("int");
+
+                                    b2.HasKey("OrderInfoOrderId");
+
+                                    b2.ToTable("Orders");
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("OrderInfoOrderId");
+                                });
+
+                            b1.Navigation("Delivery")
+                                .IsRequired();
+
+                            b1.Navigation("Payment")
+                                .IsRequired();
+                        });
+
+                    b.Navigation("Info")
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("AmazonKiller.Domain.Entities.Orders.OrderItem", b =>
+                {
+                    b.HasOne("AmazonKiller.Domain.Entities.Orders.Order", null)
+                        .WithMany("Items")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AmazonKiller.Domain.Entities.Products.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("AmazonKiller.Domain.Entities.Products.Product", b =>
@@ -575,10 +674,6 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         .HasForeignKey("DetailsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("AmazonKiller.Domain.Entities.Orders.Order", null)
-                        .WithMany("Products")
-                        .HasForeignKey("OrderId");
 
                     b.Navigation("Details");
                 });
@@ -642,7 +737,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("AmazonKiller.Domain.Entities.Orders.Order", b =>
                 {
-                    b.Navigation("Products");
+                    b.Navigation("Items");
                 });
 
             modelBuilder.Entity("AmazonKiller.Domain.Entities.Products.Category", b =>

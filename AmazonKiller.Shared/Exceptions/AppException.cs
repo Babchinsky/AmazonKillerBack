@@ -1,6 +1,9 @@
-﻿namespace AmazonKiller.Shared.Exceptions;
+﻿using Microsoft.AspNetCore.Http;
 
-public class AppException(string message, int statusCode = 400) : Exception(message)
+namespace AmazonKiller.Shared.Exceptions;
+
+public class AppException(string message, int statusCode = StatusCodes.Status400BadRequest)
+    : Exception(message)
 {
     public int StatusCode { get; } = statusCode;
 }
