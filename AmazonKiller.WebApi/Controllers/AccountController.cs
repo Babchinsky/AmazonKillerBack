@@ -125,11 +125,11 @@ public class AccountController(IMediator mediator) : ControllerBase
         return Ok(id);
     }
 
-    [HttpPost("{orderId:guid}/products/{productId:guid}")]
+    [HttpPost("orders/products")]
     [Tags("Orders")]
-    public async Task<IActionResult> AddProductToOrder(Guid orderId, Guid productId, int quantity, CancellationToken ct)
+    public async Task<IActionResult> AddProductToOrder([FromBody] AddProductToOrderCommand cmd, CancellationToken ct)
     {
-        await mediator.Send(new AddProductToOrderCommand(orderId, productId, quantity), ct);
+        await mediator.Send(cmd, ct);
         return NoContent();
     }
 

@@ -2,7 +2,6 @@
 
 public record OrderDetailsDto(
     Guid Id,
-    long OrderNumber,
     decimal Price,
     string Status,
     DateTime OrderedAt,

@@ -1,5 +1,4 @@
-﻿using AmazonKiller.Application.DTOs.Account;
-using AmazonKiller.Application.DTOs.Account.Orders;
+﻿using AmazonKiller.Application.DTOs.Account.Orders;
 using AmazonKiller.Application.Interfaces.Repositories.Account;
 using AmazonKiller.Domain.Entities.Orders;
 using AmazonKiller.Infrastructure.Data;
@@ -11,6 +10,19 @@ namespace AmazonKiller.Infrastructure.Repositories.Account;
 
 public class OrderRepository(AmazonDbContext db, IMapper mapper) : IOrderRepository
 {
+    private async Task RecalculateOrderTotalPriceAsync(Guid orderId, CancellationToken ct)
+    {
+        var order = await db.Orders
+            .Include(o => o.Items)
+            .FirstOrDefaultAsync(o => o.Id == orderId, ct);
+
+        if (order == null)
+            return;
+
+        order.TotalPrice = order.Items.Sum(i => i.Price * i.Quantity);
+        await db.SaveChangesAsync(ct);
+    }
+
     public async Task<List<OrderDto>> GetUserOrdersAsync(Guid userId, CancellationToken ct)
     {
         var orders = await db.Orders
@@ -49,12 +61,11 @@ public class OrderRepository(AmazonDbContext db, IMapper mapper) : IOrderReposit
 
         return new OrderDetailsDto(
             order.Id,
-            0, // Removed old OrderId
             order.TotalPrice,
             order.Status.ToString(),
             order.Info.OrderedAt,
             $"{d.Address.Country}, {d.Address.State}, {d.Address.City}, {d.Address.Street}, {d.Address.HouseNumber}",
-            $"{order.User.FirstName} {order.User?.LastName}",
+            $"{order.User.FirstName} {order.User.LastName}",
             order.Info.Payment.PaymentType.ToString(),
             items
         );
@@ -70,61 +81,52 @@ public class OrderRepository(AmazonDbContext db, IMapper mapper) : IOrderReposit
     public async Task AddProductToOrderAsync(Guid orderId, Guid productId, int quantity, CancellationToken ct)
     {
         var order = await db.Orders
-            .Include(o => o.Items)
-            .FirstOrDefaultAsync(o => o.Id == orderId, ct);
-
-        if (order == null)
-            throw new NotFoundException("Order not found");
+                        .Include(o => o.Items)
+                        .FirstOrDefaultAsync(o => o.Id == orderId, ct)
+                    ?? throw new NotFoundException("Order not found");
 
         var product = await db.Products
-            .FirstOrDefaultAsync(p => p.Id == productId, ct);
+                          .AsNoTracking()
+                          .FirstOrDefaultAsync(p => p.Id == productId, ct)
+                      ?? throw new NotFoundException("Product not found");
 
-        if (product == null)
-            throw new NotFoundException("Product not found");
+        var item = order.Items.FirstOrDefault(i => i.ProductId == productId);
 
-        var existingItem = order.Items.FirstOrDefault(i => i.ProductId == product.Id);
-
-        if (existingItem != null)
-        {
-            existingItem.Quantity += quantity;
-        }
+        if (item != null)
+            item.Quantity += quantity;
         else
-        {
-            var orderItem = new OrderItem
+            order.Items.Add(new OrderItem
             {
                 Id = Guid.NewGuid(),
                 OrderId = order.Id,
-                ProductId = product.Id,
-                Status = OrderStatus.Ordered,
-                Price = product.Price, // цена за единицу товара
+                ProductId = productId,
+                Price = product.Price,
                 Quantity = quantity,
+                Status = OrderStatus.Ordered,
                 OrderedAt = DateTime.UtcNow
-            };
-
-            db.OrderItems.Add(orderItem);
-            order.Items.Add(orderItem);
-        }
-
-        order.TotalPrice = order.Items.Sum(i => i.Price * i.Quantity);
+            });
 
         await db.SaveChangesAsync(ct);
+        await RecalculateOrderTotalPriceAsync(orderId, ct);
     }
 
     public async Task RemoveProductFromOrderAsync(Guid orderId, Guid orderItemId, CancellationToken ct)
     {
         var order = await db.Orders
-            .Include(o => o.Items)
-            .FirstOrDefaultAsync(o => o.Id == orderId, ct);
+                        .Include(o => o.Items)
+                        .FirstOrDefaultAsync(o => o.Id == orderId, ct)
+                    ?? throw new NotFoundException("Order not found");
 
-        if (order == null)
-            throw new NotFoundException("Order not found");
+        var item = order.Items.FirstOrDefault(i => i.Id == orderItemId)
+                   ?? throw new NotFoundException("Order item not found");
 
-        var item = order.Items.FirstOrDefault(i => i.Id == orderItemId);
-        if (item == null)
-            throw new NotFoundException("Order item not found");
-
-        order.TotalPrice -= item.Price;
         order.Items.Remove(item);
+
+        if (!order.Items.Any()) db.Orders.Remove(order); // Если удалили последний товар — удаляем весь заказ
+
         await db.SaveChangesAsync(ct);
+
+        if (db.Orders.Any(o => o.Id == orderId)) // Если заказ остался — пересчитываем сумму
+            await RecalculateOrderTotalPriceAsync(orderId, ct);
     }
 }

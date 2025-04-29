@@ -87,11 +87,20 @@ var app = builder.Build();
 // --- Автоматическая миграция БД ---
 using (var scope = app.Services.CreateScope())
 {
-    scope.ServiceProvider.GetRequiredService<AmazonDbContext>().Database.Migrate();
+    var env = scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>();
+    var db = scope.ServiceProvider.GetRequiredService<AmazonDbContext>();
+
+    if (!env.IsEnvironment("Testing"))
+    {
+        db.Database.Migrate(); // Только если не тесты!
+    }
 }
 
 // --- Middleware ---
-app.UseMiddleware<ExceptionHandlingMiddleware>();
+if (!app.Environment.IsEnvironment("Testing"))
+{
+    app.UseMiddleware<ExceptionHandlingMiddleware>();
+}
 
 // --- Swagger/Scalar UI ---
 if (app.Environment.IsDevelopment())
@@ -111,3 +120,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+public partial class Program;
