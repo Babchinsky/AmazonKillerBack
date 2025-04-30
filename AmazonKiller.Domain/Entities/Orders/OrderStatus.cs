@@ -3,7 +3,8 @@ namespace AmazonKiller.Domain.Entities.Orders;
 public enum OrderStatus
 {
     Received,
-    Delivered,
-    Canceled,
+    ReadyForPickup,
+    Shipped,
+    Cancelled,
     Ordered
 }
