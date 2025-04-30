@@ -1,19 +1,14 @@
 ﻿using AmazonKiller.Application.Interfaces.Common.Address;
-using AmazonKiller.Application.Options;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 
 namespace AmazonKiller.WebApi.Controllers.Address;
 
 [ApiController]
 [Route("api/np")]
 public class NovaPoshtaController(
-    INovaPoshtaService service,
-    IOptions<NovaPoshtaOptions> npSettings)
+    INovaPoshtaService service)
     : ControllerBase
 {
-    private readonly NovaPoshtaOptions _npSettings = npSettings.Value;
-
     [HttpGet("regions")]
     public async Task<IActionResult> GetRegions(CancellationToken ct)
     {
