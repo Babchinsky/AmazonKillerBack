@@ -9,9 +9,12 @@ public class CartList
 
     [Required] public Guid UserId { get; set; }
 
-    [Required] public ICollection<ProductCard> Products { get; set; } = new List<ProductCard>();
+    [Required] public Guid ProductId { get; set; }
+    public Product Product { get; set; } = null!;
 
     [Range(1, int.MaxValue)] public int Quantity { get; set; }
 
-    [Range(1, int.MaxValue)] public int Price { get; set; }
+    [Range(0.01, double.MaxValue)] public decimal Price { get; set; } // за 1 единицу на момент добавления
+
+    public DateTime AddedAt { get; set; } = DateTime.UtcNow;
 }

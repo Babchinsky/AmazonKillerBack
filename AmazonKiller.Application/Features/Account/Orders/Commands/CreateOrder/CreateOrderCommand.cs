@@ -5,12 +5,12 @@ namespace AmazonKiller.Application.Features.Account.Orders.Commands.CreateOrder;
 
 public class CreateOrderCommand : IRequest<Guid>
 {
-    // Recipient
+    // Получатель
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
 
-    // Address
+    // Адрес
     public string Country { get; set; } = string.Empty;
     public string? State { get; set; }
     public string City { get; set; } = string.Empty;
@@ -19,7 +19,7 @@ public class CreateOrderCommand : IRequest<Guid>
     public string? ApartmentNumber { get; set; }
     public string PostCode { get; set; } = string.Empty;
 
-    // Payment
+    // Оплата
     public PaymentType PaymentType { get; set; }
     public string? CardNumber { get; set; }
     public string? ExpirationDate { get; set; }

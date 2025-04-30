@@ -1,5 +1,6 @@
 using System.Text;
 using AmazonKiller.Application.DependencyInjection;
+using AmazonKiller.Application.Options;
 using AmazonKiller.Infrastructure.Data;
 using AmazonKiller.Infrastructure.DependencyInjection;
 using AmazonKiller.Infrastructure.Middleware;
@@ -20,6 +21,8 @@ builder.Services
     .AddPersistence(builder.Configuration) // БД
     .AddInfrastructure() // Репозитории/сервисы
     .AddApplication(); // MediatR / AutoMapper / валидаторы
+
+builder.Services.Configure<NovaPoshtaOptions>(builder.Configuration.GetSection("NovaPoshta"));
 
 // ---------- JWT ----------
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

@@ -61,6 +61,17 @@ public class AmazonDbContext(DbContextOptions<AmazonDbContext> options) : DbCont
         // ---------- ReviewContent ----------
         b.Entity<ReviewContent>(e => { e.PrimitiveCollection(r => r.FilePaths); });
 
+        // ---------- CartList ----------
+        b.Entity<CartList>(e =>
+        {
+            e.HasOne(cl => cl.Product)
+                .WithMany()
+                .HasForeignKey(cl => cl.ProductId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            e.Property(cl => cl.Price).HasPrecision(18, 2);
+        });
+
         // ---------- Wishlist ----------
         b.Entity<Wishlist>(e =>
         {
