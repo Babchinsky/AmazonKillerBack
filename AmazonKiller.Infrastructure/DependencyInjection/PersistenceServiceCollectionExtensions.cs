@@ -15,16 +15,11 @@ public static class PersistenceServiceCollectionExtensions
         {
             var env = sp.GetRequiredService<IWebHostEnvironment>();
             if (env.IsEnvironment("Testing"))
-            {
-                opt.UseInMemoryDatabase("TestDb");
-            }
+                opt.UseInMemoryDatabase("TestDb_Shared"); // обязательно фиксированное имя
             else
-            {
                 opt.UseSqlServer(cfg.GetConnectionString("DefaultConnection"));
-            }
         });
 
         return services;
     }
-
 }

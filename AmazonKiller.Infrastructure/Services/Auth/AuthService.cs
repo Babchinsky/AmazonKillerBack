@@ -14,12 +14,12 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace AmazonKiller.Infrastructure.Services.Auth;
 
-public class AuthService(AmazonDbContext db, IConfiguration cfg) : IAuthService
+public class AuthService(AmazonDbContext db, IConfiguration cfg, IPasswordService passwordService) : IAuthService
 {
     public async Task<AuthTokensDto> LoginAsync(LoginUserCommand cmd)
     {
         var user = await db.Users.SingleOrDefaultAsync(u => u.Email == cmd.Email);
-        if (user is null || !BCrypt.Net.BCrypt.Verify(cmd.Password, user.PasswordHash))
+        if (user is null || !passwordService.VerifyPassword(cmd.Password, user.PasswordHash))
             throw new AppException("Bad credentials", 401);
 
         db.RefreshTokens.RemoveRange(db.RefreshTokens.Where(t => t.UserId == user.Id));

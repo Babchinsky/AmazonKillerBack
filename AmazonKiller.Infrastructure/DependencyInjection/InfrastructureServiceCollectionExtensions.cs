@@ -29,6 +29,7 @@ public static class InfrastructureServiceCollectionExtensions
         services.AddScoped<IWishlistRepository, WishlistRepository>();
         services.AddScoped<IOrderRepository, OrderRepository>();
         services.AddScoped<IVerificationEmailSender, VerificationEmailSender>();
+        services.AddScoped<IPasswordService, PasswordService>();
 
         return services;
     }

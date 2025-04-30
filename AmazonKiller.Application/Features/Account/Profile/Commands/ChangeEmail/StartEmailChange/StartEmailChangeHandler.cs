@@ -3,20 +3,24 @@ using AmazonKiller.Application.Interfaces.Repositories.Auth;
 using AmazonKiller.Domain.Entities.Users;
 using AmazonKiller.Shared.Exceptions;
 using MediatR;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 
 namespace AmazonKiller.Application.Features.Account.Profile.Commands.ChangeEmail.StartEmailChange;
 
 public class StartEmailChangeHandler(
     IVerificationEmailSender verificationEmailSender,
     IEmailVerificationRepository repo,
-    ICurrentUserService currentUserService
+    ICurrentUserService currentUserService,
+    IWebHostEnvironment env
 ) : IRequestHandler<StartEmailChangeCommand>
 {
     public async Task Handle(StartEmailChangeCommand cmd, CancellationToken ct)
     {
         var userId = currentUserService.UserId ?? throw new AppException("Unauthorized", 401);
 
-        var code = new Random().Next(100000, 999999).ToString();
+        // Генерируем код
+        var code = env.IsEnvironment("Testing") ? "123456" : new Random().Next(100000, 999999).ToString();
 
         var entry = new EmailVerification
         {

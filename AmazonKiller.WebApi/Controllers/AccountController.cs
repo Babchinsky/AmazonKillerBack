@@ -13,6 +13,7 @@ using AmazonKiller.Application.Features.Account.Wishlist.Commands.AddToWishlist;
 using AmazonKiller.Application.Features.Account.Wishlist.Commands.DeleteFromWishlist;
 using AmazonKiller.Application.Features.Account.Wishlist.Commands.ToggleWishlist;
 using AmazonKiller.Application.Features.Account.Wishlist.Queries.GetWishlist;
+using AmazonKiller.Shared.Exceptions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -41,9 +42,26 @@ public class AccountController(IMediator mediator) : ControllerBase
     [HttpPut("name")]
     public async Task<IActionResult> ChangeName([FromBody] ChangeNameCommand cmd)
     {
-        await mediator.Send(cmd);
-        return NoContent();
+        try
+        {
+            // Пытаемся обработать команду
+            await mediator.Send(cmd);
+            return NoContent(); // Возвращаем 204, если имя успешно изменено
+        }
+        catch (AppException ex)
+        {
+            // Если имя не изменилось, возвращаем 400 BadRequest
+            if (ex.Message == "New name cannot be the same as the current name")
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+
+            // Пробрасываем другие исключения дальше
+            throw;
+        }
     }
+
+
 
     [HttpPut("password")]
     public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordCommand cmd)

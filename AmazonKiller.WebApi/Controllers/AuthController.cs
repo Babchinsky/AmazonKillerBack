@@ -21,12 +21,13 @@ public class AuthController(IAuthService authService, IMediator mediator) : Cont
         return NoContent();
     }
 
-
     [HttpPost("confirm-registration")]
-    public async Task<IActionResult> Confirm([FromBody] ConfirmRegistrationCommand cmd)
+    public async Task<IActionResult> Confirm(ConfirmRegistrationCommand cmd)
     {
-        return Ok(await mediator.Send(cmd));
+        await mediator.Send(cmd);
+        return NoContent();
     }
+
 
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginUserCommand cmd)

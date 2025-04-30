@@ -1,8 +1,8 @@
 using System.Text;
 using AmazonKiller.Application.DependencyInjection;
 using AmazonKiller.Infrastructure.Data;
-using AmazonKiller.Infrastructure.Middleware;
 using AmazonKiller.Infrastructure.DependencyInjection;
+using AmazonKiller.Infrastructure.Middleware;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -90,17 +90,11 @@ using (var scope = app.Services.CreateScope())
     var env = scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>();
     var db = scope.ServiceProvider.GetRequiredService<AmazonDbContext>();
 
-    if (!env.IsEnvironment("Testing"))
-    {
-        db.Database.Migrate(); // Только если не тесты!
-    }
+    if (!env.IsEnvironment("Testing")) db.Database.Migrate(); // Только если не тесты!
 }
 
 // --- Middleware ---
-if (!app.Environment.IsEnvironment("Testing"))
-{
-    app.UseMiddleware<ExceptionHandlingMiddleware>();
-}
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 // --- Swagger/Scalar UI ---
 if (app.Environment.IsDevelopment())
@@ -121,4 +115,7 @@ app.MapControllers();
 
 app.Run();
 
-public partial class Program;
+namespace AmazonKiller.WebApi
+{
+    public partial class Program;
+}
