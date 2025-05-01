@@ -94,6 +94,9 @@ using (var scope = app.Services.CreateScope())
     var db = scope.ServiceProvider.GetRequiredService<AmazonDbContext>();
 
     if (!env.IsEnvironment("Testing")) db.Database.Migrate(); // Только если не тесты!
+
+    // // ➜ наполняем БД, если она ещё пустая
+    // await DatabaseSeeder.SeedAsync(db);
 }
 
 // --- Middleware ---

@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using AmazonKiller.Domain.Entities.Products;
+﻿using AmazonKiller.Domain.Entities.Products;
+using AmazonKiller.Domain.Entities.Users;
 
 namespace AmazonKiller.Domain.Entities.Reviews;
 
@@ -7,13 +7,15 @@ public class Review
 {
     public Guid Id { get; set; }
 
-    [Required] public ReviewContent Content { get; set; } = new();
+    public ReviewContent Content { get; set; } = new();
 
     public Rating Rating { get; set; }
 
-    [Required] public Guid ProductId { get; set; }
+    public Guid ProductId { get; set; }
+    public Product Product { get; set; } = null!;
 
-    [Required] public Guid UserId { get; set; }
+    public Guid UserId { get; set; }
+    public User User { get; set; } = null!;
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 

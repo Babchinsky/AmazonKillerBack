@@ -2,11 +2,15 @@
 using AmazonKiller.Application.Interfaces.Common;
 using AmazonKiller.Application.Interfaces.Common.Address;
 using AmazonKiller.Application.Interfaces.Repositories.Account;
+using AmazonKiller.Application.Interfaces.Repositories.Admin.Users;
 using AmazonKiller.Application.Interfaces.Repositories.Auth;
 using AmazonKiller.Application.Interfaces.Repositories.Products;
+using AmazonKiller.Application.Interfaces.Repositories.Reviews;
 using AmazonKiller.Infrastructure.Repositories.Account;
+using AmazonKiller.Infrastructure.Repositories.Admin.Users;
 using AmazonKiller.Infrastructure.Repositories.Auth;
 using AmazonKiller.Infrastructure.Repositories.Products;
+using AmazonKiller.Infrastructure.Repositories.Reviews;
 using AmazonKiller.Infrastructure.Services.Auth;
 using AmazonKiller.Infrastructure.Services.Common;
 using AmazonKiller.Infrastructure.Services.Common.Address;
@@ -34,7 +38,9 @@ public static class InfrastructureServiceCollectionExtensions
         services.AddScoped<IPasswordService, PasswordService>();
         services.AddScoped<ICartRepository, CartRepository>();
         services.AddScoped<ICountryService, CountryService>();
-        
+        services.AddScoped<IAdminUserRepository, AdminUserRepository>();
+        services.AddScoped<IReviewRepository, ReviewRepository>();
+
         services.AddHttpClient<INovaPoshtaService, NovaPoshtaService>();
 
         return services;

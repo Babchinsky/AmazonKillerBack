@@ -24,7 +24,7 @@ public class CartRepository(AmazonDbContext db) : ICartRepository
                 UserId = userId,
                 ProductId = productId,
                 Quantity = quantity,
-                Price = (int)product.Price // или Math.Round(product.Price * quantity)
+                Price = product.Price // или Math.Round(product.Price * quantity)
             });
             await db.SaveChangesAsync(ct);
         }

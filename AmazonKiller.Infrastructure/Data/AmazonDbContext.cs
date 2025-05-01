@@ -87,6 +87,13 @@ public class AmazonDbContext(DbContextOptions<AmazonDbContext> options) : DbCont
                 .HasForeignKey(w => w.ProductId)
                 .OnDelete(DeleteBehavior.Cascade);
         });
+        
+        
+        
+        b.Entity<User>()
+            .Property(u => u.CreatedAt)
+            .HasDefaultValueSql("GETUTCDATE()");   // для SQL Server
+        
 
         // Order -> OrderInfo (owned)
         b.Entity<Order>().OwnsOne(o => o.Info, info =>
