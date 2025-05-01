@@ -10,5 +10,7 @@ public interface IProductRepository
     Task AddAsync(Product product);
     Task UpdateAsync(Product product);
     Task DeleteAsync(Guid id);
+    Task UpdateAsync(Product product, byte[] originalRowVersion, CancellationToken ct);
+    Task BulkSoftDeleteAsync(IEnumerable<Guid> ids, CancellationToken ct);
     IQueryable<Product> Queryable();
 }

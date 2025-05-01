@@ -13,14 +13,11 @@ public class MappingProfile : Profile
     public MappingProfile()
     {
         CreateMap<CreateProductCommand, Product>()
-            .ForMember(dest => dest.Id, opt => opt.MapFrom(_ => Guid.NewGuid()))
-            .ForMember(dest => dest.Code, opt => opt.MapFrom(_ => Ulid.NewUlid().ToString()))
-            .ForMember(dest => dest.Details, opt => opt.Ignore())
-            .ForMember(dest => dest.DetailsId, opt => opt.MapFrom(src => src.DetailsId));
+            .ForMember(d => d.Details, o => o.Ignore()); // остальное по-умолчанию
 
         CreateMap<UpdateProductCommand, Product>()
-            .ForMember(dest => dest.Details, opt => opt.Ignore())
-            .ForMember(dest => dest.DetailsId, opt => opt.MapFrom(src => src.DetailsId));
+            .ForMember(d => d.Details, o => o.Ignore())
+            .ForMember(d => d.RowVersion, o => o.Ignore()); // RowVersion управляется БД
 
         CreateMap<Product, ProductDto>();
     }

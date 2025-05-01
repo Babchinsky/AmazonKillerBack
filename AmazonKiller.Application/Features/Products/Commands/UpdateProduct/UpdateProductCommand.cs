@@ -5,10 +5,12 @@ namespace AmazonKiller.Application.Features.Products.Commands.UpdateProduct;
 
 public record UpdateProductCommand(
     Guid Id,
+    byte[] RowVersion,
     string Name,
-    List<string> ProductPics,
     decimal Price,
     int Quantity,
     Guid CategoryId,
-    Guid DetailsId
+    IReadOnlyCollection<string> ImageUrls,
+    IReadOnlyCollection<AttributeDto> Attributes,
+    IReadOnlyCollection<FeatureDto> Features
 ) : IRequest<ProductDto>;

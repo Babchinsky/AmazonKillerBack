@@ -15,6 +15,7 @@ using AmazonKiller.Infrastructure.Services.Auth;
 using AmazonKiller.Infrastructure.Services.Common;
 using AmazonKiller.Infrastructure.Services.Common.Address;
 using AmazonKiller.Infrastructure.Services.Common.Emails;
+using AmazonKiller.Infrastructure.Services.Common.FileStorage;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace AmazonKiller.Infrastructure.DependencyInjection;
@@ -40,7 +41,8 @@ public static class InfrastructureServiceCollectionExtensions
         services.AddScoped<ICountryService, CountryService>();
         services.AddScoped<IAdminUserRepository, AdminUserRepository>();
         services.AddScoped<IReviewRepository, ReviewRepository>();
-        services.AddScoped<ICategoryRepository, CategoryRepository>(); 
+        services.AddScoped<ICategoryRepository, CategoryRepository>();
+        services.AddScoped<IFileStorage, LocalFileStorage>();
 
         services.AddHttpClient<INovaPoshtaService, NovaPoshtaService>();
 
