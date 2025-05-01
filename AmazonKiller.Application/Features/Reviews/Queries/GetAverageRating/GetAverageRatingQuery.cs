@@ -1,6 +1,5 @@
+using MediatR;
+
 namespace AmazonKiller.Application.Features.Reviews.Queries.GetAverageRating;
 
-public class GetAverageRatingQuery
-{
-    
-}
+public record GetAverageRatingQuery(Guid ProductId) : IRequest<double>;

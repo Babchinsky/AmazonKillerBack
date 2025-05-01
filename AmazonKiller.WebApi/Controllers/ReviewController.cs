@@ -18,12 +18,12 @@ namespace AmazonKiller.WebApi.Controllers;
 public class ReviewController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll([FromQuery] GetAllReviewsQuery query)
     {
-        var reviews = await mediator.Send(new GetAllReviewsQuery());
+        var reviews = await mediator.Send(query);
         return Ok(reviews);
     }
-
+    
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetById(Guid id)
     {
@@ -31,10 +31,10 @@ public class ReviewController(IMediator mediator) : ControllerBase
         return Ok(review);
     }
 
-    [HttpGet("product/{productId:guid}")]
-    public async Task<IActionResult> GetByProductId(Guid productId)
+    [HttpGet("product/{productId:guid}/reviews")]
+    public async Task<IActionResult> GetReviewsByProductId(Guid productId, [FromQuery] int page = 1, [FromQuery] int pageSize = 20)
     {
-        var reviews = await mediator.Send(new GetReviewsByProductIdQuery(productId));
+        var reviews = await mediator.Send(new GetReviewsByProductIdQuery(productId, page, pageSize));
         return Ok(reviews);
     }
 
@@ -86,11 +86,7 @@ public class ReviewController(IMediator mediator) : ControllerBase
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> Delete(Guid id)
     {
-        var exists = await mediator.Send(new IsReviewExistsQuery(id));
-        if (!exists)
-            return NotFound();
-
-        await mediator.Send(new DeleteReviewCommand(id));
-        return NoContent();
+        var deleted = await mediator.Send(new DeleteReviewCommand(id));
+        return deleted ? NoContent() : NotFound();
     }
 }

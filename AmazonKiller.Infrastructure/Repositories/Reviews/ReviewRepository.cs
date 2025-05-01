@@ -75,7 +75,9 @@ public class ReviewRepository(AmazonDbContext db) : IReviewRepository
     {
         return await db.Reviews
             .Where(r => r.ProductId == productId)
-            .AverageAsync(r => (int)r.Rating);
+            .Select(r => (int)r.Rating)
+            .DefaultIfEmpty(0) 
+            .AverageAsync();
     }
 
     public Task<int> GetReviewCountAsync(Guid productId)

@@ -1,6 +1,5 @@
+using MediatR;
+
 namespace AmazonKiller.Application.Features.Reviews.Queries.IsReviewExists;
 
-public class IsReviewExistsQuery
-{
-    
-}
+public record IsReviewExistsQuery(Guid Id) : IRequest<bool>;
