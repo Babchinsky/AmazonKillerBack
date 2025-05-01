@@ -87,13 +87,12 @@ public class AmazonDbContext(DbContextOptions<AmazonDbContext> options) : DbCont
                 .HasForeignKey(w => w.ProductId)
                 .OnDelete(DeleteBehavior.Cascade);
         });
-        
-        
-        
+
+
         b.Entity<User>()
             .Property(u => u.CreatedAt)
-            .HasDefaultValueSql("GETUTCDATE()");   // для SQL Server
-        
+            .HasDefaultValueSql("GETUTCDATE()"); // для SQL Server
+
 
         // Order -> OrderInfo (owned)
         b.Entity<Order>().OwnsOne(o => o.Info, info =>
@@ -102,6 +101,21 @@ public class AmazonDbContext(DbContextOptions<AmazonDbContext> options) : DbCont
 
             info.OwnsOne(i => i.Payment);
         });
+
+        // ---------- Categories (hierarchy) ----------
+        b.Entity<Category>(e =>
+        {
+            e.HasOne(c => c.Parent)
+                .WithMany(c => c.Children)
+                .HasForeignKey(c => c.ParentId)
+                .OnDelete(DeleteBehavior.Restrict); // не рвём ветку каскадом
+
+            e.Property(c => c.Status)
+                .HasDefaultValue(CategoryStatus.Active);
+
+            e.Property(c => c.Name).HasMaxLength(40);
+        });
+
 
         // ---------- seed ----------
         SeedData.Seed(b);

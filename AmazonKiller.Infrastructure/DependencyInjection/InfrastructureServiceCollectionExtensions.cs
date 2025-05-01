@@ -40,6 +40,7 @@ public static class InfrastructureServiceCollectionExtensions
         services.AddScoped<ICountryService, CountryService>();
         services.AddScoped<IAdminUserRepository, AdminUserRepository>();
         services.AddScoped<IReviewRepository, ReviewRepository>();
+        services.AddScoped<ICategoryRepository, CategoryRepository>(); 
 
         services.AddHttpClient<INovaPoshtaService, NovaPoshtaService>();
 
