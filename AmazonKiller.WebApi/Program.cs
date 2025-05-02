@@ -1,8 +1,10 @@
 using System.Text;
 using AmazonKiller.Application.DependencyInjection;
+using AmazonKiller.Application.Interfaces.Repositories.Reviews;
 using AmazonKiller.Infrastructure.Data;
 using AmazonKiller.Infrastructure.DependencyInjection;
 using AmazonKiller.Infrastructure.Middleware;
+using AmazonKiller.Infrastructure.Repositories.Reviews;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -15,6 +17,7 @@ builder.WebHost.UseUrls("http://0.0.0.0:80");
 // ----------  DI ----------
 builder.Services.AddControllers();
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
 
 builder.Services
     .AddPersistence(builder.Configuration) // БД
