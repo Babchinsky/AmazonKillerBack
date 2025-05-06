@@ -1,4 +1,5 @@
-﻿using AmazonKiller.Domain.Entities.Products;
+﻿using System.ComponentModel.DataAnnotations;
+using AmazonKiller.Domain.Entities.Products;
 using AmazonKiller.Domain.Entities.Users;
 
 namespace AmazonKiller.Domain.Entities.Reviews;
@@ -20,4 +21,5 @@ public class Review
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
     public int Likes { get; set; }
+    [Timestamp] public byte[] RowVersion { get; set; } = [];
 }

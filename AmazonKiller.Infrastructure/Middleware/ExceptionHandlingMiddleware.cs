@@ -1,6 +1,9 @@
 ﻿using System.Text.Json;
 using AmazonKiller.Shared.Exceptions;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace AmazonKiller.Infrastructure.Middleware;
 
@@ -29,10 +32,13 @@ public class ExceptionHandlingMiddleware(RequestDelegate next)
             context.Response.StatusCode = StatusCodes.Status500InternalServerError;
             context.Response.ContentType = "application/json";
 
+
+            var isDev = context.RequestServices.GetRequiredService<IWebHostEnvironment>().IsDevelopment();
+
+
             var result = JsonSerializer.Serialize(new
             {
-                error = "Internal server error",
-                details = ex.Message // <-- можно убрать детали в продакшене
+                error = isDev ? ex.Message : "Internal server error"
             });
 
             await context.Response.WriteAsync(result);

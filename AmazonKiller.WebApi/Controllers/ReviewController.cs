@@ -1,5 +1,6 @@
 using AmazonKiller.Application.Features.Reviews.Commands.CreateReview;
 using AmazonKiller.Application.Features.Reviews.Commands.DeleteReview;
+using AmazonKiller.Application.Features.Reviews.Commands.LikeReview;
 using AmazonKiller.Application.Features.Reviews.Commands.UpdateReview;
 using AmazonKiller.Application.Features.Reviews.Queries.GetAllReviews;
 using AmazonKiller.Application.Features.Reviews.Queries.GetAverageRating;
@@ -23,7 +24,7 @@ public class ReviewController(IMediator mediator) : ControllerBase
         var reviews = await mediator.Send(query);
         return Ok(reviews);
     }
-    
+
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetById(Guid id)
     {
@@ -32,7 +33,8 @@ public class ReviewController(IMediator mediator) : ControllerBase
     }
 
     [HttpGet("product/{productId:guid}/reviews")]
-    public async Task<IActionResult> GetReviewsByProductId(Guid productId, [FromQuery] int page = 1, [FromQuery] int pageSize = 20)
+    public async Task<IActionResult> GetReviewsByProductId(Guid productId, [FromQuery] int page = 1,
+        [FromQuery] int pageSize = 20)
     {
         var reviews = await mediator.Send(new GetReviewsByProductIdQuery(productId, page, pageSize));
         return Ok(reviews);
@@ -61,10 +63,10 @@ public class ReviewController(IMediator mediator) : ControllerBase
 
     [Authorize]
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] CreateReviewCommand command)
+    public async Task<IActionResult> Create([FromForm] CreateReviewCommand command) 
     {
-        var result = await mediator.Send(command);
-        return CreatedAtAction(nameof(GetById), new { id = result }, result);
+        var dto = await mediator.Send(command);
+        return CreatedAtAction(nameof(GetById), new { id = dto.Id }, dto);
     }
 
     [Authorize]
@@ -88,5 +90,13 @@ public class ReviewController(IMediator mediator) : ControllerBase
     {
         var deleted = await mediator.Send(new DeleteReviewCommand(id));
         return deleted ? NoContent() : NotFound();
+    }
+
+    [Authorize]
+    [HttpPost("{id:guid}/like")]
+    public async Task<IActionResult> Like(Guid id)
+    {
+        await mediator.Send(new LikeReviewCommand(id));
+        return NoContent();
     }
 }

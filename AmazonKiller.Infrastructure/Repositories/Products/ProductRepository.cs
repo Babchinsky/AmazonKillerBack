@@ -60,10 +60,11 @@ public class ProductRepository(AmazonDbContext db) : IProductRepository
         await db.SaveChangesAsync();
     }
 
-    public Task BulkSoftDeleteAsync(IEnumerable<Guid> ids, CancellationToken ct)
+    public async Task BulkSoftDeleteAsync(IEnumerable<Guid> ids, CancellationToken ct)
     {
-        return db.Database.ExecuteSqlAsync(
-            $"UPDATE Products SET Status = {(int)ProductStatus.OutOfStock} WHERE Id IN ({ids})", ct);
+        await db.Products
+            .Where(p => ids.Contains(p.Id))
+            .ExecuteUpdateAsync(p => p.SetProperty(x => x.Status, ProductStatus.OutOfStock), ct);
     }
 
     public Task<bool> IsExistsAsync(Guid id)

@@ -1,15 +1,22 @@
+using AmazonKiller.Application.Interfaces.Common;
 using AmazonKiller.Application.Interfaces.Repositories.Reviews;
+using AmazonKiller.Shared.Exceptions;
 using MediatR;
 
 namespace AmazonKiller.Application.Features.Reviews.Commands.DeleteReview;
 
-public class DeleteReviewHandler(IReviewRepository repo)
+public class DeleteReviewHandler(
+    IReviewRepository repo,
+    ICurrentUserService current)
     : IRequestHandler<DeleteReviewCommand, bool>
 {
-    public async Task<bool> Handle(DeleteReviewCommand request, CancellationToken cancellationToken)
+    public async Task<bool> Handle(DeleteReviewCommand request, CancellationToken ct)
     {
-        if (!await repo.IsExistsAsync(request.Id))
-            return false;
+        var review = await repo.GetByIdAsync(request.Id);
+        if (review is null) return false;
+
+        if (review.UserId != current.UserId)
+            throw new AppException("Forbidden", 403);
 
         await repo.DeleteAsync(request.Id);
         return true;

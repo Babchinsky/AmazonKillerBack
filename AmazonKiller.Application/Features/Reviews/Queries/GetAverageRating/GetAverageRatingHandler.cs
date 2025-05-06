@@ -3,7 +3,7 @@ using MediatR;
 
 namespace AmazonKiller.Application.Features.Reviews.Queries.GetAverageRating;
 
-public class GetAverageRatingHandler(IReviewRepository repo) 
+public class GetAverageRatingHandler(IReviewRepository repo)
     : IRequestHandler<GetAverageRatingQuery, double>
 {
     public async Task<double> Handle(GetAverageRatingQuery request, CancellationToken cancellationToken)

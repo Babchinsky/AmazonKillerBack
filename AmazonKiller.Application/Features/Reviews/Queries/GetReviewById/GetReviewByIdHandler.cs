@@ -9,13 +9,11 @@ namespace AmazonKiller.Application.Features.Reviews.Queries.GetReviewById;
 public class GetReviewByIdHandler(IReviewRepository repo, IMapper mapper)
     : IRequestHandler<GetReviewByIdQuery, ReviewDto>
 {
-    public async Task<ReviewDto> Handle(GetReviewByIdQuery request, CancellationToken cancellationToken)
+    public async Task<ReviewDto> Handle(
+        GetReviewByIdQuery q, CancellationToken ct) 
     {
-        var review = await repo.GetByIdAsync(request.Id);
-
-        if (review == null)
-            throw new NotFoundException($"Review with ID {request.Id} not found.");
-
-        return mapper.Map<ReviewDto>(review);
+        var r = await repo.GetByIdAsync(q.Id)
+                ?? throw new NotFoundException("Review");
+        return mapper.Map<ReviewDto>(r);
     }
 }

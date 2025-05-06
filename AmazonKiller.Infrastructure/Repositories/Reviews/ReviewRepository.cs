@@ -11,25 +11,32 @@ public class ReviewRepository(AmazonDbContext db) : IReviewRepository
 {
     public async Task<List<ReviewDto>> GetUserReviewsAsync(Guid userId, CancellationToken ct)
     {
-        return await db.Reviews
+        var reviews = await db.Reviews
             .Where(r => r.UserId == userId)
             .Include(r => r.Content)
             .Include(r => r.Product)
-            .Select(r => new ReviewDto
-            {
-                Id = r.Id,
-                Rating = (int)r.Rating,
-                Message = r.Content.Message,
-                Article = r.Content.Article,
-                FilePaths = r.Content.FilePaths,
-                CreatedAt = r.CreatedAt,
-                ProductName = r.Product.Name,
-                UserFullName = r.User.FirstName + " " + r.User.LastName,
-                Tags = new List<string> { "High quality", "Actual price" } // пока заглушка
-            })
+            .Include(r => r.User)
+            .AsNoTracking()
             .ToListAsync(ct);
+
+        return reviews.Select(r => new ReviewDto
+        {
+            Id = r.Id,
+            Rating = (int)r.Rating,
+            Content = new ReviewContentDto(
+                r.Content.Article,
+                r.Content.Message,
+                r.Content.FilePaths),
+            ProductId = r.ProductId,
+            UserId = r.UserId,
+            CreatedAt = r.CreatedAt,
+            UserFullName = r.User.FirstName + " " + r.User.LastName,
+            ProductName = r.Product.Name,
+            Tags = new List<string> { "High quality", "Actual price" },
+            Likes = r.Likes
+        }).ToList();
     }
-    
+
     public Task<List<Review>> GetAllAsync()
     {
         return db.Reviews
@@ -98,12 +105,21 @@ public class ReviewRepository(AmazonDbContext db) : IReviewRepository
         return await db.Reviews
             .Where(r => r.ProductId == productId)
             .Select(r => (int)r.Rating)
-            .DefaultIfEmpty(0) 
+            .DefaultIfEmpty(0)
             .AverageAsync();
     }
 
     public Task<int> GetReviewCountAsync(Guid productId)
     {
         return db.Reviews.CountAsync(r => r.ProductId == productId);
+    }
+
+    public async Task LikeAsync(Guid reviewId, CancellationToken ct)
+    {
+        var review = await db.Reviews.FirstOrDefaultAsync(r => r.Id == reviewId, ct)
+                     ?? throw new NotFoundException("Review not found");
+
+        review.Likes++;
+        await db.SaveChangesAsync(ct);
     }
 }
