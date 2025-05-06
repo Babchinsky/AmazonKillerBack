@@ -1,3 +1,5 @@
+using AmazonKiller.Application.DTOs.Reviews;
+
 using AmazonKiller.Domain.Entities.Reviews;
 
 namespace AmazonKiller.Application.Interfaces.Repositories.Reviews;
@@ -16,4 +18,5 @@ public interface IReviewRepository
     Task<List<Review>> GetByProductIdAsync(Guid productId);
     Task<double> GetAverageRatingAsync(Guid productId);
     Task<int> GetReviewCountAsync(Guid productId);
+    Task<List<ReviewDto>> GetUserReviewsAsync(Guid userId, CancellationToken ct);
 }

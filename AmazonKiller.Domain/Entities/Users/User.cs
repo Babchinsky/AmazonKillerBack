@@ -16,6 +16,8 @@ public class User
 
     [Required] public Role Role { get; set; }
 
+    [Required] public UserStatus Status { get; set; } = UserStatus.Active;
+
     [Required]
     [StringLength(20, MinimumLength = 1)]
     public string FirstName { get; set; } = string.Empty;
@@ -24,6 +26,10 @@ public class User
     [StringLength(20, MinimumLength = 1)]
     public string LastName { get; set; } = string.Empty;
 
+    /// <summary>UTC-время создания записи.</summary>
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+    // навигационные коллекции
     public ICollection<Order> Orders { get; set; } = new List<Order>();
     public ICollection<Wishlist> Wishlists { get; set; } = new List<Wishlist>();
     public ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();

@@ -87,10 +87,20 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
+
+                    b.Property<Guid?>("ParentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Status")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ParentId");
 
                     b.ToTable("Categories");
 
@@ -98,7 +108,8 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         new
                         {
                             Id = new Guid("11111111-1111-1111-1111-111111111111"),
-                            Name = "Books"
+                            Name = "Books",
+                            Status = 0
                         });
                 });
 
@@ -194,9 +205,6 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<Guid?>("CartListId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -223,8 +231,6 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CartListId");
 
                     b.ToTable("ProductCards");
                 });
@@ -312,6 +318,10 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
 
                     b.HasIndex("ContentId");
 
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("UserId");
+
                     b.ToTable("Reviews");
                 });
 
@@ -381,8 +391,15 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Price")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("AddedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("Price")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
@@ -391,6 +408,8 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
 
                     b.ToTable("CartLists");
                 });
@@ -453,6 +472,11 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -475,6 +499,9 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Role")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -658,6 +685,16 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("AmazonKiller.Domain.Entities.Products.Category", b =>
+                {
+                    b.HasOne("AmazonKiller.Domain.Entities.Products.Category", "Parent")
+                        .WithMany("Children")
+                        .HasForeignKey("ParentId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Parent");
+                });
+
             modelBuilder.Entity("AmazonKiller.Domain.Entities.Products.Product", b =>
                 {
                     b.HasOne("AmazonKiller.Domain.Entities.Products.Category", null)
@@ -675,13 +712,6 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                     b.Navigation("Details");
                 });
 
-            modelBuilder.Entity("AmazonKiller.Domain.Entities.Products.ProductCard", b =>
-                {
-                    b.HasOne("AmazonKiller.Domain.Entities.Users.CartList", null)
-                        .WithMany("Products")
-                        .HasForeignKey("CartListId");
-                });
-
             modelBuilder.Entity("AmazonKiller.Domain.Entities.Reviews.Review", b =>
                 {
                     b.HasOne("AmazonKiller.Domain.Entities.Reviews.ReviewContent", "Content")
@@ -690,7 +720,23 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("AmazonKiller.Domain.Entities.Products.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AmazonKiller.Domain.Entities.Users.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Content");
+
+                    b.Navigation("Product");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("AmazonKiller.Domain.Entities.Sales.Sale", b =>
@@ -698,6 +744,17 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                     b.HasOne("AmazonKiller.Domain.Entities.Products.Product", "Product")
                         .WithOne("Sale")
                         .HasForeignKey("AmazonKiller.Domain.Entities.Sales.Sale", "ProductId");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("AmazonKiller.Domain.Entities.Users.CartList", b =>
+                {
+                    b.HasOne("AmazonKiller.Domain.Entities.Products.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Product");
                 });
@@ -739,17 +796,14 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("AmazonKiller.Domain.Entities.Products.Category", b =>
                 {
+                    b.Navigation("Children");
+
                     b.Navigation("Products");
                 });
 
             modelBuilder.Entity("AmazonKiller.Domain.Entities.Products.Product", b =>
                 {
                     b.Navigation("Sale");
-                });
-
-            modelBuilder.Entity("AmazonKiller.Domain.Entities.Users.CartList", b =>
-                {
-                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("AmazonKiller.Domain.Entities.Users.User", b =>

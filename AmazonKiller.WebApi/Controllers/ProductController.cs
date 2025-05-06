@@ -1,9 +1,12 @@
-﻿using AmazonKiller.Application.Features.Products.Commands.CreateProduct;
+﻿using AmazonKiller.Application.Features.Products.Commands.BulkDeleteProducts;
+using AmazonKiller.Application.Features.Products.Commands.CreateProduct;
 using AmazonKiller.Application.Features.Products.Commands.DeleteProduct;
 using AmazonKiller.Application.Features.Products.Commands.UpdateProduct;
 using AmazonKiller.Application.Features.Products.Queries.GetAllProducts;
 using AmazonKiller.Application.Features.Products.Queries.GetProductById;
 using AmazonKiller.Application.Features.Products.Queries.IsProductExists;
+using AmazonKiller.Application.Interfaces.Common;
+using AmazonKiller.WebApi.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -37,10 +40,24 @@ public class ProductController(IMediator mediator) : ControllerBase
 
     [Authorize(Roles = "Admin")]
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] CreateProductCommand command)
+    public async Task<IActionResult> Create([FromForm] CreateProductRequest req,
+        [FromServices] IFileStorage files,
+        CancellationToken ct)
     {
-        var result = await mediator.Send(command);
-        return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
+        var urls = new List<string>();
+        foreach (var file in req.Images)
+        {
+            await using var stream = file.OpenReadStream();
+            var url = await files.SaveAsync(stream, Path.GetExtension(file.FileName), ct);
+            urls.Add(url);
+        }
+
+        var cmd = new CreateProductCommand(
+            req.Name, req.CategoryId, req.DetailsId, req.Price, req.Quantity,
+            req.Discount, urls, req.Attributes, req.Features);
+
+        var dto = await mediator.Send(cmd, ct);
+        return CreatedAtAction(nameof(GetById), new { id = dto.Id }, dto);
     }
 
     [Authorize(Roles = "Admin")]
@@ -68,5 +85,13 @@ public class ProductController(IMediator mediator) : ControllerBase
 
         var updated = await mediator.Send(cmd);
         return Ok(updated);
+    }
+
+    [Authorize(Roles = "Admin")]
+    [HttpPatch("bulk-delete")]
+    public async Task<IActionResult> BulkDelete([FromBody] BulkDeleteProductsCommand cmd, CancellationToken ct)
+    {
+        await mediator.Send(cmd, ct);
+        return NoContent();
     }
 }

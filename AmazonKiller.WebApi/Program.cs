@@ -1,10 +1,9 @@
 using System.Text;
 using AmazonKiller.Application.DependencyInjection;
-using AmazonKiller.Application.Interfaces.Repositories.Reviews;
+using AmazonKiller.Application.Options;
 using AmazonKiller.Infrastructure.Data;
 using AmazonKiller.Infrastructure.DependencyInjection;
 using AmazonKiller.Infrastructure.Middleware;
-using AmazonKiller.Infrastructure.Repositories.Reviews;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -17,12 +16,13 @@ builder.WebHost.UseUrls("http://0.0.0.0:80");
 // ----------  DI ----------
 builder.Services.AddControllers();
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
 
 builder.Services
     .AddPersistence(builder.Configuration) // БД
     .AddInfrastructure() // Репозитории/сервисы
     .AddApplication(); // MediatR / AutoMapper / валидаторы
+
+builder.Services.Configure<NovaPoshtaOptions>(builder.Configuration.GetSection("NovaPoshta"));
 
 // ---------- JWT ----------
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -94,6 +94,9 @@ using (var scope = app.Services.CreateScope())
     var db = scope.ServiceProvider.GetRequiredService<AmazonDbContext>();
 
     if (!env.IsEnvironment("Testing")) db.Database.Migrate(); // Только если не тесты!
+
+    // // ➜ наполняем БД, если она ещё пустая
+    // await DatabaseSeeder.SeedAsync(db);
 }
 
 // --- Middleware ---

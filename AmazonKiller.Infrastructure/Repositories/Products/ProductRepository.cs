@@ -37,12 +37,33 @@ public class ProductRepository(AmazonDbContext db) : IProductRepository
         }
     }
 
+    public async Task UpdateAsync(Product product, byte[] originalRowVersion, CancellationToken ct)
+    {
+        var entry = db.Entry(product);
+        entry.Property(p => p.RowVersion).OriginalValue = originalRowVersion;
+
+        try
+        {
+            await db.SaveChangesAsync(ct);
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            throw new AppException("The product was modified by another user", 409);
+        }
+    }
+
     public async Task DeleteAsync(Guid id)
     {
         var p = await db.Products.FindAsync(id);
         if (p is null) return;
         db.Products.Remove(p);
         await db.SaveChangesAsync();
+    }
+
+    public Task BulkSoftDeleteAsync(IEnumerable<Guid> ids, CancellationToken ct)
+    {
+        return db.Database.ExecuteSqlAsync(
+            $"UPDATE Products SET Status = {(int)ProductStatus.OutOfStock} WHERE Id IN ({ids})", ct);
     }
 
     public Task<bool> IsExistsAsync(Guid id)

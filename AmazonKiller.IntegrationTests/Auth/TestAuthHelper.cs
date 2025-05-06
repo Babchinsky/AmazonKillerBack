@@ -45,7 +45,7 @@ public static class TestAuthHelper
 
         return (client, email, password);
     }
-    
+
     // В классе TestAuthHelper добавьте метод для получения токена
     // Этот метод уже включает регистрацию и получение токена
     public static async Task<string> GetAccessTokenAsync(CustomWebApplicationFactory factory)
@@ -57,26 +57,18 @@ public static class TestAuthHelper
         // Регистрация
         var startBody = new { Email = email, Password = password };
         var startResponse = await client.PostAsJsonAsync("/api/auth/start-registration", startBody);
-        if (startResponse.StatusCode != HttpStatusCode.NoContent)
-        {
-            throw new Exception("Registration failed");
-        }
+        if (startResponse.StatusCode != HttpStatusCode.NoContent) throw new Exception("Registration failed");
 
         // Подтверждение регистрации
         var confirmBody = new { Email = email, Code = "123456" };
         var confirmResponse = await client.PostAsJsonAsync("/api/auth/confirm-registration", confirmBody);
         if (confirmResponse.StatusCode != HttpStatusCode.NoContent)
-        {
             throw new Exception("Registration confirmation failed");
-        }
 
         // Логин и получение токена
         var loginResponse = await client.PostAsJsonAsync("/api/auth/login", new { Email = email, Password = password });
-        if (loginResponse.StatusCode != HttpStatusCode.OK)
-        {
-            throw new Exception("Login failed");
-        }
-    
+        if (loginResponse.StatusCode != HttpStatusCode.OK) throw new Exception("Login failed");
+
         var loginJson = await loginResponse.Content.ReadFromJsonAsync<Dictionary<string, string>>();
         return loginJson!["accessToken"];
     }

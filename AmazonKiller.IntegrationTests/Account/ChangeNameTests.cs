@@ -24,13 +24,13 @@ public class ChangeNameTests(CustomWebApplicationFactory factory)
     {
         // Параметры для изменения имени
         var body = new { FirstName = "NewFirstName", LastName = "NewLastName" };
-        
+
         // Проверка, что _client корректно инициализирован
         Assert.NotNull(_client);
 
         // Отправка запроса на изменение имени
         var response = await _client!.PutAsJsonAsync("/api/account/name", body);
-        
+
         // Проверка, что статус код NoContent (204)
         Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
     }
@@ -47,7 +47,7 @@ public class ChangeNameTests(CustomWebApplicationFactory factory)
         // Ожидаем BadRequest, так как имя не изменилось
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
     }
-    
+
     [Fact]
     public async Task Should_Return_BadRequest_When_Name_Is_Empty()
     {

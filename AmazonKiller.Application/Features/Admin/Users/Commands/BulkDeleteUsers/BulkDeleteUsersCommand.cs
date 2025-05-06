@@ -1,0 +1,5 @@
+﻿using MediatR;
+
+namespace AmazonKiller.Application.Features.Admin.Users.Commands.BulkDeleteUsers;
+
+public record BulkDeleteUsersCommand(List<Guid> UserIds) : IRequest<Unit>;

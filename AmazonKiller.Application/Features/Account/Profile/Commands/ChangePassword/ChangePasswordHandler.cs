@@ -5,7 +5,8 @@ using MediatR;
 
 namespace AmazonKiller.Application.Features.Account.Profile.Commands.ChangePassword;
 
-public class ChangePasswordHandler(ICurrentUserService currentUser, IAccountRepository repo) : IRequestHandler<ChangePasswordCommand, Unit>
+public class ChangePasswordHandler(ICurrentUserService currentUser, IAccountRepository repo)
+    : IRequestHandler<ChangePasswordCommand, Unit>
 {
     public async Task<Unit> Handle(ChangePasswordCommand cmd, CancellationToken ct)
     {

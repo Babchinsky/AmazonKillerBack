@@ -5,9 +5,12 @@ namespace AmazonKiller.Application.Features.Products.Commands.CreateProduct;
 
 public record CreateProductCommand(
     string Name,
-    List<string> ProductPics,
+    Guid CategoryId,
+    Guid DetailsId,
     decimal Price,
     int Quantity,
-    Guid CategoryId,
-    Guid DetailsId
+    decimal? Discount,
+    IReadOnlyCollection<string> ImageUrls,
+    IReadOnlyCollection<AttributeDto> Attributes,
+    IReadOnlyCollection<FeatureDto> Features
 ) : IRequest<ProductDto>;

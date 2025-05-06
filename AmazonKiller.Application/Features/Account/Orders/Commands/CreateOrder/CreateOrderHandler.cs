@@ -1,59 +1,70 @@
 ﻿using AmazonKiller.Application.Interfaces.Common;
 using AmazonKiller.Application.Interfaces.Repositories.Account;
 using AmazonKiller.Domain.Entities.Orders;
+using AmazonKiller.Shared.Exceptions;
 using MediatR;
 
 namespace AmazonKiller.Application.Features.Account.Orders.Commands.CreateOrder;
 
 public class CreateOrderHandler(
-    IOrderRepository repo,
-    ICurrentUserService currentUser
-) : IRequestHandler<CreateOrderCommand, Guid>
+    IOrderRepository orderRepo,
+    ICartRepository cartRepo,
+    ICurrentUserService currentUser) : IRequestHandler<CreateOrderCommand, Guid>
 {
-    public async Task<Guid> Handle(CreateOrderCommand request, CancellationToken ct)
+    public async Task<Guid> Handle(CreateOrderCommand req, CancellationToken ct)
     {
-        if (currentUser.UserId is not { } userId)
-            throw new UnauthorizedAccessException("User is not authenticated");
+        var userId = currentUser.UserId ?? throw new UnauthorizedAccessException("User is not authenticated");
 
-        var delivery = new DeliveryInfo
-        {
-            FirstName = request.FirstName,
-            LastName = request.LastName,
-            Email = request.Email,
-            Address = new Address
-            {
-                Country = request.Country,
-                State = request.State,
-                City = request.City,
-                Street = request.Street,
-                HouseNumber = request.HouseNumber,
-                ApartmentNumber = request.ApartmentNumber,
-                PostCode = request.PostCode
-            }
-        };
-
-        var payment = new PaymentInfo
-        {
-            PaymentType = request.PaymentType,
-            CardNumber = request.PaymentType == PaymentType.Card ? request.CardNumber : null,
-            ExpirationDate = request.PaymentType == PaymentType.Card ? request.ExpirationDate : null,
-            Cvv = request.PaymentType == PaymentType.Card ? request.Cvv : null
-        };
+        var cartItems = await cartRepo.GetCartItemsWithProductsAsync(userId, ct);
+        if (!cartItems.Any()) throw new AppException("Cart is empty", 400);
 
         var order = new Order
         {
-            Info = new OrderInfo
-            {
-                Delivery = delivery,
-                Payment = payment,
-                OrderedAt = DateTime.UtcNow
-            },
             UserId = userId,
             Status = OrderStatus.Ordered,
-            TotalPrice = 0
+            Info = new OrderInfo
+            {
+                OrderedAt = DateTime.UtcNow,
+                Delivery = new DeliveryInfo
+                {
+                    FirstName = req.FirstName,
+                    LastName = req.LastName,
+                    Email = req.Email,
+                    Address = new Address
+                    {
+                        Country = req.Country,
+                        State = req.State,
+                        City = req.City,
+                        Street = req.Street,
+                        HouseNumber = req.HouseNumber,
+                        ApartmentNumber = req.ApartmentNumber,
+                        PostCode = req.PostCode
+                    }
+                },
+                Payment = new PaymentInfo
+                {
+                    PaymentType = req.PaymentType,
+                    CardNumber = req.PaymentType == PaymentType.Card ? req.CardNumber : null,
+                    ExpirationDate = req.PaymentType == PaymentType.Card ? req.ExpirationDate : null,
+                    Cvv = req.PaymentType == PaymentType.Card ? req.Cvv : null
+                }
+            },
+            Items = cartItems.Select(i => new OrderItem
+            {
+                Id = Guid.NewGuid(),
+                ProductId = i.ProductId,
+                Price = i.Price,
+                Quantity = i.Quantity,
+                OrderedAt = DateTime.UtcNow,
+                Status = OrderStatus.Ordered
+            }).ToList()
         };
 
-        await repo.CreateOrderAsync(order, ct);
-        return order.Id;
+        order.TotalPrice = order.Items.Sum(x => x.Price * x.Quantity);
+
+        var orderId = await orderRepo.CreateOrderAsync(order, ct);
+        await cartRepo.ClearCartAsync(userId, ct);
+
+        return orderId;
     }
 }

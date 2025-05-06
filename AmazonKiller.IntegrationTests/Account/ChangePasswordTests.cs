@@ -6,10 +6,11 @@ using Xunit.Abstractions;
 
 namespace AmazonKiller.IntegrationTests.Account;
 
-public class ChangePasswordTests(CustomWebApplicationFactory factory, ITestOutputHelper testOutputHelper) : IClassFixture<CustomWebApplicationFactory>
+public class ChangePasswordTests(CustomWebApplicationFactory factory, ITestOutputHelper testOutputHelper)
+    : IClassFixture<CustomWebApplicationFactory>
 {
     private readonly HttpClient _client = TestAuthHelper.RegisterAndLoginAsync(factory).Result;
-    
+
     [Fact]
     public async Task Should_Return_NoContent_For_ValidPasswordChange()
     {
