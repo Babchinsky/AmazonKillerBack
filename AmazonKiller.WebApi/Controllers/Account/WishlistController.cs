@@ -11,7 +11,6 @@ namespace AmazonKiller.WebApi.Controllers.Account;
 [ApiController]
 [Route("api/[controller]")]
 [Authorize]
-[Tags("Wishlist")]
 public class WishlistController(IMediator mediator) : ControllerBase
 {
     [HttpGet]

@@ -12,7 +12,6 @@ namespace AmazonKiller.WebApi.Controllers.Account;
 [ApiController]
 [Route("api/[controller]")]
 [Authorize]
-[Tags("Orders")]
 public class OrdersController(IMediator mediator) : ControllerBase
 {
     [HttpGet]

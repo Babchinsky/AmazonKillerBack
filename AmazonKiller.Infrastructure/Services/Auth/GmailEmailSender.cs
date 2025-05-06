@@ -26,21 +26,19 @@ public class GmailEmailSender(IConfiguration cfg, IWebHostEnvironment env) : IEm
             return; // Прекращаем выполнение метода, не отправляя email
         }
 
-        // Если хотите полностью отключить отправку через почту (временно), закомментируйте или удалите следующую часть:
-        /*
-        var smtp = new SmtpClient("smtp.gmail.com", 587)
-        {
-            EnableSsl = true,
-            Credentials = new NetworkCredential(_from, _appPassword)
-        };
+         // Если хотите полностью отключить отправку через почту (временно), закомментируйте или удалите следующую часть:
+         var smtp = new SmtpClient("smtp.gmail.com", 587)
+         {
+             EnableSsl = true,
+             Credentials = new NetworkCredential(_from, _appPassword)
+         };
 
-        var message = new MailMessage(_from, to, subject, htmlBody)
-        {
-            IsBodyHtml = true
-        };
+         var message = new MailMessage(_from, to, subject, htmlBody)
+         {
+             IsBodyHtml = true
+         };
 
-        await smtp.SendMailAsync(message);
-        */
+         await smtp.SendMailAsync(message);
 
         // Для временной заглушки просто ничего не делаем
         // Можно вывести лог для отладки:

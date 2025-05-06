@@ -1,6 +1,4 @@
-﻿// AmazonKiller.Infrastructure/Data/SeedData.cs
-
-using AmazonKiller.Domain.Entities.Products;
+﻿using AmazonKiller.Domain.Entities.Products;
 using Microsoft.EntityFrameworkCore;
 
 namespace AmazonKiller.Infrastructure.Data;

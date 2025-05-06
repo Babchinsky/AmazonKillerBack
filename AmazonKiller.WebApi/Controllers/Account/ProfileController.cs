@@ -14,7 +14,6 @@ namespace AmazonKiller.WebApi.Controllers.Account;
 [ApiController]
 [Route("api/[controller]")]
 [Authorize]
-[Tags("Profile")]
 public class ProfileController(IMediator mediator) : ControllerBase
 {
     [HttpPost("email-change/start")]

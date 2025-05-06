@@ -8,9 +8,9 @@ using NUlid;
 
 namespace AmazonKiller.Application.Mappings;
 
-public class MappingProfile : Profile
+public class ProductMappingProfile : Profile
 {
-    public MappingProfile()
+    public ProductMappingProfile()
     {
         CreateMap<CreateProductCommand, Product>()
             .ForMember(d => d.Details, o => o.Ignore()); // остальное по-умолчанию
