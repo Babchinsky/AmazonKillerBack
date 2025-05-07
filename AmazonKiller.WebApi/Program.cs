@@ -107,7 +107,7 @@ app.UseMiddleware<ExceptionHandlingMiddleware>();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AmazonKiller API v1"));
     app.MapScalarApiReference(o => { o.OpenApiRoutePattern = "/swagger/{documentName}/swagger.json"; });
 }
 else

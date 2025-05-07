@@ -17,6 +17,7 @@ using AmazonKiller.Infrastructure.Services.Common.Address;
 using AmazonKiller.Infrastructure.Services.Common.Emails;
 using AmazonKiller.Infrastructure.Services.Common.FileStorage;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace AmazonKiller.Infrastructure.DependencyInjection;
 
@@ -24,27 +25,27 @@ public static class InfrastructureServiceCollectionExtensions
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services)
     {
-        services.AddScoped<IAuthService, AuthService>();
-        services.AddScoped<IProductRepository, ProductRepository>();
-        services.AddScoped<ICurrentUserService, CurrentUserService>();
-        services.AddScoped<IAccountRepository, AccountRepository>();
-        services.AddScoped<IEmailSender, GmailEmailSender>();
-        services.AddScoped<IEmailVerificationRepository, EmailVerificationRepository>();
-        services.AddScoped<IUserRepository, UserRepository>();
-        services.AddScoped<IAdminSecretValidator, AdminSecretValidator>();
-        services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
-        services.AddScoped<IWishlistRepository, WishlistRepository>();
-        services.AddScoped<IOrderRepository, OrderRepository>();
-        services.AddScoped<IVerificationEmailSender, VerificationEmailSender>();
-        services.AddScoped<IPasswordService, PasswordService>();
-        services.AddScoped<ICartRepository, CartRepository>();
-        services.AddScoped<ICountryService, CountryService>();
-        services.AddScoped<IAdminUserRepository, AdminUserRepository>();
-        services.AddScoped<IReviewRepository, ReviewRepository>();
-        services.AddScoped<ICategoryRepository, CategoryRepository>();
-        services.AddScoped<IFileStorage, LocalFileStorage>();
-
+        services.TryAddSingleton<IPasswordService, PasswordService>();
         services.AddHttpClient<INovaPoshtaService, NovaPoshtaService>();
+        
+        services.TryAddScoped<IAuthService, AuthService>();
+        services.TryAddScoped<IProductRepository, ProductRepository>();
+        services.TryAddScoped<ICurrentUserService, CurrentUserService>();
+        services.TryAddScoped<IAccountRepository, AccountRepository>();
+        services.TryAddScoped<IEmailSender, GmailEmailSender>();
+        services.TryAddScoped<IEmailVerificationRepository, EmailVerificationRepository>();
+        services.TryAddScoped<IUserRepository, UserRepository>();
+        services.TryAddScoped<IAdminSecretValidator, AdminSecretValidator>();
+        services.TryAddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+        services.TryAddScoped<IWishlistRepository, WishlistRepository>();
+        services.TryAddScoped<IOrderRepository, OrderRepository>();
+        services.TryAddScoped<IVerificationEmailSender, VerificationEmailSender>();
+        services.TryAddScoped<ICartRepository, CartRepository>();
+        services.TryAddScoped<ICountryService, CountryService>();
+        services.TryAddScoped<IAdminUserRepository, AdminUserRepository>();
+        services.TryAddScoped<IReviewRepository, ReviewRepository>();
+        services.TryAddScoped<ICategoryRepository, CategoryRepository>();
+        services.TryAddScoped<IFileStorage, LocalFileStorage>();
 
         return services;
     }
