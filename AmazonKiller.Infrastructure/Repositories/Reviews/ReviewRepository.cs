@@ -9,6 +9,11 @@ namespace AmazonKiller.Infrastructure.Repositories.Reviews;
 
 public class ReviewRepository(AmazonDbContext db) : IReviewRepository
 {
+    private IQueryable<Review> QueryWithContent()
+    {
+        return db.Reviews.Include(r => r.Content);
+    }
+    
     public async Task<List<ReviewDto>> GetUserReviewsAsync(Guid userId, CancellationToken ct)
     {
         var reviews = await db.Reviews
@@ -32,23 +37,21 @@ public class ReviewRepository(AmazonDbContext db) : IReviewRepository
             CreatedAt = r.CreatedAt,
             UserFullName = r.User.FirstName + " " + r.User.LastName,
             ProductName = r.Product.Name,
-            Tags = new List<string> { "High quality", "Actual price" },
+            Tags = ["High quality", "Actual price"],
             Likes = r.Likes
         }).ToList();
     }
 
     public Task<List<Review>> GetAllAsync()
     {
-        return db.Reviews
-            .Include(r => r.Content)
+        return QueryWithContent()
             .AsNoTracking()
             .ToListAsync();
     }
 
     public Task<Review?> GetByIdAsync(Guid id)
     {
-        return db.Reviews
-            .Include(r => r.Content)
+        return QueryWithContent()
             .FirstOrDefaultAsync(r => r.Id == id);
     }
 
@@ -87,13 +90,12 @@ public class ReviewRepository(AmazonDbContext db) : IReviewRepository
 
     public IQueryable<Review> Queryable()
     {
-        return db.Reviews.Include(r => r.Content);
+        return QueryWithContent();
     }
 
     public Task<List<Review>> GetByProductIdAsync(Guid productId)
     {
-        return db.Reviews
-            .Include(r => r.Content)
+        return QueryWithContent()
             .Where(r => r.ProductId == productId)
             .OrderByDescending(r => r.CreatedAt)
             .AsNoTracking()

@@ -10,12 +10,17 @@ namespace AmazonKiller.Infrastructure.Repositories.Account;
 
 public class WishlistRepository(AmazonDbContext db, IMapper mapper) : IWishlistRepository
 {
+    private IQueryable<Wishlist> QueryWithProductAndSale()
+    {
+        return db.WishlistItems
+            .Include(x => x.Product)
+            .ThenInclude(p => p.Sale);
+    }
+    
     public async Task<List<ProductInWishlistDto>> GetWishlistAsync(Guid userId, CancellationToken ct)
     {
-        var wishlist = await db.WishlistItems
+        var wishlist = await QueryWithProductAndSale()
             .Where(x => x.UserId == userId)
-            .Include(x => x.Product)
-            .ThenInclude(p => p.Sale)
             .ToListAsync(ct);
 
         return mapper.Map<List<ProductInWishlistDto>>(wishlist);

@@ -10,6 +10,19 @@ namespace AmazonKiller.Infrastructure.Repositories.Account;
 
 public class OrderRepository(AmazonDbContext db, IMapper mapper) : IOrderRepository
 {
+    private IQueryable<Order> QueryOrderWithAllIncludes()
+    {
+        return db.Orders
+            .Include(o => o.Info)
+            .ThenInclude(i => i.Delivery)
+            .ThenInclude(d => d.Address)
+            .Include(o => o.Info)
+            .ThenInclude(i => i.Payment)
+            .Include(o => o.User)
+            .Include(o => o.Items)
+            .ThenInclude(i => i.Product);
+    }
+
     private async Task RecalculateOrderTotalPriceAsync(Guid orderId, CancellationToken ct)
     {
         var order = await db.Orders
@@ -36,15 +49,7 @@ public class OrderRepository(AmazonDbContext db, IMapper mapper) : IOrderReposit
 
     public async Task<OrderDetailsDto> GetOrderDetailsAsync(Guid userId, Guid orderId, CancellationToken ct)
     {
-        var order = await db.Orders
-            .Include(o => o.Info)
-            .ThenInclude(i => i.Delivery)
-            .ThenInclude(deliveryInfo => deliveryInfo.Address)
-            .Include(o => o.Info)
-            .ThenInclude(i => i.Payment)
-            .Include(o => o.User)
-            .Include(o => o.Items)
-            .ThenInclude(i => i.Product)
+        var order = await QueryOrderWithAllIncludes()
             .FirstOrDefaultAsync(o => o.Id == orderId && o.UserId == userId, ct);
 
         if (order is null)
