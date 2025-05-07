@@ -1,29 +1,20 @@
-﻿using AmazonKiller.Application.DTOs.Products;
-using FluentValidation;
+﻿using FluentValidation;
 
 namespace AmazonKiller.Application.Features.Products.Commands.CreateProduct;
 
-public class CreateProductRequestValidator : AbstractValidator<CreateProductRequest>
+public class CreateProductValidator : AbstractValidator<CreateProductCommand>
 {
-    private static readonly string[] AllowedExt = [".jpg", ".jpeg", ".png", ".webp"];
-
-    public CreateProductRequestValidator()
+    public CreateProductValidator()
     {
-        RuleFor(x => x.Name).NotEmpty().Length(2, 100);
-
+        RuleFor(x => x.Name).NotEmpty().MaximumLength(100);
+        RuleFor(x => x.CategoryId).NotEmpty();
+        RuleFor(x => x.DetailsId).NotEmpty();
         RuleFor(x => x.Price).GreaterThan(0);
-        RuleFor(x => x.Discount)
-            .GreaterThan(0).LessThan(x => x.Price)
-            .When(x => x.Discount.HasValue);
+        RuleFor(x => x.Quantity).GreaterThanOrEqualTo(0);
+        RuleForEach(x => x.ImageUrls).NotEmpty().MaximumLength(300);
 
-        RuleFor(x => x.Images)
-            .NotEmpty().WithMessage("Нужно ≥1 фото")
-            .Must(list => list.Count <= 10).WithMessage("Максимум 10 файлов");
-
-        RuleForEach(x => x.Images)
-            .Must(f => AllowedExt.Contains(Path.GetExtension(f.FileName).ToLower()))
-            .WithMessage("Разрешены изображения jpg/png/webp")
-            .Must(f => f.Length < 2 * 1024 * 1024) // 2 MB
-            .WithMessage("Файл > 2 MB");
+        // Вложенные валидации для AttributeDto и FeatureDto:
+        RuleForEach(x => x.Attributes).SetValidator(new AttributeDtoValidator());
+        RuleForEach(x => x.Features).SetValidator(new FeatureDtoValidator());
     }
 }
