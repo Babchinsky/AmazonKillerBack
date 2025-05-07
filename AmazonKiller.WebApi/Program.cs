@@ -23,6 +23,7 @@ builder.Services
     .AddApplication(); // MediatR / AutoMapper / валидаторы
 
 builder.Services.Configure<NovaPoshtaOptions>(builder.Configuration.GetSection("NovaPoshta"));
+builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("Email"));
 
 // ---------- JWT ----------
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

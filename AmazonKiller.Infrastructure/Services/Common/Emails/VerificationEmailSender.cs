@@ -1,24 +1,25 @@
 ﻿using System.Reflection;
 using AmazonKiller.Application.Interfaces.Auth;
 using AmazonKiller.Application.Interfaces.Common;
+using AmazonKiller.Application.Options;
+using Microsoft.Extensions.Options;
 
 namespace AmazonKiller.Infrastructure.Services.Common.Emails;
 
-public class VerificationEmailSender(IEmailSender emailSender) : IVerificationEmailSender
+public class VerificationEmailSender(IEmailSender emailSender, IOptions<EmailSettings> emailSettingsOptions) : IVerificationEmailSender
 {
     private const string TemplatePath =
         "AmazonKiller.Infrastructure.Services.Common.Emails.Templates.VerificationCodeTemplate.html";
 
-    private const string LogoUrl = "https://i.imgur.com/580gOlL.png";
-    private const string WebsiteUrl = "http://localhost:8080/scalar/";
+    private readonly EmailSettings _settings = emailSettingsOptions.Value;
 
     public async Task SendVerificationCodeAsync(string email, string subject, string code)
     {
         var htmlTemplate = await LoadTemplateAsync();
         var htmlBody = htmlTemplate
             .Replace("{{code}}", code)
-            .Replace("{{logoUrl}}", LogoUrl)
-            .Replace("{{websiteUrl}}", WebsiteUrl)
+            .Replace("{{logoUrl}}", _settings.LogoUrl)
+            .Replace("{{websiteUrl}}", _settings.WebsiteUrl)
             .Replace("{{year}}", DateTime.UtcNow.Year.ToString());
 
         await emailSender.SendEmailAsync(email, subject, htmlBody);
