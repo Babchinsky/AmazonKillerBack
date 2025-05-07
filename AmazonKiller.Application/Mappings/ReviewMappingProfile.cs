@@ -24,10 +24,10 @@ public class ReviewMappingProfile : Profile
             .ForMember(dest => dest.Id, opt => opt.Ignore())
             .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
             .ForMember(dest => dest.Likes, opt => opt.Ignore());
-        
+
         CreateMap<Review, ReviewDto>()
-            .ForMember(d => d.Rating,   o => o.MapFrom(s => (int)s.Rating))
-            .ForMember(d => d.Content,  o => o.MapFrom(s => s.Content))
+            .ForMember(d => d.Rating, o => o.MapFrom(s => (int)s.Rating))
+            .ForMember(d => d.Content, o => o.MapFrom(s => s.Content))
             .ForMember(d => d.ProductName,
                 o => o.MapFrom(s => s.Product.Name))
             .ForMember(d => d.UserFullName,

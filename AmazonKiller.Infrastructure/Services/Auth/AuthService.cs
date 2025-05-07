@@ -24,13 +24,17 @@ public class AuthService(AmazonDbContext db, IConfiguration cfg, IPasswordServic
             !passwordService.VerifyPassword(cmd.Password, user.PasswordHash))
             throw new AppException("Bad credentials", 401);
 
-        db.RefreshTokens.RemoveRange(db.RefreshTokens.Where(t => t.UserId == user.Id));
-        return await IssueTokensAsync(user);
+        db.RefreshTokens.RemoveRange(db.RefreshTokens
+            .Where(t => t.UserId == user.Id && t.DeviceId == cmd.DeviceId));
+
+        await db.SaveChangesAsync();
+
+        return await IssueTokensAsync(user, cmd.DeviceId, cmd.IpAddress, cmd.UserAgent);
     }
 
-    private async Task<AuthTokensDto> IssueTokensAsync(User user)
+    private async Task<AuthTokensDto> IssueTokensAsync(User user, string deviceId, string ip, string ua)
     {
-        var refresh = await GenerateRefreshTokenAsync(user);
+        var refresh = await GenerateRefreshTokenAsync(user, deviceId, ip, ua);
         return new AuthTokensDto(GenerateJwt(user), refresh);
     }
 
@@ -39,13 +43,16 @@ public class AuthService(AmazonDbContext db, IConfiguration cfg, IPasswordServic
         return Task.FromResult(GenerateJwt(u));
     }
 
-    public async Task<string> GenerateRefreshTokenAsync(User u)
+    public async Task<string> GenerateRefreshTokenAsync(User u, string deviceId, string ip, string ua)
     {
         var rt = new RefreshToken
         {
             Token = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64)),
             ExpiresAt = DateTime.UtcNow.AddDays(7),
-            UserId = u.Id
+            UserId = u.Id,
+            DeviceId = deviceId,
+            IpAddress = ip,
+            UserAgent = ua
         };
         db.RefreshTokens.Add(rt);
         await db.SaveChangesAsync();

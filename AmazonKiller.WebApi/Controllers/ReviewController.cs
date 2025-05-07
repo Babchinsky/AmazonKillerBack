@@ -63,7 +63,7 @@ public class ReviewController(IMediator mediator) : ControllerBase
 
     [Authorize]
     [HttpPost]
-    public async Task<IActionResult> Create([FromForm] CreateReviewCommand command) 
+    public async Task<IActionResult> Create([FromForm] CreateReviewCommand command)
     {
         var dto = await mediator.Send(command);
         return CreatedAtAction(nameof(GetById), new { id = dto.Id }, dto);

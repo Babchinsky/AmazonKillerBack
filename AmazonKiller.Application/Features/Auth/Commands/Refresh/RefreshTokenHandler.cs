@@ -20,10 +20,14 @@ public class RefreshTokenHandler(
         if (old is null || old.ExpiresAt < DateTime.UtcNow)
             throw new AppException("Invalid/expired refresh token", 401);
 
-        await refreshRepo.RevokeAsync(old, ct);
+        await refreshRepo.DeleteAsync(old, ct);
         await refreshRepo.SaveAsync(ct);
 
-        var newToken = await auth.GenerateRefreshTokenAsync(old.User);
+        var newToken = await auth.GenerateRefreshTokenAsync(
+            old.User,
+            req.DeviceId,
+            req.IpAddress,
+            req.UserAgent);
         return new AuthTokensDto(await auth.GenerateJwtTokenAsync(old.User), newToken);
     }
 }

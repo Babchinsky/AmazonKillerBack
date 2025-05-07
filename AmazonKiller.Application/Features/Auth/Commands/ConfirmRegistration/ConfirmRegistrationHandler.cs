@@ -36,7 +36,11 @@ public class ConfirmRegistrationHandler(
         await repo.DeleteAsync(entry, ct);
 
         var jwt = await auth.GenerateJwtTokenAsync(user);
-        var refresh = await auth.GenerateRefreshTokenAsync(user);
+        var refresh = await auth.GenerateRefreshTokenAsync(
+            user,
+            cmd.DeviceId,
+            cmd.IpAddress,
+            cmd.UserAgent);
         return new AuthTokensDto(jwt, refresh);
     }
 }

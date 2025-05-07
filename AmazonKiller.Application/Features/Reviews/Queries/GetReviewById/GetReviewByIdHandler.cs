@@ -10,7 +10,7 @@ public class GetReviewByIdHandler(IReviewRepository repo, IMapper mapper)
     : IRequestHandler<GetReviewByIdQuery, ReviewDto>
 {
     public async Task<ReviewDto> Handle(
-        GetReviewByIdQuery q, CancellationToken ct) 
+        GetReviewByIdQuery q, CancellationToken ct)
     {
         var r = await repo.GetByIdAsync(q.Id)
                 ?? throw new NotFoundException("Review");

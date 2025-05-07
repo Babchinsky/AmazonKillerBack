@@ -27,6 +27,23 @@ public class AmazonDbContext(DbContextOptions<AmazonDbContext> options) : DbCont
 
     protected override void OnModelCreating(ModelBuilder b)
     {
+        // ----- RefreshToken -----
+        b.Entity<RefreshToken>(builder =>
+        {
+            builder.HasKey(rt => rt.Id);
+            builder.HasIndex(rt => rt.Token).IsUnique();
+
+            builder.Property(rt => rt.Token).IsRequired();
+            builder.Property(rt => rt.DeviceId).IsRequired();
+            builder.Property(rt => rt.UserAgent).IsRequired();
+            builder.Property(rt => rt.IpAddress).IsRequired();
+            builder.Property(rt => rt.ExpiresAt).IsRequired();
+
+            builder.HasOne(rt => rt.User)
+                .WithMany()
+                .HasForeignKey(rt => rt.UserId);
+        });
+
         // ----- ProductCard -----
         b.Entity<ProductCard>(e => { e.Property(pc => pc.Price).HasPrecision(18, 2); });
 

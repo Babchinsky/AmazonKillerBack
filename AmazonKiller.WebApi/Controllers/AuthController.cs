@@ -31,7 +31,8 @@ public class AuthController(IAuthService authService, IMediator mediator) : Cont
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginUserCommand cmd)
     {
-        return Ok(await authService.LoginAsync(cmd));
+        var tokens = await authService.LoginAsync(cmd);
+        return Ok(tokens); // tokens: { jwt, refresh }
     }
 
     [HttpPost("refresh")]
