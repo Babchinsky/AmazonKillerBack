@@ -5,6 +5,7 @@ using AmazonKiller.Application.Features.Account.Profile.Commands.ChangePassword;
 using AmazonKiller.Application.Features.Account.Profile.Commands.DeleteAccount;
 using AmazonKiller.Application.Features.Account.Profile.Commands.Logout;
 using AmazonKiller.Shared.Exceptions;
+using AmazonKiller.WebApi.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -40,7 +41,7 @@ public class ProfileController(IMediator mediator) : ControllerBase
         }
         catch (AppException ex) when (ex.Message == "New name cannot be the same as the current name")
         {
-            return BadRequest(new { message = ex.Message });
+            return this.ProblemBadRequest(ex.Message);
         }
     }
 

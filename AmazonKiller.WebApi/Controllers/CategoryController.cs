@@ -6,6 +6,7 @@ using AmazonKiller.Application.Features.Categories.Queries.GetAllCategories;
 using AmazonKiller.Application.Features.Categories.Queries.GetCategoryById;
 using AmazonKiller.Application.Features.Categories.Queries.GetCategoryTree;
 using AmazonKiller.Application.Features.Categories.Queries.IsCategoryExists;
+using AmazonKiller.WebApi.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -58,7 +59,7 @@ public class CategoryController(IMediator mediator) : ControllerBase
         [FromBody] UpdateCategoryCommand cmd,
         CancellationToken ct)
     {
-        if (id != cmd.Id) return BadRequest("ID mismatch");
+        if (id != cmd.Id) return this.ProblemBadRequest("ID mismatch");
 
         var updated = await mediator.Send(cmd, ct);
         return Ok(updated);

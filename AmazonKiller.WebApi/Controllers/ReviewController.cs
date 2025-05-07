@@ -8,6 +8,7 @@ using AmazonKiller.Application.Features.Reviews.Queries.GetReviewsByProductId;
 using AmazonKiller.Application.Features.Reviews.Queries.GetReviewById;
 using AmazonKiller.Application.Features.Reviews.Queries.GetReviewCount;
 using AmazonKiller.Application.Features.Reviews.Queries.IsReviewExists;
+using AmazonKiller.WebApi.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -74,11 +75,11 @@ public class ReviewController(IMediator mediator) : ControllerBase
     public async Task<IActionResult> Update(Guid id, [FromBody] UpdateReviewCommand cmd)
     {
         if (id != cmd.Id)
-            return BadRequest("Id mismatch");
+            return this.ProblemBadRequest("ID mismatch");
 
         var exists = await mediator.Send(new IsReviewExistsQuery(id));
         if (!exists)
-            return NotFound();
+            return this.ProblemNotFound($"Entity with ID {id} not found");
 
         var updated = await mediator.Send(cmd);
         return Ok(updated);

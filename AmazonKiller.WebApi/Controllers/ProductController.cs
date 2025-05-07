@@ -6,6 +6,7 @@ using AmazonKiller.Application.Features.Products.Queries.GetAllProducts;
 using AmazonKiller.Application.Features.Products.Queries.GetProductById;
 using AmazonKiller.Application.Features.Products.Queries.IsProductExists;
 using AmazonKiller.Application.Interfaces.Common;
+using AmazonKiller.WebApi.Extensions;
 using AmazonKiller.WebApi.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -66,7 +67,7 @@ public class ProductController(IMediator mediator) : ControllerBase
     {
         var isExists = await mediator.Send(new IsProductExistsQuery(id));
         if (!isExists)
-            return NotFound();
+            return this.ProblemNotFound($"Entity with ID {id} not found");
 
         await mediator.Send(new DeleteProductCommand(id));
         return NoContent();
@@ -77,11 +78,11 @@ public class ProductController(IMediator mediator) : ControllerBase
     public async Task<IActionResult> Update(Guid id, [FromBody] UpdateProductCommand cmd)
     {
         if (id != cmd.Id)
-            return BadRequest("Id mismatch");
+            return this.ProblemBadRequest("ID mismatch");
 
         var isExists = await mediator.Send(new IsProductExistsQuery(id));
         if (!isExists)
-            return NotFound();
+            return this.ProblemNotFound($"Entity with ID {id} not found");
 
         var updated = await mediator.Send(cmd);
         return Ok(updated);
