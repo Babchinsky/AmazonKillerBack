@@ -1,13 +1,12 @@
-﻿using System.Text.Json;
+﻿using System.Net;
+using System.Text.Json;
 using AmazonKiller.Shared.Exceptions;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace AmazonKiller.Infrastructure.Middleware;
 
-public class ExceptionHandlingMiddleware(RequestDelegate next)
+public class ExceptionHandlingMiddleware(RequestDelegate next, ILogger<ExceptionHandlingMiddleware> logger)
 {
     public async Task InvokeAsync(HttpContext context)
     {
@@ -15,33 +14,33 @@ public class ExceptionHandlingMiddleware(RequestDelegate next)
         {
             await next(context);
         }
-        catch (AppException ex)
+        catch (AppException ex) // кастомные исключения
         {
-            context.Response.StatusCode = ex.StatusCode; // <<< Уважай статус код из AppException
-            context.Response.ContentType = "application/json";
-
-            var result = JsonSerializer.Serialize(new
-            {
-                error = ex.Message
-            });
-
-            await context.Response.WriteAsync(result);
+            logger.LogWarning(ex, "Handled application exception: {Message}", ex.Message);
+            await WriteProblemDetailsAsync(context, ex.Message, (int)HttpStatusCode.BadRequest);
         }
         catch (Exception ex)
         {
-            context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-            context.Response.ContentType = "application/json";
-
-
-            var isDev = context.RequestServices.GetRequiredService<IWebHostEnvironment>().IsDevelopment();
-
-
-            var result = JsonSerializer.Serialize(new
-            {
-                error = isDev ? ex.Message : "Internal server error"
-            });
-
-            await context.Response.WriteAsync(result);
+            logger.LogError(ex, "Unhandled exception occurred");
+            await WriteProblemDetailsAsync(context, "An unexpected error occurred",
+                (int)HttpStatusCode.InternalServerError);
         }
+    }
+
+    private static async Task WriteProblemDetailsAsync(HttpContext context, string message, int statusCode)
+    {
+        context.Response.ContentType = "application/json";
+        context.Response.StatusCode = statusCode;
+
+        var problem = new
+        {
+            title = statusCode == 400 ? "Bad request" : "Internal server error",
+            detail = message,
+            status = statusCode,
+            instance = context.Request.Path
+        };
+
+        var json = JsonSerializer.Serialize(problem);
+        await context.Response.WriteAsync(json);
     }
 }
