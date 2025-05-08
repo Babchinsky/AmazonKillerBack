@@ -16,7 +16,7 @@ public class WishlistRepository(AmazonDbContext db, IMapper mapper) : IWishlistR
             .Include(x => x.Product)
             .ThenInclude(p => p.Sale);
     }
-    
+
     public async Task<List<ProductInWishlistDto>> GetWishlistAsync(Guid userId, CancellationToken ct)
     {
         var wishlist = await QueryWithProductAndSale()

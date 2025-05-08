@@ -13,7 +13,7 @@ public class ReviewRepository(AmazonDbContext db) : IReviewRepository
     {
         return db.Reviews.Include(r => r.Content);
     }
-    
+
     public async Task<List<ReviewDto>> GetUserReviewsAsync(Guid userId, CancellationToken ct)
     {
         var reviews = await db.Reviews

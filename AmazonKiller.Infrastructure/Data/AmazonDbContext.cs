@@ -113,7 +113,7 @@ public class AmazonDbContext(DbContextOptions<AmazonDbContext> options) : DbCont
                 .WithMany()
                 .HasForeignKey(w => w.ProductId)
                 .OnDelete(DeleteBehavior.Cascade);
-            
+
             e.Property(w => w.AddedAt)
                 .HasDefaultValueSql("GETUTCDATE()")
                 .ValueGeneratedOnAdd();

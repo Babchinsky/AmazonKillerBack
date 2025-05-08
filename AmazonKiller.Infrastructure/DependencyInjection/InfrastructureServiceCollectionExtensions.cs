@@ -27,7 +27,7 @@ public static class InfrastructureServiceCollectionExtensions
     {
         services.TryAddSingleton<IPasswordService, PasswordService>();
         services.AddHttpClient<INovaPoshtaService, NovaPoshtaService>();
-        
+
         services.TryAddScoped<IAuthService, AuthService>();
         services.TryAddScoped<IProductRepository, ProductRepository>();
         services.TryAddScoped<ICurrentUserService, CurrentUserService>();

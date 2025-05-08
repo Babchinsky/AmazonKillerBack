@@ -93,10 +93,10 @@ public static class SeedData
 
         // Users
         const string fixedSalt = "$2a$11$0123456789ABCDEFFEDCBA";
-        var userPasswordHash  = BCrypt.Net.BCrypt.HashPassword("User123!",  fixedSalt);
+        var userPasswordHash = BCrypt.Net.BCrypt.HashPassword("User123!", fixedSalt);
         var adminPasswordHash = BCrypt.Net.BCrypt.HashPassword("Admin123!", fixedSalt);
         var seedDate = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-        
+
         modelBuilder.Entity<User>().HasData(
             new User
             {
@@ -121,7 +121,7 @@ public static class SeedData
                 CreatedAt = seedDate
             }
         );
-        
+
         // Wishlist
         modelBuilder.Entity<Wishlist>().HasData(
             new Wishlist
@@ -131,7 +131,7 @@ public static class SeedData
                 AddedAt = seedDate // Статическая дата
             }
         );
-        
+
         // CartList
         modelBuilder.Entity<CartList>().HasData(
             new CartList
@@ -144,7 +144,7 @@ public static class SeedData
                 AddedAt = seedDate // Статическая дата
             }
         );
-        
+
         // ReviewContent
         modelBuilder.Entity<ReviewContent>().HasData(
             new ReviewContent
@@ -155,7 +155,7 @@ public static class SeedData
                 FilePaths = ["file1.jpg", "file2.jpg"] // Статический список строк
             }
         );
-        
+
         // Review
         modelBuilder.Entity<Review>().HasData(new Review
         {

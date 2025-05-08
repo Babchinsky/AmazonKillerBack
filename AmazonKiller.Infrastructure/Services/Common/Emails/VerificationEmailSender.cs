@@ -6,7 +6,8 @@ using Microsoft.Extensions.Options;
 
 namespace AmazonKiller.Infrastructure.Services.Common.Emails;
 
-public class VerificationEmailSender(IEmailSender emailSender, IOptions<EmailSettings> emailSettingsOptions) : IVerificationEmailSender
+public class VerificationEmailSender(IEmailSender emailSender, IOptions<EmailSettings> emailSettingsOptions)
+    : IVerificationEmailSender
 {
     private const string TemplatePath =
         "AmazonKiller.Infrastructure.Services.Common.Emails.Templates.VerificationCodeTemplate.html";

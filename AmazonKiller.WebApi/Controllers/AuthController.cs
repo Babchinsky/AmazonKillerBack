@@ -3,7 +3,6 @@ using AmazonKiller.Application.Features.Auth.Commands.Login;
 using AmazonKiller.Application.Features.Auth.Commands.Refresh;
 using AmazonKiller.Application.Features.Auth.Commands.RegisterAdmin;
 using AmazonKiller.Application.Features.Auth.Commands.StartRegistration;
-using AmazonKiller.Application.Interfaces;
 using AmazonKiller.Application.Interfaces.Auth;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -22,17 +21,16 @@ public class AuthController(IAuthService authService, IMediator mediator) : Cont
     }
 
     [HttpPost("confirm-registration")]
-    public async Task<IActionResult> Confirm(ConfirmRegistrationCommand cmd)
+    public async Task<IActionResult> Confirm([FromBody] ConfirmRegistrationCommand cmd)
     {
-        await mediator.Send(cmd);
-        return NoContent();
+        return Ok(await mediator.Send(cmd));
     }
 
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginUserCommand cmd)
     {
         var tokens = await authService.LoginAsync(cmd);
-        return Ok(tokens); // tokens: { jwt, refresh }
+        return Ok(tokens);
     }
 
     [HttpPost("refresh")]

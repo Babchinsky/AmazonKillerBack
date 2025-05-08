@@ -6,7 +6,7 @@ namespace AmazonKiller.Application.Features.Products.Commands.CreateProduct;
 public class CreateProductRequestValidator : AbstractValidator<CreateProductRequest>
 {
     private static readonly string[] AllowedExt = [".jpg", ".jpeg", ".png", ".webp"];
-    
+
     public CreateProductRequestValidator()
     {
         RuleFor(x => x.Name).NotEmpty().Length(2, 100);

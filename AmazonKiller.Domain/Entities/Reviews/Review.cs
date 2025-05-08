@@ -7,7 +7,7 @@ namespace AmazonKiller.Domain.Entities.Reviews;
 public class Review
 {
     public Guid Id { get; set; }
-    public Guid ContentId { get; set; } 
+    public Guid ContentId { get; set; }
     public ReviewContent Content { get; set; } = null!;
     public Rating Rating { get; set; }
 

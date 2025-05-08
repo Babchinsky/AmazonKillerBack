@@ -4,17 +4,29 @@ using AmazonKiller.Application.Options;
 using AmazonKiller.Infrastructure.Data;
 using AmazonKiller.Infrastructure.DependencyInjection;
 using AmazonKiller.Infrastructure.Middleware;
+using AmazonKiller.WebApi.Filters;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.ForwardedHeaders =
+        ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+
+    options.KnownNetworks.Clear(); // доверяем всем (можно ограничить, если надо)
+    options.KnownProxies.Clear();
+});
+
 builder.WebHost.UseUrls("http://0.0.0.0:80");
 
 // ----------  DI ----------
-builder.Services.AddControllers();
+// builder.Services.AddControllers();
+builder.Services.AddControllers(options => { options.Filters.Add<EnrichWithClientInfoFilter>(); });
 builder.Services.AddHttpContextAccessor();
 
 builder.Services
@@ -95,10 +107,9 @@ using (var scope = app.Services.CreateScope())
     var db = scope.ServiceProvider.GetRequiredService<AmazonDbContext>();
 
     if (!env.IsEnvironment("Testing")) db.Database.Migrate(); // Только если не тесты!
-
-    // // ➜ наполняем БД, если она ещё пустая
-    // await DatabaseSeeder.SeedAsync(db);
 }
+
+app.UseForwardedHeaders();
 
 // --- Middleware ---
 app.UseMiddleware<ExceptionHandlingMiddleware>();
