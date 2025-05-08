@@ -16,5 +16,5 @@ public class CartList
 
     [Range(0.01, double.MaxValue)] public decimal Price { get; set; } // за 1 единицу на момент добавления
 
-    public DateTime AddedAt { get; set; } = DateTime.UtcNow;
+    public DateTime AddedAt { get; set; }
 }

@@ -14,6 +14,13 @@ public static class PersistenceServiceCollectionExtensions
         services.AddDbContext<AmazonDbContext>((sp, opt) =>
         {
             var env = sp.GetRequiredService<IWebHostEnvironment>();
+
+            // Включаем SensitiveDataLogging только в Development среде
+            // if (env.IsDevelopment())
+            // {
+            //     opt.EnableSensitiveDataLogging();
+            // }
+
             if (env.IsEnvironment("Testing"))
                 opt.UseInMemoryDatabase("TestDb_Shared"); // обязательно фиксированное имя
             else

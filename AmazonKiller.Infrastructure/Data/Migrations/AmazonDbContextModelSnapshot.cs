@@ -110,6 +110,12 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                             Id = new Guid("11111111-1111-1111-1111-111111111111"),
                             Name = "Books",
                             Status = 0
+                        },
+                        new
+                        {
+                            Id = new Guid("22222222-2222-2222-2222-222222222222"),
+                            Name = "Tech",
+                            Status = 0
                         });
                 });
 
@@ -180,17 +186,34 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("22222222-2222-2222-2222-222222222222"),
+                            Id = new Guid("55555555-5555-5555-5555-555555555555"),
                             CategoryId = new Guid("11111111-1111-1111-1111-111111111111"),
                             Code = "01JS9QNDAYKK2CFRT5AKZF1YAA",
                             DetailsId = new Guid("33333333-3333-3333-3333-333333333333"),
-                            InCartList = false,
-                            InWishlist = false,
+                            InCartList = true,
+                            InWishlist = true,
                             Name = "C# in Depth",
                             Price = 39.99m,
                             ProductPics = "[]",
                             Quantity = 10,
                             Rating = 5,
+                            ReviewsCount = 1,
+                            RowVersion = new byte[0],
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = new Guid("66666666-6666-6666-6666-666666666666"),
+                            CategoryId = new Guid("22222222-2222-2222-2222-222222222222"),
+                            Code = "01JS9QNDAYKK2CFRT5AKZF1YBB",
+                            DetailsId = new Guid("44444444-4444-4444-4444-444444444444"),
+                            InCartList = false,
+                            InWishlist = false,
+                            Name = "Wireless Mouse",
+                            Price = 19.99m,
+                            ProductPics = "[]",
+                            Quantity = 50,
+                            Rating = 4,
                             ReviewsCount = 0,
                             RowVersion = new byte[0],
                             Status = 0
@@ -287,6 +310,16 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                             Color = 5,
                             FabricType = "Paper",
                             Origin = "USA"
+                        },
+                        new
+                        {
+                            Id = new Guid("44444444-4444-4444-4444-444444444444"),
+                            Brand = 20,
+                            CareInstructions = "Wipe clean",
+                            ClosureType = "Zip",
+                            Color = 4,
+                            FabricType = "Plastic",
+                            Origin = "China"
                         });
                 });
 
@@ -300,7 +333,9 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
 
                     b.Property<int>("Likes")
                         .HasColumnType("int");
@@ -329,6 +364,19 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Reviews");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
+                            ContentId = new Guid("99999999-9999-9999-9999-999999999999"),
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Likes = 3,
+                            ProductId = new Guid("55555555-5555-5555-5555-555555555555"),
+                            Rating = 5,
+                            RowVersion = new byte[0],
+                            UserId = new Guid("77777777-7777-7777-7777-777777777777")
+                        });
                 });
 
             modelBuilder.Entity("AmazonKiller.Domain.Entities.Reviews.ReviewContent", b =>
@@ -354,6 +402,15 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ReviewContents");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("99999999-9999-9999-9999-999999999999"),
+                            Article = "Great book!",
+                            FilePaths = "[\"file1.jpg\",\"file2.jpg\"]",
+                            Message = "Very useful for learning advanced C#"
+                        });
                 });
 
             modelBuilder.Entity("AmazonKiller.Domain.Entities.Sales.Sale", b =>
@@ -398,7 +455,9 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("AddedAt")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
 
                     b.Property<decimal>("Price")
                         .HasPrecision(18, 2)
@@ -418,6 +477,17 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("CartLists");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"),
+                            AddedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Price = 39.99m,
+                            ProductId = new Guid("55555555-5555-5555-5555-555555555555"),
+                            Quantity = 1,
+                            UserId = new Guid("77777777-7777-7777-7777-777777777777")
+                        });
                 });
 
             modelBuilder.Entity("AmazonKiller.Domain.Entities.Users.EmailVerification", b =>
@@ -480,17 +550,12 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("UserId1")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
                     b.HasIndex("Token")
                         .IsUnique();
 
                     b.HasIndex("UserId");
-
-                    b.HasIndex("UserId1");
 
                     b.ToTable("RefreshTokens");
                 });
@@ -536,6 +601,30 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("77777777-7777-7777-7777-777777777777"),
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Email = "user@example.com",
+                            FirstName = "Test",
+                            LastName = "User",
+                            PasswordHash = "$2a$11$0123456789ABCDEFFEDCB.S2Yzr2tczlChVlvkY9yqWo1rec6s2eC",
+                            Role = 0,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = new Guid("88888888-8888-8888-8888-888888888888"),
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Email = "admin@example.com",
+                            FirstName = "Admin",
+                            LastName = "Root",
+                            PasswordHash = "$2a$11$0123456789ABCDEFFEDCB.f3zF6Kwis6bGMA186omDrGf1JNLP/eK",
+                            Role = 1,
+                            Status = 0
+                        });
                 });
 
             modelBuilder.Entity("AmazonKiller.Domain.Entities.Users.Wishlist", b =>
@@ -547,13 +636,23 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("AddedAt")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
 
                     b.HasKey("UserId", "ProductId");
 
                     b.HasIndex("ProductId");
 
                     b.ToTable("WishlistItems");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = new Guid("77777777-7777-7777-7777-777777777777"),
+                            ProductId = new Guid("55555555-5555-5555-5555-555555555555"),
+                            AddedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        });
                 });
 
             modelBuilder.Entity("AmazonKiller.Domain.Entities.Orders.Order", b =>
@@ -791,14 +890,10 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
             modelBuilder.Entity("AmazonKiller.Domain.Entities.Users.RefreshToken", b =>
                 {
                     b.HasOne("AmazonKiller.Domain.Entities.Users.User", "User")
-                        .WithMany()
+                        .WithMany("RefreshTokens")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("AmazonKiller.Domain.Entities.Users.User", null)
-                        .WithMany("RefreshTokens")
-                        .HasForeignKey("UserId1");
 
                     b.Navigation("User");
                 });

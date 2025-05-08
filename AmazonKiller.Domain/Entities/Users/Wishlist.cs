@@ -10,5 +10,5 @@ public class Wishlist
     public Guid ProductId { get; set; }
     public Product Product { get; set; } = null!;
 
-    public DateTime AddedAt { get; set; } = DateTime.UtcNow;
+    public DateTime AddedAt { get; set; }
 }

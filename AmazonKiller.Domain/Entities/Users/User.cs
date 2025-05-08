@@ -27,7 +27,7 @@ public class User
     public string LastName { get; set; } = string.Empty;
 
     /// <summary>UTC-время создания записи.</summary>
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime CreatedAt { get; set; }
 
     // навигационные коллекции
     public ICollection<Order> Orders { get; set; } = new List<Order>();

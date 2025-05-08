@@ -40,7 +40,7 @@ public class AmazonDbContext(DbContextOptions<AmazonDbContext> options) : DbCont
             builder.Property(rt => rt.ExpiresAt).IsRequired();
 
             builder.HasOne(rt => rt.User)
-                .WithMany()
+                .WithMany(u => u.RefreshTokens)
                 .HasForeignKey(rt => rt.UserId);
         });
 
@@ -75,6 +75,12 @@ public class AmazonDbContext(DbContextOptions<AmazonDbContext> options) : DbCont
             e.Property(oi => oi.Price).HasPrecision(18, 2); // ← и это
         });
 
+        // ---------- Review ----------
+        b.Entity<Review>()
+            .Property(r => r.CreatedAt)
+            .HasDefaultValueSql("GETUTCDATE()")
+            .ValueGeneratedOnAdd();
+
         // ---------- ReviewContent ----------
         b.Entity<ReviewContent>(e => { e.PrimitiveCollection(r => r.FilePaths); });
 
@@ -87,6 +93,10 @@ public class AmazonDbContext(DbContextOptions<AmazonDbContext> options) : DbCont
                 .OnDelete(DeleteBehavior.Cascade);
 
             e.Property(cl => cl.Price).HasPrecision(18, 2);
+
+            e.Property(cl => cl.AddedAt)
+                .HasDefaultValueSql("GETUTCDATE()")
+                .ValueGeneratedOnAdd();
         });
 
         // ---------- Wishlist ----------
@@ -103,12 +113,17 @@ public class AmazonDbContext(DbContextOptions<AmazonDbContext> options) : DbCont
                 .WithMany()
                 .HasForeignKey(w => w.ProductId)
                 .OnDelete(DeleteBehavior.Cascade);
+            
+            e.Property(w => w.AddedAt)
+                .HasDefaultValueSql("GETUTCDATE()")
+                .ValueGeneratedOnAdd();
         });
 
-
+        // ---------- User ----------
         b.Entity<User>()
             .Property(u => u.CreatedAt)
-            .HasDefaultValueSql("GETUTCDATE()"); // для SQL Server
+            .HasDefaultValueSql("GETUTCDATE()")
+            .ValueGeneratedOnAdd();
 
 
         // Order -> OrderInfo (owned)
@@ -134,7 +149,7 @@ public class AmazonDbContext(DbContextOptions<AmazonDbContext> options) : DbCont
         });
 
 
-        // ---------- seed ----------
+        // ---------- Seed ----------
         SeedData.Seed(b);
     }
 }

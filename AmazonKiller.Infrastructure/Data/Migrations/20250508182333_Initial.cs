@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace AmazonKiller.Infrastructure.Data.Migrations
 {
     /// <inheritdoc />
@@ -188,9 +190,13 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Token = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Token = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    DeviceId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserAgent = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IpAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ExpiresAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    IsRevoked = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -212,7 +218,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                     ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    AddedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    AddedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()")
                 },
                 constraints: table =>
                 {
@@ -234,8 +240,9 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                     Rating = table.Column<int>(type: "int", nullable: false),
                     ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Likes = table.Column<int>(type: "int", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
+                    Likes = table.Column<int>(type: "int", nullable: false),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -288,7 +295,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                 {
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AddedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    AddedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()")
                 },
                 constraints: table =>
                 {
@@ -364,17 +371,58 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
             migrationBuilder.InsertData(
                 table: "Categories",
                 columns: new[] { "Id", "Name", "ParentId" },
-                values: new object[] { new Guid("11111111-1111-1111-1111-111111111111"), "Books", null });
+                values: new object[,]
+                {
+                    { new Guid("11111111-1111-1111-1111-111111111111"), "Books", null },
+                    { new Guid("22222222-2222-2222-2222-222222222222"), "Tech", null }
+                });
 
             migrationBuilder.InsertData(
                 table: "ProductDetails",
                 columns: new[] { "Id", "Brand", "CareInstructions", "ClosureType", "ClothesSize", "Color", "FabricType", "Origin", "ShoesSize" },
-                values: new object[] { new Guid("33333333-3333-3333-3333-333333333333"), 16, "Keep dry", "None", null, 5, "Paper", "USA", null });
+                values: new object[,]
+                {
+                    { new Guid("33333333-3333-3333-3333-333333333333"), 16, "Keep dry", "None", null, 5, "Paper", "USA", null },
+                    { new Guid("44444444-4444-4444-4444-444444444444"), 20, "Wipe clean", "Zip", null, 4, "Plastic", "China", null }
+                });
+
+            migrationBuilder.InsertData(
+                table: "ReviewContents",
+                columns: new[] { "Id", "Article", "FilePaths", "Message" },
+                values: new object[] { new Guid("99999999-9999-9999-9999-999999999999"), "Great book!", "[\"file1.jpg\",\"file2.jpg\"]", "Very useful for learning advanced C#" });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "CreatedAt", "Email", "FirstName", "LastName", "PasswordHash", "ProfilePicUrl", "Role", "Status" },
+                values: new object[,]
+                {
+                    { new Guid("77777777-7777-7777-7777-777777777777"), new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "user@example.com", "Test", "User", "$2a$11$0123456789ABCDEFFEDCB.S2Yzr2tczlChVlvkY9yqWo1rec6s2eC", null, 0, 0 },
+                    { new Guid("88888888-8888-8888-8888-888888888888"), new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "admin@example.com", "Admin", "Root", "$2a$11$0123456789ABCDEFFEDCB.f3zF6Kwis6bGMA186omDrGf1JNLP/eK", null, 1, 0 }
+                });
 
             migrationBuilder.InsertData(
                 table: "Products",
                 columns: new[] { "Id", "CategoryId", "Code", "DetailsId", "InCartList", "InWishlist", "Name", "Price", "ProductPics", "Quantity", "Rating", "ReviewsCount", "Status" },
-                values: new object[] { new Guid("22222222-2222-2222-2222-222222222222"), new Guid("11111111-1111-1111-1111-111111111111"), "01JS9QNDAYKK2CFRT5AKZF1YAA", new Guid("33333333-3333-3333-3333-333333333333"), false, false, "C# in Depth", 39.99m, "[]", 10, 5, 0, 0 });
+                values: new object[,]
+                {
+                    { new Guid("55555555-5555-5555-5555-555555555555"), new Guid("11111111-1111-1111-1111-111111111111"), "01JS9QNDAYKK2CFRT5AKZF1YAA", new Guid("33333333-3333-3333-3333-333333333333"), true, true, "C# in Depth", 39.99m, "[]", 10, 5, 1, 0 },
+                    { new Guid("66666666-6666-6666-6666-666666666666"), new Guid("22222222-2222-2222-2222-222222222222"), "01JS9QNDAYKK2CFRT5AKZF1YBB", new Guid("44444444-4444-4444-4444-444444444444"), false, false, "Wireless Mouse", 19.99m, "[]", 50, 4, 0, 0 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "CartLists",
+                columns: new[] { "Id", "AddedAt", "Price", "ProductId", "Quantity", "UserId" },
+                values: new object[] { new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"), new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), 39.99m, new Guid("55555555-5555-5555-5555-555555555555"), 1, new Guid("77777777-7777-7777-7777-777777777777") });
+
+            migrationBuilder.InsertData(
+                table: "Reviews",
+                columns: new[] { "Id", "ContentId", "CreatedAt", "Likes", "ProductId", "Rating", "UserId" },
+                values: new object[] { new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"), new Guid("99999999-9999-9999-9999-999999999999"), new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), 3, new Guid("55555555-5555-5555-5555-555555555555"), 5, new Guid("77777777-7777-7777-7777-777777777777") });
+
+            migrationBuilder.InsertData(
+                table: "WishlistItems",
+                columns: new[] { "ProductId", "UserId", "AddedAt" },
+                values: new object[] { new Guid("55555555-5555-5555-5555-555555555555"), new Guid("77777777-7777-7777-7777-777777777777"), new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc) });
 
             migrationBuilder.CreateIndex(
                 name: "IX_CartLists_ProductId",
@@ -416,6 +464,12 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                 name: "IX_Products_DetailsId",
                 table: "Products",
                 column: "DetailsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RefreshTokens_Token",
+                table: "RefreshTokens",
+                column: "Token",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_RefreshTokens_UserId",
