@@ -5,7 +5,7 @@ using AmazonKiller.Domain.Entities.Users;
 using AmazonKiller.Shared.Exceptions;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Configuration;
 
 namespace AmazonKiller.Application.Features.Account.Profile.Commands.ChangeEmail.StartEmailChange;
 
@@ -14,9 +14,13 @@ public class StartEmailChangeHandler(
     IEmailVerificationRepository repo,
     ICurrentUserService currentUserService,
     IWebHostEnvironment env,
+    IConfiguration config,
     IAccountRepository accountRepo
 ) : IRequestHandler<StartEmailChangeCommand>
 {
+    private readonly bool _useFixedCode = config.GetValue<bool>("Verification:UseFixedCode");
+    private readonly string? _fixedCode = config.GetValue<string>("Verification:FixedCodeValue");
+
     public async Task Handle(StartEmailChangeCommand cmd, CancellationToken ct)
     {
         var userId = currentUserService.UserId ?? throw new AppException("Unauthorized", 401);
@@ -31,7 +35,7 @@ public class StartEmailChangeHandler(
             throw new AppException("New email cannot be the same as the current email", 400);
 
         // Генерируем код
-        var code = env.IsEnvironment("Testing") ? "123456" : new Random().Next(100000, 999999).ToString();
+        var code = _useFixedCode ? _fixedCode : new Random().Next(100000, 999999).ToString();
 
         var entry = new EmailVerification
         {

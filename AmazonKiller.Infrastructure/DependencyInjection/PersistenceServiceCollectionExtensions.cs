@@ -21,10 +21,11 @@ public static class PersistenceServiceCollectionExtensions
             //     opt.EnableSensitiveDataLogging();
             // }
 
-            if (env.IsEnvironment("Testing"))
-                opt.UseInMemoryDatabase("TestDb_Shared"); // обязательно фиксированное имя
-            else
-                opt.UseSqlServer(cfg.GetConnectionString("DefaultConnection"));
+            // if (env.IsEnvironment("Testing"))
+            //     opt.UseInMemoryDatabase("TestDb_Shared"); // обязательно фиксированное имя
+            // else
+            //     opt.UseSqlServer(cfg.GetConnectionString("DefaultConnection"));
+            opt.UseSqlServer(cfg.GetConnectionString("DefaultConnection"));
         });
 
         return services;

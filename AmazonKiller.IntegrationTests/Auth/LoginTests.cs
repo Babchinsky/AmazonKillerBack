@@ -1,12 +1,21 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
 using FluentAssertions;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace AmazonKiller.IntegrationTests.Auth;
 
 public class LoginTests(CustomWebApplicationFactory factory) : IClassFixture<CustomWebApplicationFactory>
 {
     private readonly HttpClient _client = factory.CreateClient();
+
+    private string? GetFixedCode()
+    {
+        using var scope = factory.Services.CreateScope();
+        var config = scope.ServiceProvider.GetRequiredService<IConfiguration>();
+        return config.GetValue<string>("Verification:FixedCodeValue");
+    }
 
     private async Task RegisterTestUserAsync(string email, string password)
     {
@@ -16,17 +25,17 @@ public class LoginTests(CustomWebApplicationFactory factory) : IClassFixture<Cus
         startResponse.StatusCode.Should().Be(HttpStatusCode.NoContent);
 
         // Confirm registration
-        var confirmBody = new { Email = email, Code = "123456" }; // Для тестов код всегда 123456
+        var code = GetFixedCode();
+        var confirmBody = new { Email = email, Code = code };
         var confirmResponse = await _client.PostAsJsonAsync("/api/auth/confirm-registration", confirmBody);
         confirmResponse.StatusCode.Should().Be(HttpStatusCode.NoContent);
     }
-
 
     [Fact]
     public async Task Login_ShouldReturn_Token_WhenCredentialsAreValid()
     {
         var email = $"test_{Guid.NewGuid()}@mail.com";
-        var password = "StrongPass123";
+        const string password = "StrongPass123";
         await RegisterTestUserAsync(email, password);
 
         var body = new { Email = email, Password = password };

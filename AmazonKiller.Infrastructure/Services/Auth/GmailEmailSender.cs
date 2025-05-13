@@ -7,11 +7,11 @@ using Microsoft.Extensions.Hosting;
 
 namespace AmazonKiller.Infrastructure.Services.Auth;
 
-public class GmailEmailSender(IConfiguration cfg, IWebHostEnvironment env) : IEmailSender
+public class GmailEmailSender(IConfiguration cfg) : IEmailSender
 {
     private readonly string _from = cfg["Gmail:From"] ?? throw new ArgumentNullException(nameof(cfg));
     private readonly string _appPassword = cfg["Gmail:AppPassword"] ?? throw new ArgumentNullException(nameof(cfg));
-    private readonly IWebHostEnvironment _env = env ?? throw new ArgumentNullException(nameof(env));
+    private readonly bool _useFixedCode = cfg.GetValue<bool>("Verification:UseFixedCode");
 
     // Внедрение зависимостей через конструктор
 
@@ -19,11 +19,10 @@ public class GmailEmailSender(IConfiguration cfg, IWebHostEnvironment env) : IEm
     public async Task SendEmailAsync(string to, string subject, string htmlBody)
     {
         // Закомментировано: больше не отправляем email в тестовом окружении
-        if (_env.IsEnvironment("Testing"))
+        if (_useFixedCode)
         {
-            // Замените на простой вывод сообщения в консоль
-            Console.WriteLine("Email sending skipped in Testing environment.");
-            return; // Прекращаем выполнение метода, не отправляя email
+            Console.WriteLine($"Email to {to} skipped (UseFixedCode=true)");
+            return;
         }
 
         // Если хотите полностью отключить отправку через почту (временно), закомментируйте или удалите следующую часть:

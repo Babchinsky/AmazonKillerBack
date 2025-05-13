@@ -1,14 +1,16 @@
 ﻿using AmazonKiller.Application.Interfaces.Repositories.Auth;
 using AmazonKiller.Domain.Entities.Users;
 using AmazonKiller.Infrastructure.Data;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Configuration;
 
 namespace AmazonKiller.Infrastructure.Repositories.Auth;
 
-public class EmailVerificationRepository(AmazonDbContext db, IWebHostEnvironment env) : IEmailVerificationRepository
+public class EmailVerificationRepository(AmazonDbContext db, IConfiguration config) : IEmailVerificationRepository
 {
+    private readonly bool _useFixedCode = config.GetValue<bool>("Verification:UseFixedCode");
+    private readonly string? _fixedCode = config.GetValue<string>("Verification:FixedCodeValue");
+
     public Task AddAsync(EmailVerification entry, CancellationToken ct)
     {
         db.EmailVerifications.Add(entry);
@@ -45,7 +47,7 @@ public class EmailVerificationRepository(AmazonDbContext db, IWebHostEnvironment
 
     public async Task<string> CreateCodeAsync(string email, string tempPasswordHash, CancellationToken ct)
     {
-        var code = env.IsEnvironment("Testing") ? "123456" : GenerateRandomCode();
+        var code = _useFixedCode ? _fixedCode : GenerateRandomCode();
 
         var entry = new EmailVerification
         {
@@ -60,6 +62,7 @@ public class EmailVerificationRepository(AmazonDbContext db, IWebHostEnvironment
 
         return code;
     }
+
 
     private static string GenerateRandomCode()
     {

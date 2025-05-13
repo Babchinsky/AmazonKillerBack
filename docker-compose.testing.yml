@@ -1,0 +1,33 @@
+﻿services:
+  webapi:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"                         # чтобы дергать из Postman
+    environment:
+      ASPNETCORE_ENVIRONMENT: Testing     # код-123456
+      ConnectionStrings__DefaultConnection: |
+        Server=db;Database=amazonkillerdb;
+        User Id=sa;Password=YourStrong@Password1;Encrypt=False
+    depends_on:
+      - db
+    networks: [ app-net ]
+
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "YourStrong@Password1"   # ← правильное имя переменной
+      MSSQL_PID: "Express"
+    ports:                      # откроем наружу, если нужна локальная студия
+      - "1433:1433"
+    volumes:
+      - sqlserverdata:/var/opt/mssql
+    networks: [ app-net ]
+
+volumes:
+  sqlserverdata:
+
+networks:
+  app-net:
