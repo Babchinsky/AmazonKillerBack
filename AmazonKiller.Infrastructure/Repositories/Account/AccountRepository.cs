@@ -27,11 +27,12 @@ public class AccountRepository(AmazonDbContext db) : IAccountRepository
         return db.SaveChangesAsync(ct);
     }
 
-    public Task DeleteUserAsync(User user, CancellationToken ct)
+    public async Task DeleteUserAsync(User user, CancellationToken ct)
     {
         db.RefreshTokens.RemoveRange(user.RefreshTokens);
-        db.Users.Remove(user);
-        return db.SaveChangesAsync(ct);
+        user.Status = UserStatus.Deleted;
+        db.Users.Update(user);
+        await db.SaveChangesAsync(ct);
     }
 
     public Task RevokeRefreshTokensAsync(Guid userId, CancellationToken ct)
