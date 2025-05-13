@@ -15,7 +15,12 @@ public class CreateCategoryHandler(ICategoryRepository repo, IMapper mapper)
         {
             Id = Guid.NewGuid(),
             Name = request.Name,
-            ParentId = request.ParentId
+            ParentId = request.ParentId,
+            Description = request.Description,
+            ImageUrl = request.ImageUrl,
+            IconName = request.ParentId == null ? request.IconName : null,
+            PropertyKeys = request.ParentId != null ? request.PropertyKeys ?? [] : [],
+            Status = request.Status
         };
 
         await repo.AddAsync(category, ct);

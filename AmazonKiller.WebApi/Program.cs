@@ -106,7 +106,8 @@ using (var scope = app.Services.CreateScope())
     var env = scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>();
     var db = scope.ServiceProvider.GetRequiredService<AmazonDbContext>();
 
-    if (!env.IsEnvironment("Testing")) db.Database.Migrate(); // Только если не тесты!
+    // if (!env.IsEnvironment("Testing")) 
+    db.Database.Migrate(); // Только если не тесты!
 }
 
 app.UseForwardedHeaders();

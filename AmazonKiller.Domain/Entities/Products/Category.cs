@@ -16,5 +16,11 @@ public class Category
 
     public CategoryStatus Status { get; set; } = CategoryStatus.Active;
 
+    public string? Description { get; set; }
+    public string? ImageUrl { get; set; } // ссылка на изображение
+    public string? IconName { get; set; } // только для категорий
+
+    public ICollection<string> PropertyKeys { get; set; } = new List<string>(); // только для подкатегорий
+
     public ICollection<Product> Products { get; set; } = new List<Product>();
 }

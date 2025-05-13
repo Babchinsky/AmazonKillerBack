@@ -8,10 +8,12 @@ public class CategoryMappingProfile : Profile
 {
     public CategoryMappingProfile()
     {
+        // Маппинг для дерева
         CreateMap<Category, CategoryTreeDto>()
             .ForMember(d => d.Status, o => o.MapFrom(s => s.Status.ToString()))
             .ForMember(d => d.Children, o => o.MapFrom(s => s.Children));
 
-        CreateMap<Category, CategoryDto>();
+        // Прямой и обратный маппинг Category <-> CategoryDto
+        CreateMap<Category, CategoryDto>().ReverseMap();
     }
 }

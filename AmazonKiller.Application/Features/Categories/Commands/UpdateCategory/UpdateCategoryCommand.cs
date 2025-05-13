@@ -1,5 +1,4 @@
 using AmazonKiller.Application.DTOs.Categories;
-using AmazonKiller.Application.DTOs.Products;
 using AmazonKiller.Domain.Entities.Products;
 using MediatR;
 
@@ -9,4 +8,9 @@ public record UpdateCategoryCommand(
     Guid Id,
     string Name,
     CategoryStatus Status,
-    Guid? ParentId) : IRequest<CategoryDto>;
+    Guid? ParentId,
+    string? Description,
+    string? ImageUrl,
+    string? IconName,
+    List<string>? PropertyKeys
+) : IRequest<CategoryDto>;

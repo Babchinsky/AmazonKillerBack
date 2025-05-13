@@ -29,8 +29,26 @@ public static class SeedData
 
         // Categories
         modelBuilder.Entity<Category>().HasData(
-            new Category { Id = booksId, Name = "Books" },
-            new Category { Id = techId, Name = "Tech" }
+            new Category
+            {
+                Id = booksId,
+                Name = "Books",
+                Status = CategoryStatus.Active,
+                Description = "A selection of books",
+                ImageUrl = "https://example.com/images/books.jpg",
+                IconName = "book", // так как это main category
+                ParentId = null
+            },
+            new Category
+            {
+                Id = techId,
+                Name = "Tech",
+                Status = CategoryStatus.Active,
+                Description = "Tech gadgets and accessories",
+                ImageUrl = "https://example.com/images/tech.jpg",
+                IconName = "devices", // тоже main category
+                ParentId = null
+            }
         );
 
         // ProductDetails

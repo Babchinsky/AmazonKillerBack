@@ -18,6 +18,10 @@ public class UpdateCategoryHandler(ICategoryRepository repo, IMapper mapper)
         c.Name = request.Name;
         c.Status = request.Status;
         c.ParentId = request.ParentId;
+        c.Description = request.Description;
+        c.ImageUrl = request.ImageUrl;
+        c.IconName = request.ParentId == null ? request.IconName : null;
+        c.PropertyKeys = request.ParentId != null ? request.PropertyKeys ?? [] : [];
 
         await repo.UpdateAsync(c, ct);
         return mapper.Map<CategoryDto>(c);

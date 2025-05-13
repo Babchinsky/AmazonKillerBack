@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AmazonKiller.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AmazonDbContext))]
-    [Migration("20250508182333_Initial")]
+    [Migration("20250513165019_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -88,6 +88,15 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IconName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(40)
@@ -95,6 +104,10 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
 
                     b.Property<Guid?>("ParentId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.PrimitiveCollection<string>("PropertyKeys")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Status")
                         .ValueGeneratedOnAdd()
@@ -111,13 +124,21 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         new
                         {
                             Id = new Guid("11111111-1111-1111-1111-111111111111"),
+                            Description = "A selection of books",
+                            IconName = "book",
+                            ImageUrl = "https://example.com/images/books.jpg",
                             Name = "Books",
+                            PropertyKeys = "[]",
                             Status = 0
                         },
                         new
                         {
                             Id = new Guid("22222222-2222-2222-2222-222222222222"),
+                            Description = "Tech gadgets and accessories",
+                            IconName = "devices",
+                            ImageUrl = "https://example.com/images/tech.jpg",
                             Name = "Tech",
+                            PropertyKeys = "[]",
                             Status = 0
                         });
                 });
@@ -500,7 +521,6 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Code")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
