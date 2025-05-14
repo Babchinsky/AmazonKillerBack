@@ -1,5 +1,4 @@
 ﻿using AmazonKiller.Application.DTOs.Common;
-using AmazonKiller.Application.DTOs.Products;
 using AmazonKiller.Application.Features.Products.Commands.BulkDeleteProducts;
 using AmazonKiller.Application.Features.Products.Commands.CreateProduct;
 using AmazonKiller.Application.Features.Products.Commands.UpdateProduct;

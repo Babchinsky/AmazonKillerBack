@@ -2,4 +2,4 @@
 
 namespace AmazonKiller.Application.Features.Account.Profile.Commands.DeleteAccount;
 
-public record DeleteAccountCommand() : IRequest<Unit>;
+public record DeleteAccountCommand : IRequest<Unit>;

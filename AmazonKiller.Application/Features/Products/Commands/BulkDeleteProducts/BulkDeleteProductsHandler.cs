@@ -1,5 +1,4 @@
 ﻿using AmazonKiller.Application.DTOs.Common;
-using AmazonKiller.Application.DTOs.Products;
 using AmazonKiller.Application.Interfaces.Repositories.Products;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

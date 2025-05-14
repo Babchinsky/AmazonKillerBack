@@ -36,7 +36,7 @@ public class GetAllReviewsHandler(IReviewRepository repo, IMapper mapper)
             .Skip((q.Page - 1) * q.PageSize)
             .Take(q.PageSize);
 
-        var list = await EntityFrameworkQueryableExtensions.ToListAsync(query, ct);
+        var list = await query.ToListAsync(ct);
         return mapper.Map<List<ReviewDto>>(list);
     }
 }

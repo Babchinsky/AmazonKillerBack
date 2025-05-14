@@ -16,7 +16,7 @@ public class CreateOrderHandler(
         var userId = currentUser.UserId ?? throw new UnauthorizedAccessException("User is not authenticated");
 
         var cartItems = await cartRepo.GetCartItemsWithProductsAsync(userId, ct);
-        if (!cartItems.Any()) throw new AppException("Cart is empty", 400);
+        if (cartItems.Count == 0) throw new AppException("Cart is empty");
 
         var order = new Order
         {

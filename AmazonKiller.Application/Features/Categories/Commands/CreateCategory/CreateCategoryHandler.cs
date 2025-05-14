@@ -4,7 +4,6 @@ using AmazonKiller.Domain.Entities.Products;
 using AmazonKiller.Shared.Exceptions;
 using AutoMapper;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 
 namespace AmazonKiller.Application.Features.Categories.Commands.CreateCategory;
 

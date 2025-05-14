@@ -4,7 +4,6 @@ using AmazonKiller.Application.Interfaces.Services;
 using AmazonKiller.Domain.Entities.Users;
 using AmazonKiller.Shared.Exceptions;
 using MediatR;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 
 namespace AmazonKiller.Application.Features.Account.Profile.Commands.ChangeEmail.StartEmailChange;
@@ -13,7 +12,6 @@ public class StartEmailChangeHandler(
     IVerificationEmailSender verificationEmailSender,
     IEmailVerificationRepository repo,
     ICurrentUserService currentUserService,
-    IWebHostEnvironment env,
     IConfiguration config,
     IAccountRepository accountRepo
 ) : IRequestHandler<StartEmailChangeCommand>
@@ -32,7 +30,7 @@ public class StartEmailChangeHandler(
 
         // Если новый email совпадает с текущим, не разрешаем изменить
         if (user.Email == cmd.NewEmail)
-            throw new AppException("New email cannot be the same as the current email", 400);
+            throw new AppException("New email cannot be the same as the current email");
 
         // Генерируем код
         var code = _useFixedCode ? _fixedCode : new Random().Next(100000, 999999).ToString();

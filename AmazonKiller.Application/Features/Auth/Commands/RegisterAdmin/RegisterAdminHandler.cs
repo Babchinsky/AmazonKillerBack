@@ -1,7 +1,5 @@
 ﻿using AmazonKiller.Application.DTOs.Auth;
-using AmazonKiller.Application.Interfaces;
 using AmazonKiller.Application.Interfaces.Auth;
-using AmazonKiller.Application.Interfaces.Repositories;
 using AmazonKiller.Application.Interfaces.Repositories.Auth;
 using AmazonKiller.Application.Interfaces.Services;
 using AmazonKiller.Domain.Entities.Users;

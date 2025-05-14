@@ -127,7 +127,7 @@ public class OrderRepository(AmazonDbContext db, IMapper mapper) : IOrderReposit
 
         order.Items.Remove(item);
 
-        if (!order.Items.Any()) db.Orders.Remove(order); // Если удалили последний товар — удаляем весь заказ
+        if (order.Items.Count == 0) db.Orders.Remove(order); // Если удалили последний товар — удаляем весь заказ
 
         await db.SaveChangesAsync(ct);
 

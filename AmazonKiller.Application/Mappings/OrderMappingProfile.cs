@@ -1,5 +1,4 @@
-﻿using AmazonKiller.Application.DTOs.Account;
-using AmazonKiller.Application.DTOs.Account.Orders;
+﻿using AmazonKiller.Application.DTOs.Account.Orders;
 using AmazonKiller.Domain.Entities.Orders;
 using AutoMapper;
 

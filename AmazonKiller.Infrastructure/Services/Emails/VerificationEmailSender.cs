@@ -14,7 +14,7 @@ public class VerificationEmailSender(IEmailSender emailSender, IOptions<EmailSet
 
     private readonly EmailSettings _settings = emailSettingsOptions.Value;
 
-    public async Task SendVerificationCodeAsync(string email, string subject, string code)
+    public async Task SendVerificationCodeAsync(string email, string subject, string? code)
     {
         var htmlTemplate = await LoadTemplateAsync();
         var htmlBody = htmlTemplate

@@ -6,8 +6,8 @@ namespace AmazonKiller.Infrastructure.Services;
 public class CurrentRequestContext(IHttpContextAccessor accessor) : ICurrentRequestContext
 {
     public string IpAddress =>
-        accessor.HttpContext?.Connection?.RemoteIpAddress?.ToString() ?? "unknown";
+        accessor.HttpContext?.Connection.RemoteIpAddress?.ToString() ?? "unknown";
 
     public string UserAgent =>
-        accessor.HttpContext?.Request?.Headers.UserAgent.ToString() ?? "unknown";
+        accessor.HttpContext?.Request.Headers.UserAgent.ToString() ?? "unknown";
 }

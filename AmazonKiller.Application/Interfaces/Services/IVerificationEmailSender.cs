@@ -2,5 +2,5 @@
 
 public interface IVerificationEmailSender
 {
-    Task SendVerificationCodeAsync(string email, string subject, string code);
+    Task SendVerificationCodeAsync(string email, string subject, string? code);
 }

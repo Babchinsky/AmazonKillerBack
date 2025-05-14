@@ -35,8 +35,8 @@ public class OrdersController(IMediator mediator) : ControllerBase
         return Ok(id);
     }
 
-    [HttpPost("{orderId:guid}/products")]
-    public async Task<IActionResult> AddProduct(Guid orderId, [FromBody] AddProductToOrderCommand cmd,
+    [HttpPost("/products")]
+    public async Task<IActionResult> AddProduct([FromBody] AddProductToOrderCommand cmd,
         CancellationToken ct)
     {
         await mediator.Send(cmd, ct);

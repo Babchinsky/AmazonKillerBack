@@ -45,7 +45,7 @@ public class EmailVerificationRepository(AmazonDbContext db, IConfiguration conf
                 ct);
     }
 
-    public async Task<string> CreateCodeAsync(string email, string tempPasswordHash, CancellationToken ct)
+    public async Task<string?> CreateCodeAsync(string email, string tempPasswordHash, CancellationToken ct)
     {
         var code = _useFixedCode ? _fixedCode : GenerateRandomCode();
 

@@ -15,7 +15,7 @@ public class Product
 
     public Rating Rating { get; set; } = Rating.Five;
     public int ReviewsCount { get; set; }
-    public List<string> ProductPics { get; set; } = new(); // stored as JSON
+    public List<string> ProductPics { get; set; } = []; // stored as JSON
 
     [Required] public Guid DetailsId { get; set; }
     [Required] public ProductDetails Details { get; set; } = null!;

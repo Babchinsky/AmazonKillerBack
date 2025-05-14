@@ -3,4 +3,4 @@ using MediatR;
 
 namespace AmazonKiller.Application.Features.Account.Cart.Queries.GetCart;
 
-public record GetCartQuery() : IRequest<List<ProductInCartDto>>;
+public record GetCartQuery : IRequest<List<ProductInCartDto>>;

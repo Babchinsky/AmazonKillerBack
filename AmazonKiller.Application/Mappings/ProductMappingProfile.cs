@@ -1,10 +1,8 @@
-﻿using AmazonKiller.Application.DTOs;
-using AmazonKiller.Application.DTOs.Products;
+﻿using AmazonKiller.Application.DTOs.Products;
 using AmazonKiller.Application.Features.Products.Commands.CreateProduct;
 using AmazonKiller.Application.Features.Products.Commands.UpdateProduct;
 using AmazonKiller.Domain.Entities.Products;
 using AutoMapper;
-using NUlid;
 
 namespace AmazonKiller.Application.Mappings;
 

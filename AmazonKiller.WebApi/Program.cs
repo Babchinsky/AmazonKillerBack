@@ -65,7 +65,7 @@ builder.Services.AddSwaggerGen(c =>
     // --- JWT авторизация в Swagger ---
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
-        Description = @"Введите токен как: Bearer {токен}",
+        Description = "Введите токен как: Bearer {токен}",
         Name = "Authorization",
         In = ParameterLocation.Header,
         Type = SecuritySchemeType.Http,
@@ -103,7 +103,7 @@ var app = builder.Build();
 // --- Автоматическая миграция БД ---
 using (var scope = app.Services.CreateScope())
 {
-    var env = scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>();
+    // var env = scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>();
     var db = scope.ServiceProvider.GetRequiredService<AmazonDbContext>();
 
     // if (!env.IsEnvironment("Testing")) 

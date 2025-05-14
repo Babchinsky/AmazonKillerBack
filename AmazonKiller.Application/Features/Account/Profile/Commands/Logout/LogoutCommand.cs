@@ -2,4 +2,4 @@
 
 namespace AmazonKiller.Application.Features.Account.Profile.Commands.Logout;
 
-public record LogoutCommand() : IRequest<Unit>;
+public record LogoutCommand : IRequest<Unit>;

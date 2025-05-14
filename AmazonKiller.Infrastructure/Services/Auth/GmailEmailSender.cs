@@ -1,9 +1,7 @@
 ﻿using System.Net;
 using System.Net.Mail;
 using AmazonKiller.Application.Interfaces.Auth;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
 
 namespace AmazonKiller.Infrastructure.Services.Auth;
 

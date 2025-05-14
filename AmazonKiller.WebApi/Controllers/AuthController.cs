@@ -3,7 +3,6 @@ using AmazonKiller.Application.Features.Auth.Commands.Login;
 using AmazonKiller.Application.Features.Auth.Commands.Refresh;
 using AmazonKiller.Application.Features.Auth.Commands.RegisterAdmin;
 using AmazonKiller.Application.Features.Auth.Commands.StartRegistration;
-using AmazonKiller.Application.Interfaces.Auth;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,7 +10,7 @@ namespace AmazonKiller.WebApi.Controllers;
 
 [ApiController]
 [Route("api/auth")]
-public class AuthController(IAuthService authService, IMediator mediator) : ControllerBase
+public class AuthController(IMediator mediator) : ControllerBase
 {
     [HttpPost("register/start")]
     public async Task<IActionResult> Start([FromBody] StartRegistrationCommand cmd)

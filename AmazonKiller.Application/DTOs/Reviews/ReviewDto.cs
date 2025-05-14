@@ -10,6 +10,6 @@ public class ReviewDto
     public DateTime CreatedAt { get; set; }
     public string UserFullName { get; set; } = string.Empty;
     public string ProductName { get; set; } = string.Empty;
-    public List<string> Tags { get; set; } = new();
+    public List<string> Tags { get; set; } = [];
     public int Likes { get; set; }
 }

@@ -1,6 +1,4 @@
-﻿using AmazonKiller.Application.DTOs.Auth;
-using AmazonKiller.Application.Features.Auth.Commands.Login;
-using AmazonKiller.Domain.Entities.Users;
+﻿using AmazonKiller.Domain.Entities.Users;
 
 namespace AmazonKiller.Application.Interfaces.Auth;
 

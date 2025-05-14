@@ -1,7 +1,6 @@
 using AmazonKiller.Application.DTOs.Reviews;
 using AmazonKiller.Application.Features.Reviews.Commands.CreateReview;
 using AmazonKiller.Application.Features.Reviews.Commands.UpdateReview;
-using AmazonKiller.Domain.Entities.Products;
 using AmazonKiller.Domain.Entities.Reviews;
 using AutoMapper;
 
