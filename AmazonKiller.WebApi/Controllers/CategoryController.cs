@@ -61,9 +61,10 @@ public class CategoryController(IMediator mediator) : ControllerBase
 
     [Authorize(Roles = "Admin")]
     [HttpPost("delete-many")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> BulkDelete([FromBody] BulkDeleteCategoriesCommand cmd, CancellationToken ct)
     {
-        await mediator.Send(cmd, ct);
-        return NoContent();
+        var result = await mediator.Send(cmd, ct);
+        return Ok(result);
     }
 }

@@ -1,7 +1,7 @@
-﻿using AmazonKiller.Application.Interfaces.Common;
+﻿using AmazonKiller.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Hosting;
 
-namespace AmazonKiller.Infrastructure.Services.Common.FileStorage;
+namespace AmazonKiller.Infrastructure.Services.FileStorage;
 
 public class LocalFileStorage(IWebHostEnvironment env) : IFileStorage
 {

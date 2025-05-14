@@ -8,4 +8,6 @@ public interface IUserRepository
     Task AddAdminAsync(User user, CancellationToken ct);
     Task<bool> IsEmailTakenAsync(string email, CancellationToken ct);
     Task ChangeEmailAsync(Guid userId, string newEmail, CancellationToken ct);
+    Task<User?> GetUserByEmailAsync(string email, CancellationToken ct);
+    Task RemoveRefreshTokensForDeviceAsync(Guid userId, string deviceId, CancellationToken ct);
 }

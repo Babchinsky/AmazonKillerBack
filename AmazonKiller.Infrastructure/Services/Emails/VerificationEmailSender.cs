@@ -1,16 +1,16 @@
 ﻿using System.Reflection;
 using AmazonKiller.Application.Interfaces.Auth;
-using AmazonKiller.Application.Interfaces.Common;
+using AmazonKiller.Application.Interfaces.Services;
 using AmazonKiller.Application.Options;
 using Microsoft.Extensions.Options;
 
-namespace AmazonKiller.Infrastructure.Services.Common.Emails;
+namespace AmazonKiller.Infrastructure.Services.Emails;
 
 public class VerificationEmailSender(IEmailSender emailSender, IOptions<EmailSettings> emailSettingsOptions)
     : IVerificationEmailSender
 {
     private const string TemplatePath =
-        "AmazonKiller.Infrastructure.Services.Common.Emails.Templates.VerificationCodeTemplate.html";
+        "AmazonKiller.Infrastructure.Services.Emails.Templates.VerificationCodeTemplate.html";
 
     private readonly EmailSettings _settings = emailSettingsOptions.Value;
 

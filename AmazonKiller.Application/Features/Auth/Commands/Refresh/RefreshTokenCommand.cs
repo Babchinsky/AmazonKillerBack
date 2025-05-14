@@ -4,11 +4,4 @@ using MediatR;
 
 namespace AmazonKiller.Application.Features.Auth.Commands.Refresh;
 
-public record RefreshTokenCommand(
-    string RefreshToken,
-    string DeviceId
-) : IRequest<AuthTokensDto>
-{
-    [JsonIgnore] public string? IpAddress { get; set; }
-    [JsonIgnore] public string? UserAgent { get; set; }
-}
+public record RefreshTokenCommand(string RefreshToken, string DeviceId) : IRequest<AuthTokensDto>;

@@ -1,6 +1,6 @@
 ﻿using AmazonKiller.Application.DTOs.Account.ProductCart;
-using AmazonKiller.Application.Interfaces.Common;
 using AmazonKiller.Application.Interfaces.Repositories.Account;
+using AmazonKiller.Application.Interfaces.Services;
 using MediatR;
 
 namespace AmazonKiller.Application.Features.Account.Cart.Queries.GetCart;

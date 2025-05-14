@@ -1,8 +1,7 @@
 ﻿using AmazonKiller.Application.DTOs.Auth;
-using AmazonKiller.Application.Interfaces;
 using AmazonKiller.Application.Interfaces.Auth;
-using AmazonKiller.Application.Interfaces.Repositories;
 using AmazonKiller.Application.Interfaces.Repositories.Auth;
+using AmazonKiller.Application.Interfaces.Services;
 using AmazonKiller.Domain.Entities.Users;
 using AmazonKiller.Shared.Exceptions;
 using MediatR;
@@ -12,7 +11,8 @@ namespace AmazonKiller.Application.Features.Auth.Commands.ConfirmRegistration;
 public class ConfirmRegistrationHandler(
     IEmailVerificationRepository repo,
     IUserRepository userRepo,
-    IAuthService auth)
+    IAuthService auth,
+    ICurrentRequestContext context) // <--- добавлено
     : IRequestHandler<ConfirmRegistrationCommand, AuthTokensDto>
 {
     public async Task<AuthTokensDto> Handle(ConfirmRegistrationCommand cmd, CancellationToken ct)
@@ -39,8 +39,9 @@ public class ConfirmRegistrationHandler(
         var refresh = await auth.GenerateRefreshTokenAsync(
             user,
             cmd.DeviceId,
-            cmd.IpAddress,
-            cmd.UserAgent);
+            context.IpAddress,
+            context.UserAgent);
+
         return new AuthTokensDto(jwt, refresh);
     }
 }

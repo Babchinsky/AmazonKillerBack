@@ -17,11 +17,6 @@ public class AccountRepository(AmazonDbContext db) : IAccountRepository
         return db.Users.Include(u => u.RefreshTokens).FirstOrDefaultAsync(u => u.Id == userId, ct);
     }
 
-    public Task<bool> IsEmailTakenAsync(string email, Guid currentUserId, CancellationToken ct)
-    {
-        return db.Users.AnyAsync(u => u.Email == email && u.Id != currentUserId, ct);
-    }
-
     public Task SaveChangesAsync(CancellationToken ct)
     {
         return db.SaveChangesAsync(ct);

@@ -1,21 +1,22 @@
 ﻿using AmazonKiller.Application.Interfaces.Auth;
-using AmazonKiller.Application.Interfaces.Common;
-using AmazonKiller.Application.Interfaces.Common.Address;
 using AmazonKiller.Application.Interfaces.Repositories.Account;
 using AmazonKiller.Application.Interfaces.Repositories.Admin.Users;
 using AmazonKiller.Application.Interfaces.Repositories.Auth;
 using AmazonKiller.Application.Interfaces.Repositories.Products;
 using AmazonKiller.Application.Interfaces.Repositories.Reviews;
+using AmazonKiller.Application.Interfaces.Services;
+using AmazonKiller.Application.Interfaces.Services.Address;
 using AmazonKiller.Infrastructure.Repositories.Account;
 using AmazonKiller.Infrastructure.Repositories.Admin.Users;
 using AmazonKiller.Infrastructure.Repositories.Auth;
 using AmazonKiller.Infrastructure.Repositories.Products;
 using AmazonKiller.Infrastructure.Repositories.Reviews;
+using AmazonKiller.Infrastructure.Services;
+using AmazonKiller.Infrastructure.Services.Address;
 using AmazonKiller.Infrastructure.Services.Auth;
-using AmazonKiller.Infrastructure.Services.Common;
-using AmazonKiller.Infrastructure.Services.Common.Address;
-using AmazonKiller.Infrastructure.Services.Common.Emails;
-using AmazonKiller.Infrastructure.Services.Common.FileStorage;
+using AmazonKiller.Infrastructure.Services.Emails;
+using AmazonKiller.Infrastructure.Services.FileStorage;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -27,6 +28,7 @@ public static class InfrastructureServiceCollectionExtensions
     {
         services.TryAddSingleton<IPasswordService, PasswordService>();
         services.AddHttpClient<INovaPoshtaService, NovaPoshtaService>();
+        services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
         services.TryAddScoped<IAuthService, AuthService>();
         services.TryAddScoped<IProductRepository, ProductRepository>();
@@ -46,6 +48,7 @@ public static class InfrastructureServiceCollectionExtensions
         services.TryAddScoped<IReviewRepository, ReviewRepository>();
         services.TryAddScoped<ICategoryRepository, CategoryRepository>();
         services.TryAddScoped<IFileStorage, LocalFileStorage>();
+        services.TryAddScoped<ICurrentRequestContext, CurrentRequestContext>();
 
         return services;
     }

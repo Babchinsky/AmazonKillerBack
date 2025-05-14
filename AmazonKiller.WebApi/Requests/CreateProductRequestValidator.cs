@@ -1,9 +1,8 @@
-﻿using AmazonKiller.Application.DTOs.Products;
-using FluentValidation;
+﻿using FluentValidation;
 
-namespace AmazonKiller.Application.Features.Products.Commands.CreateProduct;
+namespace AmazonKiller.WebApi.Requests;
 
-public class CreateProductRequestValidator : AbstractValidator<CreateProductRequest>
+public class CreateProductRequestValidator : AbstractValidator<Application.DTOs.Products.CreateProductRequest>
 {
     private static readonly string[] AllowedExt = [".jpg", ".jpeg", ".png", ".webp"];
 

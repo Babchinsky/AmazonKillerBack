@@ -35,4 +35,16 @@ public class UserRepository(AmazonDbContext db) : IUserRepository
         user.Email = newEmail;
         await db.SaveChangesAsync(ct);
     }
+
+    public async Task<User?> GetUserByEmailAsync(string email, CancellationToken ct)
+    {
+        return await db.Users.SingleOrDefaultAsync(u => u.Email == email, ct);
+    }
+
+    public async Task RemoveRefreshTokensForDeviceAsync(Guid userId, string deviceId, CancellationToken ct)
+    {
+        var tokens = db.RefreshTokens.Where(t => t.UserId == userId && t.DeviceId == deviceId);
+        db.RefreshTokens.RemoveRange(tokens);
+        await db.SaveChangesAsync(ct);
+    }
 }

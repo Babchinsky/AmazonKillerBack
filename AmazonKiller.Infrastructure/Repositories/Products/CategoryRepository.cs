@@ -17,21 +17,6 @@ public class CategoryRepository(AmazonDbContext db) : ICategoryRepository
             .ToListAsync(ct);
     }
 
-    public async Task<List<Guid>> GetDescendantIdsAsync(Guid rootId, CancellationToken ct)
-    {
-        var sql = $"""
-                   WITH cte AS (
-                       SELECT Id FROM Categories WHERE Id = '{rootId}'
-                       UNION ALL
-                       SELECT c.Id FROM Categories c
-                       JOIN cte ON c.ParentId = cte.Id
-                   )
-                   SELECT Id FROM cte
-                   """;
-
-        return await db.Database.SqlQueryRaw<Guid>(sql).ToListAsync(ct);
-    }
-
     // ---- CRUD ---------------------------------------------------
     public Task<List<Category>> GetAllAsync(CancellationToken ct)
     {
@@ -60,26 +45,9 @@ public class CategoryRepository(AmazonDbContext db) : ICategoryRepository
         return db.SaveChangesAsync(ct);
     }
 
-    public async Task BulkHardDeleteAsync(IEnumerable<Guid> rootIds, CancellationToken ct)
+    public async Task DeleteRangeAsync(IEnumerable<Category> categories, CancellationToken ct)
     {
-        var allCategories = await db.Categories.ToListAsync(ct);
-
-        var roots = rootIds as Guid[] ?? rootIds.ToArray();
-        var idsToDelete = new HashSet<Guid>(roots);
-
-        foreach (var rootId in roots)
-            CollectChildren(rootId);
-
-        var categoriesToRemove = allCategories.Where(c => idsToDelete.Contains(c.Id)).ToList();
-
-        db.Categories.RemoveRange(categoriesToRemove);
+        db.Categories.RemoveRange(categories);
         await db.SaveChangesAsync(ct);
-        return;
-
-        void CollectChildren(Guid parentId)
-        {
-            var children = allCategories.Where(c => c.ParentId == parentId).ToList();
-            foreach (var child in children.Where(child => idsToDelete.Add(child.Id))) CollectChildren(child.Id);
-        }
     }
 }

@@ -8,11 +8,6 @@ namespace AmazonKiller.Infrastructure.Repositories.Products;
 
 public class ProductRepository(AmazonDbContext db) : IProductRepository
 {
-    public Task<List<Product>> GetAllAsync()
-    {
-        return db.Products.Include(p => p.Details).AsNoTracking().ToListAsync();
-    }
-
     public Task<Product?> GetByIdAsync(Guid id)
     {
         return db.Products.Include(p => p.Details).FirstOrDefaultAsync(p => p.Id == id);
@@ -22,19 +17,6 @@ public class ProductRepository(AmazonDbContext db) : IProductRepository
     {
         db.Products.Add(product);
         await db.SaveChangesAsync();
-    }
-
-    public async Task UpdateAsync(Product product)
-    {
-        try
-        {
-            db.Products.Update(product);
-            await db.SaveChangesAsync();
-        }
-        catch (DbUpdateConcurrencyException)
-        {
-            throw new AppException("The product was modified by another user", 409);
-        }
     }
 
     public async Task UpdateAsync(Product product, byte[] originalRowVersion, CancellationToken ct)
@@ -52,19 +34,17 @@ public class ProductRepository(AmazonDbContext db) : IProductRepository
         }
     }
 
-    public async Task DeleteAsync(Guid id)
+    public async Task BulkDeleteAsync(IEnumerable<Guid> ids, CancellationToken ct)
     {
-        var p = await db.Products.FindAsync(id);
-        if (p is null) return;
-        db.Products.Remove(p);
-        await db.SaveChangesAsync();
+        var products = await db.Products.Where(p => ids.Contains(p.Id)).ToListAsync(ct);
+        db.Products.RemoveRange(products);
+        await db.SaveChangesAsync(ct);
     }
 
-    public async Task BulkSoftDeleteAsync(IEnumerable<Guid> ids, CancellationToken ct)
+    public async Task DeleteRangeAsync(IEnumerable<Product> products, CancellationToken ct)
     {
-        await db.Products
-            .Where(p => ids.Contains(p.Id))
-            .ExecuteUpdateAsync(p => p.SetProperty(x => x.Status, ProductStatus.OutOfStock), ct);
+        db.Products.RemoveRange(products);
+        await db.SaveChangesAsync(ct);
     }
 
     public Task<bool> IsExistsAsync(Guid id)

@@ -1,6 +1,6 @@
 using AmazonKiller.Application.DTOs.Reviews;
-using AmazonKiller.Application.Interfaces.Common;
 using AmazonKiller.Application.Interfaces.Repositories.Reviews;
+using AmazonKiller.Application.Interfaces.Services;
 using AmazonKiller.Domain.Entities.Products;
 using AmazonKiller.Shared.Exceptions;
 using AutoMapper;

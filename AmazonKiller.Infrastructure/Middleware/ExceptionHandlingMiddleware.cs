@@ -17,13 +17,30 @@ public class ExceptionHandlingMiddleware(RequestDelegate next, ILogger<Exception
         catch (AppException ex) // кастомные исключения
         {
             logger.LogWarning(ex, "Handled application exception: {Message}", ex.Message);
-            await WriteProblemDetailsAsync(context, ex.Message, (int)HttpStatusCode.BadRequest);
+            await WriteProblemDetailsAsync(context, ex.Message, StatusCodes.Status400BadRequest);
+        }
+        catch (JsonException ex) // ошибки при десериализации JSON
+        {
+            logger.LogWarning(ex, "Invalid JSON format");
+            await WriteProblemDetailsAsync(context, "Invalid JSON format: " + ex.Message,
+                StatusCodes.Status400BadRequest);
+        }
+        catch (FormatException ex) // например, неверный Guid
+        {
+            logger.LogWarning(ex, "Invalid input format");
+            await WriteProblemDetailsAsync(context, "Invalid input format: " + ex.Message,
+                StatusCodes.Status400BadRequest);
+        }
+        catch (InvalidOperationException ex) // частые ошибки приведения или ожидания значений
+        {
+            logger.LogWarning(ex, "Invalid operation");
+            await WriteProblemDetailsAsync(context, ex.Message, StatusCodes.Status400BadRequest);
         }
         catch (Exception ex)
         {
             logger.LogError(ex, "Unhandled exception occurred");
             await WriteProblemDetailsAsync(context, "An unexpected error occurred",
-                (int)HttpStatusCode.InternalServerError);
+                StatusCodes.Status500InternalServerError);
         }
     }
 
@@ -34,7 +51,14 @@ public class ExceptionHandlingMiddleware(RequestDelegate next, ILogger<Exception
 
         var problem = new
         {
-            title = statusCode == 400 ? "Bad request" : "Internal server error",
+            title = statusCode switch
+            {
+                StatusCodes.Status400BadRequest => "Bad request",
+                StatusCodes.Status401Unauthorized => "Unauthorized",
+                StatusCodes.Status403Forbidden => "Forbidden",
+                StatusCodes.Status404NotFound => "Not found",
+                _ => "Internal server error"
+            },
             detail = message,
             status = statusCode,
             instance = context.Request.Path

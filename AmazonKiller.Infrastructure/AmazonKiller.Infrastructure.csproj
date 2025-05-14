@@ -25,8 +25,11 @@
     </ItemGroup>
 
     <ItemGroup>
-        <None Remove="Services\Common\Emails\Templates\VerificationCodeTemplate.html"/>
-        <EmbeddedResource Include="Services\Common\Emails\Templates\VerificationCodeTemplate.html"/>
+        <None Remove="Services\Emails\Templates\VerificationCodeTemplate.html"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Include="Services\Emails\Templates\VerificationCodeTemplate.html"/>
     </ItemGroup>
 
 </Project>

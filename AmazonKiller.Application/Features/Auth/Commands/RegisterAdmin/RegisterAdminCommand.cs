@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using AmazonKiller.Application.DTOs.Auth;
+using MediatR;
 
 namespace AmazonKiller.Application.Features.Auth.Commands.RegisterAdmin;
 
@@ -7,4 +8,6 @@ public record RegisterAdminCommand(
     string Password,
     string FirstName,
     string LastName,
-    string Secret) : IRequest<string>;
+    string Secret,
+    string DeviceId
+) : IRequest<AuthTokensDto>;

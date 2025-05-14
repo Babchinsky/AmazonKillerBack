@@ -1,11 +1,11 @@
 ﻿using System.Text;
 using System.Text.Json;
 using AmazonKiller.Application.DTOs.Common.Address;
-using AmazonKiller.Application.Interfaces.Common.Address;
+using AmazonKiller.Application.Interfaces.Services.Address;
 using AmazonKiller.Application.Options;
 using Microsoft.Extensions.Options;
 
-namespace AmazonKiller.Infrastructure.Services.Common.Address;
+namespace AmazonKiller.Infrastructure.Services.Address;
 
 public class NovaPoshtaService(HttpClient client, IOptions<NovaPoshtaOptions> options) : INovaPoshtaService
 {

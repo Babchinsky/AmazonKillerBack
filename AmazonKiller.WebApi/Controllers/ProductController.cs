@@ -1,16 +1,17 @@
-﻿using AmazonKiller.Application.Features.Products.Commands.BulkDeleteProducts;
+﻿using AmazonKiller.Application.DTOs.Common;
+using AmazonKiller.Application.DTOs.Products;
+using AmazonKiller.Application.Features.Products.Commands.BulkDeleteProducts;
 using AmazonKiller.Application.Features.Products.Commands.CreateProduct;
-using AmazonKiller.Application.Features.Products.Commands.DeleteProduct;
 using AmazonKiller.Application.Features.Products.Commands.UpdateProduct;
 using AmazonKiller.Application.Features.Products.Queries.GetAllProducts;
 using AmazonKiller.Application.Features.Products.Queries.GetProductById;
 using AmazonKiller.Application.Features.Products.Queries.IsProductExists;
-using AmazonKiller.Application.Interfaces.Common;
+using AmazonKiller.Application.Interfaces.Services;
 using AmazonKiller.WebApi.Extensions;
-using AmazonKiller.WebApi.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using CreateProductRequest = AmazonKiller.WebApi.Requests.CreateProductRequest;
 
 namespace AmazonKiller.WebApi.Controllers;
 
@@ -77,22 +78,11 @@ public class ProductController(IMediator mediator) : ControllerBase
     }
 
     [Authorize(Roles = "Admin")]
-    [HttpDelete("{id:guid}")]
-    public async Task<IActionResult> Delete(Guid id)
-    {
-        var isExists = await mediator.Send(new IsProductExistsQuery(id));
-        if (!isExists)
-            return this.ProblemNotFound($"Entity with ID {id} not found");
-
-        await mediator.Send(new DeleteProductCommand(id));
-        return NoContent();
-    }
-
-    [Authorize(Roles = "Admin")]
     [HttpPost("delete-many")]
+    [ProducesResponseType(typeof(BulkDeleteResultDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> BulkDelete([FromBody] BulkDeleteProductsCommand cmd, CancellationToken ct)
     {
-        await mediator.Send(cmd, ct);
-        return NoContent();
+        var result = await mediator.Send(cmd, ct);
+        return Ok(result);
     }
 }

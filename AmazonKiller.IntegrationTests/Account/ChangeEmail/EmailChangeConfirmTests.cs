@@ -10,19 +10,17 @@ namespace AmazonKiller.IntegrationTests.Account.ChangeEmail;
 public class EmailChangeConfirmTests : IClassFixture<CustomWebApplicationFactory>
 {
     private readonly HttpClient _client;
-    private readonly string? _fixedCode;
+    private readonly string _fixedCode;
 
-    public EmailChangeConfirmTests(CustomWebApplicationFactory factory, string fixedCode)
+    public EmailChangeConfirmTests(CustomWebApplicationFactory factory)
     {
         var result = TestAuthHelper.RegisterAndLoginWithCredentialsAsync(factory).Result;
         _client = result.Client;
 
-        // Получаем конфигурацию из DI
         using var scope = factory.Services.CreateScope();
-        var config = scope.ServiceProvider.GetRequiredService<IConfiguration>();
-        _fixedCode = config.GetValue<string>("Verification:FixedCodeValue");
+        var cfg = scope.ServiceProvider.GetRequiredService<IConfiguration>();
+        _fixedCode = cfg["EmailVerification:FixedCode"] ?? "123456";
 
-        // Очистка базы
         var db = scope.ServiceProvider.GetRequiredService<AmazonDbContext>();
         db.EmailVerifications.RemoveRange(db.EmailVerifications);
         db.SaveChanges();

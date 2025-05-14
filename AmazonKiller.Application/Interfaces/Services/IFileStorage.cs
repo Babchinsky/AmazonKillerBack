@@ -1,6 +1,6 @@
 ﻿// Application/Interfaces/Common/IFileStorage.cs
 
-namespace AmazonKiller.Application.Interfaces.Common;
+namespace AmazonKiller.Application.Interfaces.Services;
 
 public interface IFileStorage
 {

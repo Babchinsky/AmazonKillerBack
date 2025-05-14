@@ -1,6 +1,6 @@
-﻿using AmazonKiller.Application.Interfaces.Common.Address;
+﻿using AmazonKiller.Application.Interfaces.Services.Address;
 
-namespace AmazonKiller.Infrastructure.Services.Common.Address;
+namespace AmazonKiller.Infrastructure.Services.Address;
 
 public class CountryService : ICountryService
 {

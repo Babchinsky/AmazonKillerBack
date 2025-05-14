@@ -1,4 +1,4 @@
-﻿using AmazonKiller.Application.Interfaces.Common.Address;
+﻿using AmazonKiller.Application.Interfaces.Services.Address;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AmazonKiller.WebApi.Controllers.Address;

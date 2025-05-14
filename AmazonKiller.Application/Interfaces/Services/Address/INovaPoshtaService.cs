@@ -1,6 +1,6 @@
 ﻿using AmazonKiller.Application.DTOs.Common.Address;
 
-namespace AmazonKiller.Application.Interfaces.Common.Address;
+namespace AmazonKiller.Application.Interfaces.Services.Address;
 
 public interface INovaPoshtaService
 {

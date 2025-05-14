@@ -5,7 +5,6 @@ namespace AmazonKiller.Application.Interfaces.Repositories.Products;
 public interface ICategoryRepository
 {
     Task<List<Category>> GetTreeAsync(CancellationToken ct);
-    Task<List<Guid>> GetDescendantIdsAsync(Guid rootId, CancellationToken ct);
 
     // ---- CRUD ---------------------------------------------------
     Task<List<Category>> GetAllAsync(CancellationToken ct);
@@ -14,5 +13,5 @@ public interface ICategoryRepository
 
     Task AddAsync(Category c, CancellationToken ct);
     Task UpdateAsync(Category c, CancellationToken ct);
-    Task BulkHardDeleteAsync(IEnumerable<Guid> ids, CancellationToken ct);
+    Task DeleteRangeAsync(IEnumerable<Category> categories, CancellationToken ct);
 }

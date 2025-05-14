@@ -14,30 +14,8 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace AmazonKiller.Infrastructure.Services.Auth;
 
-public class AuthService(AmazonDbContext db, IConfiguration cfg, IPasswordService passwordService) : IAuthService
+public class AuthService(AmazonDbContext db, IConfiguration cfg) : IAuthService
 {
-    public async Task<AuthTokensDto> LoginAsync(LoginUserCommand cmd)
-    {
-        var user = await db.Users.SingleOrDefaultAsync(u => u.Email == cmd.Email);
-
-        if (user is null || user.Status == UserStatus.Deleted ||
-            !passwordService.VerifyPassword(cmd.Password, user.PasswordHash))
-            throw new AppException("Bad credentials", 401);
-
-        db.RefreshTokens.RemoveRange(db.RefreshTokens
-            .Where(t => t.UserId == user.Id && t.DeviceId == cmd.DeviceId));
-
-        await db.SaveChangesAsync();
-
-        return await IssueTokensAsync(user, cmd.DeviceId, cmd.IpAddress, cmd.UserAgent);
-    }
-
-    private async Task<AuthTokensDto> IssueTokensAsync(User user, string deviceId, string ip, string ua)
-    {
-        var refresh = await GenerateRefreshTokenAsync(user, deviceId, ip, ua);
-        return new AuthTokensDto(GenerateJwt(user), refresh);
-    }
-
     public Task<string> GenerateJwtTokenAsync(User u)
     {
         return Task.FromResult(GenerateJwt(u));

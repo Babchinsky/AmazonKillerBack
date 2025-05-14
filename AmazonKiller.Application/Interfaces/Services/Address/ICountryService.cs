@@ -1,4 +1,4 @@
-﻿namespace AmazonKiller.Application.Interfaces.Common.Address;
+﻿namespace AmazonKiller.Application.Interfaces.Services.Address;
 
 public interface ICountryService
 {
