@@ -8,7 +8,7 @@ namespace AmazonKiller.WebApi.Controllers.Address;
 public class CountryController(ICountryService countryService) : ControllerBase
 {
     [HttpGet]
-    public async Task<IActionResult> GetCountries(CancellationToken ct)
+    public async Task<IActionResult> GetAll(CancellationToken ct)
     {
         var countries = await countryService.GetCountriesAsync(ct);
         return Ok(countries);

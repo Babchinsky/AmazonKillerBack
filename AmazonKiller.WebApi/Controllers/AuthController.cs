@@ -10,17 +10,17 @@ using Microsoft.AspNetCore.Mvc;
 namespace AmazonKiller.WebApi.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/auth")]
 public class AuthController(IAuthService authService, IMediator mediator) : ControllerBase
 {
-    [HttpPost("start-registration")]
+    [HttpPost("register/start")]
     public async Task<IActionResult> Start([FromBody] StartRegistrationCommand cmd)
     {
         await mediator.Send(cmd);
         return NoContent();
     }
 
-    [HttpPost("confirm-registration")]
+    [HttpPost("register/confirm")]
     public async Task<IActionResult> Confirm([FromBody] ConfirmRegistrationCommand cmd)
     {
         return Ok(await mediator.Send(cmd));
@@ -33,13 +33,13 @@ public class AuthController(IAuthService authService, IMediator mediator) : Cont
         return Ok(tokens);
     }
 
-    [HttpPost("refresh")]
+    [HttpPost("refresh-token")]
     public async Task<IActionResult> Refresh([FromBody] RefreshTokenCommand cmd)
     {
         return Ok(await mediator.Send(cmd));
     }
 
-    [HttpPost("register-admin")]
+    [HttpPost("register/admin")]
     public async Task<IActionResult> RegisterAdmin([FromBody] RegisterAdminCommand command)
     {
         return Ok(await mediator.Send(command));

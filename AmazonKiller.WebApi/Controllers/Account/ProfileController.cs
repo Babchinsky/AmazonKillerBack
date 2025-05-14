@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AmazonKiller.WebApi.Controllers.Account;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/profile")]
 [Authorize]
 public class ProfileController(IMediator mediator) : ControllerBase
 {

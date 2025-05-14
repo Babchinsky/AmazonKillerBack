@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AmazonKiller.WebApi.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/products")]
 public class ProductController(IMediator mediator) : ControllerBase
 {
     [HttpGet("search")]
@@ -62,18 +62,6 @@ public class ProductController(IMediator mediator) : ControllerBase
     }
 
     [Authorize(Roles = "Admin")]
-    [HttpDelete("{id:guid}")]
-    public async Task<IActionResult> Delete(Guid id)
-    {
-        var isExists = await mediator.Send(new IsProductExistsQuery(id));
-        if (!isExists)
-            return this.ProblemNotFound($"Entity with ID {id} not found");
-
-        await mediator.Send(new DeleteProductCommand(id));
-        return NoContent();
-    }
-
-    [Authorize(Roles = "Admin")]
     [HttpPut("{id:guid}")]
     public async Task<IActionResult> Update(Guid id, [FromBody] UpdateProductCommand cmd)
     {
@@ -89,7 +77,19 @@ public class ProductController(IMediator mediator) : ControllerBase
     }
 
     [Authorize(Roles = "Admin")]
-    [HttpPatch("bulk-delete")]
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> Delete(Guid id)
+    {
+        var isExists = await mediator.Send(new IsProductExistsQuery(id));
+        if (!isExists)
+            return this.ProblemNotFound($"Entity with ID {id} not found");
+
+        await mediator.Send(new DeleteProductCommand(id));
+        return NoContent();
+    }
+
+    [Authorize(Roles = "Admin")]
+    [HttpPost("delete-many")]
     public async Task<IActionResult> BulkDelete([FromBody] BulkDeleteProductsCommand cmd, CancellationToken ct)
     {
         await mediator.Send(cmd, ct);

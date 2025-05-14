@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AmazonKiller.WebApi.Controllers.Account;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/wishlist")]
 [Authorize]
 public class WishlistController(IMediator mediator) : ControllerBase
 {
@@ -20,15 +20,15 @@ public class WishlistController(IMediator mediator) : ControllerBase
         return Ok(result);
     }
 
-    [HttpPost("toggle")]
-    public async Task<IActionResult> Toggle([FromBody] ToggleWishlistCommand cmd)
+    [HttpPost]
+    public async Task<IActionResult> Add([FromBody] AddToWishlistCommand cmd)
     {
         await mediator.Send(cmd);
         return NoContent();
     }
 
-    [HttpPost]
-    public async Task<IActionResult> Add([FromBody] AddToWishlistCommand cmd)
+    [HttpPost("toggle")]
+    public async Task<IActionResult> Toggle([FromBody] ToggleWishlistCommand cmd)
     {
         await mediator.Send(cmd);
         return NoContent();

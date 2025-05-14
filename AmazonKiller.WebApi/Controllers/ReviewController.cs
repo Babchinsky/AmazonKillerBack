@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AmazonKiller.WebApi.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/reviews")]
 public class ReviewController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
@@ -33,15 +33,15 @@ public class ReviewController(IMediator mediator) : ControllerBase
         return Ok(review);
     }
 
-    [HttpGet("product/{productId:guid}/reviews")]
-    public async Task<IActionResult> GetReviewsByProductId(Guid productId, [FromQuery] int page = 1,
+    [HttpGet("product/{productId:guid}/list")]
+    public async Task<IActionResult> GetByProduct(Guid productId, [FromQuery] int page = 1,
         [FromQuery] int pageSize = 20)
     {
         var reviews = await mediator.Send(new GetReviewsByProductIdQuery(productId, page, pageSize));
         return Ok(reviews);
     }
 
-    [HttpGet("product/{productId:guid}/average-rating")]
+    [HttpGet("product/{productId:guid}/rating")]
     public async Task<IActionResult> GetAverageRating(Guid productId)
     {
         var avg = await mediator.Send(new GetAverageRatingQuery(productId));
@@ -49,14 +49,14 @@ public class ReviewController(IMediator mediator) : ControllerBase
     }
 
     [HttpGet("product/{productId:guid}/count")]
-    public async Task<IActionResult> GetReviewCount(Guid productId)
+    public async Task<IActionResult> GetCount(Guid productId)
     {
         var count = await mediator.Send(new GetReviewCountQuery(productId));
         return Ok(count);
     }
 
     [HttpGet("{id:guid}/exists")]
-    public async Task<IActionResult> IsExists(Guid id)
+    public async Task<IActionResult> Exists(Guid id)
     {
         var exists = await mediator.Send(new IsReviewExistsQuery(id));
         return Ok(exists);
@@ -79,7 +79,7 @@ public class ReviewController(IMediator mediator) : ControllerBase
 
         var exists = await mediator.Send(new IsReviewExistsQuery(id));
         if (!exists)
-            return this.ProblemNotFound($"Entity with ID {id} not found");
+            return this.ProblemNotFound($"Review {id} not found");
 
         var updated = await mediator.Send(cmd);
         return Ok(updated);

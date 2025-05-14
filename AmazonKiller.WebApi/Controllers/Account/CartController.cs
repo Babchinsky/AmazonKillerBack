@@ -13,6 +13,13 @@ namespace AmazonKiller.WebApi.Controllers.Account;
 [Authorize]
 public class CartController(IMediator mediator) : ControllerBase
 {
+    [HttpGet]
+    public async Task<IActionResult> Get()
+    {
+        var result = await mediator.Send(new GetCartQuery());
+        return Ok(result);
+    }
+
     [HttpPost]
     public async Task<IActionResult> Add([FromBody] AddProductToCartCommand cmd)
     {
@@ -32,12 +39,5 @@ public class CartController(IMediator mediator) : ControllerBase
     {
         await mediator.Send(new RemoveProductFromCartCommand(productId));
         return NoContent();
-    }
-
-    [HttpGet("cart")]
-    public async Task<IActionResult> GetCart()
-    {
-        var result = await mediator.Send(new GetCartQuery());
-        return Ok(result);
     }
 }

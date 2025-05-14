@@ -10,19 +10,19 @@ using Microsoft.AspNetCore.Mvc;
 namespace AmazonKiller.WebApi.Controllers.Account;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/orders")]
 [Authorize]
 public class OrdersController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
-    public async Task<IActionResult> Get()
+    public async Task<IActionResult> GetAll()
     {
         var orders = await mediator.Send(new GetOrdersQuery());
         return Ok(orders);
     }
 
     [HttpGet("{id:guid}")]
-    public async Task<IActionResult> GetDetails(Guid id)
+    public async Task<IActionResult> GetById(Guid id)
     {
         var details = await mediator.Send(new GetOrderDetailsQuery(id));
         return Ok(details);
@@ -35,8 +35,9 @@ public class OrdersController(IMediator mediator) : ControllerBase
         return Ok(id);
     }
 
-    [HttpPost("products")]
-    public async Task<IActionResult> AddProduct([FromBody] AddProductToOrderCommand cmd, CancellationToken ct)
+    [HttpPost("{orderId:guid}/products")]
+    public async Task<IActionResult> AddProduct(Guid orderId, [FromBody] AddProductToOrderCommand cmd,
+        CancellationToken ct)
     {
         await mediator.Send(cmd, ct);
         return NoContent();

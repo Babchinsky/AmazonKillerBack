@@ -4,10 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace AmazonKiller.WebApi.Controllers.Address;
 
 [ApiController]
-[Route("api/np")]
-public class NovaPoshtaController(
-    INovaPoshtaService service)
-    : ControllerBase
+[Route("api/nova-poshta")]
+public class NovaPoshtaController(INovaPoshtaService service) : ControllerBase
 {
     [HttpGet("regions")]
     public async Task<IActionResult> GetRegions(CancellationToken ct)
