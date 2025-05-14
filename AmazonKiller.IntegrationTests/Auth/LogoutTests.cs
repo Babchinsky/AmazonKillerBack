@@ -32,7 +32,8 @@ public class LogoutTests(CustomWebApplicationFactory factory) : IClassFixture<Cu
         confirmResponse.StatusCode.Should().Be(HttpStatusCode.NoContent);
 
         // Login
-        var loginResponse = await _client.PostAsJsonAsync("/api/auth/login", new { Email = email, Password = password });
+        var loginResponse =
+            await _client.PostAsJsonAsync("/api/auth/login", new { Email = email, Password = password });
         var loginJson = await loginResponse.Content.ReadFromJsonAsync<Dictionary<string, string>>();
         return loginJson!["accessToken"];
     }
