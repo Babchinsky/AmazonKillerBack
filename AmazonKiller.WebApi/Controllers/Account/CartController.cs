@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AmazonKiller.WebApi.Controllers.Account;
 
 [ApiController]
-[Route("api/account/cart")]
+[Route("api/cart")]
 [Authorize]
 public class CartController(IMediator mediator) : ControllerBase
 {
