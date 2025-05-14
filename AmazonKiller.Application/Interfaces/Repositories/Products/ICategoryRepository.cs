@@ -14,6 +14,5 @@ public interface ICategoryRepository
 
     Task AddAsync(Category c, CancellationToken ct);
     Task UpdateAsync(Category c, CancellationToken ct);
-    Task SoftDeleteAsync(Guid id, CancellationToken ct);
-    Task BulkSoftDeleteAsync(IEnumerable<Guid> ids, CancellationToken ct);
+    Task BulkHardDeleteAsync(IEnumerable<Guid> ids, CancellationToken ct);
 }

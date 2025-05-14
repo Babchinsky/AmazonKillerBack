@@ -8,6 +8,6 @@ public class BulkDeleteCategoriesHandler(ICategoryRepository repo)
 {
     public async Task Handle(BulkDeleteCategoriesCommand cmd, CancellationToken ct)
     {
-        await repo.BulkSoftDeleteAsync(cmd.Ids, ct);
+        await repo.BulkHardDeleteAsync(cmd.Ids, ct);
     }
 }

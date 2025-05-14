@@ -60,18 +60,26 @@ public class CategoryRepository(AmazonDbContext db) : ICategoryRepository
         return db.SaveChangesAsync(ct);
     }
 
-    public async Task SoftDeleteAsync(Guid id, CancellationToken ct)
+    public async Task BulkHardDeleteAsync(IEnumerable<Guid> rootIds, CancellationToken ct)
     {
-        var c = await db.Categories.FindAsync([id], ct);
-        if (c is null) return;
-        c.Status = CategoryStatus.NotActive;
-        await db.SaveChangesAsync(ct);
-    }
+        var allCategories = await db.Categories.ToListAsync(ct);
 
-    public async Task BulkSoftDeleteAsync(IEnumerable<Guid> ids, CancellationToken ct)
-    {
-        var cats = await db.Categories.Where(c => ids.Contains(c.Id)).ToListAsync(ct);
-        cats.ForEach(c => c.Status = CategoryStatus.NotActive);
+        var roots = rootIds as Guid[] ?? rootIds.ToArray();
+        var idsToDelete = new HashSet<Guid>(roots);
+
+        foreach (var rootId in roots)
+            CollectChildren(rootId);
+
+        var categoriesToRemove = allCategories.Where(c => idsToDelete.Contains(c.Id)).ToList();
+
+        db.Categories.RemoveRange(categoriesToRemove);
         await db.SaveChangesAsync(ct);
+        return;
+
+        void CollectChildren(Guid parentId)
+        {
+            var children = allCategories.Where(c => c.ParentId == parentId).ToList();
+            foreach (var child in children.Where(child => idsToDelete.Add(child.Id))) CollectChildren(child.Id);
+        }
     }
 }

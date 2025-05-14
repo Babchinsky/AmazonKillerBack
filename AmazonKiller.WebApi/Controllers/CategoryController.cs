@@ -8,6 +8,7 @@ using AmazonKiller.Application.Features.Categories.Queries.GetCategoryTree;
 using AmazonKiller.Application.Features.Categories.Queries.IsCategoryExists;
 using AmazonKiller.WebApi.Extensions;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AmazonKiller.WebApi.Controllers;
@@ -41,6 +42,7 @@ public class CategoryController(IMediator mediator) : ControllerBase
         return mediator.Send(new IsCategoryExistsQuery(id), ct);
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateCategoryCommand cmd, CancellationToken ct)
     {
@@ -48,6 +50,7 @@ public class CategoryController(IMediator mediator) : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpPut("{id:guid}")]
     public async Task<IActionResult> Update(Guid id, [FromBody] UpdateCategoryCommand cmd, CancellationToken ct)
     {
@@ -56,13 +59,7 @@ public class CategoryController(IMediator mediator) : ControllerBase
         return Ok(updated);
     }
 
-    [HttpDelete("{id:guid}")]
-    public async Task<IActionResult> Delete(Guid id, CancellationToken ct)
-    {
-        await mediator.Send(new BulkDeleteCategoriesCommand([id]), ct);
-        return NoContent();
-    }
-
+    [Authorize(Roles = "Admin")]
     [HttpPost("delete-many")]
     public async Task<IActionResult> BulkDelete([FromBody] BulkDeleteCategoriesCommand cmd, CancellationToken ct)
     {
