@@ -4,15 +4,15 @@ namespace AmazonKiller.Domain.Entities.Products;
 
 public class Category
 {
-    public Guid Id { get; set; }
+    public Guid Id { get; init; }
 
     [Required]
     [StringLength(40, MinimumLength = 1)]
     public string Name { get; set; } = string.Empty;
 
     public Guid? ParentId { get; set; }
-    public Category? Parent { get; set; }
-    public ICollection<Category> Children { get; set; } = new List<Category>();
+    public Category? Parent { get; init; }
+    public ICollection<Category> Children { get; init; } = new List<Category>();
 
     public CategoryStatus Status { get; set; } = CategoryStatus.Active;
 
@@ -22,5 +22,5 @@ public class Category
 
     public ICollection<string> PropertyKeys { get; set; } = new List<string>(); // только для подкатегорий
 
-    public ICollection<Product> Products { get; set; } = new List<Product>();
+    public ICollection<Product> Products { get; init; } = new List<Product>();
 }

@@ -4,21 +4,21 @@ namespace AmazonKiller.Domain.Entities.Products;
 
 public class ProductDetails
 {
-    public Guid Id { get; set; }
+    public Guid Id { get; init; }
 
-    [Required] [StringLength(50)] public required string FabricType { get; set; }
+    [Required] [StringLength(50)] public required string FabricType { get; init; }
 
-    [Required] [StringLength(100)] public required string CareInstructions { get; set; }
+    [Required] [StringLength(100)] public required string CareInstructions { get; init; }
 
-    [Required] [StringLength(50)] public required string Origin { get; set; }
+    [Required] [StringLength(50)] public required string Origin { get; init; }
 
-    [Required] [StringLength(50)] public required string ClosureType { get; set; }
+    [Required] [StringLength(50)] public required string ClosureType { get; init; }
 
-    [Required] public Brands Brand { get; set; }
+    [Required] public Brands Brand { get; init; }
 
-    [Required] public Colors Color { get; set; }
+    [Required] public Colors Color { get; init; }
 
-    public ClothesSize? ClothesSize { get; set; }
+    public ClothesSize? ClothesSize { get; init; }
 
-    public ShoesSize? ShoesSize { get; set; }
+    public ShoesSize? ShoesSize { get; init; }
 }

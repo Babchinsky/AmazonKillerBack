@@ -5,16 +5,16 @@ namespace AmazonKiller.Domain.Entities.Users;
 
 public class CartList
 {
-    public Guid Id { get; set; }
+    public Guid Id { get; init; }
 
-    [Required] public Guid UserId { get; set; }
+    [Required] public Guid UserId { get; init; }
 
-    [Required] public Guid ProductId { get; set; }
-    public Product Product { get; set; } = null!;
+    [Required] public Guid ProductId { get; init; }
+    public Product Product { get; init; } = null!;
 
     [Range(1, int.MaxValue)] public int Quantity { get; set; }
 
-    [Range(0.01, double.MaxValue)] public decimal Price { get; set; } // за 1 единицу на момент добавления
+    [Range(0.01, double.MaxValue)] public decimal Price { get; init; } // за 1 единицу на момент добавления
 
-    public DateTime AddedAt { get; set; }
+    public DateTime AddedAt { get; init; }
 }

@@ -40,6 +40,12 @@ public class AdminUserRepository(AmazonDbContext db) : IAdminUserRepository
         return UpdateUserStatusAsync(ids, UserStatus.Deleted, ct);
     }
 
+    public async Task DeleteUsersAsync(IEnumerable<User> users, CancellationToken ct)
+    {
+        db.Users.RemoveRange(users);
+        await db.SaveChangesAsync(ct);
+    }
+
     public Task RestoreUsersAsync(List<Guid> ids, CancellationToken ct)
     {
         return UpdateUserStatusAsync(ids, UserStatus.Active, ct);

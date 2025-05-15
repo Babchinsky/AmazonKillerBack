@@ -12,7 +12,7 @@ public class ConfirmRegistrationHandler(
     IEmailVerificationRepository repo,
     IUserRepository userRepo,
     IAuthService auth,
-    ICurrentRequestContext context) // <--- добавлено
+    ICurrentRequestContext context)
     : IRequestHandler<ConfirmRegistrationCommand, AuthTokensDto>
 {
     public async Task<AuthTokensDto> Handle(ConfirmRegistrationCommand cmd, CancellationToken ct)

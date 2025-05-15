@@ -107,9 +107,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Status")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(0);
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -378,7 +376,8 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ContentId");
+                    b.HasIndex("ContentId")
+                        .IsUnique();
 
                     b.HasIndex("ProductId");
 
@@ -497,6 +496,8 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
 
                     b.HasIndex("ProductId");
 
+                    b.HasIndex("UserId");
+
                     b.ToTable("CartLists");
 
                     b.HasData(
@@ -522,19 +523,25 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("ExpiresAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("TempPasswordHash")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
                     b.Property<Guid?>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("Email", "Type");
 
                     b.ToTable("EmailVerifications");
                 });
@@ -837,8 +844,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                 {
                     b.HasOne("AmazonKiller.Domain.Entities.Products.Category", "Parent")
                         .WithMany("Children")
-                        .HasForeignKey("ParentId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("ParentId");
 
                     b.Navigation("Parent");
                 });
@@ -863,8 +869,8 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
             modelBuilder.Entity("AmazonKiller.Domain.Entities.Reviews.Review", b =>
                 {
                     b.HasOne("AmazonKiller.Domain.Entities.Reviews.ReviewContent", "Content")
-                        .WithMany()
-                        .HasForeignKey("ContentId")
+                        .WithOne()
+                        .HasForeignKey("AmazonKiller.Domain.Entities.Reviews.Review", "ContentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -904,7 +910,21 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("AmazonKiller.Domain.Entities.Users.User", null)
+                        .WithMany("Cart")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("AmazonKiller.Domain.Entities.Users.EmailVerification", b =>
+                {
+                    b.HasOne("AmazonKiller.Domain.Entities.Users.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("AmazonKiller.Domain.Entities.Users.RefreshToken", b =>
@@ -956,6 +976,8 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("AmazonKiller.Domain.Entities.Users.User", b =>
                 {
+                    b.Navigation("Cart");
+
                     b.Navigation("Orders");
 
                     b.Navigation("RefreshTokens");

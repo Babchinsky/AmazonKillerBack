@@ -4,11 +4,11 @@ namespace AmazonKiller.Domain.Entities.Users;
 
 public class Wishlist
 {
-    public Guid UserId { get; set; }
-    public User User { get; set; } = null!;
+    public Guid UserId { get; init; }
+    public User User { get; init; } = null!;
 
-    public Guid ProductId { get; set; }
-    public Product Product { get; set; } = null!;
+    public Guid ProductId { get; init; }
+    public Product Product { get; init; } = null!;
 
-    public DateTime AddedAt { get; set; }
+    public DateTime AddedAt { get; init; }
 }

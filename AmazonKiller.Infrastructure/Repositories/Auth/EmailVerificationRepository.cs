@@ -1,6 +1,7 @@
 ﻿using AmazonKiller.Application.Interfaces.Repositories.Auth;
 using AmazonKiller.Domain.Entities.Users;
 using AmazonKiller.Infrastructure.Data;
+using AmazonKiller.Shared.Constants;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -11,10 +12,19 @@ public class EmailVerificationRepository(AmazonDbContext db, IConfiguration conf
     private readonly bool _useFixedCode = config.GetValue<bool>("Verification:UseFixedCode");
     private readonly string? _fixedCode = config.GetValue<string>("Verification:FixedCodeValue");
 
-    public Task AddAsync(EmailVerification entry, CancellationToken ct)
+    private async Task DeleteByEmailAndTypeAsync(string email, VerificationType type, CancellationToken ct)
     {
-        db.EmailVerifications.Add(entry);
-        return db.SaveChangesAsync(ct);
+        var old = db.EmailVerifications
+            .Where(ev => ev.Email == email && ev.Type == type);
+
+        db.EmailVerifications.RemoveRange(old);
+        await db.SaveChangesAsync(ct);
+    }
+
+    private static string GenerateRandomCode()
+    {
+        var rnd = new Random();
+        return rnd.Next(100000, 999999).ToString();
     }
 
     public Task<EmailVerification?> GetValidEntryAsync(string email, string code, CancellationToken ct)
@@ -45,28 +55,28 @@ public class EmailVerificationRepository(AmazonDbContext db, IConfiguration conf
                 ct);
     }
 
-    public async Task<string?> CreateCodeAsync(string email, string tempPasswordHash, CancellationToken ct)
+    public async Task<string> CreateAndSaveCodeAsync(
+        string email,
+        VerificationType type,
+        string? tempPasswordHash,
+        CancellationToken ct)
     {
-        var code = _useFixedCode ? _fixedCode : GenerateRandomCode();
+        await DeleteByEmailAndTypeAsync(email, type, ct);
+
+        var code = _useFixedCode ? _fixedCode ?? VerificationDefaults.DefaultFixedCode : GenerateRandomCode();
 
         var entry = new EmailVerification
         {
             Email = email,
             Code = code,
+            ExpiresAt = DateTime.UtcNow.AddMinutes(10),
             TempPasswordHash = tempPasswordHash,
-            ExpiresAt = DateTime.UtcNow.AddMinutes(15)
+            Type = type
         };
 
         db.EmailVerifications.Add(entry);
         await db.SaveChangesAsync(ct);
 
         return code;
-    }
-
-
-    private static string GenerateRandomCode()
-    {
-        var rnd = new Random();
-        return rnd.Next(100000, 999999).ToString();
     }
 }

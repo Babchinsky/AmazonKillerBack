@@ -1,6 +1,7 @@
 ﻿using AmazonKiller.Domain.Entities.Products;
 using AmazonKiller.Domain.Entities.Users;
 using AmazonKiller.Domain.Entities.Reviews;
+using AmazonKiller.Infrastructure.Data.Helpers;
 using Microsoft.EntityFrameworkCore;
 
 namespace AmazonKiller.Infrastructure.Data;
@@ -110,9 +111,8 @@ public static class SeedData
         );
 
         // Users
-        const string fixedSalt = "$2a$11$0123456789ABCDEFFEDCBA";
-        var userPasswordHash = BCrypt.Net.BCrypt.HashPassword("User123!", fixedSalt);
-        var adminPasswordHash = BCrypt.Net.BCrypt.HashPassword("Admin123!", fixedSalt);
+        var userPasswordHash = SeedPasswordHelper.Hash("User123!");
+        var adminPasswordHash = SeedPasswordHelper.Hash("Admin123!");
         var seedDate = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
         modelBuilder.Entity<User>().HasData(

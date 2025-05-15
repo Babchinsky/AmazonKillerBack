@@ -5,21 +5,21 @@ namespace AmazonKiller.Domain.Entities.Products;
 
 public class ProductCard
 {
-    public int Id { get; set; }
+    public int Id { get; init; }
 
-    [Required] public string ImageUrl { get; set; }
+    [Required] public string ImageUrl { get; init; }
 
     [Required]
     [StringLength(100, MinimumLength = 1)]
-    public string Name { get; set; }
+    public string Name { get; init; }
 
-    [Precision(18, 2)] public decimal Price { get; set; }
+    [Precision(18, 2)] public decimal Price { get; init; }
 
-    public Rating Rating { get; set; }
+    public Rating Rating { get; init; }
 
-    public bool Sale { get; set; }
+    public bool Sale { get; init; }
 
-    [Required] public Guid ProductId { get; set; }
+    [Required] public Guid ProductId { get; init; }
 
-    [Range(0, int.MaxValue)] public int ReviewsCount { get; set; }
+    [Range(0, int.MaxValue)] public int ReviewsCount { get; init; }
 }

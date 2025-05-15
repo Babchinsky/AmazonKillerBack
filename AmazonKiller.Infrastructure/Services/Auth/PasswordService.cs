@@ -4,8 +4,13 @@ namespace AmazonKiller.Infrastructure.Services.Auth;
 
 public class PasswordService : IPasswordService
 {
-    public bool VerifyPassword(string password, string passwordHash)
+    public string HashPassword(string password)
     {
-        return BCrypt.Net.BCrypt.Verify(password, passwordHash);
+        return BCrypt.Net.BCrypt.HashPassword(password);
+    }
+
+    public bool VerifyPassword(string password, string? hash)
+    {
+        return BCrypt.Net.BCrypt.Verify(password, hash);
     }
 }

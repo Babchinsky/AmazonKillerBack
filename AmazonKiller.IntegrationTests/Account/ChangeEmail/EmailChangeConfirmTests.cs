@@ -2,6 +2,7 @@
 using System.Net.Http.Json;
 using AmazonKiller.Infrastructure.Data;
 using AmazonKiller.IntegrationTests.Auth;
+using AmazonKiller.Shared.Constants;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -19,7 +20,7 @@ public class EmailChangeConfirmTests : IClassFixture<CustomWebApplicationFactory
 
         using var scope = factory.Services.CreateScope();
         var cfg = scope.ServiceProvider.GetRequiredService<IConfiguration>();
-        _fixedCode = cfg["EmailVerification:FixedCode"] ?? "123456";
+        _fixedCode = cfg["EmailVerification:FixedCode"] ?? VerificationDefaults.DefaultFixedCode;
 
         var db = scope.ServiceProvider.GetRequiredService<AmazonDbContext>();
         db.EmailVerifications.RemoveRange(db.EmailVerifications);

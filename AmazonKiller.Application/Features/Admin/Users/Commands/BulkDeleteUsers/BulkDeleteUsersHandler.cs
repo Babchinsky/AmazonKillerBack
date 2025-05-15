@@ -1,20 +1,28 @@
-﻿using AmazonKiller.Application.Interfaces.Repositories.Admin.Users;
-using AmazonKiller.Shared.Exceptions;
+﻿using AmazonKiller.Application.DTOs.Common;
+using AmazonKiller.Application.Interfaces.Repositories.Admin.Users;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace AmazonKiller.Application.Features.Admin.Users.Commands.BulkDeleteUsers;
 
-public class BulkDeleteUsersHandler(IAdminUserRepository repo) : IRequestHandler<BulkDeleteUsersCommand, Unit>
+public class BulkDeleteUsersHandler(IAdminUserRepository repo)
+    : IRequestHandler<BulkDeleteUsersCommand, BulkDeleteResultDto>
 {
-    public async Task<Unit> Handle(BulkDeleteUsersCommand request, CancellationToken ct)
+    public async Task<BulkDeleteResultDto> Handle(BulkDeleteUsersCommand request, CancellationToken ct)
     {
-        var users = await repo.GetUsersByIdsAsync(request.UserIds, ct);
+        var allUsers = await repo.Queryable()
+            .Where(u => request.UserIds.Contains(u.Id))
+            .ToListAsync(ct);
 
-        var notFound = request.UserIds.Except(users.Select(u => u.Id)).ToList();
-        if (notFound.Count != 0)
-            throw new NotFoundException($"Users not found: {string.Join(", ", notFound)}");
+        var existingIds = allUsers.Select(u => u.Id).ToList();
+        var missingIds = request.UserIds.Except(existingIds).ToList();
 
-        await repo.MarkUsersDeletedAsync(request.UserIds, ct);
-        return Unit.Value;
+        await repo.DeleteUsersAsync(allUsers, ct);
+
+        return new BulkDeleteResultDto
+        {
+            DeletedCount = existingIds.Count,
+            NotFoundIds = missingIds
+        };
     }
 }

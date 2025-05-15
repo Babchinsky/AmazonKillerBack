@@ -9,5 +9,6 @@ public interface IAdminUserRepository
     IQueryable<User> Queryable();
     Task SaveChangesAsync(CancellationToken ct);
     Task MarkUsersDeletedAsync(List<Guid> ids, CancellationToken ct);
+    Task DeleteUsersAsync(IEnumerable<User> users, CancellationToken ct);
     Task RestoreUsersAsync(List<Guid> ids, CancellationToken ct);
 }

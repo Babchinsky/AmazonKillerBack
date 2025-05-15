@@ -6,7 +6,7 @@ namespace AmazonKiller.Domain.Entities.Reviews;
 
 public class ReviewContent
 {
-    public Guid Id { get; set; }
+    public Guid Id { get; init; }
 
     [Required]
     [StringLength(40, MinimumLength = 10)]
@@ -16,7 +16,7 @@ public class ReviewContent
     [StringLength(400, MinimumLength = 20)]
     public string Message { get; set; }
 
-    [NotMapped] public ICollection<IFormFile> UploadedFiles { get; set; } = new List<IFormFile>();
+    [NotMapped] public ICollection<IFormFile> UploadedFiles { get; init; } = new List<IFormFile>();
 
     public List<string> FilePaths { get; set; } = [];
 }

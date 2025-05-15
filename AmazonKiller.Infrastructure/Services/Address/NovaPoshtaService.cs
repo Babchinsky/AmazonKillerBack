@@ -1,6 +1,6 @@
 ﻿using System.Text;
 using System.Text.Json;
-using AmazonKiller.Application.DTOs.Common.Address;
+using AmazonKiller.Application.DTOs.Address;
 using AmazonKiller.Application.Interfaces.Services.Address;
 using AmazonKiller.Application.Options;
 using Microsoft.Extensions.Options;

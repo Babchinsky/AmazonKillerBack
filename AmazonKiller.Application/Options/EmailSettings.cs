@@ -2,6 +2,7 @@
 
 public class EmailSettings
 {
-    public string LogoUrl { get; init; } = null!;
-    public string WebsiteUrl { get; init; } = null!;
+    public string LogoUrl { get; init; } = string.Empty;
+    public string WebsiteUrl { get; init; } = string.Empty;
+    public bool SendVerificationCode { get; init; } = true;
 }

@@ -1,4 +1,4 @@
-﻿using AmazonKiller.Application.DTOs.Common.Address;
+﻿using AmazonKiller.Application.DTOs.Address;
 
 namespace AmazonKiller.Application.Interfaces.Services.Address;
 

@@ -6,19 +6,19 @@ namespace AmazonKiller.Domain.Entities.Reviews;
 
 public class Review
 {
-    public Guid Id { get; set; }
-    public Guid ContentId { get; set; }
-    public ReviewContent Content { get; set; } = null!;
+    public Guid Id { get; init; }
+    public Guid ContentId { get; init; }
+    public ReviewContent Content { get; init; } = null!;
     public Rating Rating { get; set; }
 
-    public Guid ProductId { get; set; }
-    public Product Product { get; set; } = null!;
+    public Guid ProductId { get; init; }
+    public Product Product { get; init; } = null!;
 
-    public Guid UserId { get; set; }
-    public User User { get; set; } = null!;
+    public Guid UserId { get; init; }
+    public User User { get; init; } = null!;
 
-    public DateTime CreatedAt { get; set; }
-
+    public DateTime CreatedAt { get; init; }
     public int Likes { get; set; }
-    [Timestamp] public byte[] RowVersion { get; set; } = [];
+
+    [Timestamp] public byte[] RowVersion { get; init; } = [];
 }

@@ -1,4 +1,4 @@
-﻿namespace AmazonKiller.Application.DTOs.Common.Address;
+﻿namespace AmazonKiller.Application.DTOs.Address;
 
 public class CityDto
 {

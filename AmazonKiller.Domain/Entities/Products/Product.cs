@@ -11,21 +11,21 @@ public class Product
 
     [Required]
     [StringLength(100, MinimumLength = 2)]
-    public string Name { get; set; } = string.Empty;
+    public string Name { get; init; } = string.Empty;
 
-    public Rating Rating { get; set; } = Rating.Five;
-    public int ReviewsCount { get; set; }
-    public List<string> ProductPics { get; set; } = []; // stored as JSON
+    public Rating Rating { get; init; } = Rating.Five;
+    public int ReviewsCount { get; init; }
+    public List<string> ProductPics { get; init; } = []; // stored as JSON
 
-    [Required] public Guid DetailsId { get; set; }
-    [Required] public ProductDetails Details { get; set; } = null!;
+    [Required] public Guid DetailsId { get; init; }
+    [Required] public ProductDetails Details { get; init; } = null!;
 
-    [Required] public Guid CategoryId { get; set; }
-    [Range(0.01, double.MaxValue)] public decimal Price { get; set; }
-    public int Quantity { get; set; }
-    public ProductStatus Status { get; set; } = ProductStatus.InStock;
-    public bool InWishlist { get; set; }
-    public bool InCartList { get; set; }
+    [Required] public Guid CategoryId { get; init; }
+    [Range(0.01, double.MaxValue)] public decimal Price { get; init; }
+    public int Quantity { get; init; }
+    public ProductStatus Status { get; init; } = ProductStatus.InStock;
+    public bool InWishlist { get; init; }
+    public bool InCartList { get; init; }
     public Sale? Sale { get; set; }
-    [Timestamp] public byte[] RowVersion { get; set; } = []; // optimistic concurrency
+    [Timestamp] public byte[] RowVersion { get; init; } = []; // optimistic concurrency
 }

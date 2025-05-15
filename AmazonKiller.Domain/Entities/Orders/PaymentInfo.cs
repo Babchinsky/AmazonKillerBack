@@ -2,7 +2,7 @@
 
 public class PaymentInfo
 {
-    public PaymentType PaymentType { get; set; }
+    public PaymentType PaymentType { get; init; }
 
     public string? CardNumber { get; set; } // Nullable
     public string? ExpirationDate { get; set; }

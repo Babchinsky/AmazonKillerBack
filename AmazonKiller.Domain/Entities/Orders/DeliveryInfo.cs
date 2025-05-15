@@ -2,8 +2,8 @@
 
 public class DeliveryInfo
 {
-    public string FirstName { get; set; } = "";
-    public string LastName { get; set; } = "";
-    public string Email { get; set; } = "";
-    public Address Address { get; set; } = new();
+    public string FirstName { get; init; } = "";
+    public string LastName { get; init; } = "";
+    public string Email { get; init; } = "";
+    public Address Address { get; init; } = new();
 }

@@ -6,19 +6,19 @@ namespace AmazonKiller.Domain.Entities.Orders;
 
 public class OrderItem
 {
-    public Guid Id { get; set; }
+    public Guid Id { get; init; }
 
-    public Guid OrderId { get; set; } // instead of uint
+    public Guid OrderId { get; init; } // instead of uint
 
-    public Guid ProductId { get; set; }
+    public Guid ProductId { get; init; }
 
-    public Product Product { get; set; } = null!;
+    public Product Product { get; init; } = null!;
 
-    [Required] public OrderStatus Status { get; set; }
+    [Required] public OrderStatus Status { get; init; }
 
-    [Precision(18, 2)] public decimal Price { get; set; }
+    [Precision(18, 2)] public decimal Price { get; init; }
 
     [Range(1, int.MaxValue)] public int Quantity { get; set; }
 
-    [Required] public DateTime OrderedAt { get; set; }
+    [Required] public DateTime OrderedAt { get; init; }
 }

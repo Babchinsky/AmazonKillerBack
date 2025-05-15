@@ -1,5 +1,7 @@
-﻿using AmazonKiller.Application.Interfaces.Repositories.Auth;
+﻿using AmazonKiller.Application.Interfaces.Auth;
+using AmazonKiller.Application.Interfaces.Repositories.Auth;
 using AmazonKiller.Application.Interfaces.Services;
+using AmazonKiller.Domain.Entities.Users;
 using AmazonKiller.Shared.Exceptions;
 using MediatR;
 
@@ -7,6 +9,7 @@ namespace AmazonKiller.Application.Features.Auth.Commands.StartRegistration;
 
 public class StartRegistrationHandler(
     IVerificationEmailSender verificationEmailSender,
+    IPasswordService passwordService,
     IEmailVerificationRepository repo
 ) : IRequestHandler<StartRegistrationCommand>
 {
@@ -15,14 +18,13 @@ public class StartRegistrationHandler(
         if (await repo.IsEmailTakenAsync(cmd.Email, ct))
             throw new AppException("Email is already taken");
 
-        var hashedPassword = BCrypt.Net.BCrypt.HashPassword(cmd.Password);
+        var hashedPassword = passwordService.HashPassword(cmd.Password);
 
-        var code = await repo.CreateCodeAsync(cmd.Email, hashedPassword, ct);
-
-        await verificationEmailSender.SendVerificationCodeAsync(
+        await verificationEmailSender.CreateAndSendAsync(
             cmd.Email,
             "Confirm your registration",
-            code
-        );
+            VerificationType.Registration,
+            hashedPassword,
+            ct);
     }
 }

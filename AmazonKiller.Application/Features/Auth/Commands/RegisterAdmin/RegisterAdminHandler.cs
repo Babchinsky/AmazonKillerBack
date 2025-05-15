@@ -11,6 +11,7 @@ namespace AmazonKiller.Application.Features.Auth.Commands.RegisterAdmin;
 public class RegisterAdminHandler(
     IUserRepository userRepo,
     IAdminSecretValidator secretValidator,
+    IPasswordService passwordService,
     IAuthService authService,
     ICurrentRequestContext context
 ) : IRequestHandler<RegisterAdminCommand, AuthTokensDto>
@@ -27,7 +28,7 @@ public class RegisterAdminHandler(
         {
             Id = Guid.NewGuid(),
             Email = cmd.Email,
-            PasswordHash = BCrypt.Net.BCrypt.HashPassword(cmd.Password),
+            PasswordHash = passwordService.HashPassword(cmd.Password),
             FirstName = cmd.FirstName,
             LastName = cmd.LastName,
             Role = Role.Admin

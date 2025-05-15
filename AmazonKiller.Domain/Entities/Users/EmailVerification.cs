@@ -2,10 +2,11 @@
 
 public class EmailVerification
 {
-    public Guid Id { get; set; } = Guid.NewGuid();
-    public string Email { get; set; } = string.Empty;
-    public string? Code { get; set; } = string.Empty;
-    public DateTime ExpiresAt { get; set; }
-    public string TempPasswordHash { get; set; } = string.Empty;
-    public Guid? UserId { get; set; }
+    public Guid Id { get; init; } = Guid.NewGuid();
+    public string Email { get; init; } = string.Empty;
+    public string? Code { get; init; } = string.Empty;
+    public DateTime ExpiresAt { get; init; }
+    public string? TempPasswordHash { get; init; } = string.Empty;
+    public Guid? UserId { get; init; }
+    public VerificationType Type { get; init; }
 }

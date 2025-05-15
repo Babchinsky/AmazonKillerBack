@@ -9,20 +9,10 @@ public class GmailEmailSender(IConfiguration cfg) : IEmailSender
 {
     private readonly string _from = cfg["Gmail:From"] ?? throw new ArgumentNullException(nameof(cfg));
     private readonly string _appPassword = cfg["Gmail:AppPassword"] ?? throw new ArgumentNullException(nameof(cfg));
-    private readonly bool _useFixedCode = cfg.GetValue<bool>("Verification:UseFixedCode");
-
-    // Внедрение зависимостей через конструктор
 
     // Реализуем отправку email
     public async Task SendEmailAsync(string to, string subject, string htmlBody)
     {
-        // Закомментировано: больше не отправляем email в тестовом окружении
-        if (_useFixedCode)
-        {
-            Console.WriteLine($"Email to {to} skipped (UseFixedCode=true)");
-            return;
-        }
-
         // Если хотите полностью отключить отправку через почту (временно), закомментируйте или удалите следующую часть:
         var smtp = new SmtpClient("smtp.gmail.com", 587)
         {
