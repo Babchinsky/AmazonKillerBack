@@ -1,10 +1,8 @@
 ﻿using AmazonKiller.Application.Interfaces.Repositories.Account;
-using AmazonKiller.Application.Interfaces.Repositories.Auth;
 using AmazonKiller.Application.Interfaces.Services;
 using AmazonKiller.Domain.Entities.Users;
 using AmazonKiller.Shared.Exceptions;
 using MediatR;
-using Microsoft.Extensions.Configuration;
 
 namespace AmazonKiller.Application.Features.Account.Profile.Commands.ChangeEmail.StartEmailChange;
 
@@ -29,6 +27,7 @@ public class StartEmailChangeHandler(
             "Confirm your new email",
             VerificationType.EmailChange,
             null,
+            userId,
             ct);
     }
 }

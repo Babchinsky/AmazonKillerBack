@@ -6,7 +6,7 @@ using AmazonKiller.Domain.Entities.Users;
 using AmazonKiller.Shared.Exceptions;
 using MediatR;
 
-namespace AmazonKiller.Application.Features.Auth.Commands.ConfirmRegistration;
+namespace AmazonKiller.Application.Features.Auth.Commands.Registration.ConfirmRegistration;
 
 public class ConfirmRegistrationHandler(
     IEmailVerificationRepository repo,

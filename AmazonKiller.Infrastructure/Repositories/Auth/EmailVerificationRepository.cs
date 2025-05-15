@@ -59,6 +59,7 @@ public class EmailVerificationRepository(AmazonDbContext db, IConfiguration conf
         string email,
         VerificationType type,
         string? tempPasswordHash,
+        Guid? userId,
         CancellationToken ct)
     {
         await DeleteByEmailAndTypeAsync(email, type, ct);
@@ -71,7 +72,8 @@ public class EmailVerificationRepository(AmazonDbContext db, IConfiguration conf
             Code = code,
             ExpiresAt = DateTime.UtcNow.AddMinutes(10),
             TempPasswordHash = tempPasswordHash,
-            Type = type
+            Type = type,
+            UserId = userId
         };
 
         db.EmailVerifications.Add(entry);

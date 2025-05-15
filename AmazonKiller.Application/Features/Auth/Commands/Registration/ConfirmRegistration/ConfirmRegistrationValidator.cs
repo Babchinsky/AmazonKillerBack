@@ -1,7 +1,7 @@
 ﻿using AmazonKiller.Application.Validators.Common;
 using FluentValidation;
 
-namespace AmazonKiller.Application.Features.Auth.Commands.ConfirmRegistration;
+namespace AmazonKiller.Application.Features.Auth.Commands.Registration.ConfirmRegistration;
 
 public class ConfirmRegistrationValidator : AbstractValidator<ConfirmRegistrationCommand>
 {

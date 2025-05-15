@@ -28,6 +28,7 @@
         <Folder Include="Features\Account\Profile\Commands\"/>
         <Folder Include="Features\Account\Wishlist\Commands\"/>
         <Folder Include="Features\Account\Wishlist\Queries\"/>
+        <Folder Include="Features\Auth\Commands\Registration\"/>
     </ItemGroup>
 
 </Project>

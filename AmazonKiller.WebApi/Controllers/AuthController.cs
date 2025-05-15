@@ -1,8 +1,8 @@
-﻿using AmazonKiller.Application.Features.Auth.Commands.ConfirmRegistration;
-using AmazonKiller.Application.Features.Auth.Commands.Login;
+﻿using AmazonKiller.Application.Features.Auth.Commands.Login;
 using AmazonKiller.Application.Features.Auth.Commands.Refresh;
 using AmazonKiller.Application.Features.Auth.Commands.RegisterAdmin;
-using AmazonKiller.Application.Features.Auth.Commands.StartRegistration;
+using AmazonKiller.Application.Features.Auth.Commands.Registration.ConfirmRegistration;
+using AmazonKiller.Application.Features.Auth.Commands.Registration.StartRegistration;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

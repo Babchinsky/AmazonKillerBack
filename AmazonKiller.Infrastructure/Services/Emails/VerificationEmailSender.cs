@@ -47,10 +47,15 @@ public class VerificationEmailSender(
         await emailSender.SendEmailAsync(email, subject, htmlBody);
     }
 
-    public async Task<string> CreateAndSendAsync(string email, string subject, VerificationType type, string? tempHash,
+    public async Task<string> CreateAndSendAsync(
+        string email,
+        string subject,
+        VerificationType type,
+        string? tempHash,
+        Guid? userId,
         CancellationToken ct)
     {
-        var code = await verificationRepository.CreateAndSaveCodeAsync(email, type, tempHash, ct);
+        var code = await verificationRepository.CreateAndSaveCodeAsync(email, type, tempHash, userId, ct);
         await SendVerificationCodeAsync(email, subject, code);
         return code;
     }

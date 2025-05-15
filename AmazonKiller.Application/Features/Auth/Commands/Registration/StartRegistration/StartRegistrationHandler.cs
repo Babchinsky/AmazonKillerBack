@@ -5,7 +5,7 @@ using AmazonKiller.Domain.Entities.Users;
 using AmazonKiller.Shared.Exceptions;
 using MediatR;
 
-namespace AmazonKiller.Application.Features.Auth.Commands.StartRegistration;
+namespace AmazonKiller.Application.Features.Auth.Commands.Registration.StartRegistration;
 
 public class StartRegistrationHandler(
     IVerificationEmailSender verificationEmailSender,
@@ -25,6 +25,7 @@ public class StartRegistrationHandler(
             "Confirm your registration",
             VerificationType.Registration,
             hashedPassword,
+            null,
             ct);
     }
 }

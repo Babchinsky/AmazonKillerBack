@@ -3,7 +3,7 @@
 using AmazonKiller.Application.Validators.Common;
 using FluentValidation;
 
-namespace AmazonKiller.Application.Features.Auth.Commands.StartRegistration;
+namespace AmazonKiller.Application.Features.Auth.Commands.Registration.StartRegistration;
 
 public class StartRegistrationValidator : AbstractValidator<StartRegistrationCommand>
 {

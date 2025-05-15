@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace AmazonKiller.Infrastructure.Data.Configurations;
+namespace AmazonKiller.Infrastructure.Data.Configurations.Products;
 
 public class ProductConfiguration : IEntityTypeConfiguration<Product>
 {

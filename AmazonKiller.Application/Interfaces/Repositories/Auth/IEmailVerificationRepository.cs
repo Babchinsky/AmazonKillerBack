@@ -8,5 +8,7 @@ public interface IEmailVerificationRepository
     Task<bool> IsEmailTakenAsync(string email, CancellationToken ct);
     Task DeleteAsync(EmailVerification entry, CancellationToken ct);
     Task<EmailVerification?> GetValidEntryByUserIdAsync(Guid userId, string code, CancellationToken ct);
-    Task<string> CreateAndSaveCodeAsync(string email, VerificationType type, string? tempPasswordHash, CancellationToken ct);
+
+    Task<string> CreateAndSaveCodeAsync(string email, VerificationType type, string? tempPasswordHash, Guid? userId,
+        CancellationToken ct);
 }

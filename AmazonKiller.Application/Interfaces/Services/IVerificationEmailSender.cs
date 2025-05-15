@@ -4,6 +4,11 @@ namespace AmazonKiller.Application.Interfaces.Services;
 
 public interface IVerificationEmailSender
 {
-    Task<string> CreateAndSendAsync(string email, string subject, VerificationType type, string? tempHash,
+    Task<string> CreateAndSendAsync(
+        string email,
+        string subject,
+        VerificationType type,
+        string? tempHash,
+        Guid? userId,
         CancellationToken ct);
 }
