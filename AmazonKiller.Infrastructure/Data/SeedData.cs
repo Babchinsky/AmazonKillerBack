@@ -1,4 +1,5 @@
-﻿using AmazonKiller.Domain.Entities.Products;
+﻿using AmazonKiller.Domain.Entities.Categories;
+using AmazonKiller.Domain.Entities.Products;
 using AmazonKiller.Domain.Entities.Users;
 using AmazonKiller.Domain.Entities.Reviews;
 using AmazonKiller.Infrastructure.Data.Helpers;

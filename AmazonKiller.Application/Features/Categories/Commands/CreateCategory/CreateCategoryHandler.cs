@@ -1,5 +1,6 @@
 using AmazonKiller.Application.DTOs.Categories;
 using AmazonKiller.Application.Interfaces.Repositories.Products;
+using AmazonKiller.Domain.Entities.Categories;
 using AmazonKiller.Domain.Entities.Products;
 using AmazonKiller.Shared.Exceptions;
 using AutoMapper;

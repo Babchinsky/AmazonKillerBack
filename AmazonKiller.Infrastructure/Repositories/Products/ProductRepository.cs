@@ -10,12 +10,25 @@ public class ProductRepository(AmazonDbContext db) : IProductRepository
 {
     public Task<Product?> GetByIdAsync(Guid id, CancellationToken ct = default)
     {
-        return db.Products.FirstOrDefaultAsync(p => p.Id == id, ct);
+        return db.Products
+            .Include(p => p.Attributes)
+            .Include(p => p.Features)
+            .FirstOrDefaultAsync(p => p.Id == id, ct);
     }
 
     public async Task AddAsync(Product product, CancellationToken ct)
     {
         db.Products.Add(product);
+        await db.SaveChangesAsync(ct);
+    }
+
+    public async Task AddAttributesAndFeaturesAsync(
+        List<ProductAttribute> attributes,
+        List<ProductFeature> features,
+        CancellationToken ct)
+    {
+        db.ProductAttributes.AddRange(attributes);
+        db.ProductFeatures.AddRange(features);
         await db.SaveChangesAsync(ct);
     }
 

@@ -1,4 +1,5 @@
 ﻿using AmazonKiller.Application.Interfaces.Repositories.Products;
+using AmazonKiller.Domain.Entities.Categories;
 using AmazonKiller.Domain.Entities.Products;
 using AmazonKiller.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;

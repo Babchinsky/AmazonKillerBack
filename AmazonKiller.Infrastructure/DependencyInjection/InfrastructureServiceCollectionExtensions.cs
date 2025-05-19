@@ -26,29 +26,38 @@ public static class InfrastructureServiceCollectionExtensions
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services)
     {
+        // Services
         services.TryAddSingleton<IPasswordService, PasswordService>();
-        services.AddHttpClient<INovaPoshtaService, NovaPoshtaService>();
-        services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
         services.TryAddScoped<IAuthService, AuthService>();
-        services.TryAddScoped<IProductRepository, ProductRepository>();
-        services.TryAddScoped<ICurrentUserService, CurrentUserService>();
-        services.TryAddScoped<IAccountRepository, AccountRepository>();
-        services.TryAddScoped<IEmailSender, GmailEmailSender>();
-        services.TryAddScoped<IEmailVerificationRepository, EmailVerificationRepository>();
-        services.TryAddScoped<IUserRepository, UserRepository>();
-        services.TryAddScoped<IAdminSecretValidator, AdminSecretValidator>();
-        services.TryAddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
-        services.TryAddScoped<IWishlistRepository, WishlistRepository>();
-        services.TryAddScoped<IOrderRepository, OrderRepository>();
         services.TryAddScoped<IVerificationEmailSender, VerificationEmailSender>();
-        services.TryAddScoped<ICartRepository, CartRepository>();
-        services.TryAddScoped<ICountryService, CountryService>();
-        services.TryAddScoped<IAdminUserRepository, AdminUserRepository>();
-        services.TryAddScoped<IReviewRepository, ReviewRepository>();
-        services.TryAddScoped<ICategoryRepository, CategoryRepository>();
-        services.TryAddScoped<IFileStorage, LocalFileStorage>();
+        services.TryAddScoped<IEmailSender, GmailEmailSender>();
         services.TryAddScoped<ICurrentRequestContext, CurrentRequestContext>();
+
+        // External integrations
+        services.AddHttpClient<INovaPoshtaService, NovaPoshtaService>();
+
+        // Infrastructure
+        services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+        services.TryAddScoped<IFileStorage, LocalFileStorage>();
+        services.TryAddScoped<IPropertyKeyUpdater, PropertyKeyUpdater>();
+
+        // Repositories
+        services.TryAddScoped<IProductRepository, ProductRepository>();
+        services.TryAddScoped<ICategoryRepository, CategoryRepository>();
+        services.TryAddScoped<IReviewRepository, ReviewRepository>();
+        services.TryAddScoped<IUserRepository, UserRepository>();
+        services.TryAddScoped<IAccountRepository, AccountRepository>();
+        services.TryAddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+        services.TryAddScoped<IEmailVerificationRepository, EmailVerificationRepository>();
+        services.TryAddScoped<IAdminUserRepository, AdminUserRepository>();
+        services.TryAddScoped<IOrderRepository, OrderRepository>();
+        services.TryAddScoped<IWishlistRepository, WishlistRepository>();
+        services.TryAddScoped<ICartRepository, CartRepository>();
+
+        // Helpers
+        services.TryAddScoped<ICurrentUserService, CurrentUserService>();
+        services.TryAddScoped<IAdminSecretValidator, AdminSecretValidator>();
+        services.TryAddScoped<ICountryService, CountryService>();
 
         return services;
     }

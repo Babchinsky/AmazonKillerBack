@@ -115,7 +115,7 @@ app.UseForwardedHeaders();
 
 // --- Middleware ---
 app.UseMiddleware<ExceptionHandlingMiddleware>();
-app.ConfigureStaticFiles();
+StaticFilesConfiguration.ConfigureStaticFiles(app);
 
 // --- Swagger/Scalar UI ---
 if (app.Environment.IsDevelopment())

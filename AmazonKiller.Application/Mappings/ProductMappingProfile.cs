@@ -9,18 +9,23 @@ public class ProductMappingProfile : Profile
 {
     public ProductMappingProfile()
     {
-        /*  ――― 1. Запись → Домен ――― */
+        // 1. Команда → Домен
         CreateMap<CreateProductCommand, Product>()
-            // Url-ы картинок из команды кладём в коллекцию ProductPics доменной модели
-            .ForMember(dest => dest.ProductPics, opt => opt.Ignore()) // вручную добавляешь URL в handler
+            .ForMember(dest => dest.ProductPics, opt => opt.Ignore())
             .ForMember(dest => dest.Attributes, opt => opt.Ignore())
             .ForMember(dest => dest.Features, opt => opt.Ignore())
-            /* остальные поля просто копируются */
-            .ForMember(d => d.Id, o => o.Ignore()) // задастся в обработчике
+            .ForMember(d => d.Id, o => o.Ignore())
             .ForMember(d => d.RowVersion, o => o.Ignore());
 
-        /*  ――― 2. Домен → DTO ――― */
+        // 2. Домен → DTO
         CreateMap<Product, ProductDto>()
-            .ForMember(d => d.ProductPics, o => o.MapFrom(s => s.ProductPics));
+            .ForMember(d => d.ProductPics, o => o.MapFrom(s => s.ProductPics))
+            .ForMember(d => d.RowVersion, o => o.MapFrom(s => Convert.ToBase64String(s.RowVersion)))
+            .ForMember(d => d.Attributes, o => o.MapFrom(s => s.Attributes))
+            .ForMember(d => d.Features, o => o.MapFrom(s => s.Features));
+
+        // 3. Вспомогательные маппинги
+        CreateMap<ProductAttribute, ProductAttributeDto>();
+        CreateMap<ProductFeature, ProductFeatureDto>();
     }
 }

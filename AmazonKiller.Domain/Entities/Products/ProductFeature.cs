@@ -5,10 +5,10 @@
 /// </summary>
 public class ProductFeature
 {
-    public Guid Id { get; set; }
-    public Guid ProductId { get; set; }
-    public string Name { get; set; } = null!;
-    public string Description { get; set; } = null!;
+    public Guid Id { get; init; }
+    public Guid ProductId { get; init; }
+    public string Name { get; init; } = null!;
+    public string Description { get; init; } = null!;
 
-    public Product Product { get; set; } = null!;
+    public Product Product { get; init; } = null!;
 }

@@ -37,44 +37,6 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductCards",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    Rating = table.Column<int>(type: "int", nullable: false),
-                    Sale = table.Column<bool>(type: "bit", nullable: false),
-                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ReviewsCount = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProductCards", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ProductDetails",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    FabricType = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    CareInstructions = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Origin = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    ClosureType = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Brand = table.Column<int>(type: "int", nullable: false),
-                    Color = table.Column<int>(type: "int", nullable: false),
-                    ClothesSize = table.Column<int>(type: "int", nullable: true),
-                    ShoesSize = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProductDetails", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "ReviewContents",
                 columns: table => new
                 {
@@ -116,7 +78,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                     Code = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    DiscountPct = table.Column<decimal>(type: "decimal(5,4)", precision: 5, scale: 4, nullable: true),
+                    DiscountPct = table.Column<decimal>(type: "decimal(5,2)", precision: 5, scale: 2, nullable: true),
                     SoldCount = table.Column<int>(type: "int", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
@@ -243,7 +205,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductAttribute",
+                name: "ProductAttributes",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -253,9 +215,9 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductAttribute", x => x.Id);
+                    table.PrimaryKey("PK_ProductAttributes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProductAttribute_Products_ProductId",
+                        name: "FK_ProductAttributes_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
@@ -263,7 +225,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductFeature",
+                name: "ProductFeatures",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -273,9 +235,9 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductFeature", x => x.Id);
+                    table.PrimaryKey("PK_ProductFeatures", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProductFeature_Products_ProductId",
+                        name: "FK_ProductFeatures_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
@@ -316,28 +278,6 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Sales",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    OldPrice = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    NewPrice = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Sales", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Sales_Products_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Products",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -507,13 +447,13 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductAttribute_ProductId",
-                table: "ProductAttribute",
+                name: "IX_ProductAttributes_ProductId",
+                table: "ProductAttributes",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductFeature_ProductId",
-                table: "ProductFeature",
+                name: "IX_ProductFeatures_ProductId",
+                table: "ProductFeatures",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
@@ -555,13 +495,6 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Sales_ProductId",
-                table: "Sales",
-                column: "ProductId",
-                unique: true,
-                filter: "[ProductId] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_WishlistItems_ProductId",
                 table: "WishlistItems",
                 column: "ProductId");
@@ -583,25 +516,16 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                 name: "OrderItems");
 
             migrationBuilder.DropTable(
-                name: "ProductAttribute");
+                name: "ProductAttributes");
 
             migrationBuilder.DropTable(
-                name: "ProductCards");
-
-            migrationBuilder.DropTable(
-                name: "ProductDetails");
-
-            migrationBuilder.DropTable(
-                name: "ProductFeature");
+                name: "ProductFeatures");
 
             migrationBuilder.DropTable(
                 name: "RefreshTokens");
 
             migrationBuilder.DropTable(
                 name: "Reviews");
-
-            migrationBuilder.DropTable(
-                name: "Sales");
 
             migrationBuilder.DropTable(
                 name: "WishlistItems");

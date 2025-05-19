@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using AmazonKiller.Domain.Entities.Products;
 
-namespace AmazonKiller.Domain.Entities.Products;
+namespace AmazonKiller.Domain.Entities.Categories;
 
 public class Category
 {

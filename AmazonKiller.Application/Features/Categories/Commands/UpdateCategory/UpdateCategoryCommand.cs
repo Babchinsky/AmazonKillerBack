@@ -1,4 +1,5 @@
 using AmazonKiller.Application.DTOs.Categories;
+using AmazonKiller.Domain.Entities.Categories;
 using AmazonKiller.Domain.Entities.Products;
 using MediatR;
 

@@ -1,4 +1,4 @@
-﻿using AmazonKiller.Domain.Entities.Sales;
+﻿using AmazonKiller.Domain.Entities.Categories;
 
 namespace AmazonKiller.Domain.Entities.Products;
 
@@ -24,7 +24,6 @@ public class Product
 
     public decimal Price { get; set; } // Цена без учёта скидки
     public decimal? DiscountPct { get; init; } // null ⇒ скидки нет, иначе 0–100 %
-    public Sale? Sale { get; init; } // навигация односторонняя
     public int SoldCount { get; set; } // NEW
 
     public int Quantity { get; set; } // Кол-во на складе

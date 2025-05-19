@@ -1,4 +1,4 @@
-﻿namespace AmazonKiller.Domain.Entities.Products;
+﻿namespace AmazonKiller.Domain.Entities.Categories;
 
 public enum CategoryStatus
 {
