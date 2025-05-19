@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace AmazonKiller.Application.Features.Account.Orders.Commands.CreateOrder;
 
-public class CreateOrderCommandValidator : AbstractValidator<CreateOrderCommand>
+public class CreateOrderValidator : AbstractValidator<CreateOrderCommand>
 {
-    public CreateOrderCommandValidator()
+    public CreateOrderValidator()
     {
         When(x => x.PaymentType == PaymentType.Card, () =>
         {

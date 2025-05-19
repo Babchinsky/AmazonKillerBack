@@ -112,16 +112,17 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Code = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Rating = table.Column<int>(type: "int", nullable: false),
-                    ReviewsCount = table.Column<int>(type: "int", nullable: false),
-                    ProductPics = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DetailsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
+                    DiscountPct = table.Column<decimal>(type: "decimal(5,4)", precision: 5, scale: 4, nullable: true),
+                    SoldCount = table.Column<int>(type: "int", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
+                    ProductPics = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Rating = table.Column<int>(type: "int", nullable: false),
+                    ReviewsCount = table.Column<int>(type: "int", nullable: false),
                     InWishlist = table.Column<bool>(type: "bit", nullable: false),
                     InCartList = table.Column<bool>(type: "bit", nullable: false),
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false)
@@ -133,12 +134,6 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         name: "FK_Products_Categories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Categories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Products_ProductDetails_DetailsId",
-                        column: x => x.DetailsId,
-                        principalTable: "ProductDetails",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -243,6 +238,46 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         name: "FK_CartLists_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProductAttribute",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Key = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    Value = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductAttribute", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ProductAttribute_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProductFeature",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductFeature", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ProductFeature_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -394,15 +429,6 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "ProductDetails",
-                columns: new[] { "Id", "Brand", "CareInstructions", "ClosureType", "ClothesSize", "Color", "FabricType", "Origin", "ShoesSize" },
-                values: new object[,]
-                {
-                    { new Guid("33333333-3333-3333-3333-333333333333"), 16, "Keep dry", "None", null, 5, "Paper", "USA", null },
-                    { new Guid("44444444-4444-4444-4444-444444444444"), 20, "Wipe clean", "Zip", null, 4, "Plastic", "China", null }
-                });
-
-            migrationBuilder.InsertData(
                 table: "ReviewContents",
                 columns: new[] { "Id", "Article", "FilePaths", "Message" },
                 values: new object[] { new Guid("99999999-9999-9999-9999-999999999999"), "Great book!", "[\"file1.jpg\",\"file2.jpg\"]", "Very useful for learning advanced C#" });
@@ -418,11 +444,11 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "Products",
-                columns: new[] { "Id", "CategoryId", "Code", "DetailsId", "InCartList", "InWishlist", "Name", "Price", "ProductPics", "Quantity", "Rating", "ReviewsCount", "Status" },
+                columns: new[] { "Id", "CategoryId", "Code", "DiscountPct", "InCartList", "InWishlist", "Name", "Price", "ProductPics", "Quantity", "Rating", "ReviewsCount", "SoldCount", "Status" },
                 values: new object[,]
                 {
-                    { new Guid("55555555-5555-5555-5555-555555555555"), new Guid("11111111-1111-1111-1111-111111111111"), "01JS9QNDAYKK2CFRT5AKZF1YAA", new Guid("33333333-3333-3333-3333-333333333333"), true, true, "C# in Depth", 39.99m, "[]", 10, 5, 1, 0 },
-                    { new Guid("66666666-6666-6666-6666-666666666666"), new Guid("22222222-2222-2222-2222-222222222222"), "01JS9QNDAYKK2CFRT5AKZF1YBB", new Guid("44444444-4444-4444-4444-444444444444"), false, false, "Wireless Mouse", 19.99m, "[]", 50, 4, 0, 0 }
+                    { new Guid("55555555-5555-5555-5555-555555555555"), new Guid("11111111-1111-1111-1111-111111111111"), "01JS9QNDAYKK2CFRT5AKZF1YAA", null, true, true, "C# in Depth", 39.99m, "[]", 10, 5, 1, 0, 0 },
+                    { new Guid("66666666-6666-6666-6666-666666666666"), new Guid("22222222-2222-2222-2222-222222222222"), "01JS9QNDAYKK2CFRT5AKZF1YBB", null, false, false, "Wireless Mouse", 19.99m, "[]", 50, 4, 0, 0, 0 }
                 });
 
             migrationBuilder.InsertData(
@@ -481,6 +507,16 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ProductAttribute_ProductId",
+                table: "ProductAttribute",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductFeature_ProductId",
+                table: "ProductFeature",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Products_CategoryId",
                 table: "Products",
                 column: "CategoryId");
@@ -490,11 +526,6 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                 table: "Products",
                 column: "Code",
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Products_DetailsId",
-                table: "Products",
-                column: "DetailsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RefreshTokens_Token",
@@ -552,7 +583,16 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                 name: "OrderItems");
 
             migrationBuilder.DropTable(
+                name: "ProductAttribute");
+
+            migrationBuilder.DropTable(
                 name: "ProductCards");
+
+            migrationBuilder.DropTable(
+                name: "ProductDetails");
+
+            migrationBuilder.DropTable(
+                name: "ProductFeature");
 
             migrationBuilder.DropTable(
                 name: "RefreshTokens");
@@ -580,9 +620,6 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Categories");
-
-            migrationBuilder.DropTable(
-                name: "ProductDetails");
         }
     }
 }

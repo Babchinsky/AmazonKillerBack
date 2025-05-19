@@ -1,8 +1,10 @@
+using AmazonKiller.Application.Common.Helpers;
 using AmazonKiller.Application.DTOs.Reviews;
 using AmazonKiller.Application.Interfaces.Repositories.Reviews;
 using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace AmazonKiller.Application.Features.Reviews.Queries.GetAllReviews;
 
@@ -11,7 +13,7 @@ public class GetAllReviewsHandler(IReviewRepository repo, IMapper mapper)
 {
     public async Task<List<ReviewDto>> Handle(GetAllReviewsQuery q, CancellationToken ct)
     {
-        var query = repo.Queryable().AsQueryable();
+        var query = repo.Queryable().AsNoTracking();
 
         if (q.ProductId.HasValue)
             query = query.Where(r => r.ProductId == q.ProductId);
@@ -22,19 +24,15 @@ public class GetAllReviewsHandler(IReviewRepository repo, IMapper mapper)
         if (q.MaxRating.HasValue)
             query = query.Where(r => (int)r.Rating <= q.MaxRating);
 
-        if (!string.IsNullOrEmpty(q.SortBy))
-            query = (q.SortBy.ToLower(), q.SortDesc) switch
-            {
-                ("rating", true) => query.OrderByDescending(r => r.Rating),
-                ("rating", false) => query.OrderBy(r => r.Rating),
-                ("createdat", true) => query.OrderByDescending(r => r.CreatedAt),
-                ("createdat", false) => query.OrderBy(r => r.CreatedAt),
-                _ => query
-            };
+        var sortMap = new Dictionary<string, Expression<Func<Domain.Entities.Reviews.Review, object>>>
+        {
+            ["rating"] = r => r.Rating,
+            ["createdat"] = r => r.CreatedAt
+        };
 
         query = query
-            .Skip((q.Page - 1) * q.PageSize)
-            .Take(q.PageSize);
+            .ApplySorting(q.Parameters, sortMap)
+            .ApplyPagination(q.Parameters);
 
         var list = await query.ToListAsync(ct);
         return mapper.Map<List<ReviewDto>>(list);

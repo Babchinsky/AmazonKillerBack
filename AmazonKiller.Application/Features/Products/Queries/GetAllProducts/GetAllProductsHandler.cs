@@ -1,7 +1,9 @@
-﻿using AmazonKiller.Application.DTOs.Products;
+﻿using AmazonKiller.Application.Common.Helpers;
+using AmazonKiller.Application.DTOs.Products;
 using AmazonKiller.Application.Interfaces.Repositories.Products;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace AmazonKiller.Application.Features.Products.Queries.GetAllProducts;
 
@@ -24,30 +26,23 @@ public class GetAllProductsHandler(IProductRepository repo)
         if (q.MaxPrice.HasValue)
             query = query.Where(p => p.Price <= q.MaxPrice);
 
-        if (!string.IsNullOrEmpty(q.SortBy))
-            query = (q.SortBy.ToLower(), q.SortDesc) switch
-            {
-                ("price", true) => query.OrderByDescending(p => p.Price),
-                ("price", false) => query.OrderBy(p => p.Price),
-                ("rating", true) => query.OrderByDescending(p => p.Rating),
-                ("rating", false) => query.OrderBy(p => p.Rating),
-                ("soldcount", true) => query.OrderByDescending(p => p.SoldCount),
-                ("soldcount", false) => query.OrderBy(p => p.SoldCount),
-                _ => query
-            };
-
         if (q.Filters is not null)
-        {
             foreach (var (key, val) in q.Filters)
-            {
                 query = query.Where(p =>
                     p.Attributes.Any(a => a.Key == key && a.Value == val));
-            }
-        }
+
+        var sortMap = new Dictionary<string, Expression<Func<Domain.Entities.Products.Product, object>>>
+        {
+            ["price"] = p => p.Price,
+            ["rating"] = p => p.Rating,
+            ["soldcount"] = p => p.SoldCount
+        };
+
+        query = query
+            .ApplySorting(q.Parameters, sortMap)
+            .ApplyPagination(q.Parameters);
 
         return await query
-            .Skip((q.Page - 1) * q.PageSize)
-            .Take(q.PageSize)
             .Select(p => new ProductDto
             {
                 Id = p.Id,

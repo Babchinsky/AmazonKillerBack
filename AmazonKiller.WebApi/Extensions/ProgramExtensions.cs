@@ -1,4 +1,5 @@
 ﻿// namespace подобран так, чтобы совпадать с другими WebApi-расширениями
+
 namespace AmazonKiller.WebApi.Extensions;
 
 using Microsoft.AspNetCore.StaticFiles;
@@ -15,7 +16,7 @@ public static class ProgramExtensions
         {
             OnPrepareResponse = ctx =>
             {
-                const int year = 31536000;            // сек
+                const int year = 31536000; // сек
                 ctx.Context.Response.Headers.CacheControl = $"public,max-age={year}";
             },
             ContentTypeProvider = new FileExtensionContentTypeProvider

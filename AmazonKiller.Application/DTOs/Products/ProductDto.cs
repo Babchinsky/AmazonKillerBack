@@ -11,7 +11,7 @@ public class ProductDto
     public Guid CategoryId { get; init; }
     public decimal Price { get; init; }
     public int Quantity { get; init; }
-    public int SoldCount { get; init; } 
+    public int SoldCount { get; init; }
     public IReadOnlyCollection<ProductAttributeDto> Attributes { get; init; } = [];
     public IReadOnlyCollection<ProductFeatureDto> Features { get; init; } = [];
     public string RowVersion { get; init; } = string.Empty;

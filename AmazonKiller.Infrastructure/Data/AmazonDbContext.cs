@@ -30,30 +30,6 @@ public class AmazonDbContext(DbContextOptions<AmazonDbContext> options) : DbCont
         // Подключаем все конфигурации из текущей сборки
         b.ApplyConfigurationsFromAssembly(typeof(AmazonDbContext).Assembly);
 
-        // AmazonKiller.Infrastructure/Data/AmazonDbContext.cs  (OnModelCreating)
-        b.Entity<ProductAttribute>(entityTypeBuilder =>
-        {
-            entityTypeBuilder.HasKey(x => x.Id);
-            entityTypeBuilder.Property(x => x.Key).HasMaxLength(30).IsRequired();
-            entityTypeBuilder.Property(x => x.Value).HasMaxLength(30).IsRequired();
-            entityTypeBuilder.HasOne(x => x.Product)
-                .WithMany(p => p.Attributes)
-                .HasForeignKey(x => x.ProductId)
-                .OnDelete(DeleteBehavior.Cascade);
-        });
-
-        b.Entity<ProductFeature>(entityTypeBuilder =>
-        {
-            entityTypeBuilder.HasKey(x => x.Id);
-            entityTypeBuilder.Property(x => x.Name).HasMaxLength(60).IsRequired();
-            entityTypeBuilder.Property(x => x.Description).HasMaxLength(300).IsRequired();
-            entityTypeBuilder.HasOne(x => x.Product)
-                .WithMany(p => p.Features)
-                .HasForeignKey(x => x.ProductId)
-                .OnDelete(DeleteBehavior.Cascade);
-        });
-
-
         // Seed 
         SeedData.Seed(b);
     }
