@@ -1,36 +1,58 @@
-﻿using AmazonKiller.Application.DTOs.Products;
-using AmazonKiller.Application.Interfaces.Repositories.Products;
+﻿using AmazonKiller.Application.Interfaces.Repositories.Products;
+using AmazonKiller.Application.Interfaces.Services;
 using AmazonKiller.Domain.Entities.Products;
-using AmazonKiller.Domain.Entities.Sales;
-using AutoMapper;
 using MediatR;
 
 namespace AmazonKiller.Application.Features.Products.Commands.CreateProduct;
 
-public sealed class CreateProductHandler(
-    IProductRepository repo,
-    IMapper mapper) // файлы уже загружены контроллером
-    : IRequestHandler<CreateProductCommand, ProductDto>
+public class CreateProductCommandHandler(
+    IFileStorage fileStorage,
+    IProductRepository repo)
+    : IRequestHandler<CreateProductCommand, Guid>
 {
-    public async Task<ProductDto> Handle(CreateProductCommand cmd, CancellationToken ct)
+    public async Task<Guid> Handle(CreateProductCommand cmd, CancellationToken ct)
     {
-        // mapper создаёт Product; Id/Code остаются как прописано в самой сущности
-        var product = mapper.Map<Product>(cmd);
-
-        foreach (var url in cmd.ImageUrls)
-            product.ProductPics.Add(url);
-
-        if (cmd.Discount is { } d)
-            product.Sale = new Sale
+        var uploadedUrls = new List<string>();
+        try
+        {
+            foreach (var image in cmd.Images)
             {
-                Id = Guid.NewGuid(),
-                OldPrice = cmd.Price,
-                NewPrice = d,
-                StartDate = DateTime.UtcNow,
-                EndDate = DateTime.MaxValue
+                await using var stream = image.OpenReadStream();
+                var url = await fileStorage.SaveAsync(stream, Path.GetExtension(image.FileName), ct);
+                uploadedUrls.Add(url);
+            }
+
+            var product = new Product
+            {
+                Code = cmd.Code,
+                Name = cmd.Name,
+                CategoryId = cmd.CategoryId,
+                Price = cmd.Price,
+                DiscountPct = cmd.DiscountPct,
+                Quantity = cmd.Quantity,
+                ProductPics = uploadedUrls,
+                Attributes = cmd.Attributes.Select(x => new ProductAttribute
+                {
+                    Id = Guid.NewGuid(),
+                    Key = x.Key,
+                    Value = x.Value
+                }).ToList(),
+                Features = cmd.Features.Select(x => new ProductFeature
+                {
+                    Id = Guid.NewGuid(),
+                    Name = x.Name,
+                    Description = x.Description
+                }).ToList()
             };
 
-        await repo.AddAsync(product);
-        return mapper.Map<ProductDto>(product);
+            await repo.AddAsync(product, ct);
+            return product.Id;
+        }
+        catch
+        {
+            foreach (var url in uploadedUrls)
+                await fileStorage.DeleteAsync(url, ct);
+            throw;
+        }
     }
 }

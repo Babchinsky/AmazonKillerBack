@@ -10,7 +10,7 @@ public class GetProductByIdHandler(IProductRepository repo, IMapper mapper)
 {
     public async Task<ProductDto?> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
     {
-        var product = await repo.GetByIdAsync(request.Id);
+        var product = await repo.GetByIdAsync(request.Id, cancellationToken);
         return product is null ? null : mapper.Map<ProductDto>(product);
     }
 }

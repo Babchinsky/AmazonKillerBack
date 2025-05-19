@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace AmazonKiller.Application.Features.Products.Commands.CreateProduct;
 
-public class AttributeDtoValidator : AbstractValidator<AttributeDto>
+public class AttributeDtoValidator : AbstractValidator<ProductAttributeDto>
 {
     public AttributeDtoValidator()
     {

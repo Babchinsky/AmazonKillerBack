@@ -14,9 +14,6 @@ public static class SeedData
         var booksId = new Guid("11111111-1111-1111-1111-111111111111");
         var techId = new Guid("22222222-2222-2222-2222-222222222222");
 
-        var details1 = new Guid("33333333-3333-3333-3333-333333333333");
-        var details2 = new Guid("44444444-4444-4444-4444-444444444444");
-
         var product1 = new Guid("55555555-5555-5555-5555-555555555555");
         var product2 = new Guid("66666666-6666-6666-6666-666666666666");
 
@@ -52,30 +49,6 @@ public static class SeedData
             }
         );
 
-        // ProductDetails
-        modelBuilder.Entity<ProductDetails>().HasData(
-            new ProductDetails
-            {
-                Id = details1,
-                FabricType = "Paper",
-                CareInstructions = "Keep dry",
-                Origin = "USA",
-                ClosureType = "None",
-                Brand = Brands.ASOS,
-                Color = Colors.White
-            },
-            new ProductDetails
-            {
-                Id = details2,
-                FabricType = "Plastic",
-                CareInstructions = "Wipe clean",
-                Origin = "China",
-                ClosureType = "Zip",
-                Brand = Brands.Nike,
-                Color = Colors.Black
-            }
-        );
-
         // Products
         modelBuilder.Entity<Product>().HasData(
             new Product
@@ -90,8 +63,7 @@ public static class SeedData
                 Rating = Rating.Five,
                 CategoryId = booksId,
                 InWishlist = true,
-                InCartList = true,
-                DetailsId = details1
+                InCartList = true
             },
             new Product
             {
@@ -105,8 +77,7 @@ public static class SeedData
                 Rating = Rating.Four,
                 CategoryId = techId,
                 InWishlist = false,
-                InCartList = false,
-                DetailsId = details2
+                InCartList = false
             }
         );
 

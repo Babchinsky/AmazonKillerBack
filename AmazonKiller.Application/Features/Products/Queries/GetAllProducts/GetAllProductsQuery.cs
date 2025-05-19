@@ -6,6 +6,7 @@ namespace AmazonKiller.Application.Features.Products.Queries.GetAllProducts;
 public record GetAllProductsQuery(
     string? SearchTerm,
     Guid? CategoryId,
+    Dictionary<string, string>? Filters, // ← сюда передаём { "Brand": "Lenovo", "Screen size": "15.6" }
     decimal? MinPrice,
     decimal? MaxPrice,
     string? SortBy,

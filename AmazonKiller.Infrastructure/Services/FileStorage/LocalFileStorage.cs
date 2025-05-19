@@ -5,28 +5,33 @@ namespace AmazonKiller.Infrastructure.Services.FileStorage;
 
 public class LocalFileStorage(IWebHostEnvironment env) : IFileStorage
 {
-    private readonly string _root = Path.Combine(env.ContentRootPath, "wwwroot", "uploads");
+    private readonly string _root = Path.Combine(env.WebRootPath, "uploads");
 
     public async Task<string> SaveAsync(Stream source, string extension, CancellationToken ct = default)
     {
-        var fileName = Guid.NewGuid() + extension;
-        var folder = DateTime.UtcNow.ToString("yyyy/MM"); // uploads/2025/05
+        var fileName = $"{Guid.NewGuid():N}{extension}";
+        var folder = DateTime.UtcNow.ToString("yyyy/MM");
         var dir = Path.Combine(_root, folder);
-        Directory.CreateDirectory(dir);
 
+        Directory.CreateDirectory(dir);
         var absPath = Path.Combine(dir, fileName);
-        await using var dst = new FileStream(absPath, FileMode.Create);
+
+        await using var dst = File.Create(absPath);
         await source.CopyToAsync(dst, ct);
 
-        return $"/uploads/{folder}/{fileName}"; // публичный URL
+        return $"/uploads/{folder}/{fileName}";
     }
 
     public Task DeleteAsync(string url, CancellationToken ct = default)
     {
-        var localPath = Path.Combine(_root, url.TrimStart('/'));
-        if (File.Exists(localPath))
-            File.Delete(localPath);
-
+        var path = Path.Combine(env.WebRootPath, url.TrimStart('/'));
+        if (File.Exists(path)) File.Delete(path);
         return Task.CompletedTask;
+    }
+
+    public Task<bool> ExistsAsync(string url, CancellationToken ct = default)
+    {
+        var path = Path.Combine(env.WebRootPath, url.TrimStart('/'));
+        return Task.FromResult(File.Exists(path));
     }
 }

@@ -1,87 +1,89 @@
-﻿using AmazonKiller.Application.DTOs.Common;
+﻿using AmazonKiller.Application.Features.Filters.Queries;
 using AmazonKiller.Application.Features.Products.Commands.BulkDeleteProducts;
 using AmazonKiller.Application.Features.Products.Commands.CreateProduct;
 using AmazonKiller.Application.Features.Products.Commands.UpdateProduct;
 using AmazonKiller.Application.Features.Products.Queries.GetAllProducts;
 using AmazonKiller.Application.Features.Products.Queries.GetProductById;
 using AmazonKiller.Application.Features.Products.Queries.IsProductExists;
-using AmazonKiller.Application.Interfaces.Services;
-using AmazonKiller.WebApi.Extensions;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using CreateProductRequest = AmazonKiller.WebApi.Requests.CreateProductRequest;
 
 namespace AmazonKiller.WebApi.Controllers;
 
 [ApiController]
-[Route("api/products")]
+[Route("api/[controller]")]
 public class ProductController(IMediator mediator) : ControllerBase
 {
-    [HttpGet("search")]
-    public async Task<IActionResult> Search([FromQuery] GetAllProductsQuery query)
+    /// <summary>
+    /// Получить все продукты с фильтрацией, сортировкой и пагинацией
+    /// </summary>
+    [HttpGet]
+    public async Task<IActionResult> GetAll([FromQuery] GetAllProductsQuery q, CancellationToken ct)
     {
-        var result = await mediator.Send(query);
-        return Ok(result);
+        var list = await mediator.Send(q, ct);
+        return Ok(list);
     }
 
+    /// <summary>
+    /// Получить продукт по ID
+    /// </summary>
     [HttpGet("{id:guid}")]
-    public async Task<IActionResult> GetById(Guid id)
+    public async Task<IActionResult> Get(Guid id, CancellationToken ct)
     {
-        var product = await mediator.Send(new GetProductByIdQuery(id));
-        return Ok(product);
+        var dto = await mediator.Send(new GetProductByIdQuery(id), ct);
+        return Ok(dto);
     }
 
+    /// <summary>
+    /// Проверить, существует ли продукт по ID
+    /// </summary>
     [HttpGet("{id:guid}/exists")]
-    public async Task<IActionResult> IsExists(Guid id)
+    public async Task<IActionResult> Exists(Guid id, CancellationToken ct)
     {
-        var exists = await mediator.Send(new IsProductExistsQuery(id));
+        var exists = await mediator.Send(new IsProductExistsQuery(id), ct);
         return Ok(exists);
     }
 
-    [Authorize(Roles = "Admin")]
+    /// <summary>
+    /// Создать новый продукт
+    /// </summary>
     [HttpPost]
-    public async Task<IActionResult> Create([FromForm] CreateProductRequest req,
-        [FromServices] IFileStorage files,
-        CancellationToken ct)
+    public async Task<IActionResult> Create([FromForm] CreateProductCommand cmd, CancellationToken ct)
     {
-        var urls = new List<string>();
-        foreach (var file in req.Images)
-        {
-            await using var stream = file.OpenReadStream();
-            var url = await files.SaveAsync(stream, Path.GetExtension(file.FileName), ct);
-            urls.Add(url);
-        }
-
-        var cmd = new CreateProductCommand(
-            req.Name, req.CategoryId, req.DetailsId, req.Price, req.Quantity,
-            req.Discount, urls, req.Attributes, req.Features);
-
-        var dto = await mediator.Send(cmd, ct);
-        return CreatedAtAction(nameof(GetById), new { id = dto.Id }, dto);
+        var id = await mediator.Send(cmd, ct);
+        return CreatedAtAction(nameof(Get), new { id }, id);
     }
 
-    [Authorize(Roles = "Admin")]
+    /// <summary>
+    /// Обновить существующий продукт
+    /// </summary>
     [HttpPut("{id:guid}")]
-    public async Task<IActionResult> Update(Guid id, [FromBody] UpdateProductCommand cmd)
+    public async Task<IActionResult> Update(Guid id, [FromBody] UpdateProductCommand cmd, CancellationToken ct)
     {
         if (id != cmd.Id)
-            return this.ProblemBadRequest("ID mismatch");
+            return BadRequest("ID mismatch");
 
-        var isExists = await mediator.Send(new IsProductExistsQuery(id));
-        if (!isExists)
-            return this.ProblemNotFound($"Entity with ID {id} not found");
-
-        var updated = await mediator.Send(cmd);
-        return Ok(updated);
+        var dto = await mediator.Send(cmd, ct);
+        return Ok(dto);
     }
 
-    [Authorize(Roles = "Admin")]
+    /// <summary>
+    /// Удалить несколько продуктов по их ID
+    /// </summary>
     [HttpPost("delete-many")]
-    [ProducesResponseType(typeof(BulkDeleteResultDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> BulkDelete([FromBody] BulkDeleteProductsCommand cmd, CancellationToken ct)
     {
         var result = await mediator.Send(cmd, ct);
+        return Ok(result);
+    }
+
+    /// <summary>
+    /// Получить доступные фильтры для выбранной категории
+    /// </summary>
+    [HttpGet("filters")]
+    public async Task<IActionResult> GetFilters([FromQuery] Guid categoryId, CancellationToken ct)
+    {
+        var result = await mediator.Send(new GetAvailableFiltersQuery(categoryId), ct);
         return Ok(result);
     }
 }

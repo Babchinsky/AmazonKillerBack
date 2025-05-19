@@ -8,15 +8,15 @@ namespace AmazonKiller.Infrastructure.Repositories.Products;
 
 public class ProductRepository(AmazonDbContext db) : IProductRepository
 {
-    public Task<Product?> GetByIdAsync(Guid id)
+    public Task<Product?> GetByIdAsync(Guid id, CancellationToken ct = default)
     {
-        return db.Products.Include(p => p.Details).FirstOrDefaultAsync(p => p.Id == id);
+        return db.Products.FirstOrDefaultAsync(p => p.Id == id, ct);
     }
 
-    public async Task AddAsync(Product product)
+    public async Task AddAsync(Product product, CancellationToken ct)
     {
         db.Products.Add(product);
-        await db.SaveChangesAsync();
+        await db.SaveChangesAsync(ct);
     }
 
     public async Task UpdateAsync(Product product, byte[] originalRowVersion, CancellationToken ct)
@@ -54,6 +54,6 @@ public class ProductRepository(AmazonDbContext db) : IProductRepository
 
     public IQueryable<Product> Queryable()
     {
-        return db.Products.Include(p => p.Details);
+        return db.Products;
     }
 }

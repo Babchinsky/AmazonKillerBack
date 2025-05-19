@@ -1,15 +1,20 @@
 ﻿using AmazonKiller.Application.Interfaces.Repositories.Account;
+using AmazonKiller.Application.Interfaces.Repositories.Products;
 using AmazonKiller.Application.Interfaces.Services;
 using AmazonKiller.Domain.Entities.Orders;
 using AmazonKiller.Shared.Exceptions;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace AmazonKiller.Application.Features.Account.Orders.Commands.CreateOrder;
 
 public class CreateOrderHandler(
     IOrderRepository orderRepo,
     ICartRepository cartRepo,
-    ICurrentUserService currentUser) : IRequestHandler<CreateOrderCommand, Guid>
+    IProductRepository productRepo,
+    ICurrentUserService currentUser,
+    DbContext dbContext)
+    : IRequestHandler<CreateOrderCommand, Guid>
 {
     public async Task<Guid> Handle(CreateOrderCommand req, CancellationToken ct)
     {
@@ -62,8 +67,17 @@ public class CreateOrderHandler(
 
         order.TotalPrice = order.Items.Sum(x => x.Price * x.Quantity);
 
+        // Инкрементируем SoldCount в одном SaveChangesAsync
+        foreach (var item in order.Items)
+        {
+            var product = await productRepo.GetByIdAsync(item.ProductId, ct);
+            if (product is not null)
+                product.SoldCount += item.Quantity;
+        }
+
         var orderId = await orderRepo.CreateOrderAsync(order, ct);
         await cartRepo.ClearCartAsync(userId, ct);
+        await dbContext.SaveChangesAsync(ct); // один SaveChanges
 
         return orderId;
     }

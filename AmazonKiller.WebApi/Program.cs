@@ -4,6 +4,7 @@ using AmazonKiller.Application.Options;
 using AmazonKiller.Infrastructure.Data;
 using AmazonKiller.Infrastructure.DependencyInjection;
 using AmazonKiller.Infrastructure.Middleware;
+using AmazonKiller.WebApi.Extensions;
 using AmazonKiller.WebApi.Filters;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -114,6 +115,7 @@ app.UseForwardedHeaders();
 
 // --- Middleware ---
 app.UseMiddleware<ExceptionHandlingMiddleware>();
+app.ConfigureStaticFiles();
 
 // --- Swagger/Scalar UI ---
 if (app.Environment.IsDevelopment())

@@ -35,7 +35,7 @@ public class OrdersController(IMediator mediator) : ControllerBase
         return Ok(id);
     }
 
-    [HttpPost("/products")]
+    [HttpPost("products")]
     public async Task<IActionResult> AddProduct([FromBody] AddProductToOrderCommand cmd,
         CancellationToken ct)
     {
