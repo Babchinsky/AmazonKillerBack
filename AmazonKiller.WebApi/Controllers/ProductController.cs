@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AmazonKiller.WebApi.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/products")]
 public class ProductController(IMediator mediator) : ControllerBase
 {
     /// <summary>
