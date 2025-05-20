@@ -11,7 +11,7 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
         e.HasIndex(p => p.Code).IsUnique();
         e.PrimitiveCollection(p => p.ImageUrls);
         e.Property(p => p.Price).HasPrecision(18, 2);
-        e.Property(p => p.DiscountPct).HasPrecision(5,2);
-        e.Property(p => p.RowVersion).IsRowVersion();
+        e.Property(p => p.DiscountPct).HasPrecision(5, 2);
+        e.Property(p => p.RowVersion).IsRowVersion().IsConcurrencyToken();
     }
 }

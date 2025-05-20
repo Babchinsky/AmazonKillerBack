@@ -4,12 +4,30 @@ using AmazonKiller.Application.Interfaces.Services;
 using AmazonKiller.Domain.Entities.Products;
 using AmazonKiller.Infrastructure.Data;
 using AmazonKiller.Shared.Exceptions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace AmazonKiller.Infrastructure.Repositories.Products;
 
 public class ProductRepository(AmazonDbContext db) : IProductRepository
 {
+    private static async Task<List<string>> UploadAllAsync(
+        IEnumerable<IFormFile> files,
+        IFileStorage storage,
+        CancellationToken ct)
+    {
+        var urls = new List<string>();
+
+        foreach (var img in files)
+        {
+            await using var s = img.OpenReadStream();
+            var url = await storage.SaveAsync(s, Path.GetExtension(img.FileName), ct);
+            urls.Add(url);
+        }
+
+        return urls;
+    }
+
     public Task<Product?> GetByIdAsync(Guid id, CancellationToken ct)
     {
         return db.Products
@@ -18,97 +36,89 @@ public class ProductRepository(AmazonDbContext db) : IProductRepository
             .FirstOrDefaultAsync(p => p.Id == id, ct);
     }
 
-    public void AttachAndSetRowVersion(Product product, byte[] rowVersion)
-    {
-        var entry = db.Entry(product);
-        if (entry.State == EntityState.Detached)
-            db.Attach(product);
-
-        entry.Property(p => p.RowVersion).OriginalValue = rowVersion;
-        entry.Property(p => p.Name).IsModified = true;
-    }
-
-    public async Task UpdateAsync(Product product, UpdateProductCommand cmd, IFileStorage files, byte[] rowVersion,
+    /// <summary>
+    /// Полное обновление продукта c оптимистичной блокировкой.
+    /// EF Core 7 – используют bulk-API ExecuteUpdate / ExecuteDelete.
+    /// </summary>
+    public async Task UpdateAsync(
+        UpdateProductCommand cmd,
+        IFileStorage fileStorage,
         CancellationToken ct)
     {
-        // Установим оригинальный RowVersion
-        var entry = db.Entry(product);
-        entry.Property(p => p.RowVersion).OriginalValue = rowVersion;
+        var oldRowVersion = Convert.FromBase64String(cmd.RowVersion);
 
-        // ✅ Обновление изображений
-        await Task.WhenAll(product.ImageUrls.Select(url => files.DeleteAsync(url, ct)));
-        var newPics = new List<string>();
-        foreach (var image in cmd.Images)
+        await using var tx = await db.Database.BeginTransactionAsync(ct);
+
+        /********** 1. Обновляем «простые» поля *********************************/
+
+        var affected = await db.Products
+            .Where(p => p.Id == cmd.Id &&
+                        p.RowVersion == oldRowVersion) // concurrency-check
+            .ExecuteUpdateAsync(set => set
+                .SetProperty(p => p.Name, cmd.Name)
+                .SetProperty(p => p.Code, cmd.Code)
+                .SetProperty(p => p.CategoryId, cmd.CategoryId)
+                .SetProperty(p => p.Price, cmd.Price)
+                .SetProperty(p => p.DiscountPct, cmd.DiscountPct)
+                .SetProperty(p => p.Quantity, cmd.Quantity), ct);
+
+        if (affected == 0)
+            throw new AppException("The product was modified by another user", 409);
+
+        /********** 2. Attributes ************************************************/
+
+        await db.ProductAttributes
+            .Where(a => a.ProductId == cmd.Id)
+            .ExecuteDeleteAsync(ct);
+
+        var newAttrs = cmd.ParsedAttributes.Select(a => new ProductAttribute
         {
-            await using var stream = image.OpenReadStream();
-            var ext = Path.GetExtension(image.FileName);
-            var url = await files.SaveAsync(stream, ext, ct);
-            newPics.Add(url);
-        }
+            Id = Guid.NewGuid(),
+            ProductId = cmd.Id,
+            Key = a.Key,
+            Value = a.Value
+        }).ToList();
 
-        product.ImageUrls = newPics;
+        await db.ProductAttributes.AddRangeAsync(newAttrs, ct);
 
-        // ✅ Обновление простых полей
-        product.Name = cmd.Name;
-        product.Code = cmd.Code;
-        product.CategoryId = cmd.CategoryId;
-        product.Price = cmd.Price;
-        product.DiscountPct = cmd.DiscountPct;
-        product.Quantity = cmd.Quantity;
+        /********** 3. Features **************************************************/
 
-        // // ✅ Обновление Attributes
-        // var toRemoveAttributes = product.Attributes
-        //     .Where(attr => !cmd.ParsedAttributes.Any(x => x.Key == attr.Key && x.Value == attr.Value))
-        //     .ToList();
-        //
-        // foreach (var attr in toRemoveAttributes)
-        //     product.Attributes.Remove(attr);
-        //
-        // foreach (var attr in from attr in cmd.ParsedAttributes
-        //          let exists = product.Attributes.Any(x => x.Key == attr.Key && x.Value == attr.Value)
-        //          where !exists
-        //          select attr)
-        // {
-        //     product.Attributes.Add(new ProductAttribute
-        //     {
-        //         Id = Guid.NewGuid(),
-        //         ProductId = product.Id,
-        //         Key = attr.Key,
-        //         Value = attr.Value
-        //     });
-        // }
-        //
-        // // ✅ Обновление Features
-        // var toRemoveFeatures = product.Features
-        //     .Where(feat => !cmd.ParsedFeatures.Any(x => x.Name == feat.Name && x.Description == feat.Description))
-        //     .ToList();
-        //
-        // foreach (var feat in toRemoveFeatures)
-        //     product.Features.Remove(feat);
-        //
-        //
-        // foreach (var feat in from feat in cmd.ParsedFeatures
-        //          let exists = product.Features.Any(x => x.Name == feat.Name && x.Description == feat.Description)
-        //          where !exists
-        //          select feat)
-        // {
-        //     product.Features.Add(new ProductFeature
-        //     {
-        //         Id = Guid.NewGuid(),
-        //         ProductId = product.Id,
-        //         Name = feat.Name,
-        //         Description = feat.Description
-        //     });
-        // }
-        
-        try
+        await db.ProductFeatures
+            .Where(f => f.ProductId == cmd.Id)
+            .ExecuteDeleteAsync(ct);
+
+        var newFeatures = cmd.ParsedFeatures.Select(f => new ProductFeature
         {
-            await db.SaveChangesAsync(ct);
-        }
-        catch (Exception ex)
-        {
-            throw new AppException(ex.Message);
-        }
+            Id = Guid.NewGuid(),
+            ProductId = cmd.Id,
+            Name = f.Name,
+            Description = f.Description
+        }).ToList();
+
+        await db.ProductFeatures.AddRangeAsync(newFeatures, ct);
+
+        /********** 4. Картинки **************************************************/
+
+        // забираем список url-ов без трекинга => не заводим вторую копию Product
+        var oldUrls = await db.Products
+            .Where(p => p.Id == cmd.Id)
+            .SelectMany(p => p.ImageUrls)
+            .AsNoTracking()
+            .ToListAsync(ct);
+
+        await Task.WhenAll(oldUrls.Select(u => fileStorage.DeleteAsync(u, ct)));
+
+        var newUrls = await UploadAllAsync(cmd.Images, fileStorage, ct);
+
+        await db.Products
+            .Where(p => p.Id == cmd.Id)
+            .ExecuteUpdateAsync(set => set
+                .SetProperty(p => p.ImageUrls, newUrls), ct);
+
+        /********** 5. Завершаем *************************************************/
+
+        await db.SaveChangesAsync(ct); // сохранит вставленные коллекции
+        await tx.CommitAsync(ct); // фиксируем изменения + новый RowVersion
     }
 
     public async Task AddAsync(Product product, CancellationToken ct)

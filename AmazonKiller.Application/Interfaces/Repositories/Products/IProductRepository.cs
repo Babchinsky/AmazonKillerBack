@@ -18,10 +18,9 @@ public interface IProductRepository
         CancellationToken ct);
 
     // --- Обновление ---
-    void AttachAndSetRowVersion(Product product, byte[] rowVersion);
 
-    Task UpdateAsync(Product product, UpdateProductCommand cmd, IFileStorage files, byte[] rowVersion,
-        CancellationToken ct);
+    Task UpdateAsync(
+        UpdateProductCommand cmd, IFileStorage files, CancellationToken ct);
 
     // --- Удаление ---
     Task DeleteRangeAsync(IEnumerable<Product> products, CancellationToken ct);

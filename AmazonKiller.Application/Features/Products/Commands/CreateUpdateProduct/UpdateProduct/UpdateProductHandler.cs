@@ -11,29 +11,19 @@ public class UpdateProductHandler(
     IProductRepository repo,
     IPropertyKeyUpdater keyUpdater,
     IMapper mapper,
-    IFileStorage files)
+    IFileStorage fileStorage)
     : IRequestHandler<UpdateProductCommand, ProductDto>
 {
     public async Task<ProductDto> Handle(UpdateProductCommand cmd, CancellationToken ct)
     {
-        var product = await repo.GetByIdAsync(cmd.Id, ct)
-                      ?? throw new NotFoundException("Product not found");
+        await repo.UpdateAsync(cmd, fileStorage, ct); // сигнатура без stub-Id
 
-        // Установим оригинальную версию до любых изменений
-        var rowVersion = Convert.FromBase64String(cmd.RowVersion);
-        // repo.AttachAndSetRowVersion(product, rowVersion);
-
-        // Обновляем всё
-        await repo.UpdateAsync(product, cmd, files, rowVersion, ct);
-
-        // Обновляем PropertyKeys категории
         await keyUpdater.UpdateCategoryPropertyKeysAsync(
             cmd.CategoryId,
             cmd.ParsedAttributes.Select(a => a.Key),
             ct);
 
-        // Возвращаем уже обновлённую сущность (с новым RowVersion)
-        var updated = await repo.GetByIdAsync(cmd.Id, ct);
+        var updated = await repo.GetByIdAsync(cmd.Id, ct); // AsNoTracking, если хотите
         return mapper.Map<ProductDto>(updated!);
     }
 }

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AmazonKiller.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AmazonDbContext))]
-    [Migration("20250520173551_Initial")]
+    [Migration("20250520183109_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
