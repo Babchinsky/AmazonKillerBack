@@ -1,5 +1,4 @@
 ﻿using AmazonKiller.Domain.Entities.Categories;
-using AmazonKiller.Domain.Entities.Products;
 
 namespace AmazonKiller.Application.Interfaces.Repositories.Products;
 

@@ -16,7 +16,7 @@ public class ExceptionHandlingMiddleware(RequestDelegate next, ILogger<Exception
         catch (AppException ex) // кастомные исключения
         {
             logger.LogWarning(ex, "Handled application exception: {Message}", ex.Message);
-            await WriteProblemDetailsAsync(context, ex.Message, StatusCodes.Status400BadRequest);
+            await WriteProblemDetailsAsync(context, ex.Message, ex.StatusCode);
         }
         catch (JsonException ex) // ошибки при десериализации JSON
         {

@@ -1,10 +1,11 @@
-﻿using FluentValidation;
+﻿namespace AmazonKiller.Application.Features.Products.Commands.CreateUpdateProduct.Common;
 
-namespace AmazonKiller.Application.Features.Products.Commands.CreateProduct;
+using FluentValidation;
 
-public class CreateProductCommandValidator : AbstractValidator<CreateProductCommand>
+public abstract class UpsertProductValidator<T> : AbstractValidator<T>
+    where T : UpsertProductModel
 {
-    public CreateProductCommandValidator()
+    protected UpsertProductValidator()
     {
         RuleFor(x => x.Code).NotEmpty().MaximumLength(60);
         RuleFor(x => x.Name).NotEmpty().MaximumLength(100);
@@ -21,9 +22,14 @@ public class CreateProductCommandValidator : AbstractValidator<CreateProductComm
         RuleForEach(x => x.ParsedFeatures)
             .ChildRules(f =>
             {
-                f.RuleFor(p => p.Name).NotEmpty().MaximumLength(60);
-                f.RuleFor(p => p.Description).NotEmpty().MaximumLength(300);
+                f.RuleFor(a => a.Name).NotEmpty().MaximumLength(60);
+                f.RuleFor(a => a.Description).NotEmpty().MaximumLength(300);
             });
+
+        RuleFor(x => x.Images)
+            .NotEmpty().WithMessage("At least one image is required")
+            .Must(list => list.Count <= 10)
+            .WithMessage("Maximum 10 images allowed");
 
         RuleForEach(x => x.Images)
             .Must(file => new[] { ".jpg", ".jpeg", ".png", ".webp" }
@@ -33,11 +39,5 @@ public class CreateProductCommandValidator : AbstractValidator<CreateProductComm
         RuleForEach(x => x.Images)
             .Must(file => file.Length <= 2 * 1024 * 1024)
             .WithMessage("Each image must be <= 2MB");
-
-
-        RuleFor(x => x.Images)
-            .NotEmpty().WithMessage("Хотя бы одно изображение обязательно")
-            .Must(list => list.Count <= 10)
-            .WithMessage("Максимум 10 изображений");
     }
 }

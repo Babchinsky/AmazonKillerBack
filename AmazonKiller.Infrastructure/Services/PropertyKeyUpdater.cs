@@ -2,47 +2,40 @@
 using AmazonKiller.Application.Interfaces.Services;
 using Microsoft.EntityFrameworkCore;
 
-namespace AmazonKiller.Infrastructure.Services
+namespace AmazonKiller.Infrastructure.Services;
+
+public class PropertyKeyUpdater(
+    ICategoryRepository categoryRepo,
+    IProductRepository productRepo) : IPropertyKeyUpdater
 {
-    public class PropertyKeyUpdater(
-        ICategoryRepository categoryRepo,
-        IProductRepository productRepo) : IPropertyKeyUpdater
+    public async Task UpdateCategoryPropertyKeysAsync(
+        Guid categoryId,
+        IEnumerable<string> usedKeysNow,
+        CancellationToken ct)
     {
-        public async Task UpdateCategoryPropertyKeysAsync(
-            Guid categoryId,
-            IEnumerable<string> usedKeys,
-            CancellationToken ct)
-        {
-            var category = await categoryRepo.GetByIdAsync(categoryId, ct);
-            if (category?.ParentId == null)
-                return; // only update for subcategories
+        var category = await categoryRepo.GetByIdAsync(categoryId, ct);
+        if (category?.ParentId == null)
+            return; // Только подкатегории
 
-            var keysToAdd = usedKeys.Distinct().Except(category.PropertyKeys).ToList();
-            var changed = false;
+        var currentKeys = category.PropertyKeys.ToHashSet();
+        var incomingKeys = usedKeysNow.Distinct().ToHashSet();
 
-            if (keysToAdd.Count != 0)
-            {
-                foreach (var key in keysToAdd)
-                    category.PropertyKeys.Add(key);
+        var toAdd = incomingKeys.Except(currentKeys).ToList();
+        var usedInProducts = await productRepo.Queryable()
+            .Where(p => p.CategoryId == categoryId)
+            .SelectMany(p => p.Attributes.Select(a => a.Key))
+            .Distinct()
+            .ToListAsync(ct);
 
-                changed = true;
-            }
+        var toRemove = category.PropertyKeys.Except(usedInProducts).ToList();
 
-            // Проверим все ключи, используемые в этой категории (по товарам)
-            var allKeysInCategory = await productRepo.Queryable()
-                .Where(p => p.CategoryId == categoryId)
-                .SelectMany(p => p.Attributes.Select(a => a.Key))
-                .Distinct()
-                .ToListAsync(ct);
+        foreach (var key in toAdd)
+            category.PropertyKeys.Add(key);
 
-            if (!category.PropertyKeys.OrderBy(x => x).SequenceEqual(allKeysInCategory.OrderBy(x => x)))
-            {
-                category.PropertyKeys = allKeysInCategory;
-                changed = true;
-            }
+        foreach (var key in toRemove)
+            category.PropertyKeys.Remove(key);
 
-            if (changed)
-                await categoryRepo.UpdateAsync(category, ct);
-        }
+        if (toAdd.Count > 0 || toRemove.Count > 0)
+            await categoryRepo.UpdateAsync(category, ct);
     }
 }

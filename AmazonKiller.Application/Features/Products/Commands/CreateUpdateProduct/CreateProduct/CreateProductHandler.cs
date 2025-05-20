@@ -5,9 +5,9 @@ using AmazonKiller.Domain.Entities.Products;
 using AmazonKiller.Shared.Exceptions;
 using MediatR;
 
-namespace AmazonKiller.Application.Features.Products.Commands.CreateProduct;
+namespace AmazonKiller.Application.Features.Products.Commands.CreateUpdateProduct.CreateProduct;
 
-public class CreateProductCommandHandler(
+public class CreateProductHandler(
     IFileStorage fileStorage,
     IProductRepository productRepo,
     ICategoryRepository categoryRepo,

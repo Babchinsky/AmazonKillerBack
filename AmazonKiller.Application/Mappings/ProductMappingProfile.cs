@@ -1,5 +1,5 @@
 ﻿using AmazonKiller.Application.DTOs.Products;
-using AmazonKiller.Application.Features.Products.Commands.CreateProduct;
+using AmazonKiller.Application.Features.Products.Commands.CreateUpdateProduct.CreateProduct;
 using AmazonKiller.Domain.Entities.Products;
 using AutoMapper;
 

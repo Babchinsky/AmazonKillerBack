@@ -4,7 +4,6 @@ using AmazonKiller.Application.Interfaces.Services;
 using AmazonKiller.Domain.Entities.Orders;
 using AmazonKiller.Shared.Exceptions;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace AmazonKiller.Application.Features.Account.Orders.Commands.CreateOrder;
 

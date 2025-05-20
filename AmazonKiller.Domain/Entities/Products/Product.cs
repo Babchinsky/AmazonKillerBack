@@ -17,21 +17,21 @@ public class Product
     /* ---------- General info ---------- */
 
     /// <summary> Уникальный артикул / штрих-код (до 60 симв.). </summary>
-    public string Code { get; init; } = null!;
+    public string Code { get; set; } = null!;
 
     /// <summary> Название товара (2–100 симв.). </summary>
     public string Name { get; set; } = null!;
 
     public decimal Price { get; set; } // Цена без учёта скидки
-    public decimal? DiscountPct { get; init; } // null ⇒ скидки нет, иначе 0–100 %
+    public decimal? DiscountPct { get; set; } // null ⇒ скидки нет, иначе 0–100 %
     public int SoldCount { get; set; } // NEW
 
     public int Quantity { get; set; } // Кол-во на складе
     public ProductStatus Status { get; init; } = ProductStatus.InStock;
 
-    public List<string> ProductPics { get; init; } = [];
-    public ICollection<ProductAttribute> Attributes { get; init; } = new List<ProductAttribute>();
-    public ICollection<ProductFeature> Features { get; init; } = new List<ProductFeature>();
+    public List<string> ProductPics { get; set; } = [];
+    public ICollection<ProductAttribute> Attributes { get; set; } = new List<ProductAttribute>();
+    public ICollection<ProductFeature> Features { get; set; } = new List<ProductFeature>();
 
     /// <summary>Первое фото — «обложка».</summary>
     public string MainImageUrl => ProductPics.FirstOrDefault() ?? "";
@@ -44,5 +44,5 @@ public class Product
     public bool InCartList { get; init; }
 
     /// <summary> Для конкуретного обновления (EF Core rowversion). </summary>
-    public byte[] RowVersion { get; init; } = [];
+    public byte[] RowVersion { get; set; } = [];
 }
