@@ -6,10 +6,9 @@ using Microsoft.AspNetCore.Http;
 namespace AmazonKiller.Application.Mappings;
 
 /// <summary>
-/// «uploads/2025/05/abc.jpg» → «http(s)://host/uploads/2025/05/abc.jpg»
+/// «2025/05/abc.jpg» → «https://host/uploads/2025/05/abc.jpg».
 /// </summary>
-public sealed class ImageUrlResolver(IHttpContextAccessor ctx) :
-    IValueResolver<Product, ProductDto, List<string>>
+public sealed class ImageUrlResolver(IHttpContextAccessor ctx) : IValueResolver<Product, ProductDto, List<string>>
 {
     public List<string> Resolve(
         Product src,
@@ -17,15 +16,13 @@ public sealed class ImageUrlResolver(IHttpContextAccessor ctx) :
         List<string> __,
         ResolutionContext ___)
     {
-        var http = ctx.HttpContext;
+        var req = ctx.HttpContext!.Request;
+        var baseUrl = $"{req.Scheme}://{req.Host}/uploads/"; // https://localhost:5001/uploads/
 
-        // если резолвер вызвали вне HTTP-контекста (тест / background-job)
-        if (http is null)
-            return src.ImageUrls.ToList();
-
-        var baseUrl = $"{http.Request.Scheme}://{http.Request.Host}";
         return src.ImageUrls
-            .Select(u => $"{baseUrl}/{u.TrimStart('/')}")
+            .Select(rel => rel.StartsWith("http", StringComparison.OrdinalIgnoreCase)
+                ? rel
+                : baseUrl + rel)
             .ToList();
     }
 }
