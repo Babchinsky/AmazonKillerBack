@@ -1,4 +1,4 @@
-﻿namespace AmazonKiller.Application.DTOs.Account.ProductCart;
+﻿namespace AmazonKiller.Application.DTOs.Products;
 
 public class ProductInCartDto
 {

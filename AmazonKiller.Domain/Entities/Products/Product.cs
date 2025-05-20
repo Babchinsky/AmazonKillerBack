@@ -29,12 +29,12 @@ public class Product
     public int Quantity { get; set; } // Кол-во на складе
     public ProductStatus Status { get; init; } = ProductStatus.InStock;
 
-    public List<string> ProductPics { get; set; } = [];
+    public List<string> ImageUrls { get; set; } = [];
     public ICollection<ProductAttribute> Attributes { get; set; } = new List<ProductAttribute>();
     public ICollection<ProductFeature> Features { get; set; } = new List<ProductFeature>();
 
     /// <summary>Первое фото — «обложка».</summary>
-    public string MainImageUrl => ProductPics.FirstOrDefault() ?? "";
+    public string MainImageUrl => ImageUrls.FirstOrDefault() ?? "";
 
     /* ---------- Служебное ---------- */
 

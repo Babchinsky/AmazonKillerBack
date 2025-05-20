@@ -28,12 +28,15 @@ public class ProductRepository(AmazonDbContext db) : IProductRepository
         entry.Property(p => p.Name).IsModified = true;
     }
 
-    public async Task UpdateProductAsync(Product product, UpdateProductCommand cmd, IFileStorage files,
+    public async Task UpdateAsync(Product product, UpdateProductCommand cmd, IFileStorage files, byte[] rowVersion,
         CancellationToken ct)
     {
-        // Удаление старых изображений
-        await Task.WhenAll(product.ProductPics.Select(url => files.DeleteAsync(url, ct)));
+        // Установим оригинальный RowVersion
+        var entry = db.Entry(product);
+        entry.Property(p => p.RowVersion).OriginalValue = rowVersion;
 
+        // ✅ Обновление изображений
+        await Task.WhenAll(product.ImageUrls.Select(url => files.DeleteAsync(url, ct)));
         var newPics = new List<string>();
         foreach (var image in cmd.Images)
         {
@@ -43,9 +46,9 @@ public class ProductRepository(AmazonDbContext db) : IProductRepository
             newPics.Add(url);
         }
 
-        product.ProductPics = newPics;
+        product.ImageUrls = newPics;
 
-        // Обновление полей
+        // ✅ Обновление простых полей
         product.Name = cmd.Name;
         product.Code = cmd.Code;
         product.CategoryId = cmd.CategoryId;
@@ -53,41 +56,60 @@ public class ProductRepository(AmazonDbContext db) : IProductRepository
         product.DiscountPct = cmd.DiscountPct;
         product.Quantity = cmd.Quantity;
 
-        // Обновление атрибутов и фичей
-        product.Attributes.Clear();
-        foreach (var attr in cmd.ParsedAttributes)
-        {
-            product.Attributes.Add(new ProductAttribute
-            {
-                Id = Guid.NewGuid(),
-                ProductId = product.Id,
-                Key = attr.Key,
-                Value = attr.Value
-            });
-        }
-
-        foreach (var feat in cmd.ParsedFeatures)
-        {
-            product.Features.Add(new ProductFeature
-            {
-                Id = Guid.NewGuid(),
-                ProductId = product.Id,
-                Name = feat.Name,
-                Description = feat.Description
-            });
-        }
-
+        // // ✅ Обновление Attributes
+        // var toRemoveAttributes = product.Attributes
+        //     .Where(attr => !cmd.ParsedAttributes.Any(x => x.Key == attr.Key && x.Value == attr.Value))
+        //     .ToList();
+        //
+        // foreach (var attr in toRemoveAttributes)
+        //     product.Attributes.Remove(attr);
+        //
+        // foreach (var attr in from attr in cmd.ParsedAttributes
+        //          let exists = product.Attributes.Any(x => x.Key == attr.Key && x.Value == attr.Value)
+        //          where !exists
+        //          select attr)
+        // {
+        //     product.Attributes.Add(new ProductAttribute
+        //     {
+        //         Id = Guid.NewGuid(),
+        //         ProductId = product.Id,
+        //         Key = attr.Key,
+        //         Value = attr.Value
+        //     });
+        // }
+        //
+        // // ✅ Обновление Features
+        // var toRemoveFeatures = product.Features
+        //     .Where(feat => !cmd.ParsedFeatures.Any(x => x.Name == feat.Name && x.Description == feat.Description))
+        //     .ToList();
+        //
+        // foreach (var feat in toRemoveFeatures)
+        //     product.Features.Remove(feat);
+        //
+        //
+        // foreach (var feat in from feat in cmd.ParsedFeatures
+        //          let exists = product.Features.Any(x => x.Name == feat.Name && x.Description == feat.Description)
+        //          where !exists
+        //          select feat)
+        // {
+        //     product.Features.Add(new ProductFeature
+        //     {
+        //         Id = Guid.NewGuid(),
+        //         ProductId = product.Id,
+        //         Name = feat.Name,
+        //         Description = feat.Description
+        //     });
+        // }
+        
         try
         {
             await db.SaveChangesAsync(ct);
         }
-        catch (DbUpdateConcurrencyException)
+        catch (Exception ex)
         {
-            throw new AppException("The product was modified by another user", 409);
+            throw new AppException(ex.Message);
         }
     }
-
-    public Task SaveAsync(CancellationToken ct) => db.SaveChangesAsync(ct);
 
     public async Task AddAsync(Product product, CancellationToken ct)
     {
@@ -103,21 +125,6 @@ public class ProductRepository(AmazonDbContext db) : IProductRepository
         db.ProductAttributes.AddRange(attributes);
         db.ProductFeatures.AddRange(features);
         await db.SaveChangesAsync(ct);
-    }
-
-    public async Task UpdateAsync(Product product, byte[] originalRowVersion, CancellationToken ct)
-    {
-        var entry = db.Entry(product);
-        entry.Property(p => p.RowVersion).OriginalValue = originalRowVersion;
-
-        try
-        {
-            await db.SaveChangesAsync(ct);
-        }
-        catch (DbUpdateConcurrencyException)
-        {
-            throw new AppException("The product was modified by another user", 409);
-        }
     }
 
     public async Task BulkDeleteAsync(IEnumerable<Guid> ids, CancellationToken ct)

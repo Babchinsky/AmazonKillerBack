@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AmazonKiller.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AmazonDbContext))]
-    [Migration("20250520172323_Initial")]
+    [Migration("20250520173551_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -158,6 +158,10 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         .HasPrecision(5, 2)
                         .HasColumnType("decimal(5,2)");
 
+                    b.PrimitiveCollection<string>("ImageUrls")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("InCartList")
                         .HasColumnType("bit");
 
@@ -171,10 +175,6 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                     b.Property<decimal>("Price")
                         .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
-
-                    b.PrimitiveCollection<string>("ProductPics")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
@@ -212,11 +212,11 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                             Id = new Guid("55555555-5555-5555-5555-555555555555"),
                             CategoryId = new Guid("11111111-1111-1111-1111-111111111111"),
                             Code = "01JS9QNDAYKK2CFRT5AKZF1YAA",
+                            ImageUrls = "[]",
                             InCartList = true,
                             InWishlist = true,
                             Name = "C# in Depth",
                             Price = 39.99m,
-                            ProductPics = "[]",
                             Quantity = 10,
                             Rating = 5,
                             ReviewsCount = 1,
@@ -229,11 +229,11 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                             Id = new Guid("66666666-6666-6666-6666-666666666666"),
                             CategoryId = new Guid("22222222-2222-2222-2222-222222222222"),
                             Code = "01JS9QNDAYKK2CFRT5AKZF1YBB",
+                            ImageUrls = "[]",
                             InCartList = false,
                             InWishlist = false,
                             Name = "Wireless Mouse",
                             Price = 19.99m,
-                            ProductPics = "[]",
                             Quantity = 50,
                             Rating = 4,
                             ReviewsCount = 0,

@@ -50,7 +50,7 @@ public class GetAllProductsHandler(IProductRepository repo)
                 Code = p.Code,
                 Rating = (int)p.Rating,
                 ReviewsCount = p.ReviewsCount,
-                ProductPics = p.ProductPics,
+                ImageUrls = p.ImageUrls,
                 CategoryId = p.CategoryId,
                 Price = p.Price,
                 Quantity = p.Quantity,

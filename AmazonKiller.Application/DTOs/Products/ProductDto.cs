@@ -7,7 +7,7 @@ public class ProductDto
     public int Rating { get; init; }
     public string Code { get; init; } = string.Empty;
     public int ReviewsCount { get; init; }
-    public List<string> ProductPics { get; init; } = [];
+    public List<string> ImageUrls { get; init; } = [];
     public Guid CategoryId { get; init; }
     public decimal Price { get; init; }
     public int Quantity { get; init; }

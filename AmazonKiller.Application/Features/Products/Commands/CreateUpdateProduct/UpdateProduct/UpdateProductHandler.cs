@@ -19,15 +19,20 @@ public class UpdateProductHandler(
         var product = await repo.GetByIdAsync(cmd.Id, ct)
                       ?? throw new NotFoundException("Product not found");
 
-        repo.AttachAndSetRowVersion(product, Convert.FromBase64String(cmd.RowVersion));
+        // Установим оригинальную версию до любых изменений
+        var rowVersion = Convert.FromBase64String(cmd.RowVersion);
+        // repo.AttachAndSetRowVersion(product, rowVersion);
 
-        await repo.UpdateProductAsync(product, cmd, files, ct);
+        // Обновляем всё
+        await repo.UpdateAsync(product, cmd, files, rowVersion, ct);
 
+        // Обновляем PropertyKeys категории
         await keyUpdater.UpdateCategoryPropertyKeysAsync(
             cmd.CategoryId,
             cmd.ParsedAttributes.Select(a => a.Key),
             ct);
 
+        // Возвращаем уже обновлённую сущность (с новым RowVersion)
         var updated = await repo.GetByIdAsync(cmd.Id, ct);
         return mapper.Map<ProductDto>(updated!);
     }

@@ -1,4 +1,4 @@
-﻿using AmazonKiller.Application.DTOs.Account.ProductCart;
+﻿using AmazonKiller.Application.DTOs.Products;
 using AmazonKiller.Application.Interfaces.Repositories.Account;
 using AmazonKiller.Application.Interfaces.Services;
 using MediatR;
@@ -24,7 +24,7 @@ public class GetCartHandler(
             {
                 ProductId = product.Id,
                 Name = product.Name,
-                ImageUrl = product.ProductPics.FirstOrDefault() ?? "",
+                ImageUrl = product.ImageUrls.FirstOrDefault() ?? "",
                 Price = Math.Round(finalPrice, 2),
                 Quantity = c.Quantity
             };

@@ -58,7 +58,7 @@ public class OrderRepository(AmazonDbContext db, IMapper mapper) : IOrderReposit
         var items = order.Items.Select(i => new OrderItemDto(
             i.Id,
             i.Product.Name,
-            i.Product.ProductPics.FirstOrDefault() ?? "",
+            i.Product.ImageUrls.FirstOrDefault() ?? "",
             i.Quantity,
             i.Price)).ToList();
 

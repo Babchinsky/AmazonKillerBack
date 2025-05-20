@@ -51,7 +51,7 @@ public class CreateProductHandler(
                 Price = cmd.Price,
                 DiscountPct = cmd.DiscountPct,
                 Quantity = cmd.Quantity,
-                ProductPics = uploadedUrls
+                ImageUrls = uploadedUrls
             };
 
             await productRepo.AddAsync(product, ct);

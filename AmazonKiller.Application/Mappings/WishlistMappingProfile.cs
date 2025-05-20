@@ -14,7 +14,7 @@ public class WishlistMappingProfile : Profile
             .ForMember(dest => dest.Name,
                 opt => opt.MapFrom(src => src.Product.Name))
             .ForMember(dest => dest.ImageUrl,
-                opt => opt.MapFrom(src => src.Product.ProductPics.FirstOrDefault() ?? ""))
+                opt => opt.MapFrom(src => src.Product.ImageUrls.FirstOrDefault() ?? ""))
             .ForMember(dest => dest.Price,
                 opt => opt.MapFrom(src => src.Product.Price))
             .ForMember(dest => dest.OldPrice,
