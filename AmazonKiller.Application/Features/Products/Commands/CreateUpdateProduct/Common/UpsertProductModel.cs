@@ -28,6 +28,8 @@ public abstract class UpsertProductModel
     public List<ProductFeatureDto> ParsedFeatures => DeserializeSafe<ProductFeatureDto>(Features);
 
     private static List<T> DeserializeSafe<T>(string json)
-        => JsonSerializer.Deserialize<List<T>>(json,
+    {
+        return JsonSerializer.Deserialize<List<T>>(json,
             new JsonSerializerOptions { PropertyNameCaseInsensitive = true }) ?? [];
+    }
 }

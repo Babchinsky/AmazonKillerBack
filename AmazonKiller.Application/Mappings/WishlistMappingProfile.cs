@@ -20,7 +20,7 @@ public class WishlistMappingProfile : Profile
             .ForMember(dest => dest.OldPrice,
                 opt => opt.MapFrom(src =>
                     src.Product.DiscountPct.HasValue
-                        ? (decimal?)Math.Round(src.Product.Price / (1 - (src.Product.DiscountPct.Value / 100)), 2)
+                        ? (decimal?)Math.Round(src.Product.Price / (1 - src.Product.DiscountPct.Value / 100), 2)
                         : null))
             .ForMember(dest => dest.Rating,
                 opt => opt.MapFrom(src => (double)src.Product.Rating))

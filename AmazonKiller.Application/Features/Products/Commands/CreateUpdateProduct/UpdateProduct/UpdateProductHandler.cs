@@ -1,7 +1,6 @@
 using AmazonKiller.Application.DTOs.Products;
 using AmazonKiller.Application.Interfaces.Repositories.Products;
 using AmazonKiller.Application.Interfaces.Services;
-using AmazonKiller.Shared.Exceptions;
 using AutoMapper;
 using MediatR;
 
@@ -16,14 +15,14 @@ public class UpdateProductHandler(
 {
     public async Task<ProductDto> Handle(UpdateProductCommand cmd, CancellationToken ct)
     {
-        await repo.UpdateAsync(cmd, fileStorage, ct); // сигнатура без stub-Id
+        await repo.UpdateAsync(cmd, fileStorage, ct);
 
         await keyUpdater.UpdateCategoryPropertyKeysAsync(
             cmd.CategoryId,
             cmd.ParsedAttributes.Select(a => a.Key),
             ct);
 
-        var updated = await repo.GetByIdAsync(cmd.Id, ct); // AsNoTracking, если хотите
+        var updated = await repo.GetByIdAsync(cmd.Id, ct);
         return mapper.Map<ProductDto>(updated!);
     }
 }

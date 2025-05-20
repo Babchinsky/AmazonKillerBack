@@ -10,30 +10,30 @@ namespace AmazonKiller.Infrastructure.Data;
 public class AmazonDbContext(DbContextOptions<AmazonDbContext> options) : DbContext(options)
 {
     public DbSet<Category> Categories => Set<Category>();
-    
-    
+
+
     public DbSet<Product> Products => Set<Product>();
     public DbSet<ProductAttribute> ProductAttributes => Set<ProductAttribute>();
     public DbSet<ProductFeature> ProductFeatures => Set<ProductFeature>();
-    
-    
+
+
     public DbSet<Order> Orders => Set<Order>();
     public DbSet<OrderItem> OrderItems => Set<OrderItem>();
     public DbSet<Address> Addresses => Set<Address>();
-    
-    
+
+
     public DbSet<EmailVerification> EmailVerifications => Set<EmailVerification>();
     public DbSet<User> Users => Set<User>();
     public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
-    
-    
+
+
     public DbSet<Review> Reviews => Set<Review>();
     public DbSet<ReviewContent> ReviewContents => Set<ReviewContent>();
-    
-    
+
+
     public DbSet<Wishlist> WishlistItems => Set<Wishlist>();
     public DbSet<CartList> CartLists => Set<CartList>();
-    
+
 
     protected override void OnModelCreating(ModelBuilder b)
     {

@@ -2,12 +2,10 @@
 
 public interface IFileStorage
 {
-    Task<string> SaveAsync(Stream source, string extension, CancellationToken ct = default);
+    Task<string> SaveAsync(Stream src, string ext, CancellationToken ct = default);
     Task DeleteAsync(string url, CancellationToken ct = default);
 
-    // Новый опциональный helper
-    Task<bool> ExistsAsync(string url, CancellationToken ct = default)
-    {
-        return Task.FromResult(false);
-    }
+    /// <summary>Удалить сразу несколько объектов «мягко» (ошибки – в лог).</summary>
+    Task DeleteBatchSafeAsync(IEnumerable<string> urls,
+        CancellationToken ct = default);
 }

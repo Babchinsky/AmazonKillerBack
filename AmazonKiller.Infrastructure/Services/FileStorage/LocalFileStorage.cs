@@ -1,45 +1,64 @@
 ﻿using AmazonKiller.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace AmazonKiller.Infrastructure.Services.FileStorage;
 
-public class LocalFileStorage(IWebHostEnvironment env) : IFileStorage
+public sealed class LocalFileStorage(
+    IWebHostEnvironment env,
+    ILogger<LocalFileStorage> log) : IFileStorage
 {
+    // …/wwwroot/uploads
     private readonly string _root = Path.Combine(
-        env.WebRootPath ?? throw new InvalidOperationException("WebRootPath is not configured"),
-        "uploads"
-    );
+        env.WebRootPath
+        ?? throw new InvalidOperationException("WebRootPath is not configured"),
+        "uploads");
 
-    private string GetAbsolutePath(string relativePath)
-        => Path.Combine(_root, relativePath.TrimStart('/').Replace('/', Path.DirectorySeparatorChar));
-
-    public async Task<string> SaveAsync(Stream source, string extension, CancellationToken ct = default)
+    /* ---------- Сохранить файл --------------------------------------- */
+    public async Task<string> SaveAsync(Stream src,
+        string ext,
+        CancellationToken ct = default)
     {
-        var fileName = $"{Guid.NewGuid():N}{extension}";
-        var folder = DateTime.UtcNow.ToString("yyyy/MM");
-        var dir = Path.Combine(_root, folder);
+        var file = $"{Guid.NewGuid():N}{ext}";
+        var folder = DateTime.UtcNow.ToString("yyyy/MM"); // 2025/05
+        var dir = Path.Combine(_root, folder); // …\uploads\2025\05
 
-        if (!Directory.Exists(dir))
-            Directory.CreateDirectory(dir);
+        Directory.CreateDirectory(dir); // идемпотентно
 
-        var absPath = Path.Combine(dir, fileName);
+        await using var dst = File.Create(Path.Combine(dir, file));
+        await src.CopyToAsync(dst, ct);
 
-        await using var dst = File.Create(absPath);
-        await source.CopyToAsync(dst, ct);
-
-        return Path.Combine("uploads", folder, fileName).Replace(Path.DirectorySeparatorChar, '/');
+        // ►  uploads/2025/05/<guid>.jpg  – то, что пойдёт в БД
+        return Path.Combine("uploads", folder, file)
+            .Replace(Path.DirectorySeparatorChar, '/');
     }
 
-    public Task DeleteAsync(string url, CancellationToken ct = default)
+    /* ---------- Удалить один / пачку ---------------------------------- */
+    private string Abs(string urlRel)
     {
-        var path = GetAbsolutePath(url);
-        if (File.Exists(path)) File.Delete(path);
+        return Path.Combine(_root,
+            urlRel.TrimStart('/')
+                .Replace('/', Path.DirectorySeparatorChar));
+    }
+
+    public Task DeleteAsync(string url, CancellationToken _ = default)
+    {
+        var abs = Abs(url);
+        if (File.Exists(abs)) File.Delete(abs);
         return Task.CompletedTask;
     }
 
-    public Task<bool> ExistsAsync(string url, CancellationToken ct = default)
+    public async Task DeleteBatchSafeAsync(IEnumerable<string> urls,
+        CancellationToken ct = default)
     {
-        var path = GetAbsolutePath(url);
-        return Task.FromResult(File.Exists(path));
+        foreach (var u in urls)
+            try
+            {
+                await DeleteAsync(u, ct);
+            }
+            catch (Exception ex)
+            {
+                log.LogWarning(ex, "Can't delete {u}", u);
+            }
     }
 }

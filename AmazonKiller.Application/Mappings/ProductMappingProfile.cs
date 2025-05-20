@@ -1,30 +1,36 @@
-﻿using AmazonKiller.Application.DTOs.Products;
+﻿// Application/Mappings/ProductMappingProfile.cs
+
+using AmazonKiller.Application.DTOs.Products;
 using AmazonKiller.Application.Features.Products.Commands.CreateUpdateProduct.CreateProduct;
 using AmazonKiller.Domain.Entities.Products;
 using AutoMapper;
 
 namespace AmazonKiller.Application.Mappings;
 
-public class ProductMappingProfile : Profile
+public sealed class ProductMappingProfile : Profile
 {
     public ProductMappingProfile()
     {
-        // 1. Команда → Домен
+        /* 1. Команда → Домен -------------------------------------------- */
         CreateMap<CreateProductCommand, Product>()
-            .ForMember(dest => dest.ImageUrls, opt => opt.Ignore())
-            .ForMember(dest => dest.Attributes, opt => opt.Ignore())
-            .ForMember(dest => dest.Features, opt => opt.Ignore())
             .ForMember(d => d.Id, o => o.Ignore())
-            .ForMember(d => d.RowVersion, o => o.Ignore());
+            .ForMember(d => d.RowVersion, o => o.Ignore())
+            .ForMember(d => d.ImageUrls, o => o.Ignore())
+            .ForMember(d => d.Attributes, o => o.Ignore())
+            .ForMember(d => d.Features, o => o.Ignore());
 
-        // 2. Домен → DTO
+        /* 2. Домен → DTO -------------------------------------------------- */
         CreateMap<Product, ProductDto>()
-            .ForMember(d => d.ImageUrls, o => o.MapFrom(s => s.ImageUrls))
-            .ForMember(d => d.RowVersion, o => o.MapFrom(s => Convert.ToBase64String(s.RowVersion)))
-            .ForMember(d => d.Attributes, o => o.MapFrom(s => s.Attributes))
-            .ForMember(d => d.Features, o => o.MapFrom(s => s.Features));
+            .ForMember(d => d.ImageUrls,
+                o => o.MapFrom<ImageUrlResolver>())
+            .ForMember(d => d.RowVersion,
+                o => o.MapFrom(s => Convert.ToBase64String(s.RowVersion)))
+            .ForMember(d => d.Attributes,
+                o => o.MapFrom(s => s.Attributes))
+            .ForMember(d => d.Features,
+                o => o.MapFrom(s => s.Features));
 
-        // 3. Вспомогательные маппинги
+        /* 3. Под-объекты -------------------------------------------------- */
         CreateMap<ProductAttribute, ProductAttributeDto>();
         CreateMap<ProductFeature, ProductFeatureDto>();
     }
