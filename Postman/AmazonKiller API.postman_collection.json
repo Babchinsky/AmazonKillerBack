@@ -353,8 +353,8 @@
 													"password = password.split('').sort(() => 0.5 - Math.random()).join('');\r",
 													"\r",
 													"/* ---------- save & log ---------- */\r",
-													"// pm.environment.set('email', email);\r",
-													"pm.environment.set('email', \"alexseyb64@gmail.com\");\r",
+													"pm.environment.set('email', email);\r",
+													"// pm.environment.set('email', \"alexseyb64@gmail.com\");\r",
 													"pm.environment.set('password', password);\r",
 													"\r",
 													"console.log({ email, password });  // виден в Postman Console"
@@ -1632,15 +1632,18 @@
 											"pm.environment.set(\"categoryImageUrl\", `\"https://example.com/image_${timestamp}.jpg\"`);\r",
 											"pm.environment.set(\"categoryStatus\", 0); // 0 = Active\r",
 											"\r",
+											"\r",
+											"pm.environment.set(\"categoryPropertyKeys\", \"[]\");\r",
+											"\r",
 											"if (isSubcategory) {\r",
 											"    // Subcategory\r",
 											"    pm.environment.set(\"categoryIconName\", null);\r",
-											"    pm.environment.set(\"categoryPropertyKeys\", JSON.stringify([\"Color\", \"Size\", \"Material\"]));\r",
+											"    // pm.environment.set(\"categoryPropertyKeys\", JSON.stringify([\"Color\", \"Size\", \"Material\"]));\r",
 											"} else {\r",
 											"    // Main category\r",
 											"    pm.environment.set(\"categoryParentId\", null);\r",
 											"    pm.environment.set(\"categoryIconName\", `\"icon_${timestamp}\"`);\r",
-											"    pm.environment.set(\"categoryPropertyKeys\", \"[]\");\r",
+											"    // pm.environment.set(\"categoryPropertyKeys\", \"[]\");\r",
 											"}\r",
 											""
 										],
@@ -2489,7 +2492,92 @@
 					"item": [
 						{
 							"name": "/api/products",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"function getRandomInt(min, max) {\r",
+											"    return Math.floor(Math.random() * (max - min + 1)) + min;\r",
+											"}\r",
+											"\r",
+											"// Уникальный артикул\r",
+											"pm.environment.set(\"productCode\", \"PROD-\" + Date.now());\r",
+											"\r",
+											"// Название товара\r",
+											"pm.environment.set(\"productName\", \"Test Product \" + getRandomInt(1, 999));\r",
+											"\r",
+											"// Цена (decimal с двумя знаками после запятой)\r",
+											"const price = getRandomInt(10, 500).toFixed(2);\r",
+											"pm.environment.set(\"productPrice\", price);\r",
+											"\r",
+											"// Скидка (decimal или ничего)\r",
+											"const discount = Math.random() < 0.5 ? getRandomInt(5, 25).toFixed(2) : null;\r",
+											"// В form-data нельзя передавать null — либо значение, либо вообще не указывать,\r",
+											"// поэтому устанавливаем \"\" (пустую строку), если null\r",
+											"pm.environment.set(\"productDiscountPct\", discount ?? \"\");\r",
+											"\r",
+											"// Количество — целое число\r",
+											"pm.environment.set(\"productQuantity\", getRandomInt(1, 100));\r",
+											"\r",
+											"// Атрибуты товара — JSON\r",
+											"const attrs = [\r",
+											"    { key: \"Color\", value: \"Black\" },\r",
+											"    { key: \"Size\", value: \"L\" }\r",
+											"];\r",
+											"pm.environment.set(\"productAttributes\", JSON.stringify(attrs));\r",
+											"\r",
+											"// Характеристики товара — JSON\r",
+											"const features = [\r",
+											"    { name: \"Durable\", description: \"Made from quality materials\" },\r",
+											"    { name: \"Waterproof\", description: \"Can resist water splash\" }\r",
+											"];\r",
+											"pm.environment.set(\"productFeatures\", JSON.stringify(features));\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"if (pm.response.code === 200 || pm.response.code === 201) {\r",
+											"    const raw = pm.response.json();\r",
+											"    const id = typeof raw === 'string' ? raw : raw?.id;\r",
+											"\r",
+											"    pm.test(\"Product created successfully\", () => {\r",
+											"        pm.expect(id, \"Product ID should be present\").to.not.be.undefined;\r",
+											"    });\r",
+											"\r",
+											"    if (id) {\r",
+											"        pm.environment.set(\"lastProductId\", id);\r",
+											"        console.log(\"✅ Created Product ID:\", id);\r",
+											"    }\r",
+											"} else {\r",
+											"    pm.test(\"Request should succeed\", () => {\r",
+											"        pm.expect(pm.response.code).to.be.oneOf([200, 201]);\r",
+											"    });\r",
+											"}\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{adminAccessToken}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "POST",
 								"header": [
 									{
@@ -2502,59 +2590,59 @@
 									"formdata": [
 										{
 											"key": "Code",
-											"value": "aliqua enim deserunt",
+											"value": "{{productCode}}",
 											"type": "text"
 										},
 										{
 											"key": "Name",
-											"value": "voluptate labore anim velit Ut",
+											"value": "{{productName}}",
 											"type": "text"
 										},
 										{
 											"key": "CategoryId",
-											"value": "3e9eeb71-a996-ee8a-71f0-dc177a77e770",
+											"value": "{{categoryId}}",
 											"type": "text"
 										},
 										{
 											"key": "Price",
-											"value": "79754064.84870201",
+											"value": "{{productPrice}}",
 											"type": "text"
 										},
 										{
 											"key": "DiscountPct",
-											"value": "88910670.15605548",
+											"value": "{{productDiscountPct}}",
 											"type": "text"
 										},
 										{
 											"key": "Quantity",
-											"value": "-56220770",
+											"value": "{{productQuantity}}",
 											"type": "text"
 										},
 										{
 											"key": "Images",
-											"value": "sit aliquip,dolore Lorem",
-											"type": "text"
+											"type": "file",
+											"src": "/C:/Users/alexs/OneDrive/Desktop/product1_photo.jpeg"
 										},
 										{
 											"key": "Attributes",
-											"value": "[object Object],[object Object]",
+											"value": "{{productAttributes}}",
 											"type": "text"
 										},
 										{
 											"key": "Features",
-											"value": "[object Object],[object Object]",
+											"value": "{{productFeatures}}",
 											"type": "text"
 										}
 									]
 								},
 								"url": {
-									"raw": "{{baseUrl}}/api/Product",
+									"raw": "{{baseUrl}}/api/products",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"api",
-										"Product"
+										"products"
 									]
 								}
 							},
@@ -2645,25 +2733,402 @@
 							]
 						},
 						{
-							"name": "/api/products/:id/exists",
+							"name": "/api/products/:id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"// Сохраняем rowVersion в переменную окружения\r",
+											"const response = pm.response.json();\r",
+											"pm.environment.set(\"productRowVersion\", response.rowVersion);\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"packages": {},
+										"type": "text/javascript"
+									}
+								}
+							],
 							"request": {
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/api/Product/:id/exists",
+									"raw": "{{baseUrl}}/api/products/:id",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"api",
-										"Product",
+										"products",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "{{lastProductId}}",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer <token>",
+												"description": "Added as a part of security scheme: bearer"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/Product/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Product",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "/api/products/update",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"function getRandomInt(min, max) {\r",
+											"    return Math.floor(Math.random() * (max - min + 1)) + min;\r",
+											"}\r",
+											"\r",
+											"// Уникальное имя и код (можно оставить код тем же, если не тестируешь смену)\r",
+											"pm.environment.set(\"productChangeName\", \"Updated Product \" + getRandomInt(100, 999));\r",
+											"pm.environment.set(\"productChangeCode\", \"PROD-\" + Date.now());\r",
+											"\r",
+											"// Новая цена\r",
+											"pm.environment.set(\"productChangePrice\", getRandomInt(100, 999).toFixed(2));\r",
+											"\r",
+											"// Новая скидка (может быть пустой строкой)\r",
+											"const discount = Math.random() < 0.5 ? getRandomInt(5, 30).toFixed(2) : \"\";\r",
+											"pm.environment.set(\"productChangeDiscountPct\", discount);\r",
+											"\r",
+											"// Новое количество\r",
+											"pm.environment.set(\"productChangeQuantity\", getRandomInt(5, 50));\r",
+											"\r",
+											"// Новые атрибуты\r",
+											"const newAttrs = [\r",
+											"    { key: \"Material\", value: \"Cotton\" },\r",
+											"    { key: \"Origin\", value: \"Ukraine\" }\r",
+											"];\r",
+											"pm.environment.set(\"productChangeAttributes\", JSON.stringify(newAttrs));\r",
+											"\r",
+											"// Новые характеристики\r",
+											"const newFeatures = [\r",
+											"    { name: \"Lightweight\", description: \"Very easy to carry\" },\r",
+											"    { name: \"Eco-friendly\", description: \"Made with sustainable materials\" }\r",
+											"];\r",
+											"pm.environment.set(\"productChangeFeatures\", JSON.stringify(newFeatures));\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", () => {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"const data = pm.response.json();\r",
+											"if (data?.id) {\r",
+											"    pm.environment.set(\"lastProductId\", data.id); // обновим ID на случай, если он вдруг меняется\r",
+											"    pm.environment.set(\"productRowVersion\", data.rowVersion);\r",
+											"\r",
+											"    // Переносим изменения из productChange → product*\r",
+											"    pm.environment.set(\"productName\", pm.environment.get(\"productChangeName\"));\r",
+											"    pm.environment.set(\"productCode\", pm.environment.get(\"productChangeCode\"));\r",
+											"    pm.environment.set(\"productPrice\", pm.environment.get(\"productChangePrice\"));\r",
+											"    pm.environment.set(\"productDiscountPct\", pm.environment.get(\"productChangeDiscountPct\"));\r",
+											"    pm.environment.set(\"productQuantity\", pm.environment.get(\"productChangeQuantity\"));\r",
+											"    pm.environment.set(\"productAttributes\", pm.environment.get(\"productChangeAttributes\"));\r",
+											"    pm.environment.set(\"productFeatures\", pm.environment.get(\"productChangeFeatures\"));\r",
+											"\r",
+											"    console.log(\"✅ Product updated. ID:\", data.id);\r",
+											"} else {\r",
+											"    console.warn(\"⚠️ Response did not contain ID\");\r",
+											"}\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{adminAccessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "multipart/form-data"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "Id",
+											"value": "{{lastProductId}}",
+											"type": "text"
+										},
+										{
+											"key": "RowVersion",
+											"value": "{{productRowVersion}}",
+											"type": "text"
+										},
+										{
+											"key": "Code",
+											"value": "{{productChangeCode}}",
+											"type": "text"
+										},
+										{
+											"key": "Name",
+											"value": "{{productChangeName}}",
+											"type": "text"
+										},
+										{
+											"key": "CategoryId",
+											"value": "{{categoryId}}",
+											"type": "text"
+										},
+										{
+											"key": "Price",
+											"value": "{{productChangePrice}}",
+											"type": "text"
+										},
+										{
+											"key": "DiscountPct",
+											"value": "{{productChangeDiscountPct}}",
+											"type": "text"
+										},
+										{
+											"key": "Quantity",
+											"value": "{{productChangeQuantity}}",
+											"type": "text"
+										},
+										{
+											"key": "Images",
+											"type": "file",
+											"src": "/C:/Users/alexs/OneDrive/Desktop/product2_photo.jpg"
+										},
+										{
+											"key": "Attributes",
+											"value": "{{productChangeAttributes}}",
+											"type": "text"
+										},
+										{
+											"key": "Features",
+											"value": "{{productChangeFeatures}}",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/products/update",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"products",
+										"update"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "multipart/form-data"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer <token>",
+												"description": "Added as a part of security scheme: bearer"
+											}
+										],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "Id",
+													"value": "urn:uuid:fe8b3a7e-0ee1-e254-2639-a4a93ac17f14",
+													"type": "text"
+												},
+												{
+													"key": "RowVersion",
+													"value": "reprehenderit commodo voluptate est aute",
+													"type": "text"
+												},
+												{
+													"key": "Code",
+													"value": "ipsum ut",
+													"type": "text"
+												},
+												{
+													"key": "Name",
+													"value": "reprehenderit dolor magna proident",
+													"type": "text"
+												},
+												{
+													"key": "CategoryId",
+													"value": "urn:uuid:afe15903-f74c-336a-5553-261182e55786",
+													"type": "text"
+												},
+												{
+													"key": "Price",
+													"value": "-91890135.75512317",
+													"type": "text"
+												},
+												{
+													"key": "DiscountPct",
+													"value": "-87351024.34196156",
+													"type": "text"
+												},
+												{
+													"key": "Quantity",
+													"value": "-25770186",
+													"type": "text"
+												},
+												{
+													"key": "Images",
+													"value": "sint minim amet,qui Duis amet nostrud",
+													"type": "text"
+												},
+												{
+													"key": "Attributes",
+													"value": "ut officia eiusmod",
+													"type": "text"
+												},
+												{
+													"key": "Features",
+													"value": "ut adipisicing laborum",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/products/update",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"products",
+												"update"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "/api/products/:id/exists",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Проверка статуса 200 OK\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"// Проверка, что возвращается булевый результат\r",
+											"pm.test(\"Body is boolean\", function () {\r",
+											"    const json = pm.response.json();\r",
+											"    pm.expect(typeof json).to.eql(\"boolean\");\r",
+											"});\r",
+											"\r",
+											"// Сохраняем результат как переменную окружения\r",
+											"pm.environment.set(\"productExists\", pm.response.json());\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/products/:id/exists",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"products",
 										":id",
 										"exists"
 									],
 									"variable": [
 										{
 											"key": "id",
-											"value": "df158756-5bfa-966d-037d-d30cf8bda11f",
+											"value": "{{lastProductId}}",
 											"description": "(Required) "
 										}
 									]
@@ -2709,116 +3174,24 @@
 							]
 						},
 						{
-							"name": "/api/products/:id",
-							"request": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"id\": \"a9df649a-0ddc-9052-5993-524a1461bb46\",\n  \"rowVersion\": \"tempor ut\",\n  \"name\": \"magna\",\n  \"price\": -83529227.61572002,\n  \"quantity\": -94881453,\n  \"categoryId\": \"66d177c2-9f55-429c-eca2-69e93b44e1f7\",\n  \"imageUrls\": [\n    \"consequat enim sit in amet\",\n    \"Ut ut irure\"\n  ],\n  \"attributes\": [\n    {\n      \"key\": \"incididunt sint ut\",\n      \"value\": \"dolore non laborum\"\n    },\n    {\n      \"key\": \"nisi anim officia\",\n      \"value\": \"veniam occaecat in elit\"\n    }\n  ],\n  \"features\": [\n    {\n      \"name\": \"ex\",\n      \"description\": \"sed\"\n    },\n    {\n      \"name\": \"in anim\",\n      \"description\": \"esse nostrud id\"\n    }\n  ]\n}",
-									"options": {
-										"raw": {
-											"headerFamily": "json",
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{baseUrl}}/api/Product/:id",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"api",
-										"Product",
-										":id"
-									],
-									"variable": [
-										{
-											"key": "id",
-											"value": "df158756-5bfa-966d-037d-d30cf8bda11f",
-											"description": "(Required) "
-										}
-									]
-								}
-							},
-							"response": [
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "PUT",
-										"header": [
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											},
-											{
-												"key": "Authorization",
-												"value": "Bearer <token>",
-												"description": "Added as a part of security scheme: bearer"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n  \"id\": \"a9df649a-0ddc-9052-5993-524a1461bb46\",\n  \"rowVersion\": \"tempor ut\",\n  \"name\": \"magna\",\n  \"price\": -83529227.61572002,\n  \"quantity\": -94881453,\n  \"categoryId\": \"66d177c2-9f55-429c-eca2-69e93b44e1f7\",\n  \"imageUrls\": [\n    \"consequat enim sit in amet\",\n    \"Ut ut irure\"\n  ],\n  \"attributes\": [\n    {\n      \"key\": \"incididunt sint ut\",\n      \"value\": \"dolore non laborum\"\n    },\n    {\n      \"key\": \"nisi anim officia\",\n      \"value\": \"veniam occaecat in elit\"\n    }\n  ],\n  \"features\": [\n    {\n      \"name\": \"ex\",\n      \"description\": \"sed\"\n    },\n    {\n      \"name\": \"in anim\",\n      \"description\": \"esse nostrud id\"\n    }\n  ]\n}",
-											"options": {
-												"raw": {
-													"headerFamily": "json",
-													"language": "json"
-												}
-											}
-										},
-										"url": {
-											"raw": "{{baseUrl}}/api/Product/:id",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"api",
-												"Product",
-												":id"
-											],
-											"variable": [
-												{
-													"key": "id"
-												}
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "text",
-									"header": [],
-									"cookie": [],
-									"body": ""
-								}
-							]
-						},
-						{
-							"name": "/api/products/:id",
+							"name": "/api/products/filters",
 							"request": {
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/api/Product/:id",
+									"raw": "{{baseUrl}}/api/products/filters?categoryId={{categoryId}}",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"api",
-										"Product",
-										":id"
+										"products",
+										"filters"
 									],
-									"variable": [
+									"query": [
 										{
-											"key": "id",
-											"value": "df158756-5bfa-966d-037d-d30cf8bda11f",
-											"description": "(Required) "
+											"key": "categoryId",
+											"value": "{{categoryId}}"
 										}
 									]
 								}
@@ -2836,18 +3209,19 @@
 											}
 										],
 										"url": {
-											"raw": "{{baseUrl}}/api/Product/:id",
+											"raw": "{{baseUrl}}/api/products/filters?categoryId=b9e4960a-4416-96e9-ddcc-45215806d7bd",
 											"host": [
 												"{{baseUrl}}"
 											],
 											"path": [
 												"api",
-												"Product",
-												":id"
+												"products",
+												"filters"
 											],
-											"variable": [
+											"query": [
 												{
-													"key": "id"
+													"key": "categoryId",
+													"value": "b9e4960a-4416-96e9-ddcc-45215806d7bd"
 												}
 											]
 										}
@@ -2867,46 +3241,62 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/api/Product?SearchTerm=labore reprehenderit cillum&CategoryId=df158756-5bfa-966d-037d-d30cf8bda11f&Filters[nostrud__]=esse deserunt elit laboris&MinPrice=5164692.082011387&MaxPrice=5164692.082011387&Parameters.Page=-24164913&Parameters.PageSize=-24164913&Parameters.SortBy=labore reprehenderit cillum&Parameters.SortDesc=true",
+									"raw": "{{baseUrl}}/api/products?SearchTerm=qui anim officia&CategoryId=b9e4960a-4416-96e9-ddcc-45215806d7bd&Filters[essedc]=incididunt culpa aute eiusmod&Filters[sit_95]=deserunt incididunt in&Filters[commodo__d1]=proident officia sunt&Filters[est3b0]=voluptate elit&Filters[in5]=adipisicing amet consequat laborum labo&MinPrice=-56941408.11765398&MaxPrice=-56941408.11765398&Parameters.Page=-22381522&Parameters.PageSize=-22381522&Parameters.SortBy=qui anim officia&Parameters.SortDesc=true",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"api",
-										"Product"
+										"products"
 									],
 									"query": [
 										{
 											"key": "SearchTerm",
-											"value": "labore reprehenderit cillum"
+											"value": "qui anim officia"
 										},
 										{
 											"key": "CategoryId",
-											"value": "df158756-5bfa-966d-037d-d30cf8bda11f"
+											"value": "b9e4960a-4416-96e9-ddcc-45215806d7bd"
 										},
 										{
-											"key": "Filters[nostrud__]",
-											"value": "esse deserunt elit laboris"
+											"key": "Filters[essedc]",
+											"value": "incididunt culpa aute eiusmod"
+										},
+										{
+											"key": "Filters[sit_95]",
+											"value": "deserunt incididunt in"
+										},
+										{
+											"key": "Filters[commodo__d1]",
+											"value": "proident officia sunt"
+										},
+										{
+											"key": "Filters[est3b0]",
+											"value": "voluptate elit"
+										},
+										{
+											"key": "Filters[in5]",
+											"value": "adipisicing amet consequat laborum labo"
 										},
 										{
 											"key": "MinPrice",
-											"value": "5164692.082011387"
+											"value": "-56941408.11765398"
 										},
 										{
 											"key": "MaxPrice",
-											"value": "5164692.082011387"
+											"value": "-56941408.11765398"
 										},
 										{
 											"key": "Parameters.Page",
-											"value": "-24164913"
+											"value": "-22381522"
 										},
 										{
 											"key": "Parameters.PageSize",
-											"value": "-24164913"
+											"value": "-22381522"
 										},
 										{
 											"key": "Parameters.SortBy",
-											"value": "labore reprehenderit cillum"
+											"value": "qui anim officia"
 										},
 										{
 											"key": "Parameters.SortDesc",
@@ -2928,46 +3318,62 @@
 											}
 										],
 										"url": {
-											"raw": "{{baseUrl}}/api/Product?SearchTerm=labore reprehenderit cillum&CategoryId=df158756-5bfa-966d-037d-d30cf8bda11f&Filters[nostrud__]=esse deserunt elit laboris&MinPrice=5164692.082011387&MaxPrice=5164692.082011387&Parameters.Page=-24164913&Parameters.PageSize=-24164913&Parameters.SortBy=labore reprehenderit cillum&Parameters.SortDesc=true",
+											"raw": "{{baseUrl}}/api/products?SearchTerm=qui anim officia&CategoryId=b9e4960a-4416-96e9-ddcc-45215806d7bd&Filters[essedc]=incididunt culpa aute eiusmod&Filters[sit_95]=deserunt incididunt in&Filters[commodo__d1]=proident officia sunt&Filters[est3b0]=voluptate elit&Filters[in5]=adipisicing amet consequat laborum labo&MinPrice=-56941408.11765398&MaxPrice=-56941408.11765398&Parameters.Page=-22381522&Parameters.PageSize=-22381522&Parameters.SortBy=qui anim officia&Parameters.SortDesc=true",
 											"host": [
 												"{{baseUrl}}"
 											],
 											"path": [
 												"api",
-												"Product"
+												"products"
 											],
 											"query": [
 												{
 													"key": "SearchTerm",
-													"value": "labore reprehenderit cillum"
+													"value": "qui anim officia"
 												},
 												{
 													"key": "CategoryId",
-													"value": "df158756-5bfa-966d-037d-d30cf8bda11f"
+													"value": "b9e4960a-4416-96e9-ddcc-45215806d7bd"
 												},
 												{
-													"key": "Filters[nostrud__]",
-													"value": "esse deserunt elit laboris"
+													"key": "Filters[essedc]",
+													"value": "incididunt culpa aute eiusmod"
+												},
+												{
+													"key": "Filters[sit_95]",
+													"value": "deserunt incididunt in"
+												},
+												{
+													"key": "Filters[commodo__d1]",
+													"value": "proident officia sunt"
+												},
+												{
+													"key": "Filters[est3b0]",
+													"value": "voluptate elit"
+												},
+												{
+													"key": "Filters[in5]",
+													"value": "adipisicing amet consequat laborum labo"
 												},
 												{
 													"key": "MinPrice",
-													"value": "5164692.082011387"
+													"value": "-56941408.11765398"
 												},
 												{
 													"key": "MaxPrice",
-													"value": "5164692.082011387"
+													"value": "-56941408.11765398"
 												},
 												{
 													"key": "Parameters.Page",
-													"value": "-24164913"
+													"value": "-22381522"
 												},
 												{
 													"key": "Parameters.PageSize",
-													"value": "-24164913"
+													"value": "-22381522"
 												},
 												{
 													"key": "Parameters.SortBy",
-													"value": "labore reprehenderit cillum"
+													"value": "qui anim officia"
 												},
 												{
 													"key": "Parameters.SortDesc",
@@ -2986,70 +3392,18 @@
 							]
 						},
 						{
-							"name": "/api/products/filters",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/api/Product/filters?categoryId=df158756-5bfa-966d-037d-d30cf8bda11f",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"api",
-										"Product",
-										"filters"
-									],
-									"query": [
-										{
-											"key": "categoryId",
-											"value": "df158756-5bfa-966d-037d-d30cf8bda11f"
-										}
-									]
-								}
-							},
-							"response": [
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "GET",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "Bearer <token>",
-												"description": "Added as a part of security scheme: bearer"
-											}
-										],
-										"url": {
-											"raw": "{{baseUrl}}/api/Product/filters?categoryId=df158756-5bfa-966d-037d-d30cf8bda11f",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"api",
-												"Product",
-												"filters"
-											],
-											"query": [
-												{
-													"key": "categoryId",
-													"value": "df158756-5bfa-966d-037d-d30cf8bda11f"
-												}
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "text",
-									"header": [],
-									"cookie": [],
-									"body": ""
-								}
-							]
-						},
-						{
 							"name": "/api/products/delete-many",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{adminAccessToken}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "POST",
 								"header": [
 									{
@@ -3059,7 +3413,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"ids\": [\n    \"72355503-2456-a037-4130-05ab2af74fca\",\n    \"3673aa52-8ece-db72-85c7-c51d6c9a3c96\"\n  ]\n}",
+									"raw": "{\n  \"ids\": [\n    \"urn:uuid:9a27eab7-40aa-3bcc-8c5c-ef779c042905\",\n    \"5f325c87-d962-174e-a75d-f492c8f1c970\"\n  ]\n}",
 									"options": {
 										"raw": {
 											"headerFamily": "json",
@@ -3068,13 +3422,13 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/api/Product/delete-many",
+									"raw": "{{baseUrl}}/api/products/delete-many",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"api",
-										"Product",
+										"products",
 										"delete-many"
 									]
 								}
@@ -3097,7 +3451,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n  \"ids\": [\n    \"72355503-2456-a037-4130-05ab2af74fca\",\n    \"3673aa52-8ece-db72-85c7-c51d6c9a3c96\"\n  ]\n}",
+											"raw": "{\n  \"ids\": [\n    \"urn:uuid:9a27eab7-40aa-3bcc-8c5c-ef779c042905\",\n    \"5f325c87-d962-174e-a75d-f492c8f1c970\"\n  ]\n}",
 											"options": {
 												"raw": {
 													"headerFamily": "json",
@@ -3106,13 +3460,13 @@
 											}
 										},
 										"url": {
-											"raw": "{{baseUrl}}/api/Product/delete-many",
+											"raw": "{{baseUrl}}/api/products/delete-many",
 											"host": [
 												"{{baseUrl}}"
 											],
 											"path": [
 												"api",
-												"Product",
+												"products",
 												"delete-many"
 											]
 										}
