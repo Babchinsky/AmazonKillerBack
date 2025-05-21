@@ -12,34 +12,9 @@ public class GetAllProductsHandler(IProductRepository repo)
 {
     public async Task<List<ProductDto>> Handle(GetAllProductsQuery q, CancellationToken ct)
     {
-        var query = repo.Queryable().AsNoTracking();
-
-        if (!string.IsNullOrWhiteSpace(q.SearchTerm))
-            query = query.Where(p => p.Name.Contains(q.SearchTerm));
-
-        if (q.CategoryId.HasValue)
-            query = query.Where(p => p.CategoryId == q.CategoryId);
-
-        if (q.MinPrice.HasValue)
-            query = query.Where(p => p.Price >= q.MinPrice);
-
-        if (q.MaxPrice.HasValue)
-            query = query.Where(p => p.Price <= q.MaxPrice);
-
-        if (q.Filters is not null)
-            foreach (var (key, val) in q.Filters)
-                query = query.Where(p =>
-                    p.Attributes.Any(a => a.Key == key && a.Value == val));
-
-        var sortMap = new Dictionary<string, Expression<Func<Domain.Entities.Products.Product, object>>>
-        {
-            ["price"] = p => p.Price,
-            ["rating"] = p => p.Rating,
-            ["soldcount"] = p => p.SoldCount
-        };
-
-        query = query
-            .ApplySorting(q.Parameters, sortMap)
+        var query = repo.Queryable().AsNoTracking()
+            .ApplyFilters(q)
+            .ApplySorting(q.Parameters)
             .ApplyPagination(q.Parameters);
 
         return await query

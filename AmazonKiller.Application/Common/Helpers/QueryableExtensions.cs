@@ -18,7 +18,9 @@ public static class QueryableExtensions
         if (string.IsNullOrWhiteSpace(q.SortBy) || !sortMap.TryGetValue(q.SortBy.ToLower(), out var sortExpr))
             return query;
 
-        return q.SortDesc
+        var order = q.SortOrder.ToLowerInvariant();
+
+        return order == "desc"
             ? query.OrderByDescending(sortExpr)
             : query.OrderBy(sortExpr);
     }

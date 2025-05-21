@@ -6,6 +6,7 @@ using AmazonKiller.Application.Features.Categories.Queries.GetAllCategories;
 using AmazonKiller.Application.Features.Categories.Queries.GetCategoryById;
 using AmazonKiller.Application.Features.Categories.Queries.GetCategoryTree;
 using AmazonKiller.Application.Features.Categories.Queries.IsCategoryExists;
+using AmazonKiller.Application.Features.Filters.Queries;
 using AmazonKiller.WebApi.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -65,6 +66,16 @@ public class CategoryController(IMediator mediator) : ControllerBase
     public async Task<IActionResult> BulkDelete([FromBody] BulkDeleteCategoriesCommand cmd, CancellationToken ct)
     {
         var result = await mediator.Send(cmd, ct);
+        return Ok(result);
+    }
+
+    /// <summary>
+    /// Получить доступные фильтры для выбранной категории
+    /// </summary>
+    [HttpGet("{id:guid}/filters")]
+    public async Task<IActionResult> GetFilters(Guid id, CancellationToken ct)
+    {
+        var result = await mediator.Send(new GetAvailableFiltersQuery(id), ct);
         return Ok(result);
     }
 }

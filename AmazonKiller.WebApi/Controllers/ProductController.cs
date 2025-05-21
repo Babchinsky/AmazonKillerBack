@@ -76,14 +76,4 @@ public class ProductController(IMediator mediator) : ControllerBase
         var result = await mediator.Send(cmd, ct);
         return Ok(result);
     }
-
-    /// <summary>
-    /// Получить доступные фильтры для выбранной категории
-    /// </summary>
-    [HttpGet("filters")]
-    public async Task<IActionResult> GetFilters([FromQuery] Guid categoryId, CancellationToken ct)
-    {
-        var result = await mediator.Send(new GetAvailableFiltersQuery(categoryId), ct);
-        return Ok(result);
-    }
 }
