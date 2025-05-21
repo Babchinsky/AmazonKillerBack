@@ -1,6 +1,4 @@
-﻿// Application/Mappings/ProductMappingProfile.cs
-
-using AmazonKiller.Application.DTOs.Products;
+﻿using AmazonKiller.Application.DTOs.Products;
 using AmazonKiller.Application.Features.Products.Commands.CreateUpdateProduct.CreateProduct;
 using AmazonKiller.Domain.Entities.Products;
 using AutoMapper;

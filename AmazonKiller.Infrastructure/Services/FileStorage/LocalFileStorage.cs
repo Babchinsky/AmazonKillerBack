@@ -32,17 +32,17 @@ public sealed class LocalFileStorage : IFileStorage
     {
         var folder = DateTime.UtcNow.ToString("yyyy/MM"); // 2025/05
         var fileName = $"{Guid.NewGuid():N}{ext}"; // <guid>.jpg
-        var dir = Path.Combine(UploadRoot, folder); // …/wwwroot/uploads/2025/05
-
+        var dir = Path.Combine(UploadRoot, folder); // …/uploads/2025/05
         Directory.CreateDirectory(dir);
 
         var absPath = Path.Combine(dir, fileName);
         await using var dst = File.Create(absPath);
         await src.CopyToAsync(dst, ct);
 
-        // → DB: uploads/2025/05/<guid>.jpg
-        return Path.Combine("uploads", folder, fileName).Replace(Path.DirectorySeparatorChar, '/');
+        // 👇 только 2025/05/<guid>.jpg
+        return Path.Combine(folder, fileName).Replace('\\', '/');
     }
+
 
     /* ─────────────────────────  DELETE  ───────────────────────────── */
 
@@ -66,7 +66,6 @@ public sealed class LocalFileStorage : IFileStorage
     public async Task DeleteBatchSafeAsync(IEnumerable<string> urls, CancellationToken ct = default)
     {
         foreach (var u in urls.Distinct(StringComparer.OrdinalIgnoreCase))
-        {
             try
             {
                 await DeleteAsync(u, ct);
@@ -75,6 +74,5 @@ public sealed class LocalFileStorage : IFileStorage
             {
                 _log.LogWarning(ex, "Failed to delete file {File}", u);
             }
-        }
     }
 }
