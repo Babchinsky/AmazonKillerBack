@@ -14,8 +14,6 @@ public class OrderItem
 
     public Product Product { get; init; } = null!;
 
-    [Required] public OrderStatus Status { get; init; }
-
     [Precision(18, 2)] public decimal Price { get; init; }
 
     [Range(1, int.MaxValue)] public int Quantity { get; set; }

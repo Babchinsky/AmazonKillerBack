@@ -12,4 +12,55 @@
         <PackageReference Include="NUlid" Version="1.7.2"/>
     </ItemGroup>
 
+    <ItemGroup>
+        <Compile Update="Entities\Categories\CategoryStatus.cs">
+            <DependentUpon>Category.cs</DependentUpon>
+        </Compile>
+        <Compile Update="Entities\Orders\OrderInfo.cs">
+            <DependentUpon>Order.cs</DependentUpon>
+        </Compile>
+        <Compile Update="Entities\Orders\DeliveryInfo.cs">
+            <DependentUpon>OrderInfo.cs</DependentUpon>
+        </Compile>
+        <Compile Update="Entities\Orders\PaymentInfo.cs">
+            <DependentUpon>OrderInfo.cs</DependentUpon>
+        </Compile>
+        <Compile Update="Entities\Orders\Address.cs">
+            <DependentUpon>DeliveryInfo.cs</DependentUpon>
+        </Compile>
+        <Compile Update="Entities\Orders\PaymentType.cs">
+            <DependentUpon>PaymentInfo.cs</DependentUpon>
+        </Compile>
+        <Compile Update="Entities\Orders\OrderStatus.cs">
+            <DependentUpon>Order.cs</DependentUpon>
+        </Compile>
+        <Compile Update="Entities\Orders\OrderItem.cs">
+            <DependentUpon>Order.cs</DependentUpon>
+        </Compile>
+        <Compile Update="Entities\Products\ProductAttribute.cs">
+            <DependentUpon>Product.cs</DependentUpon>
+        </Compile>
+        <Compile Update="Entities\Products\ProductFeature.cs">
+            <DependentUpon>Product.cs</DependentUpon>
+        </Compile>
+        <Compile Update="Entities\Products\ProductStatus.cs">
+            <DependentUpon>Product.cs</DependentUpon>
+        </Compile>
+        <Compile Update="Entities\Reviews\ReviewContent.cs">
+            <DependentUpon>Review.cs</DependentUpon>
+        </Compile>
+        <Compile Update="Entities\Users\Role.cs">
+            <DependentUpon>.cs</DependentUpon>
+        </Compile>
+        <Compile Update="Entities\Users\Status.cs">
+            <DependentUpon>User.cs</DependentUpon>
+        </Compile>
+        <Compile Update="Entities\Users\VerificationType.cs">
+            <DependentUpon>EmailVerification.cs</DependentUpon>
+        </Compile>
+        <Compile Update="Entities\Users\RefreshToken.cs">
+            <DependentUpon>User.cs</DependentUpon>
+        </Compile>
+    </ItemGroup>
+
 </Project>

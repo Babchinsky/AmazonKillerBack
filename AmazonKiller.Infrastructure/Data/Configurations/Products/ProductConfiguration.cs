@@ -15,7 +15,7 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
         e.Property(p => p.Price).HasPrecision(18, 2);
         e.Property(p => p.DiscountPercent).HasPrecision(5, 2);
 
-        e.Property(p => p.Rating).HasPrecision(3, 2); 
+        e.Property(p => p.Rating).HasPrecision(3, 2);
         e.Property(p => p.RowVersion).IsRowVersion().IsConcurrencyToken();
     }
 }

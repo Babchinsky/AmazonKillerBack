@@ -4,9 +4,9 @@ using AmazonKiller.Application.Features.Categories.Commands.CreateCategory;
 using AmazonKiller.Application.Features.Categories.Commands.UpdateCategory;
 using AmazonKiller.Application.Features.Categories.Queries.GetAllCategories;
 using AmazonKiller.Application.Features.Categories.Queries.GetCategoryById;
+using AmazonKiller.Application.Features.Categories.Queries.GetCategoryFilters;
 using AmazonKiller.Application.Features.Categories.Queries.GetCategoryTree;
 using AmazonKiller.Application.Features.Categories.Queries.IsCategoryExists;
-using AmazonKiller.Application.Features.Filters.Queries;
 using AmazonKiller.WebApi.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -75,7 +75,7 @@ public class CategoryController(IMediator mediator) : ControllerBase
     [HttpGet("{id:guid}/filters")]
     public async Task<IActionResult> GetFilters(Guid id, CancellationToken ct)
     {
-        var result = await mediator.Send(new GetAvailableFiltersQuery(id), ct);
+        var result = await mediator.Send(new GetCategoryFiltersQuery(id), ct);
         return Ok(result);
     }
 }

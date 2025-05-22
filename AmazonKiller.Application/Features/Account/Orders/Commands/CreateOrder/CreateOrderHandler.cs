@@ -59,8 +59,7 @@ public class CreateOrderHandler(
                 ProductId = i.ProductId,
                 Price = i.Price,
                 Quantity = i.Quantity,
-                OrderedAt = DateTime.UtcNow,
-                Status = OrderStatus.Ordered
+                OrderedAt = DateTime.UtcNow
             }).ToList()
         };
 

@@ -4,12 +4,12 @@ using AmazonKiller.Shared.Exceptions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace AmazonKiller.Application.Features.Filters.Queries;
+namespace AmazonKiller.Application.Features.Categories.Queries.GetCategoryFilters;
 
-public class GetAvailableFiltersHandler(IProductRepository repo, ICategoryRepository categories)
-    : IRequestHandler<GetAvailableFiltersQuery, AvailableFiltersDto>
+public class GetCategoryFiltersHandler(IProductRepository repo, ICategoryRepository categories)
+    : IRequestHandler<GetCategoryFiltersQuery, AvailableFiltersDto>
 {
-    public async Task<AvailableFiltersDto> Handle(GetAvailableFiltersQuery q, CancellationToken ct)
+    public async Task<AvailableFiltersDto> Handle(GetCategoryFiltersQuery q, CancellationToken ct)
     {
         var category = await categories.GetByIdAsync(q.CategoryId, ct);
         if (category is null)

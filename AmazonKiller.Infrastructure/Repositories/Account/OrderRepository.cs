@@ -107,7 +107,6 @@ public class OrderRepository(AmazonDbContext db, IMapper mapper) : IOrderReposit
                 ProductId = productId,
                 Price = product.Price,
                 Quantity = quantity,
-                Status = OrderStatus.Ordered,
                 OrderedAt = DateTime.UtcNow
             });
 
