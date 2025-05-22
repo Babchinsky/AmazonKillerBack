@@ -7,7 +7,6 @@ using AmazonKiller.Application.Features.Categories.Queries.GetCategoryById;
 using AmazonKiller.Application.Features.Categories.Queries.GetCategoryFilters;
 using AmazonKiller.Application.Features.Categories.Queries.GetCategoryTree;
 using AmazonKiller.Application.Features.Categories.Queries.IsCategoryExists;
-using AmazonKiller.WebApi.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

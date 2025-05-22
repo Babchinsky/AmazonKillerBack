@@ -5,7 +5,6 @@ using AmazonKiller.Application.Features.Account.Profile.Commands.ChangePassword;
 using AmazonKiller.Application.Features.Account.Profile.Commands.DeleteAccount;
 using AmazonKiller.Application.Features.Account.Profile.Commands.Logout;
 using AmazonKiller.Shared.Exceptions;
-using AmazonKiller.WebApi.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

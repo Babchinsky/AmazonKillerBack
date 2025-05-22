@@ -4,7 +4,6 @@ using AmazonKiller.Application.Features.Products.Commands.CreateUpdateProduct.Up
 using AmazonKiller.Application.Features.Products.Queries.GetAllProductCards;
 using AmazonKiller.Application.Features.Products.Queries.GetProductById;
 using AmazonKiller.Application.Features.Products.Queries.IsProductExists;
-using AmazonKiller.WebApi.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
