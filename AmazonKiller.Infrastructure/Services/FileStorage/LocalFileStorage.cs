@@ -12,19 +12,10 @@ namespace AmazonKiller.Infrastructure.Services.FileStorage;
 ///   off of the <c>wwwroot</c> folder – <strong>not</strong> off of
 ///   <c>wwwroot/uploads</c>.
 /// </summary>
-public sealed class LocalFileStorage : IFileStorage
+public sealed class LocalFileStorage(IWebHostEnvironment env, ILogger<LocalFileStorage> log) : IFileStorage
 {
-    private readonly IWebHostEnvironment _env;
-    private readonly ILogger<LocalFileStorage> _log;
-
-    private string WebRoot => _env.WebRootPath ?? throw new InvalidOperationException("WebRootPath is not configured");
+    private string WebRoot => env.WebRootPath ?? throw new InvalidOperationException("WebRootPath is not configured");
     private string UploadRoot => Path.Combine(WebRoot, "uploads"); // …/wwwroot/uploads
-
-    public LocalFileStorage(IWebHostEnvironment env, ILogger<LocalFileStorage> log)
-    {
-        _env = env;
-        _log = log;
-    }
 
     /* ──────────────────────────  SAVE  ────────────────────────────── */
 
@@ -72,7 +63,7 @@ public sealed class LocalFileStorage : IFileStorage
             }
             catch (Exception ex)
             {
-                _log.LogWarning(ex, "Failed to delete file {File}", u);
+                log.LogWarning(ex, "Failed to delete file {File}", u);
             }
     }
 }

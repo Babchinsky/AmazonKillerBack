@@ -44,10 +44,10 @@ public static class ProductQueryExtensions
         {
             ["name"] = p => p.Name,
             ["price"] = p => p.Price,
-            ["rating"] = p => p.Rating,
+            ["rating"] = p => p.AverageRating,
             ["soldcount"] = p => p.SoldCount,
             ["quantity"] = p => p.Quantity,
-            ["reviewscount"] = p => p.ReviewsCount
+            ["reviewscount"] = p => p.Reviews.Count
         };
 
         return query.ApplySorting(parameters, sortMap); // ВАЖНО: из Helpers

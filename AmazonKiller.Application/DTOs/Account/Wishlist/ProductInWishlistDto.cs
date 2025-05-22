@@ -2,12 +2,12 @@
 
 public class ProductInWishlistDto
 {
-    public Guid Id { get; set; }
-    public string Name { get; set; } = "";
-    public string ImageUrl { get; set; } = "";
-    public decimal Price { get; set; }
-    public decimal? OldPrice { get; set; }
-    public decimal Rating { get; set; }
-    public int ReviewsCount { get; set; }
-    public DateTime AddedAt { get; set; }
+    public Guid Id { get; init; }
+    public string Name { get; init; } = "";
+    public string ImageUrl { get; init; } = "";
+    public decimal Price { get; init; }
+    public decimal? OldPrice { get; init; }
+    public decimal Rating { get; init; }
+    public int ReviewsCount { get; init; }
+    public DateTime AddedAt { get; init; }
 }

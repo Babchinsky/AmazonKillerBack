@@ -2,126 +2,66 @@ using AmazonKiller.Application.DTOs.Reviews;
 using AmazonKiller.Application.Interfaces.Repositories.Reviews;
 using AmazonKiller.Domain.Entities.Reviews;
 using AmazonKiller.Infrastructure.Data;
-using AmazonKiller.Shared.Exceptions;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace AmazonKiller.Infrastructure.Repositories.Reviews;
 
-public class ReviewRepository(AmazonDbContext db) : IReviewRepository
+public class ReviewRepository(AmazonDbContext db, IMapper mapper) : IReviewRepository
 {
-    private IQueryable<Review> QueryWithContent()
-    {
-        return db.Reviews.Include(r => r.Content);
-    }
-
-    public async Task<List<ReviewDto>> GetUserReviewsAsync(Guid userId, CancellationToken ct)
-    {
-        var reviews = await db.Reviews
-            .Where(r => r.UserId == userId)
-            .Include(r => r.Content)
-            .Include(r => r.Product)
-            .Include(r => r.User)
-            .AsNoTracking()
-            .ToListAsync(ct);
-
-        return reviews.Select(r => new ReviewDto
-        {
-            Id = r.Id,
-            Rating = (int)r.Rating,
-            Content = new ReviewContentDto(
-                r.Content.Article,
-                r.Content.Message,
-                r.Content.FilePaths),
-            ProductId = r.ProductId,
-            UserId = r.UserId,
-            CreatedAt = r.CreatedAt,
-            UserFullName = r.User.FirstName + " " + r.User.LastName,
-            ProductName = r.Product.Name,
-            Tags = ["High quality", "Actual price"],
-            Likes = r.Likes
-        }).ToList();
-    }
-
-    public Task<List<Review>> GetAllAsync()
-    {
-        return QueryWithContent()
-            .AsNoTracking()
-            .ToListAsync();
-    }
-
-    public Task<Review?> GetByIdAsync(Guid id)
-    {
-        return QueryWithContent()
-            .FirstOrDefaultAsync(r => r.Id == id);
-    }
-
-    public async Task AddAsync(Review review)
-    {
-        db.Reviews.Add(review);
-        await db.SaveChangesAsync();
-    }
-
-    public async Task UpdateAsync(Review review)
-    {
-        try
-        {
-            db.Reviews.Update(review);
-            await db.SaveChangesAsync();
-        }
-        catch (DbUpdateConcurrencyException)
-        {
-            throw new AppException("The review was modified by another user", 409);
-        }
-    }
-
-    public async Task DeleteAsync(Guid id)
-    {
-        var review = await db.Reviews.FindAsync(id);
-        if (review is null) return;
-
-        db.Reviews.Remove(review);
-        await db.SaveChangesAsync();
-    }
-
-    public Task<bool> IsExistsAsync(Guid id)
-    {
-        return db.Reviews.AnyAsync(r => r.Id == id);
-    }
-
     public IQueryable<Review> Queryable()
     {
-        return QueryWithContent();
+        return db.Reviews;
     }
 
-    public Task<List<Review>> GetByProductIdAsync(Guid productId)
+    public IQueryable<ReviewDto> GetAllProjected()
     {
-        return QueryWithContent()
-            .Where(r => r.ProductId == productId)
-            .OrderByDescending(r => r.CreatedAt)
-            .AsNoTracking()
-            .ToListAsync();
+        return db.Reviews.ProjectTo<ReviewDto>(mapper.ConfigurationProvider);
     }
 
-    public async Task<double> GetAverageRatingAsync(Guid productId)
+    public Task<ReviewDto?> GetDtoByIdAsync(Guid id, CancellationToken ct = default)
     {
-        return await db.Reviews
-            .Where(r => r.ProductId == productId)
-            .Select(r => (int)r.Rating)
-            .DefaultIfEmpty(0)
-            .AverageAsync();
+        return db.Reviews
+            .Where(x => x.Id == id)
+            .ProjectTo<ReviewDto>(mapper.ConfigurationProvider)
+            .FirstOrDefaultAsync(ct);
     }
 
-    public Task<int> GetReviewCountAsync(Guid productId)
+    public Task<Review?> GetEntityByIdAsync(Guid id, CancellationToken ct = default)
     {
-        return db.Reviews.CountAsync(r => r.ProductId == productId);
+        return db.Reviews.FirstOrDefaultAsync(r => r.Id == id, ct);
     }
 
-    public async Task LikeAsync(Guid reviewId, CancellationToken ct)
+    public async Task AddAsync(Review review, CancellationToken ct = default)
     {
-        var review = await db.Reviews.FirstOrDefaultAsync(r => r.Id == reviewId, ct)
-                     ?? throw new NotFoundException("Review not found");
+        db.Reviews.Add(review);
+        await db.SaveChangesAsync(ct);
+    }
 
-        review.Likes++;
+    public async Task UpdateAsync(Review review, CancellationToken ct = default)
+    {
+        db.Entry(review).Property(nameof(Review.RowVersion)).OriginalValue = review.RowVersion;
+        db.Reviews.Update(review);
+        await db.SaveChangesAsync(ct);
+    }
+
+    public async Task DeleteAsync(Review review, CancellationToken ct = default)
+    {
+        db.Reviews.Remove(review);
+        await db.SaveChangesAsync(ct);
+    }
+
+    public async Task ToggleLikeAsync(Guid reviewId, Guid userId, CancellationToken ct)
+    {
+        var existing = await db.Set<ReviewLike>()
+            .FirstOrDefaultAsync(x => x.ReviewId == reviewId && x.UserId == userId, ct);
+
+        if (existing is null)
+            db.Set<ReviewLike>().Add(new ReviewLike { ReviewId = reviewId, UserId = userId });
+        else
+            db.Set<ReviewLike>().Remove(existing);
+
         await db.SaveChangesAsync(ct);
     }
 }

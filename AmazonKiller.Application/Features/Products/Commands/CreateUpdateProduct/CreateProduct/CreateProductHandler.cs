@@ -1,8 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using AmazonKiller.Application.DTOs.Products;
 using AmazonKiller.Application.Interfaces.Repositories.Products;
 using AmazonKiller.Application.Interfaces.Services;
 using AmazonKiller.Domain.Entities.Products;
 using AmazonKiller.Shared.Exceptions;
+using AutoMapper;
 using MediatR;
 
 namespace AmazonKiller.Application.Features.Products.Commands.CreateUpdateProduct.CreateProduct;
@@ -11,10 +13,11 @@ public class CreateProductHandler(
     IFileStorage fileStorage,
     IProductRepository productRepo,
     ICategoryRepository categoryRepo,
+    IMapper mapper,
     IPropertyKeyUpdater propertyKeyUpdater)
-    : IRequestHandler<CreateProductCommand, Guid>
+    : IRequestHandler<CreateProductCommand, ProductDto>
 {
-    public async Task<Guid> Handle(CreateProductCommand cmd, CancellationToken ct)
+    public async Task<ProductDto> Handle(CreateProductCommand cmd, CancellationToken ct)
     {
         var category = await categoryRepo.GetByIdAsync(cmd.CategoryId, ct);
         if (category is null)
@@ -74,7 +77,8 @@ public class CreateProductHandler(
 
             await productRepo.AddAttributesAndFeaturesAsync(attributes, features, ct);
 
-            return product.Id;
+            var created = await productRepo.GetByIdAsync(product.Id, ct); // вернуть со связанными данными
+            return mapper.Map<ProductDto>(created);
         }
         catch
         {

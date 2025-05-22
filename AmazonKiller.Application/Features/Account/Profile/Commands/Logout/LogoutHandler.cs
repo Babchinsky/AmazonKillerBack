@@ -10,9 +10,8 @@ public class LogoutHandler(ICurrentUserService currentUser, IAccountRepository r
     public async Task<Unit> Handle(LogoutCommand cmd, CancellationToken ct)
     {
         var userId = currentUser.UserId;
-        if (userId is null) return Unit.Value;
 
-        await repo.RevokeRefreshTokensAsync(userId.Value, ct);
+        await repo.RevokeRefreshTokensAsync(userId, ct);
         return Unit.Value;
     }
 }

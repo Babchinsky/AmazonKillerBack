@@ -3,4 +3,4 @@ using MediatR;
 
 namespace AmazonKiller.Application.Features.Categories.Queries.GetCategoryById;
 
-public record GetCategoryByIdQuery(Guid Id) : IRequest<CategoryDto>;
+public record GetCategoryByIdQuery(Guid Id) : IRequest<CategoryDetailsDto>;

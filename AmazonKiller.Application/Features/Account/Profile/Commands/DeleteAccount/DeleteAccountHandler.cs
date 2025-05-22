@@ -10,7 +10,7 @@ public class DeleteAccountHandler(ICurrentUserService currentUser, IAccountRepos
 {
     public async Task<Unit> Handle(DeleteAccountCommand cmd, CancellationToken ct)
     {
-        var user = await repo.GetCurrentUserWithTokensAsync(currentUser.UserId!.Value, ct);
+        var user = await repo.GetCurrentUserWithTokensAsync(currentUser.UserId, ct);
         if (user is null)
             throw new AppException("User not found", 404);
 

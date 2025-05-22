@@ -1,9 +1,9 @@
+using AmazonKiller.Domain.Entities.Common;
+
 namespace AmazonKiller.Domain.Entities.Orders;
 
-public class OrderInfo
+public class OrderInfo : BaseEntity
 {
-    public Guid Id { get; set; }
-
     public DeliveryInfo Delivery { get; init; } = new();
     public PaymentInfo Payment { get; init; } = new();
 

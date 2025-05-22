@@ -23,13 +23,21 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="DTOs\Account\ProductCart\"/>
         <Folder Include="Features\Account\Orders\Commands\"/>
         <Folder Include="Features\Account\Orders\Queries\"/>
         <Folder Include="Features\Account\Profile\Commands\"/>
         <Folder Include="Features\Account\Wishlist\Commands\"/>
         <Folder Include="Features\Account\Wishlist\Queries\"/>
         <Folder Include="Features\Auth\Commands\Registration\"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Compile Update="DTOs\Products\ProductAttributeDto.cs">
+            <DependentUpon>ProductDto.cs</DependentUpon>
+        </Compile>
+        <Compile Update="DTOs\Products\ProductFeatureDto.cs">
+            <DependentUpon>ProductDto.cs</DependentUpon>
+        </Compile>
     </ItemGroup>
 
 </Project>

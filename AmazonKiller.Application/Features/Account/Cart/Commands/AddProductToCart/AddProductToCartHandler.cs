@@ -10,7 +10,7 @@ public class AddProductToCartHandler(
 {
     public async Task Handle(AddProductToCartCommand cmd, CancellationToken ct)
     {
-        var userId = currentUserService.UserId!.Value;
+        var userId = currentUserService.UserId;
 
         var existing = await cartRepo.GetAsync(userId, cmd.ProductId, ct);
 

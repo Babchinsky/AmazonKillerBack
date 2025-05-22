@@ -1,12 +1,11 @@
 using System.ComponentModel.DataAnnotations;
+using AmazonKiller.Domain.Entities.Common;
 using AmazonKiller.Domain.Entities.Products;
 
 namespace AmazonKiller.Domain.Entities.Users;
 
-public class CartList
+public class CartList : BaseEntity
 {
-    public Guid Id { get; init; }
-
     [Required] public Guid UserId { get; init; }
 
     [Required] public Guid ProductId { get; init; }

@@ -4,7 +4,6 @@ using AmazonKiller.Application.Features.Admin.Users.Commands.DemoteAdmin;
 using AmazonKiller.Application.Features.Admin.Users.Commands.MakeUserAdmin;
 using AmazonKiller.Application.Features.Admin.Users.Queries.GetAllUsers;
 using AmazonKiller.Application.Features.Admin.Users.Queries.GetUserOrdersAdmin;
-using AmazonKiller.Application.Features.Admin.Users.Queries.GetUserReviewsAdmin;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -55,13 +54,6 @@ public class AdminUsersController(IMediator mediator) : ControllerBase
     public async Task<IActionResult> GetUserOrders(Guid userId)
     {
         var result = await mediator.Send(new GetUserOrdersAdminQuery(userId));
-        return Ok(result);
-    }
-
-    [HttpGet("{userId:guid}/reviews")]
-    public async Task<IActionResult> GetUserReviews(Guid userId)
-    {
-        var result = await mediator.Send(new GetUserReviewsAdminQuery(userId));
         return Ok(result);
     }
 }

@@ -1,13 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using AmazonKiller.Domain.Entities.Common;
 using AmazonKiller.Domain.Entities.Products;
 using Microsoft.EntityFrameworkCore;
 
 namespace AmazonKiller.Domain.Entities.Orders;
 
-public class OrderItem
+public class OrderItem : BaseEntity
 {
-    public Guid Id { get; init; }
-
     public Guid OrderId { get; init; } // instead of uint
 
     public Guid ProductId { get; init; }

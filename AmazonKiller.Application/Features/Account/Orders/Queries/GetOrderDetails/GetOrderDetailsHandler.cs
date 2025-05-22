@@ -11,10 +11,7 @@ public class GetOrderDetailsHandler(IOrderRepository repo, ICurrentUserService c
 {
     public async Task<OrderDetailsDto> Handle(GetOrderDetailsQuery request, CancellationToken ct)
     {
-        if (currentUser.UserId is not { } userId)
-            throw new UnauthorizedAccessException();
-
-        var result = await repo.GetOrderDetailsAsync(userId, request.OrderId, ct);
+        var result = await repo.GetOrderDetailsAsync(currentUser.UserId, request.OrderId, ct);
         return result ?? throw new NotFoundException("Order not found");
     }
 }

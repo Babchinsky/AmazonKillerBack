@@ -46,11 +46,8 @@
         <Compile Update="Entities\Products\ProductStatus.cs">
             <DependentUpon>Product.cs</DependentUpon>
         </Compile>
-        <Compile Update="Entities\Reviews\ReviewContent.cs">
-            <DependentUpon>Review.cs</DependentUpon>
-        </Compile>
         <Compile Update="Entities\Users\Role.cs">
-            <DependentUpon>.cs</DependentUpon>
+            <DependentUpon>User.cs</DependentUpon>
         </Compile>
         <Compile Update="Entities\Users\Status.cs">
             <DependentUpon>User.cs</DependentUpon>

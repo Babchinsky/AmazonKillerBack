@@ -15,7 +15,7 @@ public class ChangePasswordHandler(
     public async Task<Unit> Handle(ChangePasswordCommand cmd, CancellationToken ct)
     {
         // Получаем пользователя
-        var user = await repo.GetCurrentUserAsync(currentUser.UserId!.Value, ct);
+        var user = await repo.GetCurrentUserAsync(currentUser.UserId, ct);
         if (user is null)
             throw new NotFoundException("User not found");
 

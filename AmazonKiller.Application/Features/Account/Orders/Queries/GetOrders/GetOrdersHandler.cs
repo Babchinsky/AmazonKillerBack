@@ -10,9 +10,6 @@ public class GetOrdersHandler(IOrderRepository repo, ICurrentUserService current
 {
     public async Task<List<OrderDto>> Handle(GetOrdersQuery request, CancellationToken ct)
     {
-        if (currentUser.UserId is not { } userId)
-            throw new UnauthorizedAccessException();
-
-        return await repo.GetUserOrdersAsync(userId, ct);
+        return await repo.GetUserOrdersAsync(currentUser.UserId, ct);
     }
 }

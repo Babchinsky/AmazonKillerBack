@@ -1,4 +1,4 @@
-﻿using AmazonKiller.Application.DTOs.Filters;
+﻿using AmazonKiller.Application.DTOs.Categories;
 using AmazonKiller.Application.Interfaces.Repositories.Products;
 using AmazonKiller.Shared.Exceptions;
 using MediatR;
@@ -7,9 +7,9 @@ using Microsoft.EntityFrameworkCore;
 namespace AmazonKiller.Application.Features.Categories.Queries.GetCategoryFilters;
 
 public class GetCategoryFiltersHandler(IProductRepository repo, ICategoryRepository categories)
-    : IRequestHandler<GetCategoryFiltersQuery, AvailableFiltersDto>
+    : IRequestHandler<GetCategoryFiltersQuery, CategoryFiltersDto>
 {
-    public async Task<AvailableFiltersDto> Handle(GetCategoryFiltersQuery q, CancellationToken ct)
+    public async Task<CategoryFiltersDto> Handle(GetCategoryFiltersQuery q, CancellationToken ct)
     {
         var category = await categories.GetByIdAsync(q.CategoryId, ct);
         if (category is null)
@@ -36,6 +36,6 @@ public class GetCategoryFiltersHandler(IProductRepository repo, ICategoryReposit
                 result[key] = values;
         }
 
-        return new AvailableFiltersDto(result);
+        return new CategoryFiltersDto(result);
     }
 }

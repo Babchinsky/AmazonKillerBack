@@ -2,9 +2,4 @@
 
 namespace AmazonKiller.Application.Features.Products.Commands.CreateUpdateProduct.CreateProduct;
 
-public class CreateProductValidator : UpsertProductValidator<CreateProductCommand>
-{
-    public CreateProductValidator() : base()
-    {
-    }
-}
+public class CreateProductValidator : UpsertProductValidator<CreateProductCommand>;

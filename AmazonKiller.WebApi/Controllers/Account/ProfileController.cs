@@ -41,7 +41,7 @@ public class ProfileController(IMediator mediator) : ControllerBase
         }
         catch (AppException ex) when (ex.Message == "New name cannot be the same as the current name")
         {
-            return this.ProblemBadRequest(ex.Message);
+            return Problem(ex.Message);
         }
     }
 

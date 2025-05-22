@@ -12,8 +12,8 @@ public class GetReviewByIdHandler(IReviewRepository repo, IMapper mapper)
     public async Task<ReviewDto> Handle(
         GetReviewByIdQuery q, CancellationToken ct)
     {
-        var r = await repo.GetByIdAsync(q.Id)
-                ?? throw new NotFoundException("Review");
-        return mapper.Map<ReviewDto>(r);
+        var dto = await repo.GetDtoByIdAsync(q.Id, ct)
+                  ?? throw new NotFoundException($"Review with id {q.Id} not found.");
+        return dto;
     }
 }

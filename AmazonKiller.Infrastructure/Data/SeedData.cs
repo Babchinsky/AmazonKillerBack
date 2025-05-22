@@ -58,10 +58,9 @@ public static class SeedData
                 Code = "01JS9QNDAYKK2CFRT5AKZF1YAA",
                 Name = "C# in Depth",
                 Price = 39.99m,
-                ReviewsCount = 1,
                 Quantity = 10,
                 Status = ProductStatus.InStock,
-                Rating = 5,
+                AverageRating = 5,
                 CategoryId = booksId,
                 InWishlist = true,
                 InCartList = true
@@ -72,10 +71,9 @@ public static class SeedData
                 Code = "01JS9QNDAYKK2CFRT5AKZF1YBB",
                 Name = "Wireless Mouse",
                 Price = 19.99m,
-                ReviewsCount = 0,
                 Quantity = 50,
                 Status = ProductStatus.InStock,
-                Rating = 4,
+                AverageRating = 4,
                 CategoryId = techId,
                 InWishlist = false,
                 InCartList = false
@@ -135,27 +133,18 @@ public static class SeedData
             }
         );
 
-        // ReviewContent
-        modelBuilder.Entity<ReviewContent>().HasData(
-            new ReviewContent
-            {
-                Id = reviewContentId,
-                Article = "Great book!",
-                Message = "Very useful for learning advanced C#",
-                FilePaths = ["file1.jpg", "file2.jpg"] // Статический список строк
-            }
-        );
-
         // Review
         modelBuilder.Entity<Review>().HasData(new Review
         {
             Id = reviewId,
-            ContentId = reviewContentId,
             ProductId = product1,
             UserId = userId,
             Rating = 5,
             CreatedAt = seedDate, // Статическая дата
-            Likes = 3
+
+            Article = "Great book!",
+            Message = "Very useful for learning advanced C#",
+            FilePaths = ["file1.jpg", "file2.jpg"] // Статический список строк
         });
     }
 }

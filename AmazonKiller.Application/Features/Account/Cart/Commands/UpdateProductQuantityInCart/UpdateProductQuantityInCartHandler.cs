@@ -10,7 +10,7 @@ public class UpdateProductQuantityInCartHandler(
 {
     public async Task Handle(UpdateProductQuantityInCartCommand cmd, CancellationToken ct)
     {
-        var userId = currentUserService.UserId!.Value;
+        var userId = currentUserService.UserId;
         await cartRepo.UpdateQuantityAsync(userId, cmd.ProductId, cmd.Quantity, ct);
     }
 }

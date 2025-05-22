@@ -1,12 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using AmazonKiller.Domain.Entities.Common;
 using AmazonKiller.Domain.Entities.Products;
 
 namespace AmazonKiller.Domain.Entities.Categories;
 
-public class Category
+public class Category : VersionedEntity
 {
-    public Guid Id { get; init; }
-
     [Required]
     [StringLength(40, MinimumLength = 1)]
     public string Name { get; set; } = string.Empty;

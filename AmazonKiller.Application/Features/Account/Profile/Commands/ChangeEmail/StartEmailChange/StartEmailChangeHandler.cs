@@ -14,7 +14,7 @@ public class StartEmailChangeHandler(
 {
     public async Task Handle(StartEmailChangeCommand cmd, CancellationToken ct)
     {
-        var userId = currentUserService.UserId ?? throw new AppException("Unauthorized", 401);
+        var userId = currentUserService.UserId;
 
         var user = await accountRepo.GetCurrentUserAsync(userId, ct)
                    ?? throw new AppException("User not found", 404);

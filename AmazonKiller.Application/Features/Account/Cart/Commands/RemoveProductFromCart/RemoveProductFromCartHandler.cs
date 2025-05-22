@@ -9,7 +9,7 @@ public class RemoveProductFromCartHandler(ICurrentUserService currentUserService
 {
     public async Task Handle(RemoveProductFromCartCommand cmd, CancellationToken ct)
     {
-        var userId = currentUserService.UserId!.Value;
+        var userId = currentUserService.UserId;
         await cartRepo.RemoveAsync(userId, cmd.ProductId, ct);
     }
 }

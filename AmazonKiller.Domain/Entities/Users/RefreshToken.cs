@@ -1,8 +1,9 @@
-﻿namespace AmazonKiller.Domain.Entities.Users;
+﻿using AmazonKiller.Domain.Entities.Common;
 
-public class RefreshToken
+namespace AmazonKiller.Domain.Entities.Users;
+
+public class RefreshToken : BaseEntity
 {
-    public Guid Id { get; init; } = Guid.NewGuid();
     public Guid UserId { get; init; }
     public string Token { get; init; } = null!;
     public string DeviceId { get; init; } = null!;

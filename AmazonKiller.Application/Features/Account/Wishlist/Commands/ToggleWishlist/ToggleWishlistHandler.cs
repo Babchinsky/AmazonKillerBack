@@ -11,9 +11,6 @@ public class ToggleWishlistHandler(
 {
     public async Task Handle(ToggleWishlistCommand request, CancellationToken ct)
     {
-        if (currentUser.UserId is not { } userId)
-            throw new UnauthorizedAccessException("User not authenticated");
-
-        await repo.ToggleAsync(userId, request.ProductId, ct);
+        await repo.ToggleAsync(currentUser.UserId, request.ProductId, ct);
     }
 }

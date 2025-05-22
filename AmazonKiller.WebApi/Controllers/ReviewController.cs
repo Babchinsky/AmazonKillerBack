@@ -1,103 +1,60 @@
-using AmazonKiller.Application.Features.Reviews.Commands.CreateReview;
+using AmazonKiller.Application.DTOs.Reviews;
+using AmazonKiller.Application.Features.Reviews.Commands.CreateUpdateReview.CreateReview;
+using AmazonKiller.Application.Features.Reviews.Commands.CreateUpdateReview.UpdateReview;
 using AmazonKiller.Application.Features.Reviews.Commands.DeleteReview;
 using AmazonKiller.Application.Features.Reviews.Commands.LikeReview;
-using AmazonKiller.Application.Features.Reviews.Commands.UpdateReview;
 using AmazonKiller.Application.Features.Reviews.Queries.GetAllReviews;
-using AmazonKiller.Application.Features.Reviews.Queries.GetAverageRating;
-using AmazonKiller.Application.Features.Reviews.Queries.GetReviewsByProductId;
 using AmazonKiller.Application.Features.Reviews.Queries.GetReviewById;
-using AmazonKiller.Application.Features.Reviews.Queries.GetReviewCount;
-using AmazonKiller.Application.Features.Reviews.Queries.IsReviewExists;
-using AmazonKiller.WebApi.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AmazonKiller.WebApi.Controllers;
 
-[ApiController]
 [Route("api/reviews")]
-public class ReviewController(IMediator mediator) : ControllerBase
+[ApiController]
+public class ReviewsController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
-    public async Task<IActionResult> GetAll([FromQuery] GetAllReviewsQuery query)
+    public async Task<ActionResult<List<ReviewDto>>> GetAll([FromQuery] GetAllReviewsQuery query)
     {
-        var reviews = await mediator.Send(query);
-        return Ok(reviews);
+        return Ok(await mediator.Send(query));
     }
 
     [HttpGet("{id:guid}")]
-    public async Task<IActionResult> GetById(Guid id)
+    public async Task<ActionResult<ReviewDto>> GetById(Guid id)
     {
-        var review = await mediator.Send(new GetReviewByIdQuery(id));
-        return Ok(review);
-    }
-
-    [HttpGet("product/{productId:guid}/list")]
-    public async Task<IActionResult> GetByProduct(Guid productId, [FromQuery] int page = 1,
-        [FromQuery] int pageSize = 20)
-    {
-        var reviews = await mediator.Send(new GetReviewsByProductIdQuery(productId, page, pageSize));
-        return Ok(reviews);
-    }
-
-    [HttpGet("product/{productId:guid}/rating")]
-    public async Task<IActionResult> GetAverageRating(Guid productId)
-    {
-        var avg = await mediator.Send(new GetAverageRatingQuery(productId));
-        return Ok(avg);
-    }
-
-    [HttpGet("product/{productId:guid}/count")]
-    public async Task<IActionResult> GetCount(Guid productId)
-    {
-        var count = await mediator.Send(new GetReviewCountQuery(productId));
-        return Ok(count);
-    }
-
-    [HttpGet("{id:guid}/exists")]
-    public async Task<IActionResult> Exists(Guid id)
-    {
-        var exists = await mediator.Send(new IsReviewExistsQuery(id));
-        return Ok(exists);
+        return Ok(await mediator.Send(new GetReviewByIdQuery(id)));
     }
 
     [Authorize]
     [HttpPost]
-    public async Task<IActionResult> Create([FromForm] CreateReviewCommand command)
+    public async Task<ActionResult<ReviewDto>> Create([FromForm] CreateReviewCommand cmd)
     {
-        var dto = await mediator.Send(command);
-        return CreatedAtAction(nameof(GetById), new { id = dto.Id }, dto);
+        return Ok(await mediator.Send(cmd));
     }
 
     [Authorize]
     [HttpPut("{id:guid}")]
-    public async Task<IActionResult> Update(Guid id, [FromBody] UpdateReviewCommand cmd)
+    public async Task<ActionResult<ReviewDto>> Update(Guid id, [FromForm] UpdateReviewCommand cmd)
     {
-        if (id != cmd.Id)
-            return this.ProblemBadRequest("ID mismatch");
-
-        var exists = await mediator.Send(new IsReviewExistsQuery(id));
-        if (!exists)
-            return this.ProblemNotFound($"Review {id} not found");
-
-        var updated = await mediator.Send(cmd);
-        return Ok(updated);
+        if (id != cmd.Id) return Problem("ID mismatch");
+        return Ok(await mediator.Send(cmd));
     }
 
     [Authorize]
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> Delete(Guid id)
     {
-        var deleted = await mediator.Send(new DeleteReviewCommand(id));
-        return deleted ? NoContent() : NotFound();
+        var result = await mediator.Send(new DeleteReviewCommand(id));
+        return result ? NoContent() : NotFound();
     }
 
     [Authorize]
-    [HttpPost("{id:guid}/like")]
-    public async Task<IActionResult> Like(Guid id)
+    [HttpPost("{reviewId:guid}/like")]
+    public async Task<IActionResult> ToggleLike(Guid reviewId)
     {
-        await mediator.Send(new LikeReviewCommand(id));
-        return NoContent();
+        await mediator.Send(new LikeReviewCommand(reviewId));
+        return Ok();
     }
 }

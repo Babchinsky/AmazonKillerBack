@@ -1,8 +1,9 @@
-﻿namespace AmazonKiller.Domain.Entities.Users;
+﻿using AmazonKiller.Domain.Entities.Common;
 
-public class EmailVerification
+namespace AmazonKiller.Domain.Entities.Users;
+
+public class EmailVerification : BaseEntity
 {
-    public Guid Id { get; init; } = Guid.NewGuid();
     public string Email { get; init; } = string.Empty;
     public string? Code { get; init; } = string.Empty;
     public DateTime ExpiresAt { get; init; }

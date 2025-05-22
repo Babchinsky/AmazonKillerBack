@@ -1,7 +1,7 @@
 ﻿using AmazonKiller.Application.DTOs.Categories;
 using AmazonKiller.Application.Features.Categories.Commands.BulkDeleteCategories;
-using AmazonKiller.Application.Features.Categories.Commands.CreateCategory;
-using AmazonKiller.Application.Features.Categories.Commands.UpdateCategory;
+using AmazonKiller.Application.Features.Categories.Commands.CreateUpdateCategory.CreateCategory;
+using AmazonKiller.Application.Features.Categories.Commands.CreateUpdateCategory.UpdateCategory;
 using AmazonKiller.Application.Features.Categories.Queries.GetAllCategories;
 using AmazonKiller.Application.Features.Categories.Queries.GetCategoryById;
 using AmazonKiller.Application.Features.Categories.Queries.GetCategoryFilters;
@@ -45,7 +45,7 @@ public class CategoryController(IMediator mediator) : ControllerBase
 
     [Authorize(Roles = "Admin")]
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] CreateCategoryCommand cmd, CancellationToken ct)
+    public async Task<IActionResult> Create([FromForm] CreateCategoryCommand cmd, CancellationToken ct)
     {
         var result = await mediator.Send(cmd, ct);
         return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
@@ -53,16 +53,15 @@ public class CategoryController(IMediator mediator) : ControllerBase
 
     [Authorize(Roles = "Admin")]
     [HttpPut("{id:guid}")]
-    public async Task<IActionResult> Update(Guid id, [FromBody] UpdateCategoryCommand cmd, CancellationToken ct)
+    public async Task<IActionResult> Update(Guid id, [FromForm] UpdateCategoryCommand cmd, CancellationToken ct)
     {
-        if (id != cmd.Id) return this.ProblemBadRequest("ID mismatch");
+        if (id != cmd.Id) return Problem("ID mismatch");
         var updated = await mediator.Send(cmd, ct);
         return Ok(updated);
     }
 
     [Authorize(Roles = "Admin")]
     [HttpPost("delete-many")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> BulkDelete([FromBody] BulkDeleteCategoriesCommand cmd, CancellationToken ct)
     {
         var result = await mediator.Send(cmd, ct);

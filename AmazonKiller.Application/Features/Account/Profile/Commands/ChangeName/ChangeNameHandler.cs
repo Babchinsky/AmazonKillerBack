@@ -10,7 +10,7 @@ public class ChangeNameHandler(ICurrentUserService currentUser, IAccountReposito
 {
     public async Task Handle(ChangeNameCommand cmd, CancellationToken ct)
     {
-        var user = await repo.GetCurrentUserAsync(currentUser.UserId!.Value, ct);
+        var user = await repo.GetCurrentUserAsync(currentUser.UserId, ct);
         if (user is null)
             throw new AppException("User not found", 404);
 

@@ -8,7 +8,11 @@ public class UpdateProductValidator : UpsertProductValidator<UpdateProductComman
     public UpdateProductValidator()
     {
         RuleFor(x => x.Id)
-            .NotEqual(Guid.Empty).WithMessage("Product ID is required");
-        RuleFor(x => x.RowVersion).NotEmpty();
+            .NotEqual(Guid.Empty)
+            .WithMessage("Product ID is required");
+
+        RuleFor(x => x.RowVersion)
+            .NotEmpty()
+            .WithMessage("RowVersion is required.");
     }
 }

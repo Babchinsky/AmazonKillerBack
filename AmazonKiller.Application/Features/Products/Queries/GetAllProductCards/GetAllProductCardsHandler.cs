@@ -22,8 +22,8 @@ public class GetAllProductCardsHandler(IProductRepository repo)
                 Name = p.Name,
                 Price = p.Price,
                 ImageUrl = p.MainImageUrl,
-                Rating = p.Rating,
-                ReviewsCount = p.ReviewsCount,
+                Rating = p.AverageRating,
+                ReviewsCount = p.Reviews.Count,
                 DiscountPercent = p.DiscountPercent
             })
             .ToListAsync(ct);

@@ -1,12 +1,11 @@
-﻿using AmazonKiller.Domain.Entities.Users;
+﻿using AmazonKiller.Domain.Entities.Common;
+using AmazonKiller.Domain.Entities.Users;
 using Microsoft.EntityFrameworkCore;
 
 namespace AmazonKiller.Domain.Entities.Orders;
 
-public class Order
+public class Order : VersionedEntity
 {
-    public Guid Id { get; init; }
-
     public OrderInfo Info { get; init; } = new();
     public ICollection<OrderItem> Items { get; init; } = new List<OrderItem>();
 

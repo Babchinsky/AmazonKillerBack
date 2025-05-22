@@ -4,6 +4,7 @@ using AmazonKiller.Application.Features.Products.Commands.CreateUpdateProduct.Up
 using AmazonKiller.Application.Features.Products.Queries.GetAllProductCards;
 using AmazonKiller.Application.Features.Products.Queries.GetProductById;
 using AmazonKiller.Application.Features.Products.Queries.IsProductExists;
+using AmazonKiller.WebApi.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -51,20 +52,23 @@ public class ProductController(IMediator mediator) : ControllerBase
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Create([FromForm] CreateProductCommand cmd, CancellationToken ct)
     {
-        var id = await mediator.Send(cmd, ct);
-        return CreatedAtAction(nameof(Get), new { id }, id);
+        var dto = await mediator.Send(cmd, ct);
+        return CreatedAtAction(nameof(Get), new { id = dto.Id }, dto);
     }
 
     /// <summary>
     /// Обновить существующий продукт
     /// </summary>
-    [HttpPost("update")]
+    [HttpPut("{id:guid}")]
     [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> Update([FromForm] UpdateProductCommand cmd, CancellationToken ct)
+    public async Task<IActionResult> Update(Guid id, [FromForm] UpdateProductCommand cmd, CancellationToken ct)
     {
+        if (id != cmd.Id) return Problem("ID mismatch");
+
         var dto = await mediator.Send(cmd, ct);
         return Ok(dto);
     }
+
 
     /// <summary>
     /// Удалить несколько продуктов по их ID

@@ -1,16 +1,15 @@
 ﻿using AmazonKiller.Domain.Entities.Categories;
+using AmazonKiller.Domain.Entities.Common;
+using AmazonKiller.Domain.Entities.Reviews;
 
 namespace AmazonKiller.Domain.Entities.Products;
 
 /// <summary>
 /// Товар, отображаемый в каталоге / карточке продукта.
 /// </summary>
-public class Product
+public class Product : VersionedEntity
 {
     /* ---------- PK & FK ---------- */
-
-    public Guid Id { get; init; }
-
     public Guid CategoryId { get; init; }
     public Category Category { get; init; } = null!;
 
@@ -38,11 +37,9 @@ public class Product
 
     /* ---------- Служебное ---------- */
 
-    public decimal Rating { get; init; } // 0–5, вычисляется из отзывов
-    public int ReviewsCount { get; init; }
+    public decimal AverageRating { get; init; } // 0–5, вычисляется из отзывов
+    public ICollection<Review> Reviews { get; init; } = new List<Review>();
+
     public bool InWishlist { get; init; }
     public bool InCartList { get; init; }
-
-    /// <summary> Для конкуретного обновления (EF Core rowversion). </summary>
-    public byte[] RowVersion { get; init; } = [];
 }

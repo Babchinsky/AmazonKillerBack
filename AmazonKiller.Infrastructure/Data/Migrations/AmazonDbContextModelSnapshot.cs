@@ -49,6 +49,12 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -67,6 +73,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                             ImageUrl = "https://example.com/images/books.jpg",
                             Name = "Books",
                             PropertyKeys = "[]",
+                            RowVersion = new byte[0],
                             Status = 0
                         },
                         new
@@ -77,6 +84,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                             ImageUrl = "https://example.com/images/tech.jpg",
                             Name = "Tech",
                             PropertyKeys = "[]",
+                            RowVersion = new byte[0],
                             Status = 0
                         });
                 });
@@ -86,6 +94,12 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -141,6 +155,10 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<decimal>("AverageRating")
+                        .HasPrecision(3, 2)
+                        .HasColumnType("decimal(3,2)");
+
                     b.Property<Guid>("CategoryId")
                         .HasColumnType("uniqueidentifier");
 
@@ -173,13 +191,6 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("Rating")
-                        .HasPrecision(3, 2)
-                        .HasColumnType("decimal(3,2)");
-
-                    b.Property<int>("ReviewsCount")
-                        .HasColumnType("int");
-
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
                         .IsRequired()
@@ -205,6 +216,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         new
                         {
                             Id = new Guid("55555555-5555-5555-5555-555555555555"),
+                            AverageRating = 5m,
                             CategoryId = new Guid("11111111-1111-1111-1111-111111111111"),
                             Code = "01JS9QNDAYKK2CFRT5AKZF1YAA",
                             ImageUrls = "[]",
@@ -213,8 +225,6 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                             Name = "C# in Depth",
                             Price = 39.99m,
                             Quantity = 10,
-                            Rating = 5m,
-                            ReviewsCount = 1,
                             RowVersion = new byte[0],
                             SoldCount = 0,
                             Status = 0
@@ -222,6 +232,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         new
                         {
                             Id = new Guid("66666666-6666-6666-6666-666666666666"),
+                            AverageRating = 4m,
                             CategoryId = new Guid("22222222-2222-2222-2222-222222222222"),
                             Code = "01JS9QNDAYKK2CFRT5AKZF1YBB",
                             ImageUrls = "[]",
@@ -230,8 +241,6 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                             Name = "Wireless Mouse",
                             Price = 19.99m,
                             Quantity = 50,
-                            Rating = 4m,
-                            ReviewsCount = 0,
                             RowVersion = new byte[0],
                             SoldCount = 0,
                             Status = 0
@@ -296,16 +305,24 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ContentId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Article")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("GETUTCDATE()");
 
-                    b.Property<int>("Likes")
-                        .HasColumnType("int");
+                    b.PrimitiveCollection<string>("FilePaths")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)");
 
                     b.Property<Guid>("ProductId")
                         .HasColumnType("uniqueidentifier");
@@ -320,13 +337,14 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
 
+                    b.PrimitiveCollection<string>("Tags")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ContentId")
-                        .IsUnique();
 
                     b.HasIndex("ProductId");
 
@@ -338,48 +356,34 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         new
                         {
                             Id = new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
-                            ContentId = new Guid("99999999-9999-9999-9999-999999999999"),
+                            Article = "Great book!",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Likes = 3,
+                            FilePaths = "[\"file1.jpg\",\"file2.jpg\"]",
+                            Message = "Very useful for learning advanced C#",
                             ProductId = new Guid("55555555-5555-5555-5555-555555555555"),
                             Rating = 5m,
                             RowVersion = new byte[0],
+                            Tags = "[]",
                             UserId = new Guid("77777777-7777-7777-7777-777777777777")
                         });
                 });
 
-            modelBuilder.Entity("AmazonKiller.Domain.Entities.Reviews.ReviewContent", b =>
+            modelBuilder.Entity("AmazonKiller.Domain.Entities.Reviews.ReviewLike", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Article")
-                        .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
+                    b.Property<Guid>("ReviewId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.PrimitiveCollection<string>("FilePaths")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("LikedAt")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("Message")
-                        .IsRequired()
-                        .HasMaxLength(400)
-                        .HasColumnType("nvarchar(400)");
+                    b.HasKey("UserId", "ReviewId");
 
-                    b.HasKey("Id");
+                    b.HasIndex("ReviewId");
 
-                    b.ToTable("ReviewContents");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("99999999-9999-9999-9999-999999999999"),
-                            Article = "Great book!",
-                            FilePaths = "[\"file1.jpg\",\"file2.jpg\"]",
-                            Message = "Very useful for learning advanced C#"
-                        });
+                    b.ToTable("ReviewLikes");
                 });
 
             modelBuilder.Entity("AmazonKiller.Domain.Entities.Users.CartList", b =>
@@ -521,6 +525,9 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(20)
@@ -530,11 +537,14 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ProfilePicUrl")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("Role")
                         .HasColumnType("int");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -553,6 +563,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                             LastName = "User",
                             PasswordHash = "$2a$11$0123456789ABCDEFFEDCB.S2Yzr2tczlChVlvkY9yqWo1rec6s2eC",
                             Role = 0,
+                            RowVersion = new byte[0],
                             Status = 0
                         },
                         new
@@ -564,6 +575,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                             LastName = "Root",
                             PasswordHash = "$2a$11$0123456789ABCDEFFEDCB.f3zF6Kwis6bGMA186omDrGf1JNLP/eK",
                             Role = 1,
+                            RowVersion = new byte[0],
                             Status = 0
                         });
                 });
@@ -798,27 +810,38 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("AmazonKiller.Domain.Entities.Reviews.Review", b =>
                 {
-                    b.HasOne("AmazonKiller.Domain.Entities.Reviews.ReviewContent", "Content")
-                        .WithOne()
-                        .HasForeignKey("AmazonKiller.Domain.Entities.Reviews.Review", "ContentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("AmazonKiller.Domain.Entities.Products.Product", "Product")
-                        .WithMany()
+                        .WithMany("Reviews")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("AmazonKiller.Domain.Entities.Users.User", "User")
-                        .WithMany()
+                        .WithMany("Reviews")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Content");
-
                     b.Navigation("Product");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("AmazonKiller.Domain.Entities.Reviews.ReviewLike", b =>
+                {
+                    b.HasOne("AmazonKiller.Domain.Entities.Reviews.Review", "Review")
+                        .WithMany("LikesFromUsers")
+                        .HasForeignKey("ReviewId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AmazonKiller.Domain.Entities.Users.User", "User")
+                        .WithMany("LikedReviews")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Review");
 
                     b.Navigation("User");
                 });
@@ -895,15 +918,26 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                     b.Navigation("Attributes");
 
                     b.Navigation("Features");
+
+                    b.Navigation("Reviews");
+                });
+
+            modelBuilder.Entity("AmazonKiller.Domain.Entities.Reviews.Review", b =>
+                {
+                    b.Navigation("LikesFromUsers");
                 });
 
             modelBuilder.Entity("AmazonKiller.Domain.Entities.Users.User", b =>
                 {
                     b.Navigation("Cart");
 
+                    b.Navigation("LikedReviews");
+
                     b.Navigation("Orders");
 
                     b.Navigation("RefreshTokens");
+
+                    b.Navigation("Reviews");
 
                     b.Navigation("Wishlists");
                 });

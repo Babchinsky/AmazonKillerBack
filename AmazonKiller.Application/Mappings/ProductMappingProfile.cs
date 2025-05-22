@@ -1,5 +1,6 @@
 ﻿using AmazonKiller.Application.DTOs.Products;
 using AmazonKiller.Application.Features.Products.Commands.CreateUpdateProduct.CreateProduct;
+using AmazonKiller.Application.Mappings.ImageUrlResolvers;
 using AmazonKiller.Domain.Entities.Products;
 using AutoMapper;
 
@@ -20,7 +21,7 @@ public sealed class ProductMappingProfile : Profile
         /* 2. Домен → DTO -------------------------------------------------- */
         CreateMap<Product, ProductDto>()
             .ForMember(d => d.ImageUrls,
-                o => o.MapFrom<ImageUrlResolver>())
+                o => o.MapFrom<ProductImageUrlResolver>())
             .ForMember(d => d.RowVersion,
                 o => o.MapFrom(s => Convert.ToBase64String(s.RowVersion)))
             .ForMember(d => d.Attributes,

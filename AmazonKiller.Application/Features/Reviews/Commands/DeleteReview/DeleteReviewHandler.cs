@@ -12,13 +12,16 @@ public class DeleteReviewHandler(
 {
     public async Task<bool> Handle(DeleteReviewCommand request, CancellationToken ct)
     {
-        var review = await repo.GetByIdAsync(request.Id);
+        var review = await repo.GetEntityByIdAsync(request.Id, ct);
         if (review is null) return false;
 
-        if (review.UserId != current.UserId)
+        var isOwner = review.UserId == current.UserId;
+        var isAdmin = current.Role == "Admin"; // или Enum, если ты используешь enum
+
+        if (!isOwner && !isAdmin)
             throw new AppException("Forbidden", 403);
 
-        await repo.DeleteAsync(request.Id);
+        await repo.DeleteAsync(review, ct);
         return true;
     }
 }

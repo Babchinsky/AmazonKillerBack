@@ -1,6 +1,7 @@
 ﻿using AmazonKiller.Application.Interfaces.Repositories.Products;
 using AmazonKiller.Domain.Entities.Categories;
 using AmazonKiller.Infrastructure.Data;
+using AmazonKiller.Shared.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
 namespace AmazonKiller.Infrastructure.Repositories.Products;
@@ -39,10 +40,18 @@ public class CategoryRepository(AmazonDbContext db) : ICategoryRepository
         await db.SaveChangesAsync(ct);
     }
 
-    public Task UpdateAsync(Category c, CancellationToken ct)
+    public async Task UpdateAsync(Category c, CancellationToken ct)
     {
-        db.Categories.Update(c);
-        return db.SaveChangesAsync(ct);
+        try
+        {
+            db.Categories.Update(c);
+            await db.SaveChangesAsync(ct);
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            throw new AppException(
+                "The category was modified by another user. Please refresh the page and try again.");
+        }
     }
 
     public async Task DeleteRangeAsync(IEnumerable<Category> categories, CancellationToken ct)

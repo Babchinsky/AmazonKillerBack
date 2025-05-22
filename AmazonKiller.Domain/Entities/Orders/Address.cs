@@ -1,13 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using AmazonKiller.Domain.Entities.Common;
 
 namespace AmazonKiller.Domain.Entities.Orders;
 
 [Table("Addresses")]
-public class Address
+public class Address : BaseEntity
 {
-    public Guid Id { get; init; }
-
     [Required] [StringLength(100)] public string Country { get; init; } = string.Empty;
 
     [Required] [StringLength(100)] public string City { get; init; } = string.Empty;

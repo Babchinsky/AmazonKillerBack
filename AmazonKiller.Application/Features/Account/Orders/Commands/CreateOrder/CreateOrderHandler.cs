@@ -16,7 +16,7 @@ public class CreateOrderHandler(
 {
     public async Task<Guid> Handle(CreateOrderCommand req, CancellationToken ct)
     {
-        var userId = currentUser.UserId ?? throw new UnauthorizedAccessException("User is not authenticated");
+        var userId = currentUser.UserId;
 
         var cartItems = await cartRepo.GetCartItemsWithProductsAsync(userId, ct);
         if (cartItems.Count == 0)

@@ -1,24 +1,23 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using AmazonKiller.Domain.Entities.Common;
 using AmazonKiller.Domain.Entities.Products;
 using AmazonKiller.Domain.Entities.Users;
 
 namespace AmazonKiller.Domain.Entities.Reviews;
 
-public class Review
+public class Review : VersionedEntity
 {
-    public Guid Id { get; init; }
-    public Guid ContentId { get; init; }
-    public ReviewContent Content { get; init; } = null!;
-    public decimal Rating { get; set; }
-
     public Guid ProductId { get; init; }
     public Product Product { get; init; } = null!;
 
     public Guid UserId { get; init; }
     public User User { get; init; } = null!;
 
-    public DateTime CreatedAt { get; init; }
-    public int Likes { get; set; }
+    public string Article { get; set; } = null!;
+    public string Message { get; set; } = null!;
+    public List<string> FilePaths { get; set; } = [];
+    public List<string> Tags { get; set; } = [];
 
-    [Timestamp] public byte[] RowVersion { get; init; } = [];
+    public decimal Rating { get; set; }
+    public DateTime CreatedAt { get; init; }
+    public ICollection<ReviewLike> LikesFromUsers { get; init; } = new List<ReviewLike>();
 }

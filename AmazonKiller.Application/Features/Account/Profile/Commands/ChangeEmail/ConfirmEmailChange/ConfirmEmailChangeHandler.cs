@@ -13,13 +13,11 @@ public class ConfirmEmailChangeHandler(
 {
     public async Task<Unit> Handle(ConfirmEmailChangeCommand cmd, CancellationToken ct)
     {
-        var userId = currentUserService.UserId ?? throw new AppException("Unauthorized", 401);
-
-        var entry = await repo.GetValidEntryByUserIdAsync(userId, cmd.Code, ct);
+        var entry = await repo.GetValidEntryByUserIdAsync(currentUserService.UserId, cmd.Code, ct);
         if (entry is null)
             throw new AppException("Invalid or expired code");
 
-        await userRepo.ChangeEmailAsync(userId, entry.Email, ct);
+        await userRepo.ChangeEmailAsync(currentUserService.UserId, entry.Email, ct);
         await repo.DeleteAsync(entry, ct);
 
         return Unit.Value;

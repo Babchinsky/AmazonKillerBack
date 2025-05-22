@@ -28,7 +28,7 @@ public class AmazonDbContext(DbContextOptions<AmazonDbContext> options) : DbCont
 
 
     public DbSet<Review> Reviews => Set<Review>();
-    public DbSet<ReviewContent> ReviewContents => Set<ReviewContent>();
+    public DbSet<ReviewLike> ReviewLikes => Set<ReviewLike>();
 
 
     public DbSet<Wishlist> WishlistItems => Set<Wishlist>();

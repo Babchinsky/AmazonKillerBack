@@ -11,7 +11,7 @@ public class GetCartHandler(
 {
     public async Task<List<ProductInCartDto>> Handle(GetCartQuery request, CancellationToken ct)
     {
-        var userId = currentUser.UserId!.Value;
+        var userId = currentUser.UserId;
         var cartItems = await cartRepo.GetCartItemsWithProductsAsync(userId, ct);
 
         return cartItems.Select(c =>
