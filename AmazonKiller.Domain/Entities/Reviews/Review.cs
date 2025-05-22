@@ -9,7 +9,7 @@ public class Review
     public Guid Id { get; init; }
     public Guid ContentId { get; init; }
     public ReviewContent Content { get; init; } = null!;
-    public Rating Rating { get; set; }
+    public decimal Rating { get; set; }
 
     public Guid ProductId { get; init; }
     public Product Product { get; init; } = null!;

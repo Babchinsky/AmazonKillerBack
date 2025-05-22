@@ -30,7 +30,7 @@ public class UpdateReviewHandler(
             paths.Add(await files.SaveAsync(s, Path.GetExtension(f.FileName), ct));
         }
 
-        review.Rating = (Rating)r.Rating;
+        review.Rating = r.Rating;
         review.Content.Article = r.Article;
         review.Content.Message = r.Message;
         review.Content.FilePaths = paths;

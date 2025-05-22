@@ -2,9 +2,9 @@
 using AmazonKiller.Application.DTOs.Products;
 using MediatR;
 
-namespace AmazonKiller.Application.Features.Products.Queries.GetAllProducts;
+namespace AmazonKiller.Application.Features.Products.Queries.GetAllProductCards;
 
-public class GetAllProductsQuery : IRequest<List<ProductDto>>
+public class GetAllProductCardsQuery : IRequest<List<ProductCardDto>>
 {
     public string? SearchTerm { get; init; }
     public Guid? CategoryId { get; init; }

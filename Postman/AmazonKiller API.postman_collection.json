@@ -70,37 +70,7 @@
 									]
 								}
 							},
-							"response": [
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "GET",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "Bearer <token>",
-												"description": "Added as a part of security scheme: bearer"
-											}
-										],
-										"url": {
-											"raw": "{{baseUrl}}/api/countries",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"api",
-												"countries"
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "text",
-									"header": [],
-									"cookie": [],
-									"body": ""
-								}
-							]
+							"response": []
 						},
 						{
 							"name": "/api/nova-poshta/regions",
@@ -169,38 +139,7 @@
 									]
 								}
 							},
-							"response": [
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "GET",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "Bearer <token>",
-												"description": "Added as a part of security scheme: bearer"
-											}
-										],
-										"url": {
-											"raw": "{{baseUrl}}/api/nova-poshta/regions",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"api",
-												"nova-poshta",
-												"regions"
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "text",
-									"header": [],
-									"cookie": [],
-									"body": ""
-								}
-							]
+							"response": []
 						},
 						{
 							"name": "/api/nova-poshta/cities",
@@ -268,44 +207,7 @@
 									]
 								}
 							},
-							"response": [
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "GET",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "Bearer <token>",
-												"description": "Added as a part of security scheme: bearer"
-											}
-										],
-										"url": {
-											"raw": "{{baseUrl}}/api/nova-poshta/cities?region=<string>",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"api",
-												"nova-poshta",
-												"cities"
-											],
-											"query": [
-												{
-													"key": "region",
-													"value": "<string>"
-												}
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "text",
-									"header": [],
-									"cookie": [],
-									"body": ""
-								}
-							]
+							"response": []
 						}
 					]
 				},
@@ -407,53 +309,7 @@
 											]
 										}
 									},
-									"response": [
-										{
-											"name": "OK",
-											"originalRequest": {
-												"method": "POST",
-												"header": [
-													{
-														"key": "Content-Type",
-														"value": "application/json"
-													},
-													{
-														"key": "Authorization",
-														"value": "Bearer <token>",
-														"description": "Added as a part of security scheme: bearer"
-													}
-												],
-												"body": {
-													"mode": "raw",
-													"raw": "{\n  \"email\": \"<string>\",\n  \"password\": \"<string>\"\n}",
-													"options": {
-														"raw": {
-															"headerFamily": "json",
-															"language": "json"
-														}
-													}
-												},
-												"url": {
-													"raw": "{{baseUrl}}/api/auth/register/start",
-													"host": [
-														"{{baseUrl}}"
-													],
-													"path": [
-														"api",
-														"auth",
-														"register",
-														"start"
-													]
-												}
-											},
-											"status": "OK",
-											"code": 200,
-											"_postman_previewlanguage": "text",
-											"header": [],
-											"cookie": [],
-											"body": ""
-										}
-									]
+									"response": []
 								},
 								{
 									"name": "/api/auth/register/confirm",
@@ -528,53 +384,7 @@
 											]
 										}
 									},
-									"response": [
-										{
-											"name": "OK",
-											"originalRequest": {
-												"method": "POST",
-												"header": [
-													{
-														"key": "Content-Type",
-														"value": "application/json"
-													},
-													{
-														"key": "Authorization",
-														"value": "Bearer <token>",
-														"description": "Added as a part of security scheme: bearer"
-													}
-												],
-												"body": {
-													"mode": "raw",
-													"raw": "{\n  \"email\": \"<string>\",\n  \"code\": \"<string>\",\n  \"deviceId\": \"<string>\"\n}",
-													"options": {
-														"raw": {
-															"headerFamily": "json",
-															"language": "json"
-														}
-													}
-												},
-												"url": {
-													"raw": "{{baseUrl}}/api/auth/register/confirm",
-													"host": [
-														"{{baseUrl}}"
-													],
-													"path": [
-														"api",
-														"auth",
-														"register",
-														"confirm"
-													]
-												}
-											},
-											"status": "OK",
-											"code": 200,
-											"_postman_previewlanguage": "text",
-											"header": [],
-											"cookie": [],
-											"body": ""
-										}
-									]
+									"response": []
 								},
 								{
 									"name": "/api/auth/register/admin",
@@ -686,53 +496,7 @@
 											]
 										}
 									},
-									"response": [
-										{
-											"name": "OK",
-											"originalRequest": {
-												"method": "POST",
-												"header": [
-													{
-														"key": "Content-Type",
-														"value": "application/json"
-													},
-													{
-														"key": "Authorization",
-														"value": "Bearer <token>",
-														"description": "Added as a part of security scheme: bearer"
-													}
-												],
-												"body": {
-													"mode": "raw",
-													"raw": "{\n  \"email\": \"<string>\",\n  \"password\": \"<string>\",\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"secret\": \"<string>\"\n}",
-													"options": {
-														"raw": {
-															"headerFamily": "json",
-															"language": "json"
-														}
-													}
-												},
-												"url": {
-													"raw": "{{baseUrl}}/api/auth/register/admin",
-													"host": [
-														"{{baseUrl}}"
-													],
-													"path": [
-														"api",
-														"auth",
-														"register",
-														"admin"
-													]
-												}
-											},
-											"status": "OK",
-											"code": 200,
-											"_postman_previewlanguage": "text",
-											"header": [],
-											"cookie": [],
-											"body": ""
-										}
-									]
+									"response": []
 								}
 							]
 						},
@@ -789,52 +553,7 @@
 									]
 								}
 							},
-							"response": [
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "POST",
-										"header": [
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											},
-											{
-												"key": "Authorization",
-												"value": "Bearer <token>",
-												"description": "Added as a part of security scheme: bearer"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n  \"email\": \"<string>\",\n  \"password\": \"<string>\",\n  \"deviceId\": \"<string>\"\n}",
-											"options": {
-												"raw": {
-													"headerFamily": "json",
-													"language": "json"
-												}
-											}
-										},
-										"url": {
-											"raw": "{{baseUrl}}/api/auth/login",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"api",
-												"auth",
-												"login"
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "text",
-									"header": [],
-									"cookie": [],
-									"body": ""
-								}
-							]
+							"response": []
 						},
 						{
 							"name": "/api/auth/refresh-token",
@@ -889,52 +608,7 @@
 									]
 								}
 							},
-							"response": [
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "POST",
-										"header": [
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											},
-											{
-												"key": "Authorization",
-												"value": "Bearer <token>",
-												"description": "Added as a part of security scheme: bearer"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n  \"refreshToken\": \"<string>\",\n  \"deviceId\": \"<string>\"\n}",
-											"options": {
-												"raw": {
-													"headerFamily": "json",
-													"language": "json"
-												}
-											}
-										},
-										"url": {
-											"raw": "{{baseUrl}}/api/auth/refresh-token",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"api",
-												"auth",
-												"refresh-token"
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "text",
-									"header": [],
-									"cookie": [],
-									"body": ""
-								}
-							]
+							"response": []
 						}
 					]
 				},
@@ -1018,53 +692,7 @@
 											]
 										}
 									},
-									"response": [
-										{
-											"name": "OK",
-											"originalRequest": {
-												"method": "POST",
-												"header": [
-													{
-														"key": "Content-Type",
-														"value": "application/json"
-													},
-													{
-														"key": "Authorization",
-														"value": "Bearer <token>",
-														"description": "Added as a part of security scheme: bearer"
-													}
-												],
-												"body": {
-													"mode": "raw",
-													"raw": "{\n  \"newEmail\": \"<string>\"\n}",
-													"options": {
-														"raw": {
-															"headerFamily": "json",
-															"language": "json"
-														}
-													}
-												},
-												"url": {
-													"raw": "{{baseUrl}}/api/profile/email-change/start",
-													"host": [
-														"{{baseUrl}}"
-													],
-													"path": [
-														"api",
-														"profile",
-														"email-change",
-														"start"
-													]
-												}
-											},
-											"status": "OK",
-											"code": 200,
-											"_postman_previewlanguage": "text",
-											"header": [],
-											"cookie": [],
-											"body": ""
-										}
-									]
+									"response": []
 								},
 								{
 									"name": "/api/profile/email-change/confirm",
@@ -1123,53 +751,7 @@
 											]
 										}
 									},
-									"response": [
-										{
-											"name": "OK",
-											"originalRequest": {
-												"method": "POST",
-												"header": [
-													{
-														"key": "Content-Type",
-														"value": "application/json"
-													},
-													{
-														"key": "Authorization",
-														"value": "Bearer <token>",
-														"description": "Added as a part of security scheme: bearer"
-													}
-												],
-												"body": {
-													"mode": "raw",
-													"raw": "{\n  \"code\": \"<string>\"\n}",
-													"options": {
-														"raw": {
-															"headerFamily": "json",
-															"language": "json"
-														}
-													}
-												},
-												"url": {
-													"raw": "{{baseUrl}}/api/profile/email-change/confirm",
-													"host": [
-														"{{baseUrl}}"
-													],
-													"path": [
-														"api",
-														"profile",
-														"email-change",
-														"confirm"
-													]
-												}
-											},
-											"status": "OK",
-											"code": 200,
-											"_postman_previewlanguage": "text",
-											"header": [],
-											"cookie": [],
-											"body": ""
-										}
-									]
+									"response": []
 								}
 							]
 						},
@@ -1252,52 +834,7 @@
 									]
 								}
 							},
-							"response": [
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "PUT",
-										"header": [
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											},
-											{
-												"key": "Authorization",
-												"value": "Bearer <token>",
-												"description": "Added as a part of security scheme: bearer"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\"\n}",
-											"options": {
-												"raw": {
-													"headerFamily": "json",
-													"language": "json"
-												}
-											}
-										},
-										"url": {
-											"raw": "{{baseUrl}}/api/profile/name",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"api",
-												"profile",
-												"name"
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "text",
-									"header": [],
-									"cookie": [],
-									"body": ""
-								}
-							]
+							"response": []
 						},
 						{
 							"name": "/api/profile/password",
@@ -1396,52 +933,7 @@
 									]
 								}
 							},
-							"response": [
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "PUT",
-										"header": [
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											},
-											{
-												"key": "Authorization",
-												"value": "Bearer <token>",
-												"description": "Added as a part of security scheme: bearer"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n  \"currentPassword\": \"<string>\",\n  \"newPassword\": \"<string>\"\n}",
-											"options": {
-												"raw": {
-													"headerFamily": "json",
-													"language": "json"
-												}
-											}
-										},
-										"url": {
-											"raw": "{{baseUrl}}/api/profile/password",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"api",
-												"profile",
-												"password"
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "text",
-									"header": [],
-									"cookie": [],
-									"body": ""
-								}
-							]
+							"response": []
 						},
 						{
 							"name": "/api/profile/logout",
@@ -1495,38 +987,7 @@
 									]
 								}
 							},
-							"response": [
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "POST",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "Bearer <token>",
-												"description": "Added as a part of security scheme: bearer"
-											}
-										],
-										"url": {
-											"raw": "{{baseUrl}}/api/profile/logout",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"api",
-												"profile",
-												"logout"
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "text",
-									"header": [],
-									"cookie": [],
-									"body": ""
-								}
-							]
+							"response": []
 						},
 						{
 							"name": "/api/profile",
@@ -1574,37 +1035,7 @@
 									]
 								}
 							},
-							"response": [
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "DELETE",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "Bearer <token>",
-												"description": "Added as a part of security scheme: bearer"
-											}
-										],
-										"url": {
-											"raw": "{{baseUrl}}/api/profile",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"api",
-												"profile"
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "text",
-									"header": [],
-									"cookie": [],
-									"body": ""
-								}
-							]
+							"response": []
 						}
 					]
 				},
@@ -1714,51 +1145,7 @@
 									]
 								}
 							},
-							"response": [
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "POST",
-										"header": [
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											},
-											{
-												"key": "Authorization",
-												"value": "Bearer <token>",
-												"description": "Added as a part of security scheme: bearer"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n  \"name\": \"<string>\",\n  \"parentId\": \"<uuid>\",\n  \"description\": \"<string>\",\n  \"imageUrl\": \"<string>\",\n  \"iconName\": \"<string>\",\n  \"propertyKeys\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"status\": 1\n}",
-											"options": {
-												"raw": {
-													"headerFamily": "json",
-													"language": "json"
-												}
-											}
-										},
-										"url": {
-											"raw": "{{baseUrl}}/api/categories",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"api",
-												"categories"
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "text",
-									"header": [],
-									"cookie": [],
-									"body": ""
-								}
-							]
+							"response": []
 						},
 						{
 							"name": "/api/categories/:id",
@@ -1828,43 +1215,7 @@
 									]
 								}
 							},
-							"response": [
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "GET",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "Bearer <token>",
-												"description": "Added as a part of security scheme: bearer"
-											}
-										],
-										"url": {
-											"raw": "{{baseUrl}}/api/categories/:id",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"api",
-												"categories",
-												":id"
-											],
-											"variable": [
-												{
-													"key": "id"
-												}
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "text",
-									"header": [],
-									"cookie": [],
-									"body": ""
-								}
-							]
+							"response": []
 						},
 						{
 							"name": "/api/categories/:id/filters",
@@ -1926,44 +1277,7 @@
 									]
 								}
 							},
-							"response": [
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "GET",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "Bearer <token>",
-												"description": "Added as a part of security scheme: bearer"
-											}
-										],
-										"url": {
-											"raw": "{{baseUrl}}/api/categories/:id/filters",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"api",
-												"categories",
-												":id",
-												"filters"
-											],
-											"variable": [
-												{
-													"key": "id"
-												}
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "text",
-									"header": [],
-									"cookie": [],
-									"body": ""
-								}
-							]
+							"response": []
 						},
 						{
 							"name": "/api/categories/:id/exists",
@@ -2020,53 +1334,7 @@
 									]
 								}
 							},
-							"response": [
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "GET",
-										"header": [
-											{
-												"key": "Accept",
-												"value": "text/plain"
-											},
-											{
-												"key": "Authorization",
-												"value": "Bearer <token>",
-												"description": "Added as a part of security scheme: bearer"
-											}
-										],
-										"url": {
-											"raw": "{{baseUrl}}/api/categories/:id/exists",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"api",
-												"categories",
-												":id",
-												"exists"
-											],
-											"variable": [
-												{
-													"key": "id"
-												}
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										}
-									],
-									"cookie": [],
-									"body": "<boolean>"
-								}
-							]
+							"response": []
 						},
 						{
 							"name": "/api/categories/:id",
@@ -2174,57 +1442,7 @@
 									]
 								}
 							},
-							"response": [
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "PUT",
-										"header": [
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											},
-											{
-												"key": "Authorization",
-												"value": "Bearer <token>",
-												"description": "Added as a part of security scheme: bearer"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n  \"id\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"status\": 0,\n  \"parentId\": \"<uuid>\",\n  \"description\": \"<string>\",\n  \"imageUrl\": \"<string>\",\n  \"iconName\": \"<string>\",\n  \"propertyKeys\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
-											"options": {
-												"raw": {
-													"headerFamily": "json",
-													"language": "json"
-												}
-											}
-										},
-										"url": {
-											"raw": "{{baseUrl}}/api/categories/:id",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"api",
-												"categories",
-												":id"
-											],
-											"variable": [
-												{
-													"key": "id"
-												}
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "text",
-									"header": [],
-									"cookie": [],
-									"body": ""
-								}
-							]
+							"response": []
 						},
 						{
 							"name": "/api/categories",
@@ -2296,46 +1514,7 @@
 									]
 								}
 							},
-							"response": [
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "GET",
-										"header": [
-											{
-												"key": "Accept",
-												"value": "text/plain"
-											},
-											{
-												"key": "Authorization",
-												"value": "Bearer <token>",
-												"description": "Added as a part of security scheme: bearer"
-											}
-										],
-										"url": {
-											"raw": "{{baseUrl}}/api/categories",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"api",
-												"categories"
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										}
-									],
-									"cookie": [],
-									"body": "[\n  {\n    \"id\": \"<uuid>\",\n    \"name\": \"<string>\",\n    \"parentId\": \"<uuid>\",\n    \"description\": \"<string>\",\n    \"imageUrl\": \"<string>\",\n    \"iconName\": \"<string>\",\n    \"propertyKeys\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"status\": 0\n  },\n  {\n    \"id\": \"<uuid>\",\n    \"name\": \"<string>\",\n    \"parentId\": \"<uuid>\",\n    \"description\": \"<string>\",\n    \"imageUrl\": \"<string>\",\n    \"iconName\": \"<string>\",\n    \"propertyKeys\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"status\": 1\n  }\n]"
-								}
-							]
+							"response": []
 						},
 						{
 							"name": "/api/categories/tree",
@@ -2416,47 +1595,7 @@
 									]
 								}
 							},
-							"response": [
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "GET",
-										"header": [
-											{
-												"key": "Accept",
-												"value": "text/plain"
-											},
-											{
-												"key": "Authorization",
-												"value": "Bearer <token>",
-												"description": "Added as a part of security scheme: bearer"
-											}
-										],
-										"url": {
-											"raw": "{{baseUrl}}/api/categories/tree",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"api",
-												"categories",
-												"tree"
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										}
-									],
-									"cookie": [],
-									"body": "[\n  {\n    \"id\": \"<uuid>\",\n    \"name\": \"<string>\",\n    \"status\": \"<string>\",\n    \"children\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/CategoryTreeDto detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/CategoryTreeDto detected>\"\n      }\n    ]\n  },\n  {\n    \"id\": \"<uuid>\",\n    \"name\": \"<string>\",\n    \"status\": \"<string>\",\n    \"children\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/CategoryTreeDto detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/CategoryTreeDto detected>\"\n      }\n    ]\n  }\n]"
-								}
-							]
+							"response": []
 						},
 						{
 							"name": "/api/categories/delete-many",
@@ -2537,52 +1676,7 @@
 									]
 								}
 							},
-							"response": [
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "POST",
-										"header": [
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											},
-											{
-												"key": "Authorization",
-												"value": "Bearer <token>",
-												"description": "Added as a part of security scheme: bearer"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n  \"ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ]\n}",
-											"options": {
-												"raw": {
-													"headerFamily": "json",
-													"language": "json"
-												}
-											}
-										},
-										"url": {
-											"raw": "{{baseUrl}}/api/categories/delete-many",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"api",
-												"categories",
-												"delete-many"
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "text",
-									"header": [],
-									"cookie": [],
-									"body": ""
-								}
-							]
+							"response": []
 						}
 					]
 				},
@@ -2618,7 +1712,7 @@
 											"pm.environment.set(\"productPrice\", price);\r",
 											"\r",
 											"const discount = Math.random() < 0.5 ? getRandomInt(5, 25).toFixed(2) : \"\";\r",
-											"pm.environment.set(\"productDiscountPct\", discount);\r",
+											"pm.environment.set(\"productDiscountPercent\", discount);\r",
 											"\r",
 											"pm.environment.set(\"productQuantity\", getRandomInt(1, 100));\r",
 											"\r",
@@ -2727,8 +1821,8 @@
 											"type": "text"
 										},
 										{
-											"key": "DiscountPct",
-											"value": "{{productDiscountPct}}",
+											"key": "DiscountPercent",
+											"value": "{{productDiscountPercent}}",
 											"type": "text"
 										},
 										{
@@ -2764,91 +1858,7 @@
 									]
 								}
 							},
-							"response": [
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "POST",
-										"header": [
-											{
-												"key": "Content-Type",
-												"value": "multipart/form-data"
-											},
-											{
-												"key": "Authorization",
-												"value": "Bearer <token>",
-												"description": "Added as a part of security scheme: bearer"
-											}
-										],
-										"body": {
-											"mode": "formdata",
-											"formdata": [
-												{
-													"key": "Code",
-													"value": "aliqua enim deserunt",
-													"type": "text"
-												},
-												{
-													"key": "Name",
-													"value": "voluptate labore anim velit Ut",
-													"type": "text"
-												},
-												{
-													"key": "CategoryId",
-													"value": "3e9eeb71-a996-ee8a-71f0-dc177a77e770",
-													"type": "text"
-												},
-												{
-													"key": "Price",
-													"value": "79754064.84870201",
-													"type": "text"
-												},
-												{
-													"key": "DiscountPct",
-													"value": "88910670.15605548",
-													"type": "text"
-												},
-												{
-													"key": "Quantity",
-													"value": "-56220770",
-													"type": "text"
-												},
-												{
-													"key": "Images",
-													"value": "sit aliquip,dolore Lorem",
-													"type": "text"
-												},
-												{
-													"key": "Attributes",
-													"value": "[object Object],[object Object]",
-													"type": "text"
-												},
-												{
-													"key": "Features",
-													"value": "[object Object],[object Object]",
-													"type": "text"
-												}
-											]
-										},
-										"url": {
-											"raw": "{{baseUrl}}/api/Product",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"api",
-												"Product"
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "text",
-									"header": [],
-									"cookie": [],
-									"body": ""
-								}
-							]
+							"response": []
 						},
 						{
 							"name": "/api/products/:id",
@@ -2900,43 +1910,7 @@
 									]
 								}
 							},
-							"response": [
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "GET",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "Bearer <token>",
-												"description": "Added as a part of security scheme: bearer"
-											}
-										],
-										"url": {
-											"raw": "{{baseUrl}}/api/Product/:id",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"api",
-												"Product",
-												":id"
-											],
-											"variable": [
-												{
-													"key": "id"
-												}
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "text",
-									"header": [],
-									"cookie": [],
-									"body": ""
-								}
-							]
+							"response": []
 						},
 						{
 							"name": "/api/products/update",
@@ -2966,7 +1940,7 @@
 											"pm.environment.set(\"productChangePrice\", getRandomInt(100, 999).toFixed(2));\r",
 											"\r",
 											"const discount = Math.random() < 0.5 ? getRandomInt(5, 30).toFixed(2) : \"\";\r",
-											"pm.environment.set(\"productChangeDiscountPct\", discount);\r",
+											"pm.environment.set(\"productChangeDiscountPercent\", discount);\r",
 											"\r",
 											"pm.environment.set(\"productChangeQuantity\", getRandomInt(5, 50));\r",
 											"\r",
@@ -3020,7 +1994,7 @@
 											"    pm.environment.set(\"productName\", pm.environment.get(\"productChangeName\"));\r",
 											"    pm.environment.set(\"productCode\", pm.environment.get(\"productChangeCode\"));\r",
 											"    pm.environment.set(\"productPrice\", pm.environment.get(\"productChangePrice\"));\r",
-											"    pm.environment.set(\"productDiscountPct\", pm.environment.get(\"productChangeDiscountPct\"));\r",
+											"    pm.environment.set(\"productDiscountPercent\", pm.environment.get(\"productChangeDiscountPercent\"));\r",
 											"    pm.environment.set(\"productQuantity\", pm.environment.get(\"productChangeQuantity\"));\r",
 											"    pm.environment.set(\"productAttributes\", pm.environment.get(\"productChangeAttributes\"));\r",
 											"    pm.environment.set(\"productFeatures\", pm.environment.get(\"productChangeFeatures\"));\r",
@@ -3088,8 +2062,8 @@
 											"type": "text"
 										},
 										{
-											"key": "DiscountPct",
-											"value": "{{productChangeDiscountPct}}",
+											"key": "DiscountPercent",
+											"value": "{{productChangeDiscountPercent}}",
 											"type": "text"
 										},
 										{
@@ -3126,102 +2100,7 @@
 									]
 								}
 							},
-							"response": [
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "POST",
-										"header": [
-											{
-												"key": "Content-Type",
-												"value": "multipart/form-data"
-											},
-											{
-												"key": "Authorization",
-												"value": "Bearer <token>",
-												"description": "Added as a part of security scheme: bearer"
-											}
-										],
-										"body": {
-											"mode": "formdata",
-											"formdata": [
-												{
-													"key": "Id",
-													"value": "urn:uuid:fe8b3a7e-0ee1-e254-2639-a4a93ac17f14",
-													"type": "text"
-												},
-												{
-													"key": "RowVersion",
-													"value": "reprehenderit commodo voluptate est aute",
-													"type": "text"
-												},
-												{
-													"key": "Code",
-													"value": "ipsum ut",
-													"type": "text"
-												},
-												{
-													"key": "Name",
-													"value": "reprehenderit dolor magna proident",
-													"type": "text"
-												},
-												{
-													"key": "CategoryId",
-													"value": "urn:uuid:afe15903-f74c-336a-5553-261182e55786",
-													"type": "text"
-												},
-												{
-													"key": "Price",
-													"value": "-91890135.75512317",
-													"type": "text"
-												},
-												{
-													"key": "DiscountPct",
-													"value": "-87351024.34196156",
-													"type": "text"
-												},
-												{
-													"key": "Quantity",
-													"value": "-25770186",
-													"type": "text"
-												},
-												{
-													"key": "Images",
-													"value": "sint minim amet,qui Duis amet nostrud",
-													"type": "text"
-												},
-												{
-													"key": "Attributes",
-													"value": "ut officia eiusmod",
-													"type": "text"
-												},
-												{
-													"key": "Features",
-													"value": "ut adipisicing laborum",
-													"type": "text"
-												}
-											]
-										},
-										"url": {
-											"raw": "{{baseUrl}}/api/products/update",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"api",
-												"products",
-												"update"
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "text",
-									"header": [],
-									"cookie": [],
-									"body": ""
-								}
-							]
+							"response": []
 						},
 						{
 							"name": "/api/products/:id/exists",
@@ -3273,44 +2152,7 @@
 									]
 								}
 							},
-							"response": [
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "GET",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "Bearer <token>",
-												"description": "Added as a part of security scheme: bearer"
-											}
-										],
-										"url": {
-											"raw": "{{baseUrl}}/api/Product/:id/exists",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"api",
-												"Product",
-												":id",
-												"exists"
-											],
-											"variable": [
-												{
-													"key": "id"
-												}
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "text",
-									"header": [],
-									"cookie": [],
-									"body": ""
-								}
-							]
+							"response": []
 						},
 						{
 							"name": "/api/products",
@@ -3374,7 +2216,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/api/products?CategoryId={{categoryId}}",
+									"raw": "{{baseUrl}}/api/products",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -3390,7 +2232,8 @@
 										},
 										{
 											"key": "CategoryId",
-											"value": "{{categoryId}}"
+											"value": "{{categoryId}}",
+											"disabled": true
 										},
 										{
 											"key": "Filters[{{productFilterSizeKey}}]",
@@ -3450,91 +2293,7 @@
 									]
 								}
 							},
-							"response": [
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "GET",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "Bearer <token>",
-												"description": "Added as a part of security scheme: bearer"
-											}
-										],
-										"url": {
-											"raw": "{{baseUrl}}/api/products?SearchTerm=qui anim officia&CategoryId=b9e4960a-4416-96e9-ddcc-45215806d7bd&Filters[essedc]=incididunt culpa aute eiusmod&Filters[sit_95]=deserunt incididunt in&Filters[commodo__d1]=proident officia sunt&Filters[est3b0]=voluptate elit&Filters[in5]=adipisicing amet consequat laborum labo&MinPrice=-56941408.11765398&MaxPrice=-56941408.11765398&Parameters.Page=-22381522&Parameters.PageSize=-22381522&Parameters.SortBy=qui anim officia&Parameters.SortDesc=true",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"api",
-												"products"
-											],
-											"query": [
-												{
-													"key": "SearchTerm",
-													"value": "qui anim officia"
-												},
-												{
-													"key": "CategoryId",
-													"value": "b9e4960a-4416-96e9-ddcc-45215806d7bd"
-												},
-												{
-													"key": "Filters[essedc]",
-													"value": "incididunt culpa aute eiusmod"
-												},
-												{
-													"key": "Filters[sit_95]",
-													"value": "deserunt incididunt in"
-												},
-												{
-													"key": "Filters[commodo__d1]",
-													"value": "proident officia sunt"
-												},
-												{
-													"key": "Filters[est3b0]",
-													"value": "voluptate elit"
-												},
-												{
-													"key": "Filters[in5]",
-													"value": "adipisicing amet consequat laborum labo"
-												},
-												{
-													"key": "MinPrice",
-													"value": "-56941408.11765398"
-												},
-												{
-													"key": "MaxPrice",
-													"value": "-56941408.11765398"
-												},
-												{
-													"key": "Parameters.Page",
-													"value": "-22381522"
-												},
-												{
-													"key": "Parameters.PageSize",
-													"value": "-22381522"
-												},
-												{
-													"key": "Parameters.SortBy",
-													"value": "qui anim officia"
-												},
-												{
-													"key": "Parameters.SortDesc",
-													"value": "true"
-												}
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "text",
-									"header": [],
-									"cookie": [],
-									"body": ""
-								}
-							]
+							"response": []
 						},
 						{
 							"name": "/api/products/delete-many",
@@ -3592,52 +2351,7 @@
 									]
 								}
 							},
-							"response": [
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "POST",
-										"header": [
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											},
-											{
-												"key": "Authorization",
-												"value": "Bearer <token>",
-												"description": "Added as a part of security scheme: bearer"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n  \"ids\": [\n    \"urn:uuid:9a27eab7-40aa-3bcc-8c5c-ef779c042905\",\n    \"5f325c87-d962-174e-a75d-f492c8f1c970\"\n  ]\n}",
-											"options": {
-												"raw": {
-													"headerFamily": "json",
-													"language": "json"
-												}
-											}
-										},
-										"url": {
-											"raw": "{{baseUrl}}/api/products/delete-many",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"api",
-												"products",
-												"delete-many"
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "text",
-									"header": [],
-									"cookie": [],
-									"body": ""
-								}
-							]
+							"response": []
 						}
 					]
 				},
@@ -3700,76 +2414,7 @@
 									]
 								}
 							},
-							"response": [
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "POST",
-										"header": [
-											{
-												"key": "Content-Type",
-												"value": "multipart/form-data"
-											},
-											{
-												"key": "Authorization",
-												"value": "Bearer <token>",
-												"description": "Added as a part of security scheme: bearer"
-											}
-										],
-										"body": {
-											"mode": "formdata",
-											"formdata": [
-												{
-													"key": "Article",
-													"value": "eiusmod incididunt eu commodo",
-													"type": "text"
-												},
-												{
-													"key": "Message",
-													"value": "Lorem dolore veniam",
-													"type": "text"
-												},
-												{
-													"key": "UploadedFiles",
-													"value": "nostrud,adipisicing Ut reprehenderit ipsum officia",
-													"type": "text"
-												},
-												{
-													"key": "Rating",
-													"value": "-70846263",
-													"type": "text"
-												},
-												{
-													"key": "ProductId",
-													"value": "df12ec61-3b14-97b4-6877-603696fc9bed",
-													"type": "text"
-												},
-												{
-													"key": "UserId",
-													"value": "1eb4de9a-3fa9-a4ff-fc95-cd04bf0d0806",
-													"type": "text"
-												}
-											]
-										},
-										"url": {
-											"raw": "{{baseUrl}}/api/reviews",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"api",
-												"reviews"
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "text",
-									"header": [],
-									"cookie": [],
-									"body": ""
-								}
-							]
+							"response": []
 						},
 						{
 							"name": "/api/reviews/:id/exists",
@@ -3796,44 +2441,7 @@
 									]
 								}
 							},
-							"response": [
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "GET",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "Bearer <token>",
-												"description": "Added as a part of security scheme: bearer"
-											}
-										],
-										"url": {
-											"raw": "{{baseUrl}}/api/reviews/:id/exists",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"api",
-												"reviews",
-												":id",
-												"exists"
-											],
-											"variable": [
-												{
-													"key": "id"
-												}
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "text",
-									"header": [],
-									"cookie": [],
-									"body": ""
-								}
-							]
+							"response": []
 						},
 						{
 							"name": "/api/reviews/:id",
@@ -3874,57 +2482,7 @@
 									]
 								}
 							},
-							"response": [
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "PUT",
-										"header": [
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											},
-											{
-												"key": "Authorization",
-												"value": "Bearer <token>",
-												"description": "Added as a part of security scheme: bearer"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n  \"id\": \"ec808de5-1fa2-496b-9247-9d0a8aa20069\",\n  \"article\": \"ullamco in deserunt\",\n  \"message\": \"pariatur consectetur\",\n  \"uploadedFiles\": [\n    \"consectetur nisi mollit anim magna\",\n    \"ut Lorem sed\"\n  ],\n  \"rating\": -54044723\n}",
-											"options": {
-												"raw": {
-													"headerFamily": "json",
-													"language": "json"
-												}
-											}
-										},
-										"url": {
-											"raw": "{{baseUrl}}/api/reviews/:id",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"api",
-												"reviews",
-												":id"
-											],
-											"variable": [
-												{
-													"key": "id"
-												}
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "text",
-									"header": [],
-									"cookie": [],
-									"body": ""
-								}
-							]
+							"response": []
 						},
 						{
 							"name": "/api/reviews/:id/like",
@@ -3951,44 +2509,7 @@
 									]
 								}
 							},
-							"response": [
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "POST",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "Bearer <token>",
-												"description": "Added as a part of security scheme: bearer"
-											}
-										],
-										"url": {
-											"raw": "{{baseUrl}}/api/reviews/:id/like",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"api",
-												"reviews",
-												":id",
-												"like"
-											],
-											"variable": [
-												{
-													"key": "id"
-												}
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "text",
-									"header": [],
-									"cookie": [],
-									"body": ""
-								}
-							]
+							"response": []
 						},
 						{
 							"name": "/api/reviews/:id",
@@ -4014,43 +2535,7 @@
 									]
 								}
 							},
-							"response": [
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "GET",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "Bearer <token>",
-												"description": "Added as a part of security scheme: bearer"
-											}
-										],
-										"url": {
-											"raw": "{{baseUrl}}/api/reviews/:id",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"api",
-												"reviews",
-												":id"
-											],
-											"variable": [
-												{
-													"key": "id"
-												}
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "text",
-									"header": [],
-									"cookie": [],
-									"body": ""
-								}
-							]
+							"response": []
 						},
 						{
 							"name": "/api/reviews",
@@ -4098,67 +2583,7 @@
 									]
 								}
 							},
-							"response": [
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "GET",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "Bearer <token>",
-												"description": "Added as a part of security scheme: bearer"
-											}
-										],
-										"url": {
-											"raw": "{{baseUrl}}/api/reviews?ProductId=df158756-5bfa-966d-037d-d30cf8bda11f&MinRating=-24164913&MaxRating=-24164913&Parameters.Page=-24164913&Parameters.PageSize=-24164913&Parameters.SortBy=labore reprehenderit cillum&Parameters.SortDesc=true",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"api",
-												"reviews"
-											],
-											"query": [
-												{
-													"key": "ProductId",
-													"value": "df158756-5bfa-966d-037d-d30cf8bda11f"
-												},
-												{
-													"key": "MinRating",
-													"value": "-24164913"
-												},
-												{
-													"key": "MaxRating",
-													"value": "-24164913"
-												},
-												{
-													"key": "Parameters.Page",
-													"value": "-24164913"
-												},
-												{
-													"key": "Parameters.PageSize",
-													"value": "-24164913"
-												},
-												{
-													"key": "Parameters.SortBy",
-													"value": "labore reprehenderit cillum"
-												},
-												{
-													"key": "Parameters.SortDesc",
-													"value": "true"
-												}
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "text",
-									"header": [],
-									"cookie": [],
-									"body": ""
-								}
-							]
+							"response": []
 						},
 						{
 							"name": "/api/reviews/product/:productId/list",
@@ -4196,55 +2621,7 @@
 									]
 								}
 							},
-							"response": [
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "GET",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "Bearer <token>",
-												"description": "Added as a part of security scheme: bearer"
-											}
-										],
-										"url": {
-											"raw": "{{baseUrl}}/api/reviews/product/:productId/list?page=1&pageSize=20",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"api",
-												"reviews",
-												"product",
-												":productId",
-												"list"
-											],
-											"query": [
-												{
-													"key": "page",
-													"value": "1"
-												},
-												{
-													"key": "pageSize",
-													"value": "20"
-												}
-											],
-											"variable": [
-												{
-													"key": "productId"
-												}
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "text",
-									"header": [],
-									"cookie": [],
-									"body": ""
-								}
-							]
+							"response": []
 						},
 						{
 							"name": "/api/reviews/product/:productId/rating",
@@ -4272,45 +2649,7 @@
 									]
 								}
 							},
-							"response": [
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "GET",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "Bearer <token>",
-												"description": "Added as a part of security scheme: bearer"
-											}
-										],
-										"url": {
-											"raw": "{{baseUrl}}/api/reviews/product/:productId/rating",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"api",
-												"reviews",
-												"product",
-												":productId",
-												"rating"
-											],
-											"variable": [
-												{
-													"key": "productId"
-												}
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "text",
-									"header": [],
-									"cookie": [],
-									"body": ""
-								}
-							]
+							"response": []
 						},
 						{
 							"name": "/api/reviews/product/:productId/count",
@@ -4338,45 +2677,7 @@
 									]
 								}
 							},
-							"response": [
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "GET",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "Bearer <token>",
-												"description": "Added as a part of security scheme: bearer"
-											}
-										],
-										"url": {
-											"raw": "{{baseUrl}}/api/reviews/product/:productId/count",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"api",
-												"reviews",
-												"product",
-												":productId",
-												"count"
-											],
-											"variable": [
-												{
-													"key": "productId"
-												}
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "text",
-									"header": [],
-									"cookie": [],
-									"body": ""
-								}
-							]
+							"response": []
 						},
 						{
 							"name": "/api/reviews/:id",
@@ -4402,43 +2703,7 @@
 									]
 								}
 							},
-							"response": [
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "DELETE",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "Bearer <token>",
-												"description": "Added as a part of security scheme: bearer"
-											}
-										],
-										"url": {
-											"raw": "{{baseUrl}}/api/reviews/:id",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"api",
-												"reviews",
-												":id"
-											],
-											"variable": [
-												{
-													"key": "id"
-												}
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "text",
-									"header": [],
-									"cookie": [],
-									"body": ""
-								}
-							]
+							"response": []
 						}
 					]
 				},
@@ -4476,51 +2741,7 @@
 									]
 								}
 							},
-							"response": [
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "POST",
-										"header": [
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											},
-											{
-												"key": "Authorization",
-												"value": "Bearer <token>",
-												"description": "Added as a part of security scheme: bearer"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n  \"productId\": \"urn:uuid:9d1b6f2c-a747-f770-af2b-d3504b23ce94\",\n  \"quantity\": -44671743\n}",
-											"options": {
-												"raw": {
-													"headerFamily": "json",
-													"language": "json"
-												}
-											}
-										},
-										"url": {
-											"raw": "{{baseUrl}}/api/cart",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"api",
-												"cart"
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "text",
-									"header": [],
-									"cookie": [],
-									"body": ""
-								}
-							]
+							"response": []
 						},
 						{
 							"name": "/api/cart",
@@ -4553,51 +2774,7 @@
 									]
 								}
 							},
-							"response": [
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "PUT",
-										"header": [
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											},
-											{
-												"key": "Authorization",
-												"value": "Bearer <token>",
-												"description": "Added as a part of security scheme: bearer"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n  \"productId\": \"urn:uuid:9d1b6f2c-a747-f770-af2b-d3504b23ce94\",\n  \"quantity\": -44671743\n}",
-											"options": {
-												"raw": {
-													"headerFamily": "json",
-													"language": "json"
-												}
-											}
-										},
-										"url": {
-											"raw": "{{baseUrl}}/api/cart",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"api",
-												"cart"
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "text",
-									"header": [],
-									"cookie": [],
-									"body": ""
-								}
-							]
+							"response": []
 						},
 						{
 							"name": "/api/cart",
@@ -4615,37 +2792,7 @@
 									]
 								}
 							},
-							"response": [
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "GET",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "Bearer <token>",
-												"description": "Added as a part of security scheme: bearer"
-											}
-										],
-										"url": {
-											"raw": "{{baseUrl}}/api/cart",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"api",
-												"cart"
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "text",
-									"header": [],
-									"cookie": [],
-									"body": ""
-								}
-							]
+							"response": []
 						},
 						{
 							"name": "/api/cart/:productId",
@@ -4671,43 +2818,7 @@
 									]
 								}
 							},
-							"response": [
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "DELETE",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "Bearer <token>",
-												"description": "Added as a part of security scheme: bearer"
-											}
-										],
-										"url": {
-											"raw": "{{baseUrl}}/api/cart/:productId",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"api",
-												"cart",
-												":productId"
-											],
-											"variable": [
-												{
-													"key": "productId"
-												}
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "text",
-									"header": [],
-									"cookie": [],
-									"body": ""
-								}
-							]
+							"response": []
 						}
 					]
 				},
@@ -4745,51 +2856,7 @@
 									]
 								}
 							},
-							"response": [
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "POST",
-										"header": [
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											},
-											{
-												"key": "Authorization",
-												"value": "Bearer <token>",
-												"description": "Added as a part of security scheme: bearer"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n  \"productId\": \"urn:uuid:046cdea7-8465-2187-4251-f9aa4f34a08e\"\n}",
-											"options": {
-												"raw": {
-													"headerFamily": "json",
-													"language": "json"
-												}
-											}
-										},
-										"url": {
-											"raw": "{{baseUrl}}/api/wishlist",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"api",
-												"wishlist"
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "text",
-									"header": [],
-									"cookie": [],
-									"body": ""
-								}
-							]
+							"response": []
 						},
 						{
 							"name": "/api/wishlist/toggle",
@@ -4823,52 +2890,7 @@
 									]
 								}
 							},
-							"response": [
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "POST",
-										"header": [
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											},
-											{
-												"key": "Authorization",
-												"value": "Bearer <token>",
-												"description": "Added as a part of security scheme: bearer"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n  \"productId\": \"urn:uuid:046cdea7-8465-2187-4251-f9aa4f34a08e\"\n}",
-											"options": {
-												"raw": {
-													"headerFamily": "json",
-													"language": "json"
-												}
-											}
-										},
-										"url": {
-											"raw": "{{baseUrl}}/api/wishlist/toggle",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"api",
-												"wishlist",
-												"toggle"
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "text",
-									"header": [],
-									"cookie": [],
-									"body": ""
-								}
-							]
+							"response": []
 						},
 						{
 							"name": "/api/wishlist",
@@ -4886,37 +2908,7 @@
 									]
 								}
 							},
-							"response": [
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "GET",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "Bearer <token>",
-												"description": "Added as a part of security scheme: bearer"
-											}
-										],
-										"url": {
-											"raw": "{{baseUrl}}/api/wishlist",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"api",
-												"wishlist"
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "text",
-									"header": [],
-									"cookie": [],
-									"body": ""
-								}
-							]
+							"response": []
 						},
 						{
 							"name": "/api/wishlist/:productId",
@@ -4942,43 +2934,7 @@
 									]
 								}
 							},
-							"response": [
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "DELETE",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "Bearer <token>",
-												"description": "Added as a part of security scheme: bearer"
-											}
-										],
-										"url": {
-											"raw": "{{baseUrl}}/api/wishlist/:productId",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"api",
-												"wishlist",
-												":productId"
-											],
-											"variable": [
-												{
-													"key": "productId"
-												}
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "text",
-									"header": [],
-									"cookie": [],
-									"body": ""
-								}
-							]
+							"response": []
 						}
 					]
 				},
@@ -5016,51 +2972,7 @@
 									]
 								}
 							},
-							"response": [
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "POST",
-										"header": [
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											},
-											{
-												"key": "Authorization",
-												"value": "Bearer <token>",
-												"description": "Added as a part of security scheme: bearer"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n  \"firstName\": \"labore dolor\",\n  \"lastName\": \"consequat reprehenderit mollit fugiat\",\n  \"email\": \"aliqua officia pro\",\n  \"country\": \"nulla quis dolore anim aliquip\",\n  \"state\": \"eiusmod\",\n  \"city\": \"aliquip elit\",\n  \"street\": \"minim velit\",\n  \"houseNumber\": \"ut\",\n  \"apartmentNumber\": \"reprehenderit deserunt ullamco tempor officia\",\n  \"postCode\": \"reprehenderit sit tempor Duis\",\n  \"paymentType\": 1,\n  \"cardNumber\": \"proident minim\",\n  \"expirationDate\": \"ea enim aliqua consequat\",\n  \"cvv\": \"anim in nisi ex\"\n}",
-											"options": {
-												"raw": {
-													"headerFamily": "json",
-													"language": "json"
-												}
-											}
-										},
-										"url": {
-											"raw": "{{baseUrl}}/api/orders",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"api",
-												"orders"
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "text",
-									"header": [],
-									"cookie": [],
-									"body": ""
-								}
-							]
+							"response": []
 						},
 						{
 							"name": "/api/orders/products",
@@ -5094,52 +3006,7 @@
 									]
 								}
 							},
-							"response": [
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "POST",
-										"header": [
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											},
-											{
-												"key": "Authorization",
-												"value": "Bearer <token>",
-												"description": "Added as a part of security scheme: bearer"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n  \"orderId\": \"c79089b3-533f-9165-6781-140fbc2b7a28\",\n  \"productId\": \"urn:uuid:576a43df-f36b-1aca-71c4-aa39cfa55e5c\",\n  \"quantity\": 38317619\n}",
-											"options": {
-												"raw": {
-													"headerFamily": "json",
-													"language": "json"
-												}
-											}
-										},
-										"url": {
-											"raw": "{{baseUrl}}/api/orders/products",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"api",
-												"orders",
-												"products"
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "text",
-									"header": [],
-									"cookie": [],
-									"body": ""
-								}
-							]
+							"response": []
 						},
 						{
 							"name": "/api/orders/:id",
@@ -5165,43 +3032,7 @@
 									]
 								}
 							},
-							"response": [
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "GET",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "Bearer <token>",
-												"description": "Added as a part of security scheme: bearer"
-											}
-										],
-										"url": {
-											"raw": "{{baseUrl}}/api/orders/:id",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"api",
-												"orders",
-												":id"
-											],
-											"variable": [
-												{
-													"key": "id"
-												}
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "text",
-									"header": [],
-									"cookie": [],
-									"body": ""
-								}
-							]
+							"response": []
 						},
 						{
 							"name": "/api/orders/:orderId/products/:productId",
@@ -5234,48 +3065,7 @@
 									]
 								}
 							},
-							"response": [
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "DELETE",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "Bearer <token>",
-												"description": "Added as a part of security scheme: bearer"
-											}
-										],
-										"url": {
-											"raw": "{{baseUrl}}/api/orders/:orderId/products/:productId",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"api",
-												"orders",
-												":orderId",
-												"products",
-												":productId"
-											],
-											"variable": [
-												{
-													"key": "orderId"
-												},
-												{
-													"key": "productId"
-												}
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "text",
-									"header": [],
-									"cookie": [],
-									"body": ""
-								}
-							]
+							"response": []
 						},
 						{
 							"name": "/api/orders",
@@ -5293,37 +3083,7 @@
 									]
 								}
 							},
-							"response": [
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "GET",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "Bearer <token>",
-												"description": "Added as a part of security scheme: bearer"
-											}
-										],
-										"url": {
-											"raw": "{{baseUrl}}/api/orders",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"api",
-												"orders"
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "text",
-									"header": [],
-									"cookie": [],
-									"body": ""
-								}
-							]
+							"response": []
 						}
 					]
 				},
@@ -5380,68 +3140,7 @@
 											]
 										}
 									},
-									"response": [
-										{
-											"name": "OK",
-											"originalRequest": {
-												"method": "GET",
-												"header": [
-													{
-														"key": "Authorization",
-														"value": "Bearer <token>",
-														"description": "Added as a part of security scheme: bearer"
-													}
-												],
-												"url": {
-													"raw": "{{baseUrl}}/api/admin/users?Search=labore reprehenderit cillum&Role=labore reprehenderit cillum&Status=labore reprehenderit cillum&Parameters.Page=-24164913&Parameters.PageSize=-24164913&Parameters.SortBy=labore reprehenderit cillum&Parameters.SortDesc=false",
-													"host": [
-														"{{baseUrl}}"
-													],
-													"path": [
-														"api",
-														"admin",
-														"users"
-													],
-													"query": [
-														{
-															"key": "Search",
-															"value": "labore reprehenderit cillum"
-														},
-														{
-															"key": "Role",
-															"value": "labore reprehenderit cillum"
-														},
-														{
-															"key": "Status",
-															"value": "labore reprehenderit cillum"
-														},
-														{
-															"key": "Parameters.Page",
-															"value": "-24164913"
-														},
-														{
-															"key": "Parameters.PageSize",
-															"value": "-24164913"
-														},
-														{
-															"key": "Parameters.SortBy",
-															"value": "labore reprehenderit cillum"
-														},
-														{
-															"key": "Parameters.SortDesc",
-															"value": "false"
-														}
-													]
-												}
-											},
-											"status": "OK",
-											"code": 200,
-											"_postman_previewlanguage": "text",
-											"header": [],
-											"cookie": [],
-											"body": ""
-										}
-									]
+									"response": []
 								},
 								{
 									"name": "/api/admin/users/:userId/role/promote",
@@ -5470,46 +3169,7 @@
 											]
 										}
 									},
-									"response": [
-										{
-											"name": "OK",
-											"originalRequest": {
-												"method": "PUT",
-												"header": [
-													{
-														"key": "Authorization",
-														"value": "Bearer <token>",
-														"description": "Added as a part of security scheme: bearer"
-													}
-												],
-												"url": {
-													"raw": "{{baseUrl}}/api/admin/users/:userId/role/promote",
-													"host": [
-														"{{baseUrl}}"
-													],
-													"path": [
-														"api",
-														"admin",
-														"users",
-														":userId",
-														"role",
-														"promote"
-													],
-													"variable": [
-														{
-															"key": "userId"
-														}
-													]
-												}
-											},
-											"status": "OK",
-											"code": 200,
-											"_postman_previewlanguage": "text",
-											"header": [],
-											"cookie": [],
-											"body": ""
-										}
-									]
+									"response": []
 								},
 								{
 									"name": "/api/admin/users/:userId/role/demote",
@@ -5538,46 +3198,7 @@
 											]
 										}
 									},
-									"response": [
-										{
-											"name": "OK",
-											"originalRequest": {
-												"method": "PUT",
-												"header": [
-													{
-														"key": "Authorization",
-														"value": "Bearer <token>",
-														"description": "Added as a part of security scheme: bearer"
-													}
-												],
-												"url": {
-													"raw": "{{baseUrl}}/api/admin/users/:userId/role/demote",
-													"host": [
-														"{{baseUrl}}"
-													],
-													"path": [
-														"api",
-														"admin",
-														"users",
-														":userId",
-														"role",
-														"demote"
-													],
-													"variable": [
-														{
-															"key": "userId"
-														}
-													]
-												}
-											},
-											"status": "OK",
-											"code": 200,
-											"_postman_previewlanguage": "text",
-											"header": [],
-											"cookie": [],
-											"body": ""
-										}
-									]
+									"response": []
 								},
 								{
 									"name": "/api/admin/users/delete-many",
@@ -5612,53 +3233,7 @@
 											]
 										}
 									},
-									"response": [
-										{
-											"name": "OK",
-											"originalRequest": {
-												"method": "DELETE",
-												"header": [
-													{
-														"key": "Content-Type",
-														"value": "application/json"
-													},
-													{
-														"key": "Authorization",
-														"value": "Bearer <token>",
-														"description": "Added as a part of security scheme: bearer"
-													}
-												],
-												"body": {
-													"mode": "raw",
-													"raw": "{\n  \"userIds\": [\n    \"ee6b9695-c01c-8841-7120-75946269e3f2\",\n    \"b0c24e62-8513-4ec9-2579-1cc634f1a9e3\"\n  ]\n}",
-													"options": {
-														"raw": {
-															"headerFamily": "json",
-															"language": "json"
-														}
-													}
-												},
-												"url": {
-													"raw": "{{baseUrl}}/api/admin/users/delete-many",
-													"host": [
-														"{{baseUrl}}"
-													],
-													"path": [
-														"api",
-														"admin",
-														"users",
-														"delete-many"
-													]
-												}
-											},
-											"status": "OK",
-											"code": 200,
-											"_postman_previewlanguage": "text",
-											"header": [],
-											"cookie": [],
-											"body": ""
-										}
-									]
+									"response": []
 								},
 								{
 									"name": "/api/admin/users/restore-many",
@@ -5693,53 +3268,7 @@
 											]
 										}
 									},
-									"response": [
-										{
-											"name": "OK",
-											"originalRequest": {
-												"method": "PATCH",
-												"header": [
-													{
-														"key": "Content-Type",
-														"value": "application/json"
-													},
-													{
-														"key": "Authorization",
-														"value": "Bearer <token>",
-														"description": "Added as a part of security scheme: bearer"
-													}
-												],
-												"body": {
-													"mode": "raw",
-													"raw": "{\n  \"userIds\": [\n    \"ee6b9695-c01c-8841-7120-75946269e3f2\",\n    \"b0c24e62-8513-4ec9-2579-1cc634f1a9e3\"\n  ]\n}",
-													"options": {
-														"raw": {
-															"headerFamily": "json",
-															"language": "json"
-														}
-													}
-												},
-												"url": {
-													"raw": "{{baseUrl}}/api/admin/users/restore-many",
-													"host": [
-														"{{baseUrl}}"
-													],
-													"path": [
-														"api",
-														"admin",
-														"users",
-														"restore-many"
-													]
-												}
-											},
-											"status": "OK",
-											"code": 200,
-											"_postman_previewlanguage": "text",
-											"header": [],
-											"cookie": [],
-											"body": ""
-										}
-									]
+									"response": []
 								}
 							]
 						}

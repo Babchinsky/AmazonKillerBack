@@ -17,7 +17,7 @@ public class GetCartHandler(
         return cartItems.Select(c =>
         {
             var product = c.Product;
-            var discount = product.DiscountPct ?? 0;
+            var discount = product.DiscountPercent ?? 0;
             var finalPrice = product.Price * (1 - discount / 100);
 
             return new ProductInCartDto

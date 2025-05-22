@@ -3,11 +3,11 @@ using AmazonKiller.Application.Common.Helpers;
 using AmazonKiller.Application.Common.Models;
 using AmazonKiller.Domain.Entities.Products;
 
-namespace AmazonKiller.Application.Features.Products.Queries.GetAllProducts;
+namespace AmazonKiller.Application.Features.Products.Queries.GetAllProductCards;
 
 public static class ProductQueryExtensions
 {
-    public static IQueryable<Product> ApplyFilters(this IQueryable<Product> query, GetAllProductsQuery q)
+    public static IQueryable<Product> ApplyFilters(this IQueryable<Product> query, GetAllProductCardsQuery q)
     {
         if (!string.IsNullOrWhiteSpace(q.SearchTerm))
         {

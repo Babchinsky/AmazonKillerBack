@@ -12,7 +12,7 @@ public abstract class UpsertProductModel
     public string Name { get; init; } = string.Empty;
     public Guid CategoryId { get; init; }
     public decimal Price { get; init; }
-    public decimal? DiscountPct { get; init; }
+    public decimal? DiscountPercent { get; init; }
     public int Quantity { get; init; }
     public List<IFormFile> Images { get; init; } = [];
 

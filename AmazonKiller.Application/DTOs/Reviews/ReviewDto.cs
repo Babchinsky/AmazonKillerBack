@@ -3,7 +3,7 @@ namespace AmazonKiller.Application.DTOs.Reviews;
 public class ReviewDto
 {
     public Guid Id { get; set; }
-    public int Rating { get; set; } // от 1 до 5
+    public decimal Rating { get; set; } // от 1 до 5
     public ReviewContentDto Content { get; set; }
     public Guid ProductId { get; set; }
     public Guid UserId { get; set; }

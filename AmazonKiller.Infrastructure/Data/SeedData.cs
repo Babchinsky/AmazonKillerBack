@@ -61,7 +61,7 @@ public static class SeedData
                 ReviewsCount = 1,
                 Quantity = 10,
                 Status = ProductStatus.InStock,
-                Rating = Rating.Five,
+                Rating = 5,
                 CategoryId = booksId,
                 InWishlist = true,
                 InCartList = true
@@ -75,7 +75,7 @@ public static class SeedData
                 ReviewsCount = 0,
                 Quantity = 50,
                 Status = ProductStatus.InStock,
-                Rating = Rating.Four,
+                Rating = 4,
                 CategoryId = techId,
                 InWishlist = false,
                 InCartList = false
@@ -153,7 +153,7 @@ public static class SeedData
             ContentId = reviewContentId,
             ProductId = product1,
             UserId = userId,
-            Rating = Rating.Five,
+            Rating = 5,
             CreatedAt = seedDate, // Статическая дата
             Likes = 3
         });

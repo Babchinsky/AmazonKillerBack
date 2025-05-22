@@ -28,7 +28,7 @@ public class CreateReviewHandler(
         {
             ProductId = request.ProductId,
             UserId = request.UserId,
-            Rating = (Rating)request.Rating,
+            Rating = request.Rating,
             Content = new ReviewContent
             {
                 Article = request.Article,

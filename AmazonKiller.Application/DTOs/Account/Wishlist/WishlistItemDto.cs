@@ -6,5 +6,5 @@ public record WishlistItemDto(
     string ImageUrl,
     decimal Price,
     decimal? OldPrice,
-    double Rating
+    decimal Rating
 );

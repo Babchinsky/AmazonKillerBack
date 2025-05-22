@@ -49,7 +49,7 @@ public class CreateProductHandler(
                 Name = cmd.Name,
                 CategoryId = cmd.CategoryId,
                 Price = cmd.Price,
-                DiscountPct = cmd.DiscountPct,
+                DiscountPercent = cmd.DiscountPercent,
                 Quantity = cmd.Quantity,
                 ImageUrls = uploadedUrls
             };

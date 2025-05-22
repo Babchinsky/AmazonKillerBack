@@ -8,7 +8,7 @@ public record CreateReviewCommand(
     string Article,
     string Message,
     List<IFormFile> UploadedFiles,
-    int Rating,
+    decimal Rating,
     Guid ProductId,
     Guid UserId
 ) : IRequest<ReviewDto>;

@@ -16,7 +16,16 @@ public static class QueryableExtensions
         Dictionary<string, Expression<Func<T, object>>> sortMap)
     {
         if (string.IsNullOrWhiteSpace(q.SortBy) || !sortMap.TryGetValue(q.SortBy.ToLower(), out var sortExpr))
-            return query;
+        {
+            // fallback на Id (если есть)
+            var param = Expression.Parameter(typeof(T), "x");
+            var idProp = typeof(T).GetProperty("Id");
+            if (idProp == null) return query;
+            var idExpr = Expression.Lambda<Func<T, object>>(
+                Expression.Convert(Expression.Property(param, idProp), typeof(object)), param);
+
+            return query.OrderBy(idExpr);
+        }
 
         var order = q.SortOrder.ToLowerInvariant();
 

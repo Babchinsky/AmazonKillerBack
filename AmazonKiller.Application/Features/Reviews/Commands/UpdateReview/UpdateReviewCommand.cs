@@ -9,5 +9,5 @@ public record UpdateReviewCommand(
     string Article,
     string Message,
     List<IFormFile> UploadedFiles,
-    int Rating
+    decimal Rating
 ) : IRequest<ReviewDto>;

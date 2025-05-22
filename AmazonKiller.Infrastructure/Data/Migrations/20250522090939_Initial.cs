@@ -78,12 +78,12 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                     Code = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    DiscountPct = table.Column<decimal>(type: "decimal(5,2)", precision: 5, scale: 2, nullable: true),
+                    DiscountPercent = table.Column<decimal>(type: "decimal(5,2)", precision: 5, scale: 2, nullable: true),
                     SoldCount = table.Column<int>(type: "int", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     ImageUrls = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Rating = table.Column<int>(type: "int", nullable: false),
+                    Rating = table.Column<decimal>(type: "decimal(3,2)", precision: 3, scale: 2, nullable: false),
                     ReviewsCount = table.Column<int>(type: "int", nullable: false),
                     InWishlist = table.Column<bool>(type: "bit", nullable: false),
                     InCartList = table.Column<bool>(type: "bit", nullable: false),
@@ -250,7 +250,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ContentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Rating = table.Column<int>(type: "int", nullable: false),
+                    Rating = table.Column<decimal>(type: "decimal(3,2)", precision: 3, scale: 2, nullable: false),
                     ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
@@ -384,11 +384,11 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "Products",
-                columns: new[] { "Id", "CategoryId", "Code", "DiscountPct", "ImageUrls", "InCartList", "InWishlist", "Name", "Price", "Quantity", "Rating", "ReviewsCount", "SoldCount", "Status" },
+                columns: new[] { "Id", "CategoryId", "Code", "DiscountPercent", "ImageUrls", "InCartList", "InWishlist", "Name", "Price", "Quantity", "Rating", "ReviewsCount", "SoldCount", "Status" },
                 values: new object[,]
                 {
-                    { new Guid("55555555-5555-5555-5555-555555555555"), new Guid("11111111-1111-1111-1111-111111111111"), "01JS9QNDAYKK2CFRT5AKZF1YAA", null, "[]", true, true, "C# in Depth", 39.99m, 10, 5, 1, 0, 0 },
-                    { new Guid("66666666-6666-6666-6666-666666666666"), new Guid("22222222-2222-2222-2222-222222222222"), "01JS9QNDAYKK2CFRT5AKZF1YBB", null, "[]", false, false, "Wireless Mouse", 19.99m, 50, 4, 0, 0, 0 }
+                    { new Guid("55555555-5555-5555-5555-555555555555"), new Guid("11111111-1111-1111-1111-111111111111"), "01JS9QNDAYKK2CFRT5AKZF1YAA", null, "[]", true, true, "C# in Depth", 39.99m, 10, 5m, 1, 0, 0 },
+                    { new Guid("66666666-6666-6666-6666-666666666666"), new Guid("22222222-2222-2222-2222-222222222222"), "01JS9QNDAYKK2CFRT5AKZF1YBB", null, "[]", false, false, "Wireless Mouse", 19.99m, 50, 4m, 0, 0, 0 }
                 });
 
             migrationBuilder.InsertData(
@@ -399,7 +399,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
             migrationBuilder.InsertData(
                 table: "Reviews",
                 columns: new[] { "Id", "ContentId", "CreatedAt", "Likes", "ProductId", "Rating", "UserId" },
-                values: new object[] { new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"), new Guid("99999999-9999-9999-9999-999999999999"), new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), 3, new Guid("55555555-5555-5555-5555-555555555555"), 5, new Guid("77777777-7777-7777-7777-777777777777") });
+                values: new object[] { new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"), new Guid("99999999-9999-9999-9999-999999999999"), new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), 3, new Guid("55555555-5555-5555-5555-555555555555"), 5m, new Guid("77777777-7777-7777-7777-777777777777") });
 
             migrationBuilder.InsertData(
                 table: "WishlistItems",

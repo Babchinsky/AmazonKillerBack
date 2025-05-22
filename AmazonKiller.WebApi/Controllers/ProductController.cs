@@ -1,8 +1,7 @@
-﻿using AmazonKiller.Application.Features.Filters.Queries;
-using AmazonKiller.Application.Features.Products.Commands.BulkDeleteProducts;
+﻿using AmazonKiller.Application.Features.Products.Commands.BulkDeleteProducts;
 using AmazonKiller.Application.Features.Products.Commands.CreateUpdateProduct.CreateProduct;
 using AmazonKiller.Application.Features.Products.Commands.CreateUpdateProduct.UpdateProduct;
-using AmazonKiller.Application.Features.Products.Queries.GetAllProducts;
+using AmazonKiller.Application.Features.Products.Queries.GetAllProductCards;
 using AmazonKiller.Application.Features.Products.Queries.GetProductById;
 using AmazonKiller.Application.Features.Products.Queries.IsProductExists;
 using MediatR;
@@ -19,7 +18,7 @@ public class ProductController(IMediator mediator) : ControllerBase
     /// Получить все продукты с фильтрацией, сортировкой и пагинацией
     /// </summary>
     [HttpGet]
-    public async Task<IActionResult> GetAll([FromQuery] GetAllProductsQuery q, CancellationToken ct)
+    public async Task<IActionResult> GetAll([FromQuery] GetAllProductCardsQuery q, CancellationToken ct)
     {
         var list = await mediator.Send(q, ct);
         return Ok(list);

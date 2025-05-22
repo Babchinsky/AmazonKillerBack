@@ -61,7 +61,7 @@ public sealed class ProductRepository(AmazonDbContext db) : IProductRepository
                 .SetProperty(p => p.Code, cmd.Code)
                 .SetProperty(p => p.CategoryId, cmd.CategoryId)
                 .SetProperty(p => p.Price, cmd.Price)
-                .SetProperty(p => p.DiscountPct, cmd.DiscountPct)
+                .SetProperty(p => p.DiscountPercent, cmd.DiscountPercent)
                 .SetProperty(p => p.Quantity, cmd.Quantity)
                 .SetProperty(p => p.ImageUrls, newUrls), ct);
 

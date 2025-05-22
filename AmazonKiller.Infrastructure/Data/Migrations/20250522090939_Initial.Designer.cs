@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AmazonKiller.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AmazonDbContext))]
-    [Migration("20250520183109_Initial")]
+    [Migration("20250522090939_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -154,7 +154,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<decimal?>("DiscountPct")
+                    b.Property<decimal?>("DiscountPercent")
                         .HasPrecision(5, 2)
                         .HasColumnType("decimal(5,2)");
 
@@ -179,8 +179,9 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<int>("Rating")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Rating")
+                        .HasPrecision(3, 2)
+                        .HasColumnType("decimal(3,2)");
 
                     b.Property<int>("ReviewsCount")
                         .HasColumnType("int");
@@ -218,7 +219,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                             Name = "C# in Depth",
                             Price = 39.99m,
                             Quantity = 10,
-                            Rating = 5,
+                            Rating = 5m,
                             ReviewsCount = 1,
                             RowVersion = new byte[0],
                             SoldCount = 0,
@@ -235,7 +236,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                             Name = "Wireless Mouse",
                             Price = 19.99m,
                             Quantity = 50,
-                            Rating = 4,
+                            Rating = 4m,
                             ReviewsCount = 0,
                             RowVersion = new byte[0],
                             SoldCount = 0,
@@ -315,8 +316,9 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                     b.Property<Guid>("ProductId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Rating")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Rating")
+                        .HasPrecision(3, 2)
+                        .HasColumnType("decimal(3,2)");
 
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
@@ -346,7 +348,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Likes = 3,
                             ProductId = new Guid("55555555-5555-5555-5555-555555555555"),
-                            Rating = 5,
+                            Rating = 5m,
                             RowVersion = new byte[0],
                             UserId = new Guid("77777777-7777-7777-7777-777777777777")
                         });
