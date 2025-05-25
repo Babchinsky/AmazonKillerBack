@@ -1,4 +1,6 @@
-﻿using AmazonKiller.Application.DTOs.Account.Wishlist;
+﻿using AmazonKiller.Application.Common.Models;
+using AmazonKiller.Application.DTOs.Products;
+using AmazonKiller.Application.Features.Account.Wishlist.Queries.GetWishlist;
 using AmazonKiller.Application.Interfaces.Repositories.Account;
 using AmazonKiller.Domain.Entities.Users;
 using AmazonKiller.Infrastructure.Data;
@@ -15,14 +17,19 @@ public class WishlistRepository(AmazonDbContext db, IMapper mapper) : IWishlistR
             .Include(x => x.Product);
     }
 
-
-    public async Task<List<ProductInWishlistDto>> GetWishlistAsync(Guid userId, CancellationToken ct)
+    public async Task<List<ProductCardDto>> GetWishlistAsync(Guid userId, string? searchTerm,
+        QueryParameters parameters, CancellationToken ct)
     {
-        var wishlist = await QueryWithProduct()
+        var query = QueryWithProduct()
             .Where(x => x.UserId == userId)
-            .ToListAsync(ct);
+            .Select(x => x.Product)
+            .AsQueryable()
+            .ApplyWishlistFilters(searchTerm)
+            .ApplyWishlistSorting(parameters)
+            .ApplyWishlistPagination(parameters);
 
-        return mapper.Map<List<ProductInWishlistDto>>(wishlist);
+        var list = await query.ToListAsync(ct);
+        return mapper.Map<List<ProductCardDto>>(list);
     }
 
     public async Task ToggleAsync(Guid userId, Guid productId, CancellationToken ct)

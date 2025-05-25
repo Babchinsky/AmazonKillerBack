@@ -5,7 +5,6 @@ using AmazonKiller.Domain.Entities.Reviews;
 using AmazonKiller.Infrastructure.Data;
 using AmazonKiller.Shared.Exceptions;
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace AmazonKiller.Infrastructure.Repositories.Reviews;
@@ -93,13 +92,13 @@ public class ReviewRepository(AmazonDbContext db, IMapper mapper, IFileStorage f
 
     public async Task ToggleLikeAsync(Guid reviewId, Guid userId, CancellationToken ct)
     {
-        var existing = await db.Set<ReviewLike>()
+        var existing = await db.ReviewLikes
             .FirstOrDefaultAsync(x => x.ReviewId == reviewId && x.UserId == userId, ct);
 
         if (existing is null)
-            db.Set<ReviewLike>().Add(new ReviewLike { ReviewId = reviewId, UserId = userId });
+            db.ReviewLikes.Add(new ReviewLike { ReviewId = reviewId, UserId = userId });
         else
-            db.Set<ReviewLike>().Remove(existing);
+            db.ReviewLikes.Remove(existing);
 
         await db.SaveChangesAsync(ct);
     }

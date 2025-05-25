@@ -1,6 +1,11 @@
-﻿using AmazonKiller.Application.DTOs.Account.Wishlist;
+﻿using AmazonKiller.Application.Common.Models;
+using AmazonKiller.Application.DTOs.Products;
 using MediatR;
 
 namespace AmazonKiller.Application.Features.Account.Wishlist.Queries.GetWishlist;
 
-public record GetWishlistQuery : IRequest<List<ProductInWishlistDto>>;
+public class GetWishlistQuery : IRequest<List<ProductCardDto>>
+{
+    public string? SearchTerm { get; init; }
+    public QueryParameters Parameters { get; init; } = new();
+}

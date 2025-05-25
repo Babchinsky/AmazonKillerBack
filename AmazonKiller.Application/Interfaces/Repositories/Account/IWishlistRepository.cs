@@ -1,4 +1,5 @@
-﻿using AmazonKiller.Application.DTOs.Account.Wishlist;
+﻿using AmazonKiller.Application.Common.Models;
+using AmazonKiller.Application.DTOs.Products;
 
 namespace AmazonKiller.Application.Interfaces.Repositories.Account;
 
@@ -6,6 +7,8 @@ public interface IWishlistRepository
 {
     Task AddAsync(Guid userId, Guid productId, CancellationToken ct);
     Task ToggleAsync(Guid userId, Guid productId, CancellationToken ct);
-    Task<List<ProductInWishlistDto>> GetWishlistAsync(Guid userId, CancellationToken ct);
+
+    Task<List<ProductCardDto>> GetWishlistAsync(Guid userId, string? searchTerm,
+        QueryParameters parameters, CancellationToken ct);
     Task DeleteAsync(Guid userId, Guid productId, CancellationToken ct);
 }

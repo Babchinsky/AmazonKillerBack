@@ -1,4 +1,5 @@
-﻿using AmazonKiller.Application.Features.Account.Wishlist.Commands.AddToWishlist;
+﻿using AmazonKiller.Application.Common.Models;
+using AmazonKiller.Application.Features.Account.Wishlist.Commands.AddToWishlist;
 using AmazonKiller.Application.Features.Account.Wishlist.Commands.DeleteFromWishlist;
 using AmazonKiller.Application.Features.Account.Wishlist.Commands.ToggleWishlist;
 using AmazonKiller.Application.Features.Account.Wishlist.Queries.GetWishlist;
@@ -14,9 +15,13 @@ namespace AmazonKiller.WebApi.Controllers.Account;
 public class WishlistController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
-    public async Task<IActionResult> Get()
+    public async Task<IActionResult> Get([FromQuery] string? searchTerm, [FromQuery] QueryParameters parameters)
     {
-        var result = await mediator.Send(new GetWishlistQuery());
+        var result = await mediator.Send(new GetWishlistQuery
+        {
+            SearchTerm = searchTerm,
+            Parameters = parameters
+        });
         return Ok(result);
     }
 
