@@ -1,18 +1,18 @@
 namespace AmazonKiller.Application.DTOs.Reviews;
 
-public class ReviewDto
+public record ReviewDto
 {
-    public Guid Id { get; set; }
-    public decimal Rating { get; set; }
-    public Guid ProductId { get; set; }
-    public Guid UserId { get; set; }
-    public DateTime CreatedAt { get; set; }
-    public string UserFullName { get; set; } = string.Empty;
-    public string UserImageUrl { get; set; } = string.Empty;
-    public string Article { get; set; } = string.Empty;
-    public string Message { get; set; } = string.Empty;
-    public List<string> ImageUrls { get; set; } = [];
-    public List<string> Tags { get; set; } = [];
-    public int Likes { get; set; }
+    public Guid Id { get; init; }
+    public decimal Rating { get; init; }
+    public Guid ProductId { get; init; }
+    public Guid UserId { get; init; }
+    public DateTime CreatedAt { get; init; }
+    public string UserFullName { get; init; } = string.Empty;
+    public string UserImageUrl { get; init; } = string.Empty;
+    public string Article { get; init; } = string.Empty;
+    public string Message { get; init; } = string.Empty;
+    public List<string> ImageUrls { get; init; } = [];
+    public List<string> Tags { get; init; } = [];
+    public int Likes { get; init; }
     public string RowVersion { get; init; } = string.Empty;
 }

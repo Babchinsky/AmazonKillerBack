@@ -1,6 +1,6 @@
 ﻿namespace AmazonKiller.Application.DTOs.Account.Orders;
 
-public class OrderDto
+public record OrderDto
 {
     public Guid Id { get; init; }
     public decimal TotalPrice { get; init; }

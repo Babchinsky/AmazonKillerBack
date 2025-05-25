@@ -1,12 +1,13 @@
 ﻿namespace AmazonKiller.Application.DTOs.Account.Orders;
 
-public record OrderDetailsDto(
-    Guid Id,
-    decimal Price,
-    string Status,
-    DateTime OrderedAt,
-    string Address,
-    string Recipient,
-    string PaymentType,
-    List<OrderItemDto> Items
-);
+public record OrderDetailsDto
+{
+    public Guid Id { get; init; }
+    public decimal Price { get; init; }
+    public string Status { get; init; } = string.Empty;
+    public DateTime OrderedAt { get; init; }
+    public string Address { get; init; } = string.Empty;
+    public string Recipient { get; init; } = string.Empty;
+    public string PaymentType { get; init; } = string.Empty;
+    public List<OrderItemDto> Items { get; init; } = [];
+}

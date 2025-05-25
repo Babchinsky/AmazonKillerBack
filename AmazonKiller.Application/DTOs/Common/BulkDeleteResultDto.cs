@@ -1,7 +1,7 @@
 ﻿namespace AmazonKiller.Application.DTOs.Common;
 
-public class BulkDeleteResultDto
+public record BulkDeleteResultDto
 {
-    public int DeletedCount { get; set; }
-    public List<Guid> NotFoundIds { get; set; } = [];
+    public int DeletedCount { get; init; }
+    public List<Guid> NotFoundIds { get; init; } = [];
 }

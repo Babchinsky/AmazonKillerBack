@@ -42,6 +42,10 @@ public class ConfirmRegistrationHandler(
             context.IpAddress,
             context.UserAgent);
 
-        return new AuthTokensDto(jwt, refresh);
+        return new AuthTokensDto
+        {
+            AccessToken = jwt,
+            RefreshToken = refresh
+        };
     }
 }

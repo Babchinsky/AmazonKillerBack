@@ -1,6 +1,6 @@
 ﻿namespace AmazonKiller.Application.DTOs.Products;
 
-public class ProductDto
+public record ProductDto
 {
     public Guid Id { get; init; }
     public string Name { get; init; } = string.Empty;
@@ -10,7 +10,7 @@ public class ProductDto
     public List<string> ImageUrls { get; init; } = [];
     public Guid CategoryId { get; init; }
     public decimal Price { get; init; }
-    public decimal? DiscountPercent { get; init; } // e.g., 17.0 ⇒ "17% OFF"
+    public decimal? DiscountPercent { get; init; }
     public int Quantity { get; init; }
     public int SoldCount { get; init; }
     public IReadOnlyCollection<ProductAttributeDto> Attributes { get; init; } = [];

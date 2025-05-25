@@ -44,6 +44,10 @@ public class RegisterAdminHandler(
 
         var jwt = await authService.GenerateJwtTokenAsync(admin);
 
-        return new AuthTokensDto(jwt, refresh);
+        return new AuthTokensDto
+        {
+            AccessToken = jwt,
+            RefreshToken = refresh
+        };
     }
 }

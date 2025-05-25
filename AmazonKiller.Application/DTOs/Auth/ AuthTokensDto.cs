@@ -1,3 +1,7 @@
 ﻿namespace AmazonKiller.Application.DTOs.Auth;
 
-public record AuthTokensDto(string AccessToken, string RefreshToken);
+public record AuthTokensDto
+{
+    public string AccessToken { get; init; } = string.Empty;
+    public string RefreshToken { get; init; } = string.Empty;
+}

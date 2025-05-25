@@ -2,10 +2,10 @@
 
 namespace AmazonKiller.Application.DTOs.Categories;
 
-public class CategoryDto
+public record CategoryDto
 {
     public Guid Id { get; init; }
-    public string Name { get; init; }
+    public string Name { get; init; } = string.Empty;
     public Guid? ParentId { get; init; }
     public string? Description { get; init; }
     public string? ImageUrl { get; init; }

@@ -1,6 +1,6 @@
 ﻿namespace AmazonKiller.Application.DTOs.Products;
 
-public class ProductCardDto
+public record ProductCardDto
 {
     public Guid Id { get; init; }
     public string Name { get; init; } = string.Empty;

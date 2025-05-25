@@ -1,7 +1,9 @@
 ﻿namespace AmazonKiller.Application.DTOs.Categories;
 
-public record CategoryTreeDto(
-    Guid Id,
-    string Name,
-    string Status,
-    List<CategoryTreeDto> Children);
+public record CategoryTreeDto
+{
+    public Guid Id { get; init; }
+    public string Name { get; init; } = string.Empty;
+    public string Status { get; init; } = string.Empty;
+    public List<CategoryTreeDto> Children { get; init; } = [];
+}

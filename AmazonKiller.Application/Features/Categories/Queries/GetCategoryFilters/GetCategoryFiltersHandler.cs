@@ -36,6 +36,9 @@ public class GetCategoryFiltersHandler(IProductRepository repo, ICategoryReposit
                 result[key] = values;
         }
 
-        return new CategoryFiltersDto(result);
+        return new CategoryFiltersDto
+        {
+            Filters = result
+        };
     }
 }

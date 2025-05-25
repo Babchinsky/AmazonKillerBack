@@ -23,7 +23,7 @@ public class Product : VersionedEntity
 
     public decimal Price { get; init; } // Цена без учёта скидки
     public decimal? DiscountPercent { get; init; } // null ⇒ скидки нет, иначе 0–100 %
-    public int SoldCount { get; set; } // NEW
+    public int SoldCount { get; set; }
 
     public int Quantity { get; init; } // Кол-во на складе
 

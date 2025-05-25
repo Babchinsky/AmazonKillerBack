@@ -1,3 +1,7 @@
 ﻿namespace AmazonKiller.Application.DTOs.Products;
 
-public record ProductAttributeDto(string Key, string Value);
+public record ProductAttributeDto
+{
+    public string Key { get; init; } = string.Empty;
+    public string Value { get; init; } = string.Empty;
+}

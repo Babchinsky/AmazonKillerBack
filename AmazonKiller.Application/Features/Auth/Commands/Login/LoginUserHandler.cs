@@ -33,6 +33,10 @@ public class LoginUserHandler(
 
         var jwt = await authService.GenerateJwtTokenAsync(user);
 
-        return new AuthTokensDto(jwt, refresh);
+        return new AuthTokensDto
+        {
+            AccessToken = jwt,
+            RefreshToken = refresh
+        };
     }
 }

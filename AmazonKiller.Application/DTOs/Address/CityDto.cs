@@ -1,7 +1,7 @@
 ﻿namespace AmazonKiller.Application.DTOs.Address;
 
-public class CityDto
+public record CityDto
 {
-    public string Description { get; set; } = string.Empty;
-    public string Ref { get; set; } = string.Empty;
+    public string Description { get; init; } = string.Empty;
+    public string Ref { get; init; } = string.Empty;
 }

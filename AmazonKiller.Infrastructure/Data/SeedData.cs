@@ -20,7 +20,7 @@ public static class SeedData
 
         var userId = new Guid("77777777-7777-7777-7777-777777777777");
         var adminId = new Guid("88888888-8888-8888-8888-888888888888");
-        
+
         var reviewId = new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa");
 
         var cartId = new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb");

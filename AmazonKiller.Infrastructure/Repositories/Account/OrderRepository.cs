@@ -55,25 +55,29 @@ public class OrderRepository(AmazonDbContext db, IMapper mapper) : IOrderReposit
         if (order is null)
             throw new NotFoundException("Order not found");
 
-        var items = order.Items.Select(i => new OrderItemDto(
-            i.Id,
-            i.Product.Name,
-            i.Product.ImageUrls.FirstOrDefault() ?? "",
-            i.Quantity,
-            i.Price)).ToList();
+        var items = order.Items.Select(i => new OrderItemDto
+        {
+            Id = i.Id,
+            Name = i.Product.Name,
+            ImageUrl = i.Product.ImageUrls.FirstOrDefault() ?? "",
+            Quantity = i.Quantity,
+            Price = i.Price
+        }).ToList();
 
         var d = order.Info.Delivery;
 
-        return new OrderDetailsDto(
-            order.Id,
-            order.TotalPrice,
-            order.Status.ToString(),
-            order.Info.OrderedAt,
-            $"{d.Address.Country}, {d.Address.State}, {d.Address.City}, {d.Address.Street}, {d.Address.HouseNumber}",
-            $"{d.FirstName} {d.LastName}",
-            order.Info.Payment.PaymentType.ToString(),
-            items
-        );
+        return new OrderDetailsDto
+        {
+            Id = order.Id,
+            Price = order.TotalPrice,
+            Status = order.Status.ToString(),
+            OrderedAt = order.Info.OrderedAt,
+            Address =
+                $"{d.Address.Country}, {d.Address.State}, {d.Address.City}, {d.Address.Street}, {d.Address.HouseNumber}",
+            Recipient = $"{d.FirstName} {d.LastName}",
+            PaymentType = order.Info.Payment.PaymentType.ToString(),
+            Items = items
+        };
     }
 
     public async Task<Guid> CreateOrderAsync(Order order, CancellationToken ct)

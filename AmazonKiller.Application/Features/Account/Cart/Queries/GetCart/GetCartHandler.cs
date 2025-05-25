@@ -1,33 +1,22 @@
-﻿using AmazonKiller.Application.DTOs.Products;
+﻿using AmazonKiller.Application.DTOs.Account.Cart;
 using AmazonKiller.Application.Interfaces.Repositories.Account;
 using AmazonKiller.Application.Interfaces.Services;
+using AutoMapper;
 using MediatR;
 
 namespace AmazonKiller.Application.Features.Account.Cart.Queries.GetCart;
 
 public class GetCartHandler(
     ICartRepository cartRepo,
-    ICurrentUserService currentUser) : IRequestHandler<GetCartQuery, List<ProductInCartDto>>
+    ICurrentUserService currentUser,
+    IMapper mapper) : IRequestHandler<GetCartQuery, List<CartItemDto>>
 {
-    public async Task<List<ProductInCartDto>> Handle(GetCartQuery request, CancellationToken ct)
+    public async Task<List<CartItemDto>> Handle(GetCartQuery request, CancellationToken ct)
     {
         var userId = currentUser.UserId;
         var cartItems = await cartRepo.GetCartItemsWithProductsAsync(userId, ct);
 
-        return cartItems.Select(c =>
-        {
-            var product = c.Product;
-            var discount = product.DiscountPercent ?? 0;
-            var finalPrice = product.Price * (1 - discount / 100);
-
-            return new ProductInCartDto
-            {
-                ProductId = product.Id,
-                Name = product.Name,
-                ImageUrl = product.ImageUrls.FirstOrDefault() ?? "",
-                Price = Math.Round(finalPrice, 2),
-                Quantity = c.Quantity
-            };
-        }).ToList();
+        return mapper.Map<List<CartItemDto>>(
+            cartItems.Select(c => (c.Product, c.Quantity)).ToList());
     }
 }

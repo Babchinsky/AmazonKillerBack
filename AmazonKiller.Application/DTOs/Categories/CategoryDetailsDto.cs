@@ -1,6 +1,6 @@
 ﻿namespace AmazonKiller.Application.DTOs.Categories;
 
-public class CategoryDetailsDto : CategoryDto
+public record CategoryDetailsDto : CategoryDto
 {
-    public Dictionary<string, List<string>> Filters { get; set; } = new();
+    public Dictionary<string, List<string>> Filters { get; init; } = new();
 }

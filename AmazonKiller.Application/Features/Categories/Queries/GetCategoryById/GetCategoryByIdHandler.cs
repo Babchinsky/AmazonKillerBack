@@ -37,8 +37,10 @@ public class GetCategoryByIdHandler(
                 filters[key] = values;
         }
 
-        var dto = mapper.Map<CategoryDetailsDto>(category);
-        dto.Filters = filters;
+        var dto = mapper.Map<CategoryDetailsDto>(category) with
+        {
+            Filters = filters
+        };
 
         return dto;
     }

@@ -30,6 +30,10 @@ public class RefreshTokenHandler(
             context.UserAgent);
 
         var jwt = await auth.GenerateJwtTokenAsync(old.User);
-        return new AuthTokensDto(jwt, newToken);
+        return new AuthTokensDto
+        {
+            AccessToken = jwt,
+            RefreshToken = newToken
+        };
     }
 }

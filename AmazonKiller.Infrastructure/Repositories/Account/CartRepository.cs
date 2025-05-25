@@ -10,6 +10,10 @@ public class CartRepository(AmazonDbContext db) : ICartRepository
 {
     public async Task AddAsync(Guid userId, Guid productId, int quantity, CancellationToken ct)
     {
+        var userExists = await db.Users.AnyAsync(u => u.Id == userId, ct);
+        if (!userExists)
+            throw new AppException("User not found");
+
         var product = await db.Products
                           .AsNoTracking()
                           .FirstOrDefaultAsync(p => p.Id == productId, ct)
