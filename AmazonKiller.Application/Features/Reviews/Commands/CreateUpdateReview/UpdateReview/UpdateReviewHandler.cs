@@ -14,7 +14,7 @@ public class UpdateReviewHandler(
     IReviewRepository repo,
     IMapper mapper,
     ICurrentUserService currentUser,
-    IFileStorage files
+    IFileStorage fileStorage
 ) : IRequestHandler<UpdateReviewCommand, ReviewDto>
 {
     public async Task<ReviewDto> Handle(UpdateReviewCommand r, CancellationToken ct)
@@ -32,7 +32,7 @@ public class UpdateReviewHandler(
         foreach (var file in r.UploadedFiles)
         {
             await using var stream = file.OpenReadStream();
-            uploadedPaths.Add(await files.SaveAsync(stream, Path.GetExtension(file.FileName), ct));
+            uploadedPaths.Add(await fileStorage.SaveAsync(stream, Path.GetExtension(file.FileName), ct));
         }
 
         var review = new Review
@@ -54,12 +54,12 @@ public class UpdateReviewHandler(
         }
         catch (DbUpdateConcurrencyException)
         {
-            await files.DeleteBatchSafeAsync(uploadedPaths, ct);
+            await fileStorage.DeleteBatchSafeAsync(uploadedPaths, ct);
             throw new AppException("The review was modified by another user. Please refresh and try again.", 409);
         }
 
-        var toDelete = oldReview.ImageUrls.Except(uploadedPaths, StringComparer.OrdinalIgnoreCase);
-        await files.DeleteBatchSafeAsync(toDelete, ct);
+        var imagesToDelete = oldReview.ImageUrls.Except(uploadedPaths, StringComparer.OrdinalIgnoreCase);
+        await fileStorage.DeleteBatchSafeAsync(imagesToDelete.ToList(), ct);
 
         var entity = await repo.Queryable()
             .Include(x => x.Product)

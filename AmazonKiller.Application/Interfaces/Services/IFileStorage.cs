@@ -6,6 +6,6 @@ public interface IFileStorage
     Task DeleteAsync(string url, CancellationToken ct = default);
 
     /// <summary>Удалить сразу несколько объектов «мягко» (ошибки – в лог).</summary>
-    Task DeleteBatchSafeAsync(IEnumerable<string> urls,
+    Task DeleteBatchSafeAsync(List<string> urls,
         CancellationToken ct = default);
 }

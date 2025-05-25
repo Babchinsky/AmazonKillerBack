@@ -69,9 +69,9 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                     DiscountPercent = table.Column<decimal>(type: "decimal(5,2)", precision: 5, scale: 2, nullable: true),
                     SoldCount = table.Column<int>(type: "int", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false),
                     ImageUrls = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AverageRating = table.Column<decimal>(type: "decimal(3,2)", precision: 3, scale: 2, nullable: false),
+                    Rating = table.Column<decimal>(type: "decimal(3,2)", precision: 3, scale: 2, nullable: false),
+                    ReviewsCount = table.Column<int>(type: "int", nullable: false),
                     InWishlist = table.Column<bool>(type: "bit", nullable: false),
                     InCartList = table.Column<bool>(type: "bit", nullable: false),
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false)
@@ -387,11 +387,11 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "Products",
-                columns: new[] { "Id", "AverageRating", "CategoryId", "Code", "DiscountPercent", "ImageUrls", "InCartList", "InWishlist", "Name", "Price", "Quantity", "SoldCount", "Status" },
+                columns: new[] { "Id", "CategoryId", "Code", "DiscountPercent", "ImageUrls", "InCartList", "InWishlist", "Name", "Price", "Quantity", "Rating", "ReviewsCount", "SoldCount" },
                 values: new object[,]
                 {
-                    { new Guid("55555555-5555-5555-5555-555555555555"), 5m, new Guid("11111111-1111-1111-1111-111111111111"), "01JS9QNDAYKK2CFRT5AKZF1YAA", null, "[]", true, true, "C# in Depth", 39.99m, 10, 0, 0 },
-                    { new Guid("66666666-6666-6666-6666-666666666666"), 4m, new Guid("22222222-2222-2222-2222-222222222222"), "01JS9QNDAYKK2CFRT5AKZF1YBB", null, "[]", false, false, "Wireless Mouse", 19.99m, 50, 0, 0 }
+                    { new Guid("55555555-5555-5555-5555-555555555555"), new Guid("11111111-1111-1111-1111-111111111111"), "01JS9QNDAYKK2CFRT5AKZF1YAA", null, "[]", true, true, "C# in Depth", 39.99m, 10, 5m, 0, 0 },
+                    { new Guid("66666666-6666-6666-6666-666666666666"), new Guid("22222222-2222-2222-2222-222222222222"), "01JS9QNDAYKK2CFRT5AKZF1YBB", null, "[]", false, false, "Wireless Mouse", 19.99m, 50, 4m, 0, 0 }
                 });
 
             migrationBuilder.InsertData(

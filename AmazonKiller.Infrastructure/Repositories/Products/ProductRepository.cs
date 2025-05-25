@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace AmazonKiller.Infrastructure.Repositories.Products;
 
-public sealed class ProductRepository(AmazonDbContext db) : IProductRepository
+public sealed class ProductRepository(AmazonDbContext db, IFileStorage fileStorage) : IProductRepository
 {
     private static async Task<List<string>> SaveAllAsync(IEnumerable<IFormFile> files,
         IFileStorage fs,
@@ -42,7 +42,7 @@ public sealed class ProductRepository(AmazonDbContext db) : IProductRepository
     {
         var oldRv = Convert.FromBase64String(cmd.RowVersion);
 
-        /* 0-a.  Сохраняем ПРЕЖНИЙ список картинок  ------------------------- */
+        /* 0-a.  Сохраняем ПРЕЖНИЙ список картинок------------------------- */
         var oldUrls = await db.Products.AsNoTracking()
             .Where(p => p.Id == cmd.Id)
             .SelectMany(p => p.ImageUrls)
@@ -94,7 +94,7 @@ public sealed class ProductRepository(AmazonDbContext db) : IProductRepository
 
         /* 3.  Удаляем ФАКТИЧЕСКИ устаревшие картинки ----------------------- */
         var urlsToDelete = oldUrls.Except(newUrls, StringComparer.OrdinalIgnoreCase);
-        await fs.DeleteBatchSafeAsync(urlsToDelete, ct);
+        await fs.DeleteBatchSafeAsync(urlsToDelete.ToList(), ct);
     }
 
     public async Task AddAsync(Product product, CancellationToken ct)
@@ -115,18 +115,19 @@ public sealed class ProductRepository(AmazonDbContext db) : IProductRepository
 
     public async Task BulkDeleteAsync(IEnumerable<Guid> ids, CancellationToken ct)
     {
-        var products = await db.Products
-            .Where(p => ids.Contains(p.Id))
-            .ToListAsync(ct);
-
-        db.Products.RemoveRange(products);
-        await db.SaveChangesAsync(ct);
+        var products = await db.Products.Where(p => ids.Contains(p.Id)).ToListAsync(ct);
+        await DeleteRangeAsync(products, ct);
     }
 
     public async Task DeleteRangeAsync(IEnumerable<Product> products, CancellationToken ct)
     {
-        db.Products.RemoveRange(products);
+        var enumerable = products.ToList();
+        var imagesToDelete = enumerable.SelectMany(p => p.ImageUrls).ToList();
+
+        db.Products.RemoveRange(enumerable);
         await db.SaveChangesAsync(ct);
+
+        await fileStorage.DeleteBatchSafeAsync(imagesToDelete, ct);
     }
 
     public Task<bool> IsExistsAsync(Guid id)

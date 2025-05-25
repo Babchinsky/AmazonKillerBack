@@ -1,4 +1,5 @@
 ﻿using AmazonKiller.Application.Interfaces.Repositories.Products;
+using AmazonKiller.Application.Interfaces.Services;
 using AmazonKiller.Domain.Entities.Categories;
 using AmazonKiller.Infrastructure.Data;
 using AmazonKiller.Shared.Exceptions;
@@ -6,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AmazonKiller.Infrastructure.Repositories.Products;
 
-public class CategoryRepository(AmazonDbContext db) : ICategoryRepository
+public class CategoryRepository(AmazonDbContext db, IFileStorage fileStorage) : ICategoryRepository
 {
     // ---- дерево -------------------------------------------------
     public Task<List<Category>> GetTreeAsync(CancellationToken ct)
@@ -56,7 +57,15 @@ public class CategoryRepository(AmazonDbContext db) : ICategoryRepository
 
     public async Task DeleteRangeAsync(IEnumerable<Category> categories, CancellationToken ct)
     {
-        db.Categories.RemoveRange(categories);
+        var enumerable = categories.ToList();
+        var imageUrls = enumerable
+            .Select(c => c.ImageUrl)
+            .Where(url => !string.IsNullOrWhiteSpace(url))
+            .ToList();
+
+        db.Categories.RemoveRange(enumerable);
         await db.SaveChangesAsync(ct);
+
+        await fileStorage.DeleteBatchSafeAsync(imageUrls, ct);
     }
 }

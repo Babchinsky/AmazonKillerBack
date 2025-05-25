@@ -54,7 +54,7 @@ public sealed class LocalFileStorage(IWebHostEnvironment env, ILogger<LocalFileS
         return Task.CompletedTask;
     }
 
-    public async Task DeleteBatchSafeAsync(IEnumerable<string> urls, CancellationToken ct = default)
+    public async Task DeleteBatchSafeAsync(List<string> urls, CancellationToken ct = default)
     {
         foreach (var u in urls.Distinct(StringComparer.OrdinalIgnoreCase))
             try

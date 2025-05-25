@@ -16,7 +16,7 @@ public class ReviewMappingProfile : Profile
                 !string.IsNullOrWhiteSpace(s.User.FirstName) || !string.IsNullOrWhiteSpace(s.User.LastName)
                     ? $"{s.User.FirstName} {s.User.LastName}".Trim()
                     : s.User.Email))
-            .ForMember(d => d.UserImageUrl, o => o.MapFrom(s => s.User.ImageUrl ?? string.Empty))
+            .ForMember(d => d.UserImageUrl, o => o.MapFrom<UserImageUrlResolver>())
             .ForMember(d => d.RowVersion, o => o.MapFrom(s => Convert.ToBase64String(s.RowVersion)));
     }
 }

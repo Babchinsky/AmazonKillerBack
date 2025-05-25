@@ -44,7 +44,7 @@ public static class ProductQueryExtensions
         {
             ["name"] = p => p.Name,
             ["price"] = p => p.Price,
-            ["rating"] = p => p.AverageRating,
+            ["rating"] = p => p.Rating,
             ["soldcount"] = p => p.SoldCount,
             ["quantity"] = p => p.Quantity,
             ["reviewscount"] = p => p.Reviews.Count

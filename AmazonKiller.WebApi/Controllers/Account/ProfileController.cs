@@ -2,6 +2,7 @@
 using AmazonKiller.Application.Features.Account.Profile.Commands.ChangeEmail.StartEmailChange;
 using AmazonKiller.Application.Features.Account.Profile.Commands.ChangeName;
 using AmazonKiller.Application.Features.Account.Profile.Commands.ChangePassword;
+using AmazonKiller.Application.Features.Account.Profile.Commands.ChangePhoto;
 using AmazonKiller.Application.Features.Account.Profile.Commands.DeleteAccount;
 using AmazonKiller.Application.Features.Account.Profile.Commands.Logout;
 using AmazonKiller.Shared.Exceptions;
@@ -50,6 +51,14 @@ public class ProfileController(IMediator mediator) : ControllerBase
         await mediator.Send(cmd);
         return NoContent();
     }
+
+    [HttpPut("photo")]
+    public async Task<ActionResult<string>> ChangePhoto([FromForm] ChangePhotoCommand cmd)
+    {
+        var imageUrl = await mediator.Send(cmd);
+        return Ok($"{Request.Scheme}://{Request.Host}/uploads/{imageUrl}");
+    }
+
 
     [HttpPost("logout")]
     public async Task<IActionResult> Logout()

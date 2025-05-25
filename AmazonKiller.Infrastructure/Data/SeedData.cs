@@ -20,8 +20,7 @@ public static class SeedData
 
         var userId = new Guid("77777777-7777-7777-7777-777777777777");
         var adminId = new Guid("88888888-8888-8888-8888-888888888888");
-
-        var reviewContentId = new Guid("99999999-9999-9999-9999-999999999999");
+        
         var reviewId = new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa");
 
         var cartId = new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb");
@@ -59,8 +58,7 @@ public static class SeedData
                 Name = "C# in Depth",
                 Price = 39.99m,
                 Quantity = 10,
-                Status = ProductStatus.InStock,
-                AverageRating = 5,
+                Rating = 5,
                 CategoryId = booksId,
                 InWishlist = true,
                 InCartList = true
@@ -72,8 +70,7 @@ public static class SeedData
                 Name = "Wireless Mouse",
                 Price = 19.99m,
                 Quantity = 50,
-                Status = ProductStatus.InStock,
-                AverageRating = 4,
+                Rating = 4,
                 CategoryId = techId,
                 InWishlist = false,
                 InCartList = false

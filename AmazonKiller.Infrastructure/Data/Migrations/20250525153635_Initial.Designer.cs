@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AmazonKiller.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AmazonDbContext))]
-    [Migration("20250525104433_Initial")]
+    [Migration("20250525153635_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -158,10 +158,6 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<decimal>("AverageRating")
-                        .HasPrecision(3, 2)
-                        .HasColumnType("decimal(3,2)");
-
                     b.Property<Guid>("CategoryId")
                         .HasColumnType("uniqueidentifier");
 
@@ -194,6 +190,13 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
+                    b.Property<decimal>("Rating")
+                        .HasPrecision(3, 2)
+                        .HasColumnType("decimal(3,2)");
+
+                    b.Property<int>("ReviewsCount")
+                        .HasColumnType("int");
+
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
                         .IsRequired()
@@ -201,9 +204,6 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         .HasColumnType("rowversion");
 
                     b.Property<int>("SoldCount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -219,7 +219,6 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         new
                         {
                             Id = new Guid("55555555-5555-5555-5555-555555555555"),
-                            AverageRating = 5m,
                             CategoryId = new Guid("11111111-1111-1111-1111-111111111111"),
                             Code = "01JS9QNDAYKK2CFRT5AKZF1YAA",
                             ImageUrls = "[]",
@@ -228,14 +227,14 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                             Name = "C# in Depth",
                             Price = 39.99m,
                             Quantity = 10,
+                            Rating = 5m,
+                            ReviewsCount = 0,
                             RowVersion = new byte[0],
-                            SoldCount = 0,
-                            Status = 0
+                            SoldCount = 0
                         },
                         new
                         {
                             Id = new Guid("66666666-6666-6666-6666-666666666666"),
-                            AverageRating = 4m,
                             CategoryId = new Guid("22222222-2222-2222-2222-222222222222"),
                             Code = "01JS9QNDAYKK2CFRT5AKZF1YBB",
                             ImageUrls = "[]",
@@ -244,9 +243,10 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                             Name = "Wireless Mouse",
                             Price = 19.99m,
                             Quantity = 50,
+                            Rating = 4m,
+                            ReviewsCount = 0,
                             RowVersion = new byte[0],
-                            SoldCount = 0,
-                            Status = 0
+                            SoldCount = 0
                         });
                 });
 

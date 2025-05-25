@@ -1,5 +1,6 @@
 using AmazonKiller.Application.DTOs.Reviews;
 using AmazonKiller.Application.Interfaces.Repositories.Reviews;
+using AmazonKiller.Application.Interfaces.Services;
 using AmazonKiller.Domain.Entities.Reviews;
 using AmazonKiller.Infrastructure.Data;
 using AmazonKiller.Shared.Exceptions;
@@ -9,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AmazonKiller.Infrastructure.Repositories.Reviews;
 
-public class ReviewRepository(AmazonDbContext db, IMapper mapper) : IReviewRepository
+public class ReviewRepository(AmazonDbContext db, IMapper mapper, IFileStorage fileStorage) : IReviewRepository
 {
     public IQueryable<Review> Queryable()
     {
@@ -46,6 +47,7 @@ public class ReviewRepository(AmazonDbContext db, IMapper mapper) : IReviewRepos
         {
             db.Reviews.Add(review);
             await db.SaveChangesAsync(ct);
+            await UpdateProductStatsAsync(review.ProductId, ct); // 👈 обновляем статистику
         }
         catch (DbUpdateException ex) when (ex.InnerException?.Message.Contains("FK_Reviews_Products_ProductId") == true)
         {
@@ -58,11 +60,34 @@ public class ReviewRepository(AmazonDbContext db, IMapper mapper) : IReviewRepos
         db.Entry(review).Property(nameof(Review.RowVersion)).OriginalValue = review.RowVersion;
         db.Reviews.Update(review);
         await db.SaveChangesAsync(ct);
+        await UpdateProductStatsAsync(review.ProductId, ct); // 👈 после апдейта
     }
 
     public async Task DeleteAsync(Review review, CancellationToken ct = default)
     {
+        var imageUrls = review.ImageUrls.ToList();
         db.Reviews.Remove(review);
+        await db.SaveChangesAsync(ct);
+        await fileStorage.DeleteBatchSafeAsync(imageUrls, ct);
+        await UpdateProductStatsAsync(review.ProductId, ct); // 👈 после удаления
+    }
+
+    private async Task UpdateProductStatsAsync(Guid productId, CancellationToken ct)
+    {
+        var stats = await db.Reviews
+            .Where(r => r.ProductId == productId)
+            .GroupBy(r => r.ProductId)
+            .Select(g => new
+            {
+                Average = g.Average(r => r.Rating),
+                Count = g.Count()
+            })
+            .FirstOrDefaultAsync(ct);
+
+        var product = await db.Products.FirstAsync(p => p.Id == productId, ct);
+        product.Rating = stats?.Average ?? 0;
+        product.ReviewsCount = stats?.Count ?? 0;
+
         await db.SaveChangesAsync(ct);
     }
 

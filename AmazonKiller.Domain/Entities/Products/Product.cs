@@ -26,7 +26,6 @@ public class Product : VersionedEntity
     public int SoldCount { get; set; } // NEW
 
     public int Quantity { get; init; } // Кол-во на складе
-    public ProductStatus Status { get; init; } = ProductStatus.InStock;
 
     public List<string> ImageUrls { get; init; } = [];
     public List<ProductAttribute> Attributes { get; init; } = [];
@@ -37,7 +36,8 @@ public class Product : VersionedEntity
 
     /* ---------- Служебное ---------- */
 
-    public decimal AverageRating { get; init; } // 0–5, вычисляется из отзывов
+    public decimal Rating { get; set; } // сохраняется и пересчитывается вручную
+    public int ReviewsCount { get; set; } // сохраняется и пересчитывается вручную
     public ICollection<Review> Reviews { get; init; } = new List<Review>();
 
     public bool InWishlist { get; init; }
