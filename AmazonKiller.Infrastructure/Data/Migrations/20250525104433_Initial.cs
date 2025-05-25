@@ -241,7 +241,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Article = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
                     Message = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: false),
-                    FilePaths = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImageUrls = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Tags = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Rating = table.Column<decimal>(type: "decimal(3,2)", precision: 3, scale: 2, nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
@@ -401,7 +401,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "Reviews",
-                columns: new[] { "Id", "Article", "CreatedAt", "FilePaths", "Message", "ProductId", "Rating", "Tags", "UserId" },
+                columns: new[] { "Id", "Article", "CreatedAt", "ImageUrls", "Message", "ProductId", "Rating", "Tags", "UserId" },
                 values: new object[] { new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"), "Great book!", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "[\"file1.jpg\",\"file2.jpg\"]", "Very useful for learning advanced C#", new Guid("55555555-5555-5555-5555-555555555555"), 5m, "[]", new Guid("77777777-7777-7777-7777-777777777777") });
 
             migrationBuilder.InsertData(

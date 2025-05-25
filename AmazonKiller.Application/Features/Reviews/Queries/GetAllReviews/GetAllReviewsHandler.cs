@@ -11,13 +11,13 @@ public class GetAllReviewsHandler(IReviewRepository repo, IMapper mapper)
 {
     public async Task<List<ReviewDto>> Handle(GetAllReviewsQuery q, CancellationToken ct)
     {
-        var query = repo.GetAllProjected()
+        var query = repo.GetAllWithIncludes()
             .AsNoTracking()
             .ApplyFilters(q)
             .ApplySorting(q.Parameters)
             .ApplyPagination(q.Parameters);
 
-        var reviews = await query.ToListAsync(ct);
-        return mapper.Map<List<ReviewDto>>(reviews);
+        var list = await query.ToListAsync(ct);
+        return mapper.Map<List<ReviewDto>>(list);
     }
 }

@@ -144,7 +144,7 @@ public static class SeedData
 
             Article = "Great book!",
             Message = "Very useful for learning advanced C#",
-            FilePaths = ["file1.jpg", "file2.jpg"] // Статический список строк
+            ImageUrls = ["file1.jpg", "file2.jpg"] // Статический список строк
         });
     }
 }

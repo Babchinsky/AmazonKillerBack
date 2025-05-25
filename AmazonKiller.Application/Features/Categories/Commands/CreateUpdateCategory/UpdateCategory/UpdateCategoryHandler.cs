@@ -15,48 +15,49 @@ public class UpdateCategoryHandler(
 {
     public async Task<CategoryDto> Handle(UpdateCategoryCommand request, CancellationToken ct)
     {
-        var c = await repo.GetByIdAsync(request.Id, ct)
-                ?? throw new NotFoundException("Category not found");
+        var category = await repo.GetByIdAsync(request.Id, ct)
+                       ?? throw new NotFoundException("Category not found");
 
         // 🔒 Проверка RowVersion
-        c.RowVersion = Convert.FromBase64String(request.RowVersion);
+        category.RowVersion = Convert.FromBase64String(request.RowVersion);
 
-        // 🔁 Загрузка нового изображения, если есть
-        var newImageUrl = c.ImageUrl;
+        // 🔁 Сохраняем старый URL для возможного удаления
+        var oldImageUrl = category.ImageUrl;
+
+        // 📥 Загрузка нового изображения, если есть
+        var newImageUrl = oldImageUrl;
         if (request.Image is { Length: > 0 })
         {
-            // Загрузить новое
             await using var stream = request.Image.OpenReadStream();
             var ext = Path.GetExtension(request.Image.FileName);
             newImageUrl = await fileStorage.SaveAsync(stream, ext, ct);
         }
 
-        // ✏️ Обновление данных
-        c.Name = request.Name;
-        c.Status = request.Status;
-        c.ParentId = request.ParentId;
-        c.Description = request.Description;
-        c.IconName = request.ParentId == null ? request.IconName : null;
-        c.PropertyKeys = request.ParentId != null ? request.PropertyKeys ?? [] : [];
-        c.ImageUrl = newImageUrl;
+        // ✏️ Обновление полей
+        category.Name = request.Name;
+        category.Status = request.Status;
+        category.ParentId = request.ParentId;
+        category.Description = request.Description;
+        category.IconName = request.ParentId == null ? request.IconName : null;
+        category.PropertyKeys = request.ParentId != null ? request.PropertyKeys ?? [] : [];
+        category.ImageUrl = newImageUrl;
 
-        // 🧪 Сохранение
         try
         {
-            await repo.UpdateAsync(c, ct);
+            await repo.UpdateAsync(category, ct);
         }
         catch (Exception)
         {
-            // Если был загружен новый файл, но сохранение упало — удалить файл
-            if (request.Image != null && newImageUrl != c.ImageUrl)
+            // если упало — откатываем новый файл
+            if (request.Image != null && newImageUrl != oldImageUrl)
                 await fileStorage.DeleteAsync(newImageUrl!, ct);
             throw;
         }
 
-        // 🧹 Удалить старое изображение (если новое есть и оно отличается)
-        if (request.Image != null && c.ImageUrl != null && c.ImageUrl != newImageUrl)
-            await fileStorage.DeleteAsync(c.ImageUrl, ct);
+        // 🧹 Удаление старого изображения, если оно изменилось
+        if (request.Image != null && oldImageUrl != null && oldImageUrl != newImageUrl)
+            await fileStorage.DeleteAsync(oldImageUrl, ct);
 
-        return mapper.Map<CategoryDto>(c);
+        return mapper.Map<CategoryDto>(category);
     }
 }

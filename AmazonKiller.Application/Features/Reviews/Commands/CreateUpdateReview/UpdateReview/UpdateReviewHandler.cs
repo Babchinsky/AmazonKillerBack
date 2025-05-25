@@ -21,14 +21,12 @@ public class UpdateReviewHandler(
     {
         var oldReview = await repo.Queryable()
                             .Where(x => x.Id == r.Id)
-                            .Select(x => new { x.Id, x.UserId, x.FilePaths, x.RowVersion })
+                            .Select(x => new { x.Id, x.UserId, x.ProductId, x.ImageUrls, x.RowVersion })
                             .FirstOrDefaultAsync(ct)
                         ?? throw new NotFoundException("Review not found");
 
         if (oldReview.UserId != currentUser.UserId)
             throw new AppException("Forbidden", 403);
-
-        var oldPaths = oldReview.FilePaths.ToList();
 
         var uploadedPaths = new List<string>();
         foreach (var file in r.UploadedFiles)
@@ -40,10 +38,12 @@ public class UpdateReviewHandler(
         var review = new Review
         {
             Id = r.Id,
+            ProductId = oldReview.ProductId,
+            UserId = oldReview.UserId,
             Rating = r.Rating,
             Article = r.Article,
             Message = r.Message,
-            FilePaths = uploadedPaths,
+            ImageUrls = uploadedPaths,
             Tags = r.Tags,
             RowVersion = Convert.FromBase64String(r.RowVersion)
         };
@@ -58,12 +58,15 @@ public class UpdateReviewHandler(
             throw new AppException("The review was modified by another user. Please refresh and try again.", 409);
         }
 
-        var toDelete = oldPaths.Except(uploadedPaths, StringComparer.OrdinalIgnoreCase);
+        var toDelete = oldReview.ImageUrls.Except(uploadedPaths, StringComparer.OrdinalIgnoreCase);
         await files.DeleteBatchSafeAsync(toDelete, ct);
 
-        return await repo.Queryable()
-            .Where(x => x.Id == r.Id)
-            .ProjectTo<ReviewDto>(mapper.ConfigurationProvider)
-            .FirstAsync(ct);
+        var entity = await repo.Queryable()
+            .Include(x => x.Product)
+            .Include(x => x.User)
+            .Include(x => x.LikesFromUsers)
+            .FirstAsync(x => x.Id == r.Id, ct);
+
+        return mapper.Map<ReviewDto>(entity);
     }
 }

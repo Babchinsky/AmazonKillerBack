@@ -1,5 +1,5 @@
-﻿using AmazonKiller.Application.DTOs.Products;
-using AmazonKiller.Domain.Entities.Products;
+﻿using AmazonKiller.Application.DTOs.Reviews;
+using AmazonKiller.Domain.Entities.Reviews;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 
@@ -8,11 +8,11 @@ namespace AmazonKiller.Application.Mappings.ImageUrlResolvers;
 /// <summary>
 /// «2025/05/abc.jpg» → «https://host/uploads/2025/05/abc.jpg».
 /// </summary>
-public sealed class ProductImageUrlResolver(IHttpContextAccessor ctx)
-    : IValueResolver<Product, ProductDto, List<string>>
+public sealed class ReviewImageUrlResolver(IHttpContextAccessor ctx)
+    : IValueResolver<Review, ReviewDto, List<string>>
 {
     public List<string> Resolve(
-        Product src, ProductDto _, List<string> __, ResolutionContext ___)
+        Review src, ReviewDto _, List<string> __, ResolutionContext ___)
     {
         var req = ctx.HttpContext!.Request;
         var baseUrl = $"{req.Scheme}://{req.Host}/uploads/"; // https://host/uploads/

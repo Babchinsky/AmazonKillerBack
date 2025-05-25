@@ -6,7 +6,7 @@ namespace AmazonKiller.Application.Interfaces.Repositories.Reviews;
 public interface IReviewRepository
 {
     IQueryable<Review> Queryable(); // только для update/delete
-    IQueryable<ReviewDto> GetAllProjected(); // используется в списках
+    IQueryable<Review> GetAllWithIncludes();
     Task<ReviewDto?> GetDtoByIdAsync(Guid id, CancellationToken ct = default); // ProjectTo + FirstOrDefault
     Task<Review?> GetEntityByIdAsync(Guid id, CancellationToken ct = default); // используется в Delete
 

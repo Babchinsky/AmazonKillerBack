@@ -1,6 +1,6 @@
 ﻿using AmazonKiller.Application.DTOs.Products;
 using AmazonKiller.Application.Features.Products.Commands.CreateUpdateProduct.CreateProduct;
-using AmazonKiller.Application.Mappings.ImageUrlResolvers;
+using AmazonKiller.Application.Mappings.ImageUrlResolvers.Products;
 using AmazonKiller.Domain.Entities.Products;
 using AutoMapper;
 
@@ -10,7 +10,7 @@ public sealed class ProductMappingProfile : Profile
 {
     public ProductMappingProfile()
     {
-        /* 1. Команда → Домен -------------------------------------------- */
+        // 1. Команда → Домен
         CreateMap<CreateProductCommand, Product>()
             .ForMember(d => d.Id, o => o.Ignore())
             .ForMember(d => d.RowVersion, o => o.Ignore())
@@ -18,18 +18,18 @@ public sealed class ProductMappingProfile : Profile
             .ForMember(d => d.Attributes, o => o.Ignore())
             .ForMember(d => d.Features, o => o.Ignore());
 
-        /* 2. Домен → DTO -------------------------------------------------- */
+        // 2. Домен → ProductDto
         CreateMap<Product, ProductDto>()
-            .ForMember(d => d.ImageUrls,
-                o => o.MapFrom<ProductImageUrlResolver>())
-            .ForMember(d => d.RowVersion,
-                o => o.MapFrom(s => Convert.ToBase64String(s.RowVersion)))
-            .ForMember(d => d.Attributes,
-                o => o.MapFrom(s => s.Attributes))
-            .ForMember(d => d.Features,
-                o => o.MapFrom(s => s.Features));
+            .ForMember(d => d.ImageUrls, o => o.MapFrom<ProductImageUrlResolver>())
+            .ForMember(d => d.RowVersion, o => o.MapFrom(s => Convert.ToBase64String(s.RowVersion)))
+            .ForMember(d => d.Attributes, o => o.MapFrom(s => s.Attributes))
+            .ForMember(d => d.Features, o => o.MapFrom(s => s.Features));
 
-        /* 3. Под-объекты -------------------------------------------------- */
+        // ✅ 3. Домен → ProductCardDto (для карточек)
+        CreateMap<Product, ProductCardDto>()
+            .ForMember(d => d.ImageUrl, o => o.MapFrom<ProductMainImageUrlResolver>());
+
+        // 4. Под-объекты
         CreateMap<ProductAttribute, ProductAttributeDto>();
         CreateMap<ProductFeature, ProductFeatureDto>();
     }

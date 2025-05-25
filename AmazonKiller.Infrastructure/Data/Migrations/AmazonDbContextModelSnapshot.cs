@@ -315,7 +315,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("GETUTCDATE()");
 
-                    b.PrimitiveCollection<string>("FilePaths")
+                    b.PrimitiveCollection<string>("ImageUrls")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -358,7 +358,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                             Id = new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
                             Article = "Great book!",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            FilePaths = "[\"file1.jpg\",\"file2.jpg\"]",
+                            ImageUrls = "[\"file1.jpg\",\"file2.jpg\"]",
                             Message = "Very useful for learning advanced C#",
                             ProductId = new Guid("55555555-5555-5555-5555-555555555555"),
                             Rating = 5m,

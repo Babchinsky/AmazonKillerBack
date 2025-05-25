@@ -4,6 +4,7 @@ using AmazonKiller.Application.Interfaces.Services;
 using AmazonKiller.Domain.Entities.Reviews;
 using AutoMapper;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace AmazonKiller.Application.Features.Reviews.Commands.CreateUpdateReview.CreateReview;
 
@@ -16,11 +17,11 @@ public class CreateReviewHandler(
 {
     public async Task<ReviewDto> Handle(CreateReviewCommand r, CancellationToken ct)
     {
-        var filePaths = new List<string>();
+        var imageUrls = new List<string>();
         foreach (var file in r.UploadedFiles)
         {
             await using var stream = file.OpenReadStream();
-            filePaths.Add(await files.SaveAsync(stream, Path.GetExtension(file.FileName), ct));
+            imageUrls.Add(await files.SaveAsync(stream, Path.GetExtension(file.FileName), ct));
         }
 
         var review = new Review
@@ -31,12 +32,20 @@ public class CreateReviewHandler(
             Rating = r.Rating,
             Article = r.Article,
             Message = r.Message,
-            FilePaths = filePaths,
+            ImageUrls = imageUrls,
             Tags = r.Tags,
             CreatedAt = DateTime.UtcNow
         };
 
         await repo.AddAsync(review, ct);
-        return mapper.Map<ReviewDto>(review);
+
+        // ⬇️ Загрузи сущность с User и Product
+        var fullReview = await repo.Queryable()
+            .Include(r => r.User)
+            .Include(r => r.Product)
+            .Include(r => r.LikesFromUsers)
+            .FirstAsync(r => r.Id == review.Id, ct);
+
+        return mapper.Map<ReviewDto>(fullReview);
     }
 }

@@ -1,13 +1,13 @@
-﻿using AmazonKiller.Application.Common.Models;
-using AmazonKiller.Application.DTOs.Reviews;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 using AmazonKiller.Application.Common.Helpers;
+using AmazonKiller.Application.Common.Models;
+using AmazonKiller.Domain.Entities.Reviews;
 
 namespace AmazonKiller.Application.Features.Reviews.Queries.GetAllReviews;
 
 public static class ReviewQueryExtensions
 {
-    public static IQueryable<ReviewDto> ApplyFilters(this IQueryable<ReviewDto> query, GetAllReviewsQuery q)
+    public static IQueryable<Review> ApplyFilters(this IQueryable<Review> query, GetAllReviewsQuery q)
     {
         if (q.ProductId.HasValue)
             query = query.Where(r => r.ProductId == q.ProductId);
@@ -24,22 +24,20 @@ public static class ReviewQueryExtensions
         return query;
     }
 
-    public static IQueryable<ReviewDto> ApplySorting(this IQueryable<ReviewDto> query, QueryParameters parameters)
+    public static IQueryable<Review> ApplySorting(this IQueryable<Review> query, QueryParameters parameters)
     {
-        var sortMap = new Dictionary<string, Expression<Func<ReviewDto, object>>>
+        var sortMap = new Dictionary<string, Expression<Func<Review, object>>>
         {
             ["rating"] = r => r.Rating,
             ["createdat"] = r => r.CreatedAt,
-            ["likes"] = r => r.Likes
+            ["likes"] = r => r.LikesFromUsers.Count
         };
 
         return query.ApplySorting(parameters, sortMap);
     }
 
-    public static IQueryable<ReviewDto> ApplyPagination(this IQueryable<ReviewDto> query, QueryParameters parameters)
+    public static IQueryable<Review> ApplyPagination(this IQueryable<Review> query, QueryParameters parameters)
     {
-        return query
-            .Skip((parameters.Page - 1) * parameters.PageSize)
-            .Take(parameters.PageSize);
+        return query.Skip((parameters.Page - 1) * parameters.PageSize).Take(parameters.PageSize);
     }
 }

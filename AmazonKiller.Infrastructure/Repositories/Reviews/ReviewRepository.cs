@@ -2,6 +2,7 @@ using AmazonKiller.Application.DTOs.Reviews;
 using AmazonKiller.Application.Interfaces.Repositories.Reviews;
 using AmazonKiller.Domain.Entities.Reviews;
 using AmazonKiller.Infrastructure.Data;
+using AmazonKiller.Shared.Exceptions;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
@@ -15,17 +16,23 @@ public class ReviewRepository(AmazonDbContext db, IMapper mapper) : IReviewRepos
         return db.Reviews;
     }
 
-    public IQueryable<ReviewDto> GetAllProjected()
+    public async Task<ReviewDto?> GetDtoByIdAsync(Guid id, CancellationToken ct = default)
     {
-        return db.Reviews.ProjectTo<ReviewDto>(mapper.ConfigurationProvider);
+        var entity = await db.Reviews
+            .Include(r => r.Product)
+            .Include(r => r.User)
+            .Include(r => r.LikesFromUsers)
+            .FirstOrDefaultAsync(x => x.Id == id, ct);
+
+        return entity is null ? null : mapper.Map<ReviewDto>(entity);
     }
 
-    public Task<ReviewDto?> GetDtoByIdAsync(Guid id, CancellationToken ct = default)
+    public IQueryable<Review> GetAllWithIncludes()
     {
         return db.Reviews
-            .Where(x => x.Id == id)
-            .ProjectTo<ReviewDto>(mapper.ConfigurationProvider)
-            .FirstOrDefaultAsync(ct);
+            .Include(r => r.Product)
+            .Include(r => r.User)
+            .Include(r => r.LikesFromUsers);
     }
 
     public Task<Review?> GetEntityByIdAsync(Guid id, CancellationToken ct = default)
@@ -35,8 +42,15 @@ public class ReviewRepository(AmazonDbContext db, IMapper mapper) : IReviewRepos
 
     public async Task AddAsync(Review review, CancellationToken ct = default)
     {
-        db.Reviews.Add(review);
-        await db.SaveChangesAsync(ct);
+        try
+        {
+            db.Reviews.Add(review);
+            await db.SaveChangesAsync(ct);
+        }
+        catch (DbUpdateException ex) when (ex.InnerException?.Message.Contains("FK_Reviews_Products_ProductId") == true)
+        {
+            throw new AppException("Invalid ProductId: the specified product does not exist.");
+        }
     }
 
     public async Task UpdateAsync(Review review, CancellationToken ct = default)

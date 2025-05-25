@@ -26,7 +26,9 @@ public class ReviewConfiguration : IEntityTypeConfiguration<Review>
             .HasForeignKey(r => r.ProductId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        b.PrimitiveCollection(r => r.FilePaths);
+        b.PrimitiveCollection(r => r.ImageUrls);
         b.PrimitiveCollection(r => r.Tags);
+
+        b.Property(p => p.RowVersion).IsRowVersion().IsConcurrencyToken();
     }
 }

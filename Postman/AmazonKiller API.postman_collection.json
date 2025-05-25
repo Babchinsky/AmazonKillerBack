@@ -1869,7 +1869,10 @@
 										{
 											"key": "Images",
 											"type": "file",
-											"src": "/C:/Users/alexs/OneDrive/Desktop/product1_photo.jpeg"
+											"src": [
+												"/C:/Users/alexs/OneDrive/Desktop/product1_photo.jpeg",
+												"/C:/Users/alexs/OneDrive/Desktop/product2_photo.jpg"
+											]
 										},
 										{
 											"key": "Attributes",
@@ -2110,7 +2113,10 @@
 										{
 											"key": "Images",
 											"type": "file",
-											"src": "/C:/Users/alexs/OneDrive/Desktop/product2_photo.jpg"
+											"src": [
+												"/C:/Users/alexs/OneDrive/Desktop/product3.jpg",
+												"/C:/Users/alexs/OneDrive/Desktop/product4.jpg"
+											]
 										},
 										{
 											"key": "Attributes",
@@ -2401,138 +2407,84 @@
 					"name": "Reviews",
 					"item": [
 						{
-							"name": "Get All Reviews by Filter",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "text/plain"
+							"name": "Create Review",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"if (pm.response.code === 200 || pm.response.code === 201) {\r",
+											"    const review = pm.response.json();\r",
+											"\r",
+											"    pm.test(\"Review created successfully\", () => {\r",
+											"        pm.expect(review).to.be.an(\"object\");\r",
+											"        pm.expect(review.id, \"Review ID should exist\").to.be.a(\"string\");\r",
+											"        pm.expect(review.createdAt, \"createdAt should be present\").to.be.a(\"string\");\r",
+											"        pm.expect(review.rowVersion, \"rowVersion should exist\").to.be.a(\"string\");\r",
+											"    });\r",
+											"\r",
+											"    if (review.id) {\r",
+											"        pm.environment.set(\"reviewId\", review.id);\r",
+											"        console.log(\"✅ Saved reviewId:\", review.id);\r",
+											"    }\r",
+											"\r",
+											"    if (review.createdAt) {\r",
+											"        pm.environment.set(\"reviewCreatedAt\", review.createdAt);\r",
+											"        console.log(\"🕒 Saved reviewCreatedAt:\", review.createdAt);\r",
+											"    }\r",
+											"\r",
+											"    if (review.rowVersion) {\r",
+											"        pm.environment.set(\"reviewRowVersion\", review.rowVersion);\r",
+											"        console.log(\"🔁 Saved reviewRowVersion:\", review.rowVersion);\r",
+											"    }\r",
+											"} else {\r",
+											"    pm.test(\"Request should return 200 or 201\", () => {\r",
+											"        pm.expect(pm.response.code).to.be.oneOf([200, 201]);\r",
+											"    });\r",
+											"}\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
 									}
-								],
-								"url": {
-									"raw": "{{baseUrl}}/api/reviews?ProductId=f1c2102d-dea6-0b72-8187-54c5b0327b88&UserId=f1c2102d-dea6-0b72-8187-54c5b0327b88&MinRating=-34911693&MaxRating=-34911693&Parameters.Page=-34911693&Parameters.PageSize=-34911693&Parameters.SortBy=dolor labore consequa&Parameters.SortOrder=dolor labore consequa",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"api",
-										"reviews"
-									],
-									"query": [
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// Генерация случайных значений для тестового отзыва\r",
+											"pm.environment.set(\"reviewArticle\", \"Review \" + Math.floor(Math.random() * 100000));\r",
+											"pm.environment.set(\"reviewMessage\", \"This is a sample message with ID \" + Date.now());\r",
+											"pm.environment.set(\"reviewRating\", (Math.floor(Math.random() * 5) + 1).toString());\r",
+											"const tags = [\"tag1\", \"tag2\", \"test\"];\r",
+											"pm.environment.set(\"reviewTags0\", tags[0]);\r",
+											"pm.environment.set(\"reviewTags1\", tags[1]);\r",
+											"pm.environment.set(\"reviewTags2\", tags[2]);\r",
+											"\r",
+											"// Проверка наличия lastProductId\r",
+											"if (!pm.environment.get(\"lastProductId\")) {\r",
+											"    console.warn(\"⚠️ Variable 'lastProductId' is not set\");\r",
+											"} else {\r",
+											"    pm.environment.set(\"reviewProductId\", pm.environment.get(\"lastProductId\"));\r",
+											"}\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
 										{
-											"key": "ProductId",
-											"value": "f1c2102d-dea6-0b72-8187-54c5b0327b88"
-										},
-										{
-											"key": "UserId",
-											"value": "f1c2102d-dea6-0b72-8187-54c5b0327b88"
-										},
-										{
-											"key": "MinRating",
-											"value": "-34911693"
-										},
-										{
-											"key": "MaxRating",
-											"value": "-34911693"
-										},
-										{
-											"key": "Parameters.Page",
-											"value": "-34911693"
-										},
-										{
-											"key": "Parameters.PageSize",
-											"value": "-34911693"
-										},
-										{
-											"key": "Parameters.SortBy",
-											"value": "dolor labore consequa"
-										},
-										{
-											"key": "Parameters.SortOrder",
-											"value": "dolor labore consequa"
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
 										}
 									]
-								}
-							},
-							"response": [
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "GET",
-										"header": [
-											{
-												"key": "Accept",
-												"value": "text/plain"
-											},
-											{
-												"key": "Authorization",
-												"value": "Bearer <token>",
-												"description": "Added as a part of security scheme: bearer"
-											}
-										],
-										"url": {
-											"raw": "{{baseUrl}}/api/reviews?ProductId=f1c2102d-dea6-0b72-8187-54c5b0327b88&UserId=f1c2102d-dea6-0b72-8187-54c5b0327b88&MinRating=-34911693&MaxRating=-34911693&Parameters.Page=-34911693&Parameters.PageSize=-34911693&Parameters.SortBy=dolor labore consequa&Parameters.SortOrder=dolor labore consequa",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"api",
-												"reviews"
-											],
-											"query": [
-												{
-													"key": "ProductId",
-													"value": "f1c2102d-dea6-0b72-8187-54c5b0327b88"
-												},
-												{
-													"key": "UserId",
-													"value": "f1c2102d-dea6-0b72-8187-54c5b0327b88"
-												},
-												{
-													"key": "MinRating",
-													"value": "-34911693"
-												},
-												{
-													"key": "MaxRating",
-													"value": "-34911693"
-												},
-												{
-													"key": "Parameters.Page",
-													"value": "-34911693"
-												},
-												{
-													"key": "Parameters.PageSize",
-													"value": "-34911693"
-												},
-												{
-													"key": "Parameters.SortBy",
-													"value": "dolor labore consequa"
-												},
-												{
-													"key": "Parameters.SortOrder",
-													"value": "dolor labore consequa"
-												}
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										}
-									],
-									"cookie": [],
-									"body": "[\n  {\n    \"id\": \"0a47e623-350b-9c90-e928-2a19ec759c11\",\n    \"rating\": 22148335.499111354,\n    \"productId\": \"092de7dd-9a26-c656-099d-9a7d24cca147\",\n    \"userId\": \"e5388fef-cd37-04b4-fb38-c3cfab834e3b\",\n    \"createdAt\": \"1973-03-27T08:31:47.990Z\",\n    \"userFullName\": \"eiusmo\",\n    \"productName\": \"e\",\n    \"article\": \"anim\",\n    \"message\": \"dolor labore Ut est\",\n    \"filePaths\": [\n      \"in non esse elit\",\n      \"adipisicing magna dolor sint\"\n    ],\n    \"tags\": [\n      \"Excepteur occaecat ea sed\",\n      \"Ut id pariatur\"\n    ],\n    \"likes\": 26496856\n  },\n  {\n    \"id\": \"urn:uuid:5e5fd523-0f39-6b55-007f-0d9ad0924cb1\",\n    \"rating\": -82197825.4319987,\n    \"productId\": \"urn:uuid:38fd45a6-6e26-27a0-453c-46c8c1aa179b\",\n    \"userId\": \"urn:uuid:690e0f6e-3dcd-c105-1c9d-42016aae946a\",\n    \"createdAt\": \"1951-04-18T04:40:49.824Z\",\n    \"userFullName\": \"fugiat\",\n    \"productName\": \"est\",\n    \"article\": \"in ex reprehenderit\",\n    \"message\": \"aute voluptat\",\n    \"filePaths\": [\n      \"Lorem adipisicing id\",\n      \"magna officia aliquip enim ad\"\n    ],\n    \"tags\": [\n      \"anim consectetur eiusmod\",\n      \"consectetur labore ut\"\n    ],\n    \"likes\": 30881788\n  }\n]"
-								}
-							]
-						},
-						{
-							"name": "Create Review",
-							"request": {
+								},
 								"method": "POST",
 								"header": [
 									{
@@ -2549,32 +2501,45 @@
 									"formdata": [
 										{
 											"key": "ProductId",
-											"value": "urn:uuid:09cc30a1-16f8-2826-836a-7f49e0c7ad75",
+											"value": "{{lastProductId}}",
 											"type": "text"
 										},
 										{
 											"key": "Article",
-											"value": "Lorem nostrud esse",
+											"value": "{{reviewArticle}}",
 											"type": "text"
 										},
 										{
 											"key": "Message",
-											"value": "anim",
+											"value": "{{reviewMessage}}",
 											"type": "text"
 										},
 										{
 											"key": "Rating",
-											"value": "-53756833.110591054",
+											"value": "{{reviewRating}}",
 											"type": "text"
 										},
 										{
 											"key": "UploadedFiles",
-											"value": "tempor ex aliquip veniam est,magna cillum velit",
+											"type": "file",
+											"src": [
+												"/C:/Users/alexs/OneDrive/Desktop/review1.jpg",
+												"/C:/Users/alexs/OneDrive/Desktop/review2.jpg"
+											]
+										},
+										{
+											"key": "Tags",
+											"value": "{{reviewTags0}}",
 											"type": "text"
 										},
 										{
 											"key": "Tags",
-											"value": "minim laborum sunt nulla cillum,et adipisicing",
+											"value": "{{reviewTags1}}",
+											"type": "text"
+										},
+										{
+											"key": "Tags",
+											"value": "{{reviewTags2}}",
 											"type": "text"
 										}
 									]
@@ -2672,6 +2637,43 @@
 						},
 						{
 							"name": "Get Review by Id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"if (pm.response.code === 200) {\r",
+											"    const review = pm.response.json();\r",
+											"\r",
+											"    pm.test(\"✔ Review loaded successfully\", () => {\r",
+											"        pm.expect(review).to.be.an(\"object\");\r",
+											"        pm.expect(review.id, \"Review ID should exist\").to.be.a(\"string\");\r",
+											"        pm.expect(review.createdAt, \"CreatedAt should exist\").to.be.a(\"string\");\r",
+											"        pm.expect(review.rowVersion, \"RowVersion should exist\").to.be.a(\"string\");\r",
+											"        pm.expect(review.imageUrls, \"ImageUrls should be array\").to.be.an(\"array\");\r",
+											"        pm.expect(review.tags, \"Tags should be array\").to.be.an(\"array\");\r",
+											"    });\r",
+											"\r",
+											"    // Save to environment\r",
+											"    pm.environment.set(\"reviewId\", review.id);\r",
+											"    pm.environment.set(\"reviewCreatedAt\", review.createdAt);\r",
+											"    pm.environment.set(\"reviewRowVersion\", review.rowVersion);\r",
+											"\r",
+											"    console.log(\"🆔 reviewId:\", review.id);\r",
+											"    console.log(\"🕒 reviewCreatedAt:\", review.createdAt);\r",
+											"    console.log(\"🔐 rowVersion:\", review.rowVersion);\r",
+											"} else {\r",
+											"    pm.test(\"❌ Request failed\", () => {\r",
+											"        pm.expect(pm.response.code).to.eql(200);\r",
+											"    });\r",
+											"}\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
 							"request": {
 								"method": "GET",
 								"header": [
@@ -2693,7 +2695,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "f1c2102d-dea6-0b72-8187-54c5b0327b88",
+											"value": "{{reviewId}}",
 											"description": "(Required) "
 										}
 									]
@@ -2747,8 +2749,250 @@
 							]
 						},
 						{
-							"name": "Update Review",
+							"name": "Get All Reviews by Filter",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"if (pm.response.code === 200) {\r",
+											"    const reviews = pm.response.json();\r",
+											"\r",
+											"    pm.test(\"✔ Response is an array\", () => {\r",
+											"        pm.expect(reviews).to.be.an(\"array\");\r",
+											"        pm.expect(reviews.length).to.be.above(0);\r",
+											"    });\r",
+											"\r",
+											"    const first = reviews[0];\r",
+											"\r",
+											"    pm.test(\"✔ First review has required fields\", () => {\r",
+											"        pm.expect(first.id, \"ID\").to.be.a(\"string\");\r",
+											"        pm.expect(first.createdAt, \"CreatedAt\").to.be.a(\"string\");\r",
+											"        pm.expect(first.rowVersion, \"RowVersion\").to.be.a(\"string\");\r",
+											"        pm.expect(first.imageUrls, \"ImageUrls\").to.be.an(\"array\");\r",
+											"        pm.expect(first.tags, \"Tags\").to.be.an(\"array\");\r",
+											"    });\r",
+											"\r",
+											"    // Save variables for next requests\r",
+											"    pm.environment.set(\"reviewId\", first.id);\r",
+											"    pm.environment.set(\"reviewCreatedAt\", first.createdAt);\r",
+											"    pm.environment.set(\"reviewRowVersion\", first.rowVersion);\r",
+											"\r",
+											"    console.log(\"🆔 reviewId:\", first.id);\r",
+											"    console.log(\"🕒 createdAt:\", first.createdAt);\r",
+											"    console.log(\"🔐 rowVersion:\", first.rowVersion);\r",
+											"} else {\r",
+											"    pm.test(\"❌ Expected 200 OK\", () => {\r",
+											"        pm.expect(pm.response.code).to.eql(200);\r",
+											"    });\r",
+											"}\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
 							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/reviews?Parameters.SortBy=createdat&Parameters.SortOrder=desc",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"reviews"
+									],
+									"query": [
+										{
+											"key": "ProductId",
+											"value": "{{lastProductId}}",
+											"disabled": true
+										},
+										{
+											"key": "UserId",
+											"value": "77777777-7777-7777-7777-777777777777",
+											"disabled": true
+										},
+										{
+											"key": "MinRating",
+											"value": "3",
+											"disabled": true
+										},
+										{
+											"key": "MaxRating",
+											"value": "5",
+											"disabled": true
+										},
+										{
+											"key": "Parameters.Page",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "Parameters.PageSize",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "Parameters.SortBy",
+											"value": "createdat"
+										},
+										{
+											"key": "Parameters.SortOrder",
+											"value": "desc"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer <token>",
+												"description": "Added as a part of security scheme: bearer"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/reviews?ProductId=f1c2102d-dea6-0b72-8187-54c5b0327b88&UserId=f1c2102d-dea6-0b72-8187-54c5b0327b88&MinRating=-34911693&MaxRating=-34911693&Parameters.Page=-34911693&Parameters.PageSize=-34911693&Parameters.SortBy=dolor labore consequa&Parameters.SortOrder=dolor labore consequa",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"reviews"
+											],
+											"query": [
+												{
+													"key": "ProductId",
+													"value": "f1c2102d-dea6-0b72-8187-54c5b0327b88"
+												},
+												{
+													"key": "UserId",
+													"value": "f1c2102d-dea6-0b72-8187-54c5b0327b88"
+												},
+												{
+													"key": "MinRating",
+													"value": "-34911693"
+												},
+												{
+													"key": "MaxRating",
+													"value": "-34911693"
+												},
+												{
+													"key": "Parameters.Page",
+													"value": "-34911693"
+												},
+												{
+													"key": "Parameters.PageSize",
+													"value": "-34911693"
+												},
+												{
+													"key": "Parameters.SortBy",
+													"value": "dolor labore consequa"
+												},
+												{
+													"key": "Parameters.SortOrder",
+													"value": "dolor labore consequa"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "[\n  {\n    \"id\": \"0a47e623-350b-9c90-e928-2a19ec759c11\",\n    \"rating\": 22148335.499111354,\n    \"productId\": \"092de7dd-9a26-c656-099d-9a7d24cca147\",\n    \"userId\": \"e5388fef-cd37-04b4-fb38-c3cfab834e3b\",\n    \"createdAt\": \"1973-03-27T08:31:47.990Z\",\n    \"userFullName\": \"eiusmo\",\n    \"productName\": \"e\",\n    \"article\": \"anim\",\n    \"message\": \"dolor labore Ut est\",\n    \"filePaths\": [\n      \"in non esse elit\",\n      \"adipisicing magna dolor sint\"\n    ],\n    \"tags\": [\n      \"Excepteur occaecat ea sed\",\n      \"Ut id pariatur\"\n    ],\n    \"likes\": 26496856\n  },\n  {\n    \"id\": \"urn:uuid:5e5fd523-0f39-6b55-007f-0d9ad0924cb1\",\n    \"rating\": -82197825.4319987,\n    \"productId\": \"urn:uuid:38fd45a6-6e26-27a0-453c-46c8c1aa179b\",\n    \"userId\": \"urn:uuid:690e0f6e-3dcd-c105-1c9d-42016aae946a\",\n    \"createdAt\": \"1951-04-18T04:40:49.824Z\",\n    \"userFullName\": \"fugiat\",\n    \"productName\": \"est\",\n    \"article\": \"in ex reprehenderit\",\n    \"message\": \"aute voluptat\",\n    \"filePaths\": [\n      \"Lorem adipisicing id\",\n      \"magna officia aliquip enim ad\"\n    ],\n    \"tags\": [\n      \"anim consectetur eiusmod\",\n      \"consectetur labore ut\"\n    ],\n    \"likes\": 30881788\n  }\n]"
+								}
+							]
+						},
+						{
+							"name": "Update Review",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"if (pm.response.code === 200) {\r",
+											"    const review = pm.response.json();\r",
+											"\r",
+											"    pm.test(\"✅ Review updated successfully\", () => {\r",
+											"        pm.expect(review).to.be.an(\"object\");\r",
+											"        pm.expect(review.id).to.eql(pm.environment.get(\"reviewId\"));\r",
+											"        pm.expect(review.rowVersion).to.be.a(\"string\");\r",
+											"    });\r",
+											"\r",
+											"    // Обновляем актуальные значения после успешного обновления\r",
+											"    pm.environment.set(\"reviewArticle\", review.article);\r",
+											"    pm.environment.set(\"reviewMessage\", review.message);\r",
+											"    pm.environment.set(\"reviewRating\", review.rating.toString());\r",
+											"    pm.environment.set(\"reviewTags\", review.tags.join(\",\"));\r",
+											"    pm.environment.set(\"reviewRowVersion\", review.rowVersion);\r",
+											"    console.log(\"📝 Review data synced to 'review...' variables.\");\r",
+											"} else {\r",
+											"    pm.test(\"❌ Expected status 200\", () => {\r",
+											"        pm.expect(pm.response.code).to.eql(200);\r",
+											"    });\r",
+											"}\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// Случайные данные для обновления\r",
+											"pm.environment.set(\"changedReviewArticle\", \"veniam aliquip dolor laboris dolore\");\r",
+											"pm.environment.set(\"changedReviewMessage\", \"sunt deserunt tempor ut\");\r",
+											"\r",
+											"const rating = (1 + Math.random() * 4).toFixed(2); // Гарантированно от 1 до 5\r",
+											"pm.environment.set(\"changedReviewRating\", rating);\r",
+											"\r",
+											"const changedTags = [\"changesTag1\", \"changesTag2\"];\r",
+											"pm.environment.set(\"changedReviewTags0\", changedTags[0]);\r",
+											"pm.environment.set(\"changedReviewTags1\", changedTags[1]);\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "PUT",
 								"header": [
 									{
@@ -2765,37 +3009,45 @@
 									"formdata": [
 										{
 											"key": "Id",
-											"value": "416b5ab1-4d2e-86bb-7c22-2d5855937fae",
+											"value": "{{reviewId}}",
 											"type": "text"
 										},
 										{
 											"key": "RowVersion",
-											"value": "pariatur nulla lab",
+											"value": "{{reviewRowVersion}}",
 											"type": "text"
 										},
 										{
 											"key": "Article",
-											"value": "veniam aliquip dolor laboris dolore",
+											"value": "{{changedReviewArticle}}",
 											"type": "text"
 										},
 										{
 											"key": "Message",
-											"value": "sunt deserunt tempor ut",
+											"value": "{{changedReviewMessage}}",
 											"type": "text"
 										},
 										{
 											"key": "Rating",
-											"value": "11582346.378254503",
+											"value": "{{changedReviewRating}}",
 											"type": "text"
 										},
 										{
 											"key": "UploadedFiles",
-											"value": "labore minim commodo,nisi ut Ut esse",
+											"type": "file",
+											"src": [
+												"/C:/Users/alexs/OneDrive/Desktop/review3.jpg",
+												"/C:/Users/alexs/OneDrive/Desktop/review4.jpg"
+											]
+										},
+										{
+											"key": "Tags",
+											"value": "{{changedReviewTags0}}",
 											"type": "text"
 										},
 										{
 											"key": "Tags",
-											"value": "ipsum Ut Excepteur,in nisi reprehenderit",
+											"value": "{{changedReviewTags1}}",
 											"type": "text"
 										}
 									]
@@ -2813,7 +3065,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "f1c2102d-dea6-0b72-8187-54c5b0327b88",
+											"value": "{{reviewId}}",
 											"description": "(Required) "
 										}
 									]
@@ -2911,70 +3163,44 @@
 							]
 						},
 						{
-							"name": "Delete Review",
+							"name": "Like Review",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"👍 Review like toggled successfully\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"    \r",
+											"    // Проверим, что тело либо пустое, либо содержит 0 или 1\r",
+											"    const resText = pm.response.text();\r",
+											"    \r",
+											"    if (resText) {\r",
+											"        const result = JSON.parse(resText);\r",
+											"        pm.expect(result).to.be.oneOf([0, 1]);\r",
+											"        console.log(\"📌 Like status after toggle:\", result);\r",
+											"    } else {\r",
+											"        console.log(\"ℹ️ No body returned, only 200 OK.\");\r",
+											"    }\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
 							"request": {
-								"method": "DELETE",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/api/reviews/:id",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"api",
-										"reviews",
-										":id"
-									],
-									"variable": [
+								"auth": {
+									"type": "bearer",
+									"bearer": [
 										{
-											"key": "id",
-											"value": "f1c2102d-dea6-0b72-8187-54c5b0327b88",
-											"description": "(Required) "
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
 										}
 									]
-								}
-							},
-							"response": [
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "DELETE",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "Bearer <token>",
-												"description": "Added as a part of security scheme: bearer"
-											}
-										],
-										"url": {
-											"raw": "{{baseUrl}}/api/reviews/:id",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"api",
-												"reviews",
-												":id"
-											],
-											"variable": [
-												{
-													"key": "id"
-												}
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "text",
-									"header": [],
-									"cookie": [],
-									"body": ""
-								}
-							]
-						},
-						{
-							"name": "Like Review",
-							"request": {
+								},
 								"method": "POST",
 								"header": [],
 								"url": {
@@ -2991,7 +3217,7 @@
 									"variable": [
 										{
 											"key": "reviewId",
-											"value": "f1c2102d-dea6-0b72-8187-54c5b0327b88",
+											"value": "{{reviewId}}",
 											"description": "(Required) "
 										}
 									]
@@ -3023,6 +3249,95 @@
 											"variable": [
 												{
 													"key": "reviewId"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Delete Review",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"🗑️ Review deleted successfully\", function () {\r",
+											"    pm.response.to.have.status(204);\r",
+											"    pm.response.to.not.have.body; // Убедимся, что тело действительно пустое\r",
+											"    console.log(\"✅ Review deleted (204 No Content)\");\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/reviews/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"reviews",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "{{reviewId}}",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer <token>",
+												"description": "Added as a part of security scheme: bearer"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/reviews/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"reviews",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
 												}
 											]
 										}
