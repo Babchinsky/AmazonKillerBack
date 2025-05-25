@@ -35,9 +35,4 @@ public static class ReviewQueryExtensions
 
         return query.ApplySorting(parameters, sortMap);
     }
-
-    public static IQueryable<Review> ApplyPagination(this IQueryable<Review> query, QueryParameters parameters)
-    {
-        return query.Skip((parameters.Page - 1) * parameters.PageSize).Take(parameters.PageSize);
-    }
 }

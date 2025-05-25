@@ -4,7 +4,7 @@ using MediatR;
 
 namespace AmazonKiller.Application.Features.Products.Queries.GetAllProductCards;
 
-public class GetAllProductCardsQuery : IRequest<List<ProductCardDto>>
+public class GetAllProductCardsQuery : IRequest<PagedList<ProductCardDto>>
 {
     public string? SearchTerm { get; init; }
     public Guid? CategoryId { get; init; }

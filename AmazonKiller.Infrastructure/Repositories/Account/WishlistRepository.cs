@@ -1,7 +1,9 @@
-﻿using AmazonKiller.Application.Common.Models;
+﻿using AmazonKiller.Application.Common.Helpers;
+using AmazonKiller.Application.Common.Models;
 using AmazonKiller.Application.DTOs.Products;
 using AmazonKiller.Application.Features.Account.Wishlist.Queries.GetWishlist;
 using AmazonKiller.Application.Interfaces.Repositories.Account;
+using AmazonKiller.Domain.Entities.Products;
 using AmazonKiller.Domain.Entities.Users;
 using AmazonKiller.Infrastructure.Data;
 using AutoMapper;
@@ -17,19 +19,17 @@ public class WishlistRepository(AmazonDbContext db, IMapper mapper) : IWishlistR
             .Include(x => x.Product);
     }
 
-    public async Task<List<ProductCardDto>> GetWishlistAsync(Guid userId, string? searchTerm,
-        QueryParameters parameters, CancellationToken ct)
+    public async Task<PagedList<ProductCardDto>> GetWishlistAsync(
+        Guid userId, string? searchTerm, QueryParameters parameters, CancellationToken ct)
     {
         var query = QueryWithProduct()
             .Where(x => x.UserId == userId)
             .Select(x => x.Product)
             .AsQueryable()
             .ApplyWishlistFilters(searchTerm)
-            .ApplyWishlistSorting(parameters)
-            .ApplyWishlistPagination(parameters);
+            .ApplyWishlistSorting(parameters);
 
-        var list = await query.ToListAsync(ct);
-        return mapper.Map<List<ProductCardDto>>(list);
+        return await query.ToPagedListAsync<Product, ProductCardDto>(parameters, mapper, ct);
     }
 
     public async Task ToggleAsync(Guid userId, Guid productId, CancellationToken ct)

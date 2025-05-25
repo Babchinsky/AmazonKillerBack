@@ -5,11 +5,6 @@ namespace AmazonKiller.Application.Common.Helpers;
 
 public static class QueryableExtensions
 {
-    public static IQueryable<T> ApplyPagination<T>(this IQueryable<T> query, QueryParameters q)
-    {
-        return query.Skip((q.Page - 1) * q.PageSize).Take(q.PageSize);
-    }
-
     public static IQueryable<T> ApplySorting<T>(
         this IQueryable<T> query,
         QueryParameters q,

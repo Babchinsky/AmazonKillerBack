@@ -4,7 +4,7 @@ using MediatR;
 
 namespace AmazonKiller.Application.Features.Admin.Users.Queries.GetAllUsers;
 
-public class GetAllUsersQuery : IRequest<List<UserAdminDto>>
+public class GetAllUsersQuery : IRequest<PagedList<UserAdminDto>>
 {
     public string? Search { get; init; }
     public string? Role { get; init; }

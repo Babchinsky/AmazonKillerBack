@@ -5,7 +5,7 @@ using AmazonKiller.Domain.Entities.Products;
 
 namespace AmazonKiller.Application.Features.Account.Wishlist.Queries.GetWishlist;
 
-public static class WishlistFilterExtensions
+public static class WishlistQueryExtensions
 {
     public static IQueryable<Product> ApplyWishlistFilters(this IQueryable<Product> query, string? searchTerm)
     {
@@ -24,13 +24,5 @@ public static class WishlistFilterExtensions
         };
 
         return query.ApplySorting(parameters, sortMap);
-    }
-
-    public static IQueryable<Product> ApplyWishlistPagination(this IQueryable<Product> query,
-        QueryParameters parameters)
-    {
-        return query
-            .Skip((parameters.Page - 1) * parameters.PageSize)
-            .Take(parameters.PageSize);
     }
 }

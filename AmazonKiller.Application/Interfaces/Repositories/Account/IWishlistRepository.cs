@@ -8,7 +8,8 @@ public interface IWishlistRepository
     Task AddAsync(Guid userId, Guid productId, CancellationToken ct);
     Task ToggleAsync(Guid userId, Guid productId, CancellationToken ct);
 
-    Task<List<ProductCardDto>> GetWishlistAsync(Guid userId, string? searchTerm,
-        QueryParameters parameters, CancellationToken ct);
+    Task<PagedList<ProductCardDto>> GetWishlistAsync(
+        Guid userId, string? searchTerm, QueryParameters parameters, CancellationToken ct);
+
     Task DeleteAsync(Guid userId, Guid productId, CancellationToken ct);
 }

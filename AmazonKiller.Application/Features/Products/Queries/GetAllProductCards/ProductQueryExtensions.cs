@@ -52,11 +52,4 @@ public static class ProductQueryExtensions
 
         return query.ApplySorting(parameters, sortMap); // ВАЖНО: из Helpers
     }
-
-    public static IQueryable<Product> ApplyPagination(this IQueryable<Product> query, QueryParameters parameters)
-    {
-        return query
-            .Skip((parameters.Page - 1) * parameters.PageSize)
-            .Take(parameters.PageSize);
-    }
 }

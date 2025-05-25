@@ -4,7 +4,7 @@ using MediatR;
 
 namespace AmazonKiller.Application.Features.Reviews.Queries.GetAllReviews;
 
-public class GetAllReviewsQuery : IRequest<List<ReviewDto>>
+public class GetAllReviewsQuery : IRequest<PagedList<ReviewDto>>
 {
     public Guid? ProductId { get; init; }
     public Guid? UserId { get; init; }
