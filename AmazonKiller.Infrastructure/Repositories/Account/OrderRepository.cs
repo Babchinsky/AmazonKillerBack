@@ -23,19 +23,6 @@ public class OrderRepository(AmazonDbContext db, IMapper mapper) : IOrderReposit
             .ThenInclude(i => i.Product);
     }
 
-    private async Task RecalculateOrderTotalPriceAsync(Guid orderId, CancellationToken ct)
-    {
-        var order = await db.Orders
-            .Include(o => o.Items)
-            .FirstOrDefaultAsync(o => o.Id == orderId, ct);
-
-        if (order == null)
-            return;
-
-        order.TotalPrice = order.Items.Sum(i => i.Price * i.Quantity);
-        await db.SaveChangesAsync(ct);
-    }
-
     public async Task<List<OrderDto>> GetUserOrdersAsync(Guid userId, CancellationToken ct)
     {
         var orders = await db.Orders
@@ -47,6 +34,12 @@ public class OrderRepository(AmazonDbContext db, IMapper mapper) : IOrderReposit
         return mapper.Map<List<OrderDto>>(orders);
     }
 
+    public IQueryable<Order> QueryWithIncludes()
+    {
+        return db.Orders
+            .Include(o => o.Info);
+    }
+
     public async Task<OrderDetailsDto> GetOrderDetailsAsync(Guid userId, Guid orderId, CancellationToken ct)
     {
         var order = await QueryOrderWithAllIncludes()
@@ -55,14 +48,7 @@ public class OrderRepository(AmazonDbContext db, IMapper mapper) : IOrderReposit
         if (order is null)
             throw new NotFoundException("Order not found");
 
-        var items = order.Items.Select(i => new OrderItemDto
-        {
-            Id = i.Id,
-            Name = i.Product.Name,
-            ImageUrl = i.Product.ImageUrls.FirstOrDefault() ?? "",
-            Quantity = i.Quantity,
-            Price = i.Price
-        }).ToList();
+        var items = mapper.Map<List<OrderItemDto>>(order.Items);
 
         var d = order.Info.Delivery;
 
@@ -87,54 +73,12 @@ public class OrderRepository(AmazonDbContext db, IMapper mapper) : IOrderReposit
         return order.Id;
     }
 
-    public async Task AddProductToOrderAsync(Guid orderId, Guid productId, int quantity, CancellationToken ct)
+    public async Task UpdateOrderStatusAsync(Guid orderId, OrderStatus newStatus, CancellationToken ct)
     {
-        var order = await db.Orders
-                        .Include(o => o.Items)
-                        .FirstOrDefaultAsync(o => o.Id == orderId, ct)
+        var order = await db.Orders.FirstOrDefaultAsync(o => o.Id == orderId, ct)
                     ?? throw new NotFoundException("Order not found");
 
-        var product = await db.Products
-                          .AsNoTracking()
-                          .FirstOrDefaultAsync(p => p.Id == productId, ct)
-                      ?? throw new NotFoundException("Product not found");
-
-        var item = order.Items.FirstOrDefault(i => i.ProductId == productId);
-
-        if (item != null)
-            item.Quantity += quantity;
-        else
-            order.Items.Add(new OrderItem
-            {
-                Id = Guid.NewGuid(),
-                OrderId = order.Id,
-                ProductId = productId,
-                Price = product.Price,
-                Quantity = quantity,
-                OrderedAt = DateTime.UtcNow
-            });
-
+        order.Status = newStatus;
         await db.SaveChangesAsync(ct);
-        await RecalculateOrderTotalPriceAsync(orderId, ct);
-    }
-
-    public async Task RemoveProductFromOrderAsync(Guid orderId, Guid orderItemId, CancellationToken ct)
-    {
-        var order = await db.Orders
-                        .Include(o => o.Items)
-                        .FirstOrDefaultAsync(o => o.Id == orderId, ct)
-                    ?? throw new NotFoundException("Order not found");
-
-        var item = order.Items.FirstOrDefault(i => i.Id == orderItemId)
-                   ?? throw new NotFoundException("Order item not found");
-
-        order.Items.Remove(item);
-
-        if (order.Items.Count == 0) db.Orders.Remove(order); // Если удалили последний товар — удаляем весь заказ
-
-        await db.SaveChangesAsync(ct);
-
-        if (db.Orders.Any(o => o.Id == orderId)) // Если заказ остался — пересчитываем сумму
-            await RecalculateOrderTotalPriceAsync(orderId, ct);
     }
 }

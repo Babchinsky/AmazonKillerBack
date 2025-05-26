@@ -1,8 +1,7 @@
-﻿using AmazonKiller.Application.Features.Account.Orders.Commands.AddProductToOrder;
+﻿using AmazonKiller.Application.Features.Account.Orders.Commands.ChangeOrderStatus;
 using AmazonKiller.Application.Features.Account.Orders.Commands.CreateOrder;
-using AmazonKiller.Application.Features.Account.Orders.Commands.RemoveProductFromOrder;
+using AmazonKiller.Application.Features.Account.Orders.Queries.GetAllOrders;
 using AmazonKiller.Application.Features.Account.Orders.Queries.GetOrderDetails;
-using AmazonKiller.Application.Features.Account.Orders.Queries.GetOrders;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -15,10 +14,10 @@ namespace AmazonKiller.WebApi.Controllers.Account;
 public class OrdersController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll([FromQuery] GetAllOrdersQuery q, CancellationToken ct)
     {
-        var orders = await mediator.Send(new GetOrdersQuery());
-        return Ok(orders);
+        var list = await mediator.Send(q, ct);
+        return Ok(list);
     }
 
     [HttpGet("{id:guid}")]
@@ -35,18 +34,14 @@ public class OrdersController(IMediator mediator) : ControllerBase
         return Ok(id);
     }
 
-    [HttpPost("products")]
-    public async Task<IActionResult> AddProduct([FromBody] AddProductToOrderCommand cmd,
-        CancellationToken ct)
+    [Authorize(Roles = "Admin")]
+    [HttpPut("{id:guid}/status")]
+    public async Task<IActionResult> ChangeStatus(Guid id, [FromBody] ChangeOrderStatusCommand cmd)
     {
-        await mediator.Send(cmd, ct);
-        return NoContent();
-    }
+        if (id != cmd.OrderId)
+            return BadRequest("Mismatched OrderId");
 
-    [HttpDelete("{orderId:guid}/products/{productId:guid}")]
-    public async Task<IActionResult> RemoveProduct(Guid orderId, Guid productId, CancellationToken ct)
-    {
-        await mediator.Send(new RemoveProductFromOrderCommand(orderId, productId), ct);
+        await mediator.Send(cmd);
         return NoContent();
     }
 }

@@ -9,7 +9,7 @@ public class Order : VersionedEntity
     public OrderInfo Info { get; init; } = new();
     public ICollection<OrderItem> Items { get; init; } = new List<OrderItem>();
 
-    public OrderStatus Status { get; init; } = OrderStatus.Received;
+    public OrderStatus Status { get; set; } = OrderStatus.Ordered;
 
     [Precision(18, 2)] public decimal TotalPrice { get; set; }
 
