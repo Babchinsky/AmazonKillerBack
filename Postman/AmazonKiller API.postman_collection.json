@@ -4106,198 +4106,311 @@
 			"name": "Admin",
 			"item": [
 				{
-					"name": "Get Users by Filter",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
+					"name": "Users",
+					"item": [
+						{
+							"name": "Promote User",
+							"event": [
 								{
-									"key": "token",
-									"value": "{{adminAccessToken}}",
-									"type": "string"
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 204\", function () {\r",
+											"    pm.response.to.have.status(204);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response has no content\", function () {\r",
+											"    pm.expect(pm.response.text()).to.be.empty;\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
 								}
-							]
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{adminAccessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/admin/users/:userId/role/promote",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"users",
+										":userId",
+										"role",
+										"promote"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "77777777-7777-7777-7777-777777777777",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": []
 						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/api/admin/users",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"api",
-								"admin",
-								"users"
-							],
-							"query": [
+						{
+							"name": "Demote User",
+							"event": [
 								{
-									"key": "Search",
-									"value": "labore reprehenderit cillum",
-									"disabled": true
-								},
-								{
-									"key": "Role",
-									"value": "labore reprehenderit cillum",
-									"disabled": true
-								},
-								{
-									"key": "Status",
-									"value": "labore reprehenderit cillum",
-									"disabled": true
-								},
-								{
-									"key": "Parameters.Page",
-									"value": "-24164913",
-									"disabled": true
-								},
-								{
-									"key": "Parameters.PageSize",
-									"value": "-24164913",
-									"disabled": true
-								},
-								{
-									"key": "Parameters.SortBy",
-									"value": "labore reprehenderit cillum",
-									"disabled": true
-								},
-								{
-									"key": "Parameters.SortDesc",
-									"value": "false",
-									"disabled": true
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 204\", function () {\r",
+											"    pm.response.to.have.status(204);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response has no content\", function () {\r",
+											"    pm.expect(pm.response.text()).to.be.empty;\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
 								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Promote User",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/api/admin/users/:userId/role/promote",
-							"host": [
-								"{{baseUrl}}"
 							],
-							"path": [
-								"api",
-								"admin",
-								"users",
-								":userId",
-								"role",
-								"promote"
-							],
-							"variable": [
-								{
-									"key": "userId",
-									"value": "df158756-5bfa-966d-037d-d30cf8bda11f",
-									"description": "(Required) "
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{adminAccessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/admin/users/:userId/role/demote",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"users",
+										":userId",
+										"role",
+										"demote"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "77777777-7777-7777-7777-777777777777",
+											"description": "(Required) "
+										}
+									]
 								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Demote User",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/api/admin/users/:userId/role/demote",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"api",
-								"admin",
-								"users",
-								":userId",
-								"role",
-								"demote"
-							],
-							"variable": [
-								{
-									"key": "userId",
-									"value": "df158756-5bfa-966d-037d-d30cf8bda11f",
-									"description": "(Required) "
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Bulk Delete Users",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"userIds\": [\n    \"ee6b9695-c01c-8841-7120-75946269e3f2\",\n    \"b0c24e62-8513-4ec9-2579-1cc634f1a9e3\"\n  ]\n}",
-							"options": {
-								"raw": {
-									"headerFamily": "json",
-									"language": "json"
-								}
-							}
+							},
+							"response": []
 						},
-						"url": {
-							"raw": "{{baseUrl}}/api/admin/users/delete-many",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"api",
-								"admin",
-								"users",
-								"delete-many"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Bulk Restore Users",
-					"request": {
-						"method": "PATCH",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"userIds\": [\n    \"ee6b9695-c01c-8841-7120-75946269e3f2\",\n    \"b0c24e62-8513-4ec9-2579-1cc634f1a9e3\"\n  ]\n}",
-							"options": {
-								"raw": {
-									"headerFamily": "json",
-									"language": "json"
+						{
+							"name": "Bulk Delete Users",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
 								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/api/admin/users/restore-many",
-							"host": [
-								"{{baseUrl}}"
 							],
-							"path": [
-								"api",
-								"admin",
-								"users",
-								"restore-many"
-							]
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{adminAccessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"userIds\": [\n    \"45F3E6DD-21C7-4DC3-AE82-7C9F608C56B3\",\n    \"77777777-7777-7777-7777-777777777778\",\n    \"88888888-8888-8888-8888-888888888888\"\n  ]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/admin/users/delete-many",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"users",
+										"delete-many"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Bulk Restore Users",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"userIds\": [\n    \"45F3E6DD-21C7-4DC3-AE82-7C9F608C56B3\",\n    \"77777777-7777-7777-7777-777777777778\",\n    \"88888888-8888-8888-8888-888888888888\"\n  ]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/admin/users/restore-many",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"users",
+										"restore-many"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Users by Filter",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{adminAccessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/admin/users",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"users"
+									],
+									"query": [
+										{
+											"key": "Search",
+											"value": "fast",
+											"disabled": true
+										},
+										{
+											"key": "Role",
+											"value": "0",
+											"disabled": true
+										},
+										{
+											"key": "Status",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "Parameters.Page",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "Parameters.PageSize",
+											"value": "2",
+											"disabled": true
+										},
+										{
+											"key": "Parameters.SortBy",
+											"value": "createdat",
+											"disabled": true
+										},
+										{
+											"key": "Parameters.SortOrder",
+											"value": "desc",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					]
 				}
 			]
 		}

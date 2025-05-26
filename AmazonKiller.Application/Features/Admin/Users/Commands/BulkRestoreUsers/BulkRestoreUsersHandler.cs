@@ -1,21 +1,28 @@
-﻿using AmazonKiller.Application.Interfaces.Repositories.Admin.Users;
-using AmazonKiller.Shared.Exceptions;
+﻿using AmazonKiller.Application.DTOs.Common;
+using AmazonKiller.Application.Interfaces.Repositories.Admin.Users;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace AmazonKiller.Application.Features.Admin.Users.Commands.BulkRestoreUsers;
 
 public class BulkRestoreUsersHandler(IAdminUserRepository repo)
-    : IRequestHandler<BulkRestoreUsersCommand, Unit>
+    : IRequestHandler<BulkRestoreUsersCommand, BulkRestoreResultDto>
 {
-    public async Task<Unit> Handle(BulkRestoreUsersCommand request, CancellationToken ct)
+    public async Task<BulkRestoreResultDto> Handle(BulkRestoreUsersCommand request, CancellationToken ct)
     {
-        var users = await repo.GetUsersByIdsAsync(request.UserIds, ct);
+        var existingUsers = await repo.Queryable()
+            .Where(u => request.UserIds.Contains(u.Id))
+            .ToListAsync(ct);
 
-        var notFound = request.UserIds.Except(users.Select(u => u.Id)).ToList();
-        if (notFound.Count != 0)
-            throw new NotFoundException($"Users not found: {string.Join(", ", notFound)}");
+        var existingIds = existingUsers.Select(u => u.Id).ToList();
+        var missingIds = request.UserIds.Except(existingIds).ToList();
 
-        await repo.RestoreUsersAsync(request.UserIds, ct);
-        return Unit.Value;
+        await repo.RestoreUsersAsync(existingIds, ct);
+
+        return new BulkRestoreResultDto
+        {
+            RestoredCount = existingIds.Count,
+            NotFoundIds = missingIds
+        };
     }
 }

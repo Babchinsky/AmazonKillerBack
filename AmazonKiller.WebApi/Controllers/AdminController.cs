@@ -16,44 +16,44 @@ namespace AmazonKiller.WebApi.Controllers;
 public class AdminUsersController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
-    public async Task<IActionResult> GetAll([FromQuery] GetAllUsersQuery query)
+    public async Task<IActionResult> GetAll([FromQuery] GetAllUsersQuery query, CancellationToken ct)
     {
-        var result = await mediator.Send(query);
+        var result = await mediator.Send(query, ct);
         return Ok(result);
     }
 
     [HttpPut("{userId:guid}/role/promote")]
-    public async Task<IActionResult> PromoteToAdmin(Guid userId)
+    public async Task<IActionResult> PromoteToAdmin(Guid userId, CancellationToken ct)
     {
-        await mediator.Send(new MakeUserAdminCommand(userId));
+        await mediator.Send(new MakeUserAdminCommand(userId), ct);
         return NoContent();
     }
 
     [HttpPut("{userId:guid}/role/demote")]
-    public async Task<IActionResult> DemoteFromAdmin(Guid userId)
+    public async Task<IActionResult> DemoteFromAdmin(Guid userId, CancellationToken ct)
     {
-        await mediator.Send(new DemoteAdminCommand(userId));
+        await mediator.Send(new DemoteAdminCommand(userId), ct);
         return NoContent();
     }
 
     [HttpDelete("delete-many")]
-    public async Task<IActionResult> BulkDelete([FromBody] BulkDeleteUsersCommand cmd)
+    public async Task<IActionResult> BulkDelete([FromBody] BulkDeleteUsersCommand cmd, CancellationToken ct)
     {
-        await mediator.Send(cmd);
-        return NoContent();
+        var result = await mediator.Send(cmd, ct);
+        return Ok(result);
     }
 
     [HttpPatch("restore-many")]
-    public async Task<IActionResult> BulkRestore([FromBody] BulkRestoreUsersCommand cmd)
+    public async Task<IActionResult> BulkRestore([FromBody] BulkRestoreUsersCommand cmd, CancellationToken ct)
     {
-        await mediator.Send(cmd);
-        return NoContent();
+        var result = await mediator.Send(cmd, ct);
+        return Ok(result);
     }
 
     [HttpGet("{userId:guid}/orders")]
-    public async Task<IActionResult> GetUserOrders(Guid userId)
+    public async Task<IActionResult> GetUserOrders(Guid userId, CancellationToken ct)
     {
-        var result = await mediator.Send(new GetUserOrdersAdminQuery(userId));
+        var result = await mediator.Send(new GetUserOrdersAdminQuery(userId), ct);
         return Ok(result);
     }
 }

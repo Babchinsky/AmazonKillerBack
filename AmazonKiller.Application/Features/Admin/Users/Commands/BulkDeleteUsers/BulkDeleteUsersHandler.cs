@@ -17,7 +17,7 @@ public class BulkDeleteUsersHandler(IAdminUserRepository repo)
         var existingIds = allUsers.Select(u => u.Id).ToList();
         var missingIds = request.UserIds.Except(existingIds).ToList();
 
-        await repo.DeleteUsersAsync(allUsers, ct);
+        await repo.MarkUsersDeletedAsync(existingIds, ct);
 
         return new BulkDeleteResultDto
         {
