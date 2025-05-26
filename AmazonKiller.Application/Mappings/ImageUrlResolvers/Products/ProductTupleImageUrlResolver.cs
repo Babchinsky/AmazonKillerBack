@@ -1,4 +1,5 @@
-﻿using AmazonKiller.Domain.Entities.Products;
+﻿using AmazonKiller.Application.Common.Helpers;
+using AmazonKiller.Domain.Entities.Products;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 
@@ -9,12 +10,6 @@ public sealed class ProductTupleImageUrlResolver(IHttpContextAccessor ctx)
 {
     public string Resolve((Product product, int quantity) src, object _, string __, ResolutionContext ___)
     {
-        var req = ctx.HttpContext!.Request;
-        var baseUrl = $"{req.Scheme}://{req.Host}/uploads/";
-
-        var image = src.product.MainImageUrl;
-        return image.StartsWith("http", StringComparison.OrdinalIgnoreCase)
-            ? image
-            : baseUrl + image;
+        return ImageUrlHelper.ToAbsoluteUrl(src.product.MainImageUrl, ctx.HttpContext?.Request);
     }
 }
