@@ -58,6 +58,7 @@ public static class InfrastructureServiceCollectionExtensions
         services.TryAddScoped<ICurrentUserService, CurrentUserService>();
         services.TryAddScoped<IAdminSecretValidator, AdminSecretValidator>();
         services.TryAddScoped<ICountryService, CountryService>();
+        services.TryAddScoped<ISequenceService, SequenceService>();
 
         return services;
     }

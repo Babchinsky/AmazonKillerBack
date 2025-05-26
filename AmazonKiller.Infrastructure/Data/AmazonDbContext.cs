@@ -1,4 +1,5 @@
 ﻿using AmazonKiller.Domain.Entities.Categories;
+using AmazonKiller.Domain.Entities.Common;
 using AmazonKiller.Domain.Entities.Orders;
 using AmazonKiller.Domain.Entities.Products;
 using AmazonKiller.Domain.Entities.Reviews;
@@ -9,6 +10,8 @@ namespace AmazonKiller.Infrastructure.Data;
 
 public class AmazonDbContext(DbContextOptions<AmazonDbContext> options) : DbContext(options)
 {
+    public DbSet<Sequence> Sequences => Set<Sequence>();
+
     public DbSet<Category> Categories => Set<Category>();
 
 

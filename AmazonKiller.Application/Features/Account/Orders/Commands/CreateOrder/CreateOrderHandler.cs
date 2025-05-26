@@ -11,7 +11,8 @@ public class CreateOrderHandler(
     IOrderRepository orderRepo,
     ICartRepository cartRepo,
     IProductRepository productRepo,
-    ICurrentUserService currentUser)
+    ICurrentUserService currentUser,
+    ISequenceService sequenceService)
     : IRequestHandler<CreateOrderCommand, Guid>
 {
     public async Task<Guid> Handle(CreateOrderCommand req, CancellationToken ct)
@@ -22,9 +23,13 @@ public class CreateOrderHandler(
         if (cartItems.Count == 0)
             throw new AppException("Cart is empty");
 
+        var nextNumber = await sequenceService.GetNextAsync("Order", ct);
+        var orderNumber = $"#{nextNumber:D6}";
+
         var order = new Order
         {
             UserId = userId,
+            OrderNumber = orderNumber,
             Status = OrderStatus.Ordered,
             Info = new OrderInfo
             {

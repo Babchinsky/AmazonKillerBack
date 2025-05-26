@@ -37,7 +37,8 @@ public class OrderRepository(AmazonDbContext db, IMapper mapper) : IOrderReposit
     public IQueryable<Order> QueryWithIncludes()
     {
         return db.Orders
-            .Include(o => o.Info);
+            .Include(o => o.Info)
+            .Include(o => o.User);
     }
 
     public async Task<OrderDetailsDto> GetOrderDetailsAsync(Guid userId, Guid orderId, CancellationToken ct)
