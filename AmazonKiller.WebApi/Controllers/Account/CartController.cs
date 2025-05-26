@@ -14,30 +14,31 @@ namespace AmazonKiller.WebApi.Controllers.Account;
 public class CartController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
-    public async Task<IActionResult> Get()
+    public async Task<IActionResult> Get(CancellationToken ct)
     {
-        var result = await mediator.Send(new GetCartQuery());
+        var result = await mediator.Send(new GetCartQuery(), ct);
         return Ok(result);
     }
 
     [HttpPost]
-    public async Task<IActionResult> Add([FromBody] AddProductToCartCommand cmd)
+    public async Task<IActionResult> Add([FromBody] AddProductToCartCommand cmd, CancellationToken ct)
     {
-        await mediator.Send(cmd);
+        await mediator.Send(cmd, ct);
         return NoContent();
     }
 
     [HttpPut]
-    public async Task<IActionResult> UpdateQuantity([FromBody] UpdateProductQuantityInCartCommand cmd)
+    public async Task<IActionResult> UpdateQuantity([FromBody] UpdateProductQuantityInCartCommand cmd,
+        CancellationToken ct)
     {
-        await mediator.Send(cmd);
+        await mediator.Send(cmd, ct);
         return NoContent();
     }
 
     [HttpDelete("{productId:guid}")]
-    public async Task<IActionResult> Remove(Guid productId)
+    public async Task<IActionResult> Remove(Guid productId, CancellationToken ct)
     {
-        await mediator.Send(new RemoveProductFromCartCommand(productId));
+        await mediator.Send(new RemoveProductFromCartCommand(productId), ct);
         return NoContent();
     }
 }

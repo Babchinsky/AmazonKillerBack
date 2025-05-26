@@ -16,45 +16,45 @@ namespace AmazonKiller.WebApi.Controllers;
 public class ReviewsController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
-    public async Task<ActionResult<List<ReviewDto>>> GetAll([FromQuery] GetAllReviewsQuery query)
+    public async Task<ActionResult<List<ReviewDto>>> GetAll([FromQuery] GetAllReviewsQuery query, CancellationToken ct)
     {
-        return Ok(await mediator.Send(query));
+        return Ok(await mediator.Send(query, ct));
     }
 
     [HttpGet("{id:guid}")]
-    public async Task<ActionResult<ReviewDto>> GetById(Guid id)
+    public async Task<ActionResult<ReviewDto>> GetById(Guid id, CancellationToken ct)
     {
-        return Ok(await mediator.Send(new GetReviewByIdQuery(id)));
+        return Ok(await mediator.Send(new GetReviewByIdQuery(id), ct));
     }
 
     [Authorize]
     [HttpPost]
-    public async Task<ActionResult<ReviewDto>> Create([FromForm] CreateReviewCommand cmd)
+    public async Task<ActionResult<ReviewDto>> Create([FromForm] CreateReviewCommand cmd, CancellationToken ct)
     {
-        return Ok(await mediator.Send(cmd));
+        return Ok(await mediator.Send(cmd, ct));
     }
 
     [Authorize]
     [HttpPut("{id:guid}")]
-    public async Task<ActionResult<ReviewDto>> Update(Guid id, [FromForm] UpdateReviewCommand cmd)
+    public async Task<ActionResult<ReviewDto>> Update(Guid id, [FromForm] UpdateReviewCommand cmd, CancellationToken ct)
     {
         if (id != cmd.Id) return Problem("ID mismatch");
-        return Ok(await mediator.Send(cmd));
+        return Ok(await mediator.Send(cmd, ct));
     }
 
     [Authorize]
     [HttpDelete("{id:guid}")]
-    public async Task<IActionResult> Delete(Guid id)
+    public async Task<IActionResult> Delete(Guid id, CancellationToken ct)
     {
-        var result = await mediator.Send(new DeleteReviewCommand(id));
+        var result = await mediator.Send(new DeleteReviewCommand(id), ct);
         return result ? NoContent() : NotFound();
     }
 
     [Authorize]
     [HttpPost("{reviewId:guid}/like")]
-    public async Task<IActionResult> ToggleLike(Guid reviewId)
+    public async Task<IActionResult> ToggleLike(Guid reviewId, CancellationToken ct)
     {
-        await mediator.Send(new LikeReviewCommand(reviewId));
+        await mediator.Send(new LikeReviewCommand(reviewId), ct);
         return Ok();
     }
 }

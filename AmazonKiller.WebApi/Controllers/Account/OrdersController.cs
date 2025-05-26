@@ -21,27 +21,28 @@ public class OrdersController(IMediator mediator) : ControllerBase
     }
 
     [HttpGet("{id:guid}")]
-    public async Task<IActionResult> GetById(Guid id)
+    public async Task<IActionResult> GetById(Guid id, CancellationToken ct)
     {
-        var details = await mediator.Send(new GetOrderDetailsQuery(id));
+        var details = await mediator.Send(new GetOrderDetailsQuery(id), ct);
         return Ok(details);
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] CreateOrderCommand command)
+    public async Task<IActionResult> Create([FromBody] CreateOrderCommand command, CancellationToken ct)
     {
-        var id = await mediator.Send(command);
+        var id = await mediator.Send(command, ct);
         return Ok(id);
     }
 
     [Authorize(Roles = "Admin")]
     [HttpPut("{id:guid}/status")]
-    public async Task<IActionResult> ChangeStatus(Guid id, [FromBody] ChangeOrderStatusCommand cmd)
+    public async Task<IActionResult> ChangeStatus(Guid id, [FromBody] ChangeOrderStatusCommand cmd,
+        CancellationToken ct)
     {
         if (id != cmd.OrderId)
             return BadRequest("Mismatched OrderId");
 
-        await mediator.Send(cmd);
+        await mediator.Send(cmd, ct);
         return NoContent();
     }
 }

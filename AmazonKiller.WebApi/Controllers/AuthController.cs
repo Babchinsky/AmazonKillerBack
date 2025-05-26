@@ -13,34 +13,34 @@ namespace AmazonKiller.WebApi.Controllers;
 public class AuthController(IMediator mediator) : ControllerBase
 {
     [HttpPost("register/start")]
-    public async Task<IActionResult> Start([FromBody] StartRegistrationCommand cmd)
+    public async Task<IActionResult> Start([FromBody] StartRegistrationCommand cmd, CancellationToken ct)
     {
-        await mediator.Send(cmd);
+        await mediator.Send(cmd, ct);
         return NoContent();
     }
 
     [HttpPost("register/confirm")]
-    public async Task<IActionResult> Confirm([FromBody] ConfirmRegistrationCommand cmd)
+    public async Task<IActionResult> Confirm([FromBody] ConfirmRegistrationCommand cmd, CancellationToken ct)
     {
-        return Ok(await mediator.Send(cmd));
+        return Ok(await mediator.Send(cmd, ct));
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody] LoginUserCommand cmd)
+    public async Task<IActionResult> Login([FromBody] LoginUserCommand cmd, CancellationToken ct)
     {
-        var result = await mediator.Send(cmd);
+        var result = await mediator.Send(cmd, ct);
         return Ok(result);
     }
 
     [HttpPost("refresh-token")]
-    public async Task<IActionResult> Refresh([FromBody] RefreshTokenCommand cmd)
+    public async Task<IActionResult> Refresh([FromBody] RefreshTokenCommand cmd, CancellationToken ct)
     {
-        return Ok(await mediator.Send(cmd));
+        return Ok(await mediator.Send(cmd, ct));
     }
 
     [HttpPost("register/admin")]
-    public async Task<IActionResult> RegisterAdmin([FromBody] RegisterAdminCommand command)
+    public async Task<IActionResult> RegisterAdmin([FromBody] RegisterAdminCommand command, CancellationToken ct)
     {
-        return Ok(await mediator.Send(command));
+        return Ok(await mediator.Send(command, ct));
     }
 }
