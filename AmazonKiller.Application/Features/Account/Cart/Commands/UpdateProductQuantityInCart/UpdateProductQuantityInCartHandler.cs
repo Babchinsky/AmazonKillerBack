@@ -6,11 +6,13 @@ namespace AmazonKiller.Application.Features.Account.Cart.Commands.UpdateProductQ
 
 public class UpdateProductQuantityInCartHandler(
     ICurrentUserService currentUserService,
-    ICartRepository cartRepo) : IRequestHandler<UpdateProductQuantityInCartCommand>
+    ICartRepository cartRepo,
+    IAccountRepository accountRepo) : IRequestHandler<UpdateProductQuantityInCartCommand>
 {
     public async Task Handle(UpdateProductQuantityInCartCommand cmd, CancellationToken ct)
     {
         var userId = currentUserService.UserId;
+        await accountRepo.ThrowIfDeletedAsync(userId, ct);
         await cartRepo.UpdateQuantityAsync(userId, cmd.ProductId, cmd.Quantity, ct);
     }
 }

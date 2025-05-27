@@ -4,12 +4,16 @@ using MediatR;
 
 namespace AmazonKiller.Application.Features.Account.Cart.Commands.RemoveProductFromCart;
 
-public class RemoveProductFromCartHandler(ICurrentUserService currentUserService, ICartRepository cartRepo)
+public class RemoveProductFromCartHandler(
+    ICurrentUserService currentUserService,
+    IAccountRepository accountRepo,
+    ICartRepository cartRepo)
     : IRequestHandler<RemoveProductFromCartCommand>
 {
     public async Task Handle(RemoveProductFromCartCommand cmd, CancellationToken ct)
     {
         var userId = currentUserService.UserId;
+        await accountRepo.ThrowIfDeletedAsync(userId, ct);
         await cartRepo.RemoveAsync(userId, cmd.ProductId, ct);
     }
 }

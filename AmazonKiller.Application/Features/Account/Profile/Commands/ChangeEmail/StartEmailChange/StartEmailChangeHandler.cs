@@ -14,9 +14,10 @@ public class StartEmailChangeHandler(
 {
     public async Task Handle(StartEmailChangeCommand cmd, CancellationToken ct)
     {
-        var userId = currentUserService.UserId;
-
-        var user = await accountRepo.GetCurrentUserAsync(userId, ct)
+        var currentUserId = currentUserService.UserId;
+        await accountRepo.ThrowIfDeletedAsync(currentUserId, ct);
+        
+        var user = await accountRepo.GetCurrentUserAsync(currentUserId, ct)
                    ?? throw new AppException("User not found", 404);
 
         if (user.Email == cmd.NewEmail)
@@ -27,7 +28,7 @@ public class StartEmailChangeHandler(
             "Confirm your new email",
             VerificationType.EmailChange,
             null,
-            userId,
+            currentUserId,
             ct);
     }
 }

@@ -5,12 +5,16 @@ using MediatR;
 namespace AmazonKiller.Application.Features.Account.Wishlist.Commands.AddToWishlist;
 
 public class AddToWishlistHandler(
-    IWishlistRepository repo,
+    IWishlistRepository wishlistRepo,
+    IAccountRepository accountRepo,
     ICurrentUserService currentUserService
 ) : IRequestHandler<AddToWishlistCommand>
 {
     public async Task Handle(AddToWishlistCommand cmd, CancellationToken ct)
     {
-        await repo.AddAsync(currentUserService.UserId, cmd.ProductId, ct);
+        var currentUserId = currentUserService.UserId;
+        await accountRepo.ThrowIfDeletedAsync(currentUserId, ct);
+        
+        await wishlistRepo.AddAsync(currentUserId, cmd.ProductId, ct);
     }
 }

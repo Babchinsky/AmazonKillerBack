@@ -7,14 +7,17 @@ using MediatR;
 namespace AmazonKiller.Application.Features.Account.Profile.Commands.ChangePhoto;
 
 public class ChangePhotoHandler(
-    IAccountRepository repo,
-    ICurrentUserService currentUser,
+    IAccountRepository accountRepo,
+    ICurrentUserService currentUserService,
     IFileStorage storage
 ) : IRequestHandler<ChangePhotoCommand, string>
 {
     public async Task<string> Handle(ChangePhotoCommand cmd, CancellationToken ct)
     {
-        var user = await repo.GetCurrentUserAsync(currentUser.UserId, ct)
+        var currentUserId = currentUserService.UserId;
+        await accountRepo.ThrowIfDeletedAsync(currentUserId, ct);
+        
+        var user = await accountRepo.GetCurrentUserAsync(currentUserId, ct)
                    ?? throw new NotFoundException("User not found");
 
         var oldPhoto = user.ImageUrl;
@@ -27,7 +30,7 @@ public class ChangePhotoHandler(
         // обновляем URL
         typeof(User).GetProperty(nameof(User.ImageUrl))!.SetValue(user, newPath); // обход readonly setter
 
-        await repo.SaveChangesAsync(ct);
+        await accountRepo.SaveChangesAsync(ct);
 
         // удаляем старое фото, если было
         if (!string.IsNullOrWhiteSpace(oldPhoto))

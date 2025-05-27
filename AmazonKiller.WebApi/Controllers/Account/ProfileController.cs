@@ -5,7 +5,6 @@ using AmazonKiller.Application.Features.Account.Profile.Commands.ChangePassword;
 using AmazonKiller.Application.Features.Account.Profile.Commands.ChangePhoto;
 using AmazonKiller.Application.Features.Account.Profile.Commands.DeleteAccount;
 using AmazonKiller.Application.Features.Account.Profile.Commands.Logout;
-using AmazonKiller.Shared.Exceptions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -34,15 +33,8 @@ public class ProfileController(IMediator mediator) : ControllerBase
     [HttpPut("name")]
     public async Task<IActionResult> ChangeName([FromBody] ChangeNameCommand cmd, CancellationToken ct)
     {
-        try
-        {
-            await mediator.Send(cmd, ct);
-            return NoContent();
-        }
-        catch (AppException ex) when (ex.Message == "New name cannot be the same as the current name")
-        {
-            return Problem(ex.Message);
-        }
+        await mediator.Send(cmd, ct);
+        return NoContent();
     }
 
     [HttpPut("password")]

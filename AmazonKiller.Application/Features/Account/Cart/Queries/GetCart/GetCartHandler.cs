@@ -8,12 +8,14 @@ namespace AmazonKiller.Application.Features.Account.Cart.Queries.GetCart;
 
 public class GetCartHandler(
     ICartRepository cartRepo,
-    ICurrentUserService currentUser,
+    ICurrentUserService currentUserService,
+    IAccountRepository accountRepo,
     IMapper mapper) : IRequestHandler<GetCartQuery, List<CartItemDto>>
 {
     public async Task<List<CartItemDto>> Handle(GetCartQuery request, CancellationToken ct)
     {
-        var userId = currentUser.UserId;
+        var userId = currentUserService.UserId;
+        await accountRepo.ThrowIfDeletedAsync(userId, ct);
         var cartItems = await cartRepo.GetCartItemsWithProductsAsync(userId, ct);
 
         return mapper.Map<List<CartItemDto>>(

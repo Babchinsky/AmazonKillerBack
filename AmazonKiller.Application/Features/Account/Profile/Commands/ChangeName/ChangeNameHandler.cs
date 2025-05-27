@@ -5,14 +5,16 @@ using MediatR;
 
 namespace AmazonKiller.Application.Features.Account.Profile.Commands.ChangeName;
 
-public class ChangeNameHandler(ICurrentUserService currentUser, IAccountRepository repo)
+public class ChangeNameHandler(ICurrentUserService currentUserService, IAccountRepository accountRepo)
     : IRequestHandler<ChangeNameCommand>
 {
     public async Task Handle(ChangeNameCommand cmd, CancellationToken ct)
     {
-        var user = await repo.GetCurrentUserAsync(currentUser.UserId, ct);
-        if (user is null)
-            throw new AppException("User not found", 404);
+        var currentUserId = currentUserService.UserId;
+        await accountRepo.ThrowIfDeletedAsync(currentUserId, ct);
+        
+        var user = await accountRepo.GetCurrentUserAsync(currentUserId, ct)
+                   ?? throw new NotFoundException("User not found");
 
         if (user.FirstName == cmd.FirstName && user.LastName == cmd.LastName)
             throw new AppException("New name cannot be the same as the current name");
@@ -20,6 +22,6 @@ public class ChangeNameHandler(ICurrentUserService currentUser, IAccountReposito
         user.FirstName = cmd.FirstName;
         user.LastName = cmd.LastName;
 
-        await repo.SaveChangesAsync(ct);
+        await accountRepo.SaveChangesAsync(ct);
     }
 }

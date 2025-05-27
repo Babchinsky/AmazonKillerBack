@@ -2,13 +2,21 @@
 using AmazonKiller.Application.Interfaces.Services;
 using AmazonKiller.Domain.Entities.Users;
 using AmazonKiller.Infrastructure.Data;
+using AmazonKiller.Shared.Exceptions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace AmazonKiller.Infrastructure.Repositories.Account;
 
 public class AccountRepository(AmazonDbContext db, IFileStorage fileStorage) : IAccountRepository
 {
-    public Task<User?> GetCurrentUserAsync(Guid userId, CancellationToken ct)
+    private async Task<bool> IsUserDeletedAsync(Guid id, CancellationToken ct = default)
+    {
+        var user = await db.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Id == id, ct);
+        return user?.Status == UserStatus.Deleted;
+    }
+
+    public Task<User?> GetCurrentUserAsync(Guid userId, CancellationToken ct = default)
     {
         return db.Users.FindAsync([userId], ct).AsTask();
     }
@@ -39,5 +47,22 @@ public class AccountRepository(AmazonDbContext db, IFileStorage fileStorage) : I
     {
         db.RefreshTokens.RemoveRange(db.RefreshTokens.Where(x => x.UserId == userId));
         return db.SaveChangesAsync(ct);
+    }
+
+    public async Task ThrowIfDeletedAsync(Guid userId, CancellationToken ct = default)
+    {
+        var isDeleted = await IsUserDeletedAsync(userId, ct);
+        if (isDeleted)
+            throw new AppException("Your account has been deactivated.", StatusCodes.Status401Unauthorized);
+    }
+
+    public async Task<string> GetRoleAsync(Guid id, CancellationToken ct = default)
+    {
+        var role = await db.Users
+            .Where(u => u.Id == id)
+            .Select(u => u.Role.ToString())
+            .FirstOrDefaultAsync(ct);
+
+        return role ?? throw new NotFoundException("Role not found.");
     }
 }

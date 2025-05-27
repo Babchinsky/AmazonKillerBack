@@ -1,17 +1,22 @@
-﻿using AmazonKiller.Application.Interfaces.Repositories.Reviews;
+﻿using AmazonKiller.Application.Interfaces.Repositories.Account;
+using AmazonKiller.Application.Interfaces.Repositories.Reviews;
 using AmazonKiller.Application.Interfaces.Services;
 using MediatR;
 
 namespace AmazonKiller.Application.Features.Reviews.Commands.LikeReview;
 
 public class LikeReviewHandler(
-    IReviewRepository repo,
-    ICurrentUserService currentUser)
+    IReviewRepository reviewRepo,
+    IAccountRepository accountRepo,
+    ICurrentUserService currentUserService)
     : IRequestHandler<LikeReviewCommand, Unit>
 {
     public async Task<Unit> Handle(LikeReviewCommand cmd, CancellationToken ct)
     {
-        await repo.ToggleLikeAsync(cmd.ReviewId, currentUser.UserId, ct);
+        var currentUserId = currentUserService.UserId;
+        await accountRepo.ThrowIfDeletedAsync(currentUserId, ct);
+
+        await reviewRepo.ToggleLikeAsync(cmd.ReviewId, currentUserId, ct);
         return Unit.Value;
     }
 }

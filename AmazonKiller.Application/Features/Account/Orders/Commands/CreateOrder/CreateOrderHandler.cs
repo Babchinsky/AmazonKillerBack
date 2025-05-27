@@ -10,14 +10,16 @@ namespace AmazonKiller.Application.Features.Account.Orders.Commands.CreateOrder;
 public class CreateOrderHandler(
     IOrderRepository orderRepo,
     ICartRepository cartRepo,
+    IAccountRepository accountRepo,
     IProductRepository productRepo,
-    ICurrentUserService currentUser,
+    ICurrentUserService currentUserService,
     ISequenceService sequenceService)
     : IRequestHandler<CreateOrderCommand, Guid>
 {
     public async Task<Guid> Handle(CreateOrderCommand req, CancellationToken ct)
     {
-        var userId = currentUser.UserId;
+        var userId = currentUserService.UserId;
+        await accountRepo.ThrowIfDeletedAsync(userId, ct);
 
         var cartItems = await cartRepo.GetCartItemsWithProductsAsync(userId, ct);
         if (cartItems.Count == 0)

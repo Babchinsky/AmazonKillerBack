@@ -5,16 +5,19 @@ using MediatR;
 
 namespace AmazonKiller.Application.Features.Account.Profile.Commands.DeleteAccount;
 
-public class DeleteAccountHandler(ICurrentUserService currentUser, IAccountRepository repo)
+public class DeleteAccountHandler(ICurrentUserService currentUserService, IAccountRepository accountRepo)
     : IRequestHandler<DeleteAccountCommand, Unit>
 {
     public async Task<Unit> Handle(DeleteAccountCommand cmd, CancellationToken ct)
     {
-        var user = await repo.GetCurrentUserWithTokensAsync(currentUser.UserId, ct);
+        var currentUserId = currentUserService.UserId;
+        await accountRepo.ThrowIfDeletedAsync(currentUserId, ct);
+
+        var user = await accountRepo.GetCurrentUserWithTokensAsync(currentUserId, ct);
         if (user is null)
             throw new AppException("User not found", 404);
 
-        await repo.DeleteUserAsync(user, ct);
+        await accountRepo.DeleteUserAsync(user, ct);
         return Unit.Value;
     }
 }

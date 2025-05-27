@@ -4099,6 +4099,87 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Get Orders by Filters",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const orders = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status is 200\", function () {\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/orders",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"orders"
+							],
+							"query": [
+								{
+									"key": "UserId",
+									"value": "28d9cd55-6a39-8e45-71b6-46fe31461ce7",
+									"disabled": true
+								},
+								{
+									"key": "SearchTerm",
+									"value": "California23",
+									"disabled": true
+								},
+								{
+									"key": "Status",
+									"value": "0",
+									"disabled": true
+								},
+								{
+									"key": "Parameters.Page",
+									"value": "42575479",
+									"disabled": true
+								},
+								{
+									"key": "Parameters.PageSize",
+									"value": "42575479",
+									"disabled": true
+								},
+								{
+									"key": "Parameters.SortBy",
+									"value": "in nisi sunt",
+									"disabled": true
+								},
+								{
+									"key": "Parameters.SortOrder",
+									"value": "in nisi sunt",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -4271,7 +4352,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"userIds\": [\n    \"45F3E6DD-21C7-4DC3-AE82-7C9F608C56B3\",\n    \"77777777-7777-7777-7777-777777777778\",\n    \"88888888-8888-8888-8888-888888888888\"\n  ]\n}",
+									"raw": "{\n  \"userIds\": [\n    \"9E5354E5-4F96-4243-A85B-E82465623F41\",\n    \"77777777-7777-7777-7777-777777777778\",\n    \"88888888-8888-8888-8888-888888888887\"\n  ]\n}",
 									"options": {
 										"raw": {
 											"headerFamily": "json",
@@ -4312,6 +4393,16 @@
 								}
 							],
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{adminAccessToken}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "PATCH",
 								"header": [
 									{
@@ -4321,7 +4412,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"userIds\": [\n    \"45F3E6DD-21C7-4DC3-AE82-7C9F608C56B3\",\n    \"77777777-7777-7777-7777-777777777778\",\n    \"88888888-8888-8888-8888-888888888888\"\n  ]\n}",
+									"raw": "{\n  \"userIds\": [\n    \"9E5354E5-4F96-4243-A85B-E82465623F41\",\n    \"77777777-7777-7777-7777-777777777778\",\n    \"88888888-8888-8888-8888-888888888887\"\n  ]\n}",
 									"options": {
 										"raw": {
 											"headerFamily": "json",

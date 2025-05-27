@@ -5,12 +5,16 @@ using MediatR;
 namespace AmazonKiller.Application.Features.Account.Wishlist.Commands.DeleteFromWishlist;
 
 public class DeleteFromWishlistHandler(
-    IWishlistRepository repo,
+    IWishlistRepository wishlistRepo,
+    IAccountRepository accountRepo,
     ICurrentUserService currentUserService
 ) : IRequestHandler<DeleteFromWishlistCommand>
 {
     public async Task Handle(DeleteFromWishlistCommand cmd, CancellationToken ct)
     {
-        await repo.DeleteAsync(currentUserService.UserId, cmd.ProductId, ct);
+        var currentUserId = currentUserService.UserId;
+        await accountRepo.ThrowIfDeletedAsync(currentUserId, ct);
+
+        await wishlistRepo.DeleteAsync(currentUserId, cmd.ProductId, ct);
     }
 }

@@ -39,14 +39,18 @@ public class AuthService(AmazonDbContext db, IConfiguration cfg) : IAuthService
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(cfg["Jwt:Key"]!));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
+        var claims = new List<Claim>
+        {
+            new(ClaimTypes.NameIdentifier, u.Id.ToString()),
+            new(ClaimTypes.Email, u.Email),
+            new(ClaimTypes.Role, u.Role.ToString()),
+            new("status", u.Status.ToString()) // 👈 добавляем статус
+        };
+
         var token = new JwtSecurityToken(
-            cfg["Jwt:Issuer"],
-            cfg["Jwt:Audience"],
-            [
-                new Claim(ClaimTypes.NameIdentifier, u.Id.ToString()),
-                new Claim(ClaimTypes.Email, u.Email),
-                new Claim(ClaimTypes.Role, u.Role.ToString())
-            ],
+            issuer: cfg["Jwt:Issuer"],
+            audience: cfg["Jwt:Audience"],
+            claims: claims,
             expires: DateTime.UtcNow.AddMinutes(10),
             signingCredentials: creds);
 

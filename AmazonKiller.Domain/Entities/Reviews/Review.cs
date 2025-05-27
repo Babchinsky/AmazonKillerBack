@@ -12,12 +12,12 @@ public class Review : VersionedEntity
     public Guid UserId { get; init; }
     public User User { get; init; } = null!;
 
-    public string Article { get; set; } = null!;
-    public string Message { get; set; } = null!;
-    public List<string> ImageUrls { get; set; } = [];
-    public List<string> Tags { get; set; } = [];
+    public string Article { get; init; } = null!;
+    public string Message { get; init; } = null!;
+    public List<string> ImageUrls { get; init; } = [];
+    public List<string> Tags { get; init; } = [];
 
-    public decimal Rating { get; set; }
+    public decimal Rating { get; init; }
     public DateTime CreatedAt { get; init; }
     public ICollection<ReviewLike> LikesFromUsers { get; init; } = new List<ReviewLike>();
 }

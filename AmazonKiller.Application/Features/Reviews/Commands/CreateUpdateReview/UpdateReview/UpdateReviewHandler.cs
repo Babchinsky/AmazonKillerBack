@@ -1,4 +1,5 @@
 using AmazonKiller.Application.DTOs.Reviews;
+using AmazonKiller.Application.Interfaces.Repositories.Account;
 using AmazonKiller.Application.Interfaces.Repositories.Reviews;
 using AmazonKiller.Application.Interfaces.Services;
 using AmazonKiller.Domain.Entities.Reviews;
@@ -10,21 +11,25 @@ using Microsoft.EntityFrameworkCore;
 namespace AmazonKiller.Application.Features.Reviews.Commands.CreateUpdateReview.UpdateReview;
 
 public class UpdateReviewHandler(
-    IReviewRepository repo,
+    IReviewRepository reviewRepo,
     IMapper mapper,
-    ICurrentUserService currentUser,
+    ICurrentUserService currentUserService,
+    IAccountRepository accountRepo,
     IFileStorage fileStorage
 ) : IRequestHandler<UpdateReviewCommand, ReviewDto>
 {
     public async Task<ReviewDto> Handle(UpdateReviewCommand r, CancellationToken ct)
     {
-        var oldReview = await repo.Queryable()
+        var currentUserId = currentUserService.UserId;
+        await accountRepo.ThrowIfDeletedAsync(currentUserId, ct);
+        
+        var oldReview = await reviewRepo.Queryable()
                             .Where(x => x.Id == r.Id)
                             .Select(x => new { x.Id, x.UserId, x.ProductId, x.ImageUrls, x.RowVersion })
                             .FirstOrDefaultAsync(ct)
                         ?? throw new NotFoundException("Review not found");
 
-        if (oldReview.UserId != currentUser.UserId)
+        if (oldReview.UserId != currentUserId)
             throw new AppException("Forbidden", 403);
 
         var uploadedPaths = new List<string>();
@@ -49,7 +54,7 @@ public class UpdateReviewHandler(
 
         try
         {
-            await repo.UpdateAsync(review, ct);
+            await reviewRepo.UpdateAsync(review, ct);
         }
         catch (DbUpdateConcurrencyException)
         {
@@ -60,7 +65,7 @@ public class UpdateReviewHandler(
         var imagesToDelete = oldReview.ImageUrls.Except(uploadedPaths, StringComparer.OrdinalIgnoreCase);
         await fileStorage.DeleteBatchSafeAsync(imagesToDelete.ToList(), ct);
 
-        var entity = await repo.Queryable()
+        var entity = await reviewRepo.Queryable()
             .Include(x => x.Product)
             .Include(x => x.User)
             .Include(x => x.LikesFromUsers)

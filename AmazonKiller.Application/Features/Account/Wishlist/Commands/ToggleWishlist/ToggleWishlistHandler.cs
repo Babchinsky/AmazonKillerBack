@@ -5,12 +5,16 @@ using MediatR;
 namespace AmazonKiller.Application.Features.Account.Wishlist.Commands.ToggleWishlist;
 
 public class ToggleWishlistHandler(
-    IWishlistRepository repo,
-    ICurrentUserService currentUser)
+    IWishlistRepository wishlistRepo,
+    IAccountRepository accountRepo,
+    ICurrentUserService currentUserService)
     : IRequestHandler<ToggleWishlistCommand>
 {
     public async Task Handle(ToggleWishlistCommand request, CancellationToken ct)
     {
-        await repo.ToggleAsync(currentUser.UserId, request.ProductId, ct);
+        var currentUserId = currentUserService.UserId;
+        await accountRepo.ThrowIfDeletedAsync(currentUserId, ct);
+        
+        await wishlistRepo.ToggleAsync(currentUserId, request.ProductId, ct);
     }
 }

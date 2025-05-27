@@ -7,14 +7,18 @@ using MediatR;
 namespace AmazonKiller.Application.Features.Account.Wishlist.Queries.GetWishlist;
 
 public class GetWishlistHandler(
-    IWishlistRepository repo,
+    IWishlistRepository wishlistRepo,
+    IAccountRepository accountRepo,
     ICurrentUserService currentUserService
 ) : IRequestHandler<GetWishlistQuery, PagedList<ProductCardDto>>
 {
     public async Task<PagedList<ProductCardDto>> Handle(GetWishlistQuery request, CancellationToken ct)
     {
-        return await repo.GetWishlistAsync(
-            currentUserService.UserId,
+        var currentUserId = currentUserService.UserId;
+        await accountRepo.ThrowIfDeletedAsync(currentUserId, ct);
+
+        return await wishlistRepo.GetWishlistAsync(
+            currentUserId,
             request.SearchTerm,
             request.Parameters,
             ct

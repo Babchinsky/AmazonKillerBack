@@ -7,15 +7,18 @@ using MediatR;
 namespace AmazonKiller.Application.Features.Account.Profile.Commands.ChangePassword;
 
 public class ChangePasswordHandler(
-    ICurrentUserService currentUser,
+    ICurrentUserService currentUserService,
     IPasswordService passwordService,
-    IAccountRepository repo)
+    IAccountRepository accountRepo)
     : IRequestHandler<ChangePasswordCommand, Unit>
 {
     public async Task<Unit> Handle(ChangePasswordCommand cmd, CancellationToken ct)
     {
+        var currentUserId = currentUserService.UserId;
+        await accountRepo.ThrowIfDeletedAsync(currentUserId, ct);
+        
         // Получаем пользователя
-        var user = await repo.GetCurrentUserAsync(currentUser.UserId, ct);
+        var user = await accountRepo.GetCurrentUserAsync(currentUserId, ct);
         if (user is null)
             throw new NotFoundException("User not found");
 
@@ -29,7 +32,7 @@ public class ChangePasswordHandler(
 
         // Обновляем пароль
         user.PasswordHash = passwordService.HashPassword(cmd.NewPassword);
-        await repo.SaveChangesAsync(ct);
+        await accountRepo.SaveChangesAsync(ct);
 
         return Unit.Value;
     }
