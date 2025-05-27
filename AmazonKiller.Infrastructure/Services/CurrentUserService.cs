@@ -9,7 +9,7 @@ public class CurrentUserService(IHttpContextAccessor accessor) : ICurrentUserSer
     private HttpContext? HttpContext => accessor.HttpContext;
 
     public Guid UserId =>
-        Guid.TryParse(HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value, out var id)
+        Guid.TryParse(HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out var id)
             ? id
             : throw new UnauthorizedAccessException("User ID not found in access token.");
 }

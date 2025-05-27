@@ -1,10 +1,10 @@
-﻿using AmazonKiller.Application.Features.Account.Profile.Commands.ChangeEmail.ConfirmEmailChange;
-using AmazonKiller.Application.Features.Account.Profile.Commands.ChangeEmail.StartEmailChange;
-using AmazonKiller.Application.Features.Account.Profile.Commands.ChangeName;
-using AmazonKiller.Application.Features.Account.Profile.Commands.ChangePassword;
-using AmazonKiller.Application.Features.Account.Profile.Commands.ChangePhoto;
-using AmazonKiller.Application.Features.Account.Profile.Commands.DeleteAccount;
-using AmazonKiller.Application.Features.Account.Profile.Commands.Logout;
+﻿using AmazonKiller.Application.Features.Profile.Commands.ChangeEmail.ConfirmEmailChange;
+using AmazonKiller.Application.Features.Profile.Commands.ChangeEmail.StartEmailChange;
+using AmazonKiller.Application.Features.Profile.Commands.ChangeName;
+using AmazonKiller.Application.Features.Profile.Commands.ChangePassword;
+using AmazonKiller.Application.Features.Profile.Commands.ChangePhoto;
+using AmazonKiller.Application.Features.Profile.Commands.DeleteAccount;
+using AmazonKiller.Application.Features.Profile.Commands.Logout;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AmazonKiller.WebApi.Controllers.Account;
 
 [ApiController]
-[Route("api/profile")]
+[Route("api/account/profile")]
 [Authorize]
 public class ProfileController(IMediator mediator) : ControllerBase
 {

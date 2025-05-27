@@ -1,4 +1,4 @@
-﻿using AmazonKiller.Application.Features.Products.Commands.CreateUpdateProduct.UpdateProduct;
+﻿using AmazonKiller.Application.Features.Products.Admin.Commands.CreateUpdateProduct.UpdateProduct;
 using AmazonKiller.Domain.Entities.Products;
 using AmazonKiller.Application.Interfaces.Services;
 

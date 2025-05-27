@@ -12,7 +12,7 @@ public class Category : VersionedEntity
 
     public Guid? ParentId { get; set; }
     public Category? Parent { get; init; }
-    public ICollection<Category> Children { get; init; } = new List<Category>();
+    public ICollection<Category> Children { get; set; } = new List<Category>();
 
     public CategoryStatus Status { get; set; } = CategoryStatus.Active;
 

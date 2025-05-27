@@ -1,6 +1,6 @@
 ﻿using AmazonKiller.Application.DTOs.Account.Cart;
 using AmazonKiller.Application.DTOs.Products;
-using AmazonKiller.Application.Features.Products.Commands.CreateUpdateProduct.CreateProduct;
+using AmazonKiller.Application.Features.Products.Admin.Commands.CreateUpdateProduct.CreateProduct;
 using AmazonKiller.Application.Mappings.ImageUrlResolvers.Products;
 using AmazonKiller.Domain.Entities.Products;
 using AutoMapper;

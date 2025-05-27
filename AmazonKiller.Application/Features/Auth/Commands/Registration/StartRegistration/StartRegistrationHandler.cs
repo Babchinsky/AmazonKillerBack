@@ -1,6 +1,6 @@
-﻿using AmazonKiller.Application.Interfaces.Auth;
-using AmazonKiller.Application.Interfaces.Repositories.Auth;
+﻿using AmazonKiller.Application.Interfaces.Repositories.Auth;
 using AmazonKiller.Application.Interfaces.Services;
+using AmazonKiller.Application.Interfaces.Services.Auth;
 using AmazonKiller.Domain.Entities.Users;
 using AmazonKiller.Shared.Exceptions;
 using MediatR;

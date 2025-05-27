@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
-using AmazonKiller.Application.Interfaces.Auth;
 using AmazonKiller.Application.Interfaces.Repositories.Auth;
 using AmazonKiller.Application.Interfaces.Services;
+using AmazonKiller.Application.Interfaces.Services.Auth;
 using AmazonKiller.Application.Options;
 using AmazonKiller.Domain.Entities.Users;
 using Microsoft.Extensions.Options;

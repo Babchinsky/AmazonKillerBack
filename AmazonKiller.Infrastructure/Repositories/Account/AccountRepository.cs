@@ -56,13 +56,11 @@ public class AccountRepository(AmazonDbContext db, IFileStorage fileStorage) : I
             throw new AppException("Your account has been deactivated.", StatusCodes.Status401Unauthorized);
     }
 
-    public async Task<string> GetRoleAsync(Guid id, CancellationToken ct = default)
+    public async Task<Role> GetRoleAsync(Guid id, CancellationToken ct = default)
     {
-        var role = await db.Users
+        return await db.Users
             .Where(u => u.Id == id)
-            .Select(u => u.Role.ToString())
+            .Select(u => u.Role)
             .FirstOrDefaultAsync(ct);
-
-        return role ?? throw new NotFoundException("Role not found.");
     }
 }

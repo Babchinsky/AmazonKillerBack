@@ -6,7 +6,7 @@ namespace AmazonKiller.Domain.Entities.Orders;
 
 public class Order : VersionedEntity
 {
-    public string OrderNumber { get; init; } = string.Empty; 
+    public string OrderNumber { get; init; } = string.Empty;
     public OrderInfo Info { get; init; } = new();
     public ICollection<OrderItem> Items { get; init; } = new List<OrderItem>();
     public OrderStatus Status { get; set; } = OrderStatus.Ordered;

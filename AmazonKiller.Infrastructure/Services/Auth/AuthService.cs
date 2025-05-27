@@ -2,7 +2,7 @@
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using AmazonKiller.Application.Interfaces.Auth;
+using AmazonKiller.Application.Interfaces.Services.Auth;
 using AmazonKiller.Domain.Entities.Users;
 using AmazonKiller.Infrastructure.Data;
 using Microsoft.Extensions.Configuration;
@@ -48,9 +48,9 @@ public class AuthService(AmazonDbContext db, IConfiguration cfg) : IAuthService
         };
 
         var token = new JwtSecurityToken(
-            issuer: cfg["Jwt:Issuer"],
-            audience: cfg["Jwt:Audience"],
-            claims: claims,
+            cfg["Jwt:Issuer"],
+            cfg["Jwt:Audience"],
+            claims,
             expires: DateTime.UtcNow.AddMinutes(10),
             signingCredentials: creds);
 

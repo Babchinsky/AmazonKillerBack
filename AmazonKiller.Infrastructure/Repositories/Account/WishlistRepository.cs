@@ -1,7 +1,7 @@
 ﻿using AmazonKiller.Application.Common.Helpers;
 using AmazonKiller.Application.Common.Models;
 using AmazonKiller.Application.DTOs.Products;
-using AmazonKiller.Application.Features.Account.Wishlist.Queries.GetWishlist;
+using AmazonKiller.Application.Features.Wishlist.Queries.GetWishlist;
 using AmazonKiller.Application.Interfaces.Repositories.Account;
 using AmazonKiller.Domain.Entities.Products;
 using AmazonKiller.Domain.Entities.Users;

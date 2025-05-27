@@ -1,4 +1,4 @@
-﻿using AmazonKiller.Application.Interfaces.Auth;
+﻿using AmazonKiller.Application.Interfaces.Services.Auth;
 
 namespace AmazonKiller.Infrastructure.Services.Auth;
 

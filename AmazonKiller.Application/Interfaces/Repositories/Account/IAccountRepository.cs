@@ -11,5 +11,5 @@ public interface IAccountRepository
     Task RevokeRefreshTokensAsync(Guid userId, CancellationToken ct);
 
     Task ThrowIfDeletedAsync(Guid userId, CancellationToken ct = default);
-    Task<string> GetRoleAsync(Guid id, CancellationToken ct = default);
+    Task<Role> GetRoleAsync(Guid id, CancellationToken ct = default);
 }

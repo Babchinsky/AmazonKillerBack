@@ -1,6 +1,6 @@
 ﻿using System.Net;
 using System.Net.Mail;
-using AmazonKiller.Application.Interfaces.Auth;
+using AmazonKiller.Application.Interfaces.Services.Auth;
 using Microsoft.Extensions.Configuration;
 
 namespace AmazonKiller.Infrastructure.Services.Auth;

@@ -1,7 +1,6 @@
-﻿using AmazonKiller.Application.Features.Account.Orders.Commands.ChangeOrderStatus;
-using AmazonKiller.Application.Features.Account.Orders.Commands.CreateOrder;
-using AmazonKiller.Application.Features.Account.Orders.Queries.GetAllOrders;
-using AmazonKiller.Application.Features.Account.Orders.Queries.GetOrderDetails;
+﻿using AmazonKiller.Application.Features.Orders.Public.Commands.CreateOrder;
+using AmazonKiller.Application.Features.Orders.Public.Queries.GetAllOrders;
+using AmazonKiller.Application.Features.Orders.Public.Queries.GetOrderDetails;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AmazonKiller.WebApi.Controllers.Account;
 
 [ApiController]
-[Route("api/orders")]
+[Route("api/account/orders")]
 [Authorize]
 public class OrdersController(IMediator mediator) : ControllerBase
 {
@@ -32,17 +31,5 @@ public class OrdersController(IMediator mediator) : ControllerBase
     {
         var id = await mediator.Send(command, ct);
         return Ok(id);
-    }
-
-    [Authorize(Roles = "Admin")]
-    [HttpPut("{id:guid}/status")]
-    public async Task<IActionResult> ChangeStatus(Guid id, [FromBody] ChangeOrderStatusCommand cmd,
-        CancellationToken ct)
-    {
-        if (id != cmd.OrderId)
-            return BadRequest("Mismatched OrderId");
-
-        await mediator.Send(cmd, ct);
-        return NoContent();
     }
 }

@@ -1,7 +1,7 @@
-﻿using AmazonKiller.Application.Features.Account.Wishlist.Commands.AddToWishlist;
-using AmazonKiller.Application.Features.Account.Wishlist.Commands.DeleteFromWishlist;
-using AmazonKiller.Application.Features.Account.Wishlist.Commands.ToggleWishlist;
-using AmazonKiller.Application.Features.Account.Wishlist.Queries.GetWishlist;
+﻿using AmazonKiller.Application.Features.Wishlist.Commands.AddToWishlist;
+using AmazonKiller.Application.Features.Wishlist.Commands.DeleteFromWishlist;
+using AmazonKiller.Application.Features.Wishlist.Commands.ToggleWishlist;
+using AmazonKiller.Application.Features.Wishlist.Queries.GetWishlist;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AmazonKiller.WebApi.Controllers.Account;
 
 [ApiController]
-[Route("api/wishlist")]
+[Route("api/account/wishlist")]
 [Authorize]
 public class WishlistController(IMediator mediator) : ControllerBase
 {

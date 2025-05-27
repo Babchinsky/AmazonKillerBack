@@ -1,7 +1,7 @@
-﻿using AmazonKiller.Application.Features.Account.Cart.Commands.AddProductToCart;
-using AmazonKiller.Application.Features.Account.Cart.Commands.RemoveProductFromCart;
-using AmazonKiller.Application.Features.Account.Cart.Commands.UpdateProductQuantityInCart;
-using AmazonKiller.Application.Features.Account.Cart.Queries.GetCart;
+﻿using AmazonKiller.Application.Features.Cart.Commands.AddProductToCart;
+using AmazonKiller.Application.Features.Cart.Commands.RemoveProductFromCart;
+using AmazonKiller.Application.Features.Cart.Commands.UpdateProductQuantityInCart;
+using AmazonKiller.Application.Features.Cart.Queries.GetCart;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AmazonKiller.WebApi.Controllers.Account;
 
 [ApiController]
-[Route("api/cart")]
+[Route("api/account/cart")]
 [Authorize]
 public class CartController(IMediator mediator) : ControllerBase
 {
