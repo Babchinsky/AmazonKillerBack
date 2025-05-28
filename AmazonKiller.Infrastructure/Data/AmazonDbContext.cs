@@ -22,8 +22,6 @@ public class AmazonDbContext(DbContextOptions<AmazonDbContext> options) : DbCont
 
     public DbSet<Order> Orders => Set<Order>();
     public DbSet<OrderItem> OrderItems => Set<OrderItem>();
-    public DbSet<Address> Addresses => Set<Address>();
-
 
     public DbSet<EmailVerification> EmailVerifications => Set<EmailVerification>();
     public DbSet<User> Users => Set<User>();

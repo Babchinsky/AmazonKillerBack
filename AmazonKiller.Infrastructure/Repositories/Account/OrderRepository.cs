@@ -63,7 +63,8 @@ public class OrderRepository(AmazonDbContext db, IMapper mapper) : IOrderReposit
                 $"{d.Address.Country}, {d.Address.State}, {d.Address.City}, {d.Address.Street}, {d.Address.HouseNumber}",
             Recipient = $"{d.FirstName} {d.LastName}",
             PaymentType = order.Info.Payment.PaymentType.ToString(),
-            Items = items
+            Items = items,
+            OrderNumber = order.OrderNumber
         };
     }
 

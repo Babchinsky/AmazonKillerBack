@@ -3,6 +3,7 @@
 public record OrderDetailsDto
 {
     public Guid Id { get; init; }
+    public string OrderNumber { get; init; } = string.Empty;
     public decimal Price { get; init; }
     public string Status { get; init; } = string.Empty;
     public DateTime OrderedAt { get; init; }

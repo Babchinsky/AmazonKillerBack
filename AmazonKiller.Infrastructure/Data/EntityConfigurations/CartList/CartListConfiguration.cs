@@ -1,4 +1,5 @@
 ﻿using AmazonKiller.Domain.Entities.Users;
+using AmazonKiller.Infrastructure.Common.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -18,7 +19,13 @@ public class CartListConfiguration : IEntityTypeConfiguration<Domain.Entities.Us
             .HasForeignKey(cl => cl.UserId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        b.Property(cl => cl.Price).HasPrecision(18, 2);
+        b.Property(cl => cl.Quantity)
+            .IsRequired()
+            .HasDefaultValue(1);
+
+        b.Property(cl => cl.Price)
+            .IsRequired()
+            .UseMoneyPrecision();
 
         b.Property(cl => cl.AddedAt)
             .HasDefaultValueSql("GETUTCDATE()")

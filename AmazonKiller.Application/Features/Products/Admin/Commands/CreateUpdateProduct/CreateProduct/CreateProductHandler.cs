@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using AmazonKiller.Application.DTOs.Products;
+﻿using AmazonKiller.Application.DTOs.Products;
 using AmazonKiller.Application.Interfaces.Repositories.Products;
 using AmazonKiller.Application.Interfaces.Services;
 using AmazonKiller.Domain.Entities.Products;
@@ -31,7 +30,7 @@ public class CreateProductHandler(
         await propertyKeyUpdater.UpdateCategoryPropertyKeysAsync(cmd.CategoryId, usedKeys, ct);
 
         if (cmd.Images is null || cmd.Images.Count == 0)
-            throw new ValidationException("At least one image is required.");
+            throw new AppException("At least one image is required.");
 
         var uploadedUrls = new List<string>();
 

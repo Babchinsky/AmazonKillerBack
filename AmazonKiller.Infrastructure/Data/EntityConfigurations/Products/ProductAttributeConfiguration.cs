@@ -1,4 +1,5 @@
 ﻿using AmazonKiller.Domain.Entities.Products;
+using AmazonKiller.Infrastructure.Common.Validation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -9,8 +10,8 @@ public class ProductAttributeConfiguration : IEntityTypeConfiguration<ProductAtt
     public void Configure(EntityTypeBuilder<ProductAttribute> b)
     {
         b.HasKey(x => x.Id);
-        b.Property(x => x.Key).HasMaxLength(30).IsRequired();
-        b.Property(x => x.Value).HasMaxLength(30).IsRequired();
+        b.Property(x => x.Key).HasMaxLength(ValidationConstants.ProductAttributeMaxLength).IsRequired();
+        b.Property(x => x.Value).HasMaxLength(ValidationConstants.ProductAttributeMaxLength).IsRequired();
         b.HasOne(x => x.Product)
             .WithMany(p => p.Attributes)
             .HasForeignKey(x => x.ProductId)

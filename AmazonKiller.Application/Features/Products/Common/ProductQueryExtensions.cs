@@ -1,7 +1,6 @@
 ﻿using System.Linq.Expressions;
 using AmazonKiller.Application.Common.Helpers;
 using AmazonKiller.Application.Common.Models;
-using AmazonKiller.Application.Features.Products.Public.Queries.GetAllProductCards;
 using AmazonKiller.Domain.Entities.Products;
 
 namespace AmazonKiller.Application.Features.Products.Common;

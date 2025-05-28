@@ -2,7 +2,6 @@
 using AmazonKiller.Application.Common.Models;
 using AmazonKiller.Application.DTOs.Products;
 using AmazonKiller.Application.Features.Products.Common;
-using AmazonKiller.Application.Features.Products.Public.Queries.GetAllProductCards;
 using AmazonKiller.Application.Interfaces.Repositories.Products;
 using AmazonKiller.Domain.Entities.Products;
 using AutoMapper;

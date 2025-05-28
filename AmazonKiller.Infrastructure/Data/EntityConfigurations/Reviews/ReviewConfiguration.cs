@@ -1,4 +1,6 @@
 ﻿using AmazonKiller.Domain.Entities.Reviews;
+using AmazonKiller.Infrastructure.Common.EF;
+using AmazonKiller.Infrastructure.Common.Validation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -12,9 +14,9 @@ public class ReviewConfiguration : IEntityTypeConfiguration<Review>
             .HasDefaultValueSql("GETUTCDATE()")
             .ValueGeneratedOnAdd();
 
-        b.Property(r => r.Rating).HasPrecision(3, 2);
-        b.Property(r => r.Article).HasMaxLength(40).IsRequired();
-        b.Property(r => r.Message).HasMaxLength(400).IsRequired();
+        b.Property(r => r.Rating).UseRatingPrecision();
+        b.Property(r => r.Article).HasMaxLength(ValidationConstants.ArticleMaxLength).IsRequired();
+        b.Property(r => r.Message).HasMaxLength(ValidationConstants.MessageMaxLength).IsRequired();
 
         b.HasOne(r => r.User)
             .WithMany(u => u.Reviews)
@@ -29,6 +31,6 @@ public class ReviewConfiguration : IEntityTypeConfiguration<Review>
         b.PrimitiveCollection(r => r.ImageUrls);
         b.PrimitiveCollection(r => r.Tags);
 
-        b.Property(p => p.RowVersion).IsRowVersion().IsConcurrencyToken();
+        b.ConfigureRowVersion();
     }
 }

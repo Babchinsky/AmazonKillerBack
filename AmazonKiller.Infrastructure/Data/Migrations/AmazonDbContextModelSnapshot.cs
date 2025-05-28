@@ -39,8 +39,8 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<Guid?>("ParentId")
                         .HasColumnType("uniqueidentifier");
@@ -164,7 +164,10 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderItems");
+                    b.ToTable("OrderItems", t =>
+                        {
+                            t.HasCheckConstraint("CK_OrderItem_Quantity_Positive", "[Quantity] > 0");
+                        });
                 });
 
             modelBuilder.Entity("AmazonKiller.Domain.Entities.Products.Product", b =>
@@ -423,7 +426,9 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Quantity")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(1);
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
@@ -536,7 +541,8 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -630,7 +636,8 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                 {
                     b.HasOne("AmazonKiller.Domain.Entities.Categories.Category", "Parent")
                         .WithMany("Children")
-                        .HasForeignKey("ParentId");
+                        .HasForeignKey("ParentId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Parent");
                 });
@@ -668,15 +675,18 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
 
                                     b2.Property<string>("Email")
                                         .IsRequired()
-                                        .HasColumnType("nvarchar(max)");
+                                        .HasMaxLength(255)
+                                        .HasColumnType("nvarchar(255)");
 
                                     b2.Property<string>("FirstName")
                                         .IsRequired()
-                                        .HasColumnType("nvarchar(max)");
+                                        .HasMaxLength(100)
+                                        .HasColumnType("nvarchar(100)");
 
                                     b2.Property<string>("LastName")
                                         .IsRequired()
-                                        .HasColumnType("nvarchar(max)");
+                                        .HasMaxLength(100)
+                                        .HasColumnType("nvarchar(100)");
 
                                     b2.HasKey("OrderInfoOrderId");
 
@@ -728,7 +738,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
 
                                             b3.HasKey("DeliveryInfoOrderInfoOrderId");
 
-                                            b3.ToTable("Addresses");
+                                            b3.ToTable("Orders");
 
                                             b3.WithOwner()
                                                 .HasForeignKey("DeliveryInfoOrderInfoOrderId");

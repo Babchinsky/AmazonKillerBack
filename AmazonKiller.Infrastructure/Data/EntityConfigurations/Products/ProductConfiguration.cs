@@ -1,4 +1,5 @@
 ﻿using AmazonKiller.Domain.Entities.Products;
+using AmazonKiller.Infrastructure.Common.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -12,10 +13,11 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
 
         e.PrimitiveCollection(p => p.ImageUrls);
 
-        e.Property(p => p.Price).HasPrecision(18, 2);
-        e.Property(p => p.DiscountPercent).HasPrecision(5, 2);
+        e.Property(p => p.Price).UseMoneyPrecision();
+        e.Property(p => p.DiscountPercent).UseDiscountPrecision();
 
-        e.Property(p => p.Rating).HasPrecision(3, 2);
-        e.Property(p => p.RowVersion).IsRowVersion().IsConcurrencyToken();
+        e.Property(p => p.Rating).UseRatingPrecision();
+
+        e.ConfigureRowVersion();
     }
 }
