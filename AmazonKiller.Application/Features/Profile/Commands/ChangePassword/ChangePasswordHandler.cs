@@ -18,7 +18,7 @@ public class ChangePasswordHandler(
         await accountRepo.ThrowIfDeletedAsync(currentUserId, ct);
 
         // Получаем пользователя
-        var user = await accountRepo.GetCurrentUserAsync(currentUserId, ct);
+        var user = await accountRepo.GetUserByIdAsync(currentUserId, ct);
         if (user is null)
             throw new NotFoundException("User not found");
 

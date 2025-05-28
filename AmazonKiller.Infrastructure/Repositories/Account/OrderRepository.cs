@@ -1,4 +1,4 @@
-﻿using AmazonKiller.Application.DTOs.Account.Orders;
+﻿using AmazonKiller.Application.DTOs.Orders;
 using AmazonKiller.Application.Interfaces.Repositories.Account;
 using AmazonKiller.Domain.Entities.Orders;
 using AmazonKiller.Infrastructure.Data;

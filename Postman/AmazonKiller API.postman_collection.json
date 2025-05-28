@@ -966,7 +966,7 @@
 								{
 									"key": "Photo",
 									"type": "file",
-									"src": "/C:/Users/alexs/OneDrive/Desktop/user1.jpg"
+									"src": "/C:/Users/alexs/OneDrive/Desktop/Postman/user1.jpg"
 								}
 							]
 						},
@@ -1506,6 +1506,76 @@
 				{
 					"name": "Public",
 					"item": [
+						{
+							"name": "Get Active Categories",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 200\", function () {\r",
+											"  pm.expect(pm.response.code).to.equal(200);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Response has the required fields - id and name\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(responseData).to.be.an('array');\r",
+											"    responseData.forEach(function(category) {\r",
+											"        pm.expect(category).to.have.property('id');\r",
+											"        pm.expect(category).to.have.property('name');\r",
+											"    });\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"ID is a non-empty string\", function () {\r",
+											"  const responseData = pm.response.json();\r",
+											"  \r",
+											"  pm.expect(responseData).to.be.an('array');\r",
+											"  responseData.forEach(function(category) {\r",
+											"    pm.expect(category.id).to.be.a('string').and.to.have.lengthOf.at.least(1, \"ID should be a non-empty string\");\r",
+											"  });\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Name is a non-empty string\", function () {\r",
+											"  const responseData = pm.response.json();\r",
+											"  \r",
+											"  responseData.forEach(function(category) {\r",
+											"    pm.expect(category.name).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Name should not be empty\");\r",
+											"  });\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Content type is application/json\", function () {\r",
+											"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/categories",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"categories"
+									]
+								}
+							},
+							"response": []
+						},
 						{
 							"name": "Get Category by Id",
 							"event": [
@@ -2406,6 +2476,137 @@
 				{
 					"name": "Public",
 					"item": [
+						{
+							"name": "Get Active Products by Filter",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// const rndInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;\r",
+											"// const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];\r",
+											"\r",
+											"// // Случайные значения\r",
+											"// // pm.environment.set(\"productSearchTerm\", pick([\"notebook\", \"jacket\", \"phone\", \"bag\"]));\r",
+											"// pm.environment.set(\"productCategoryId\", pm.environment.get(\"productCategoryId\") ?? \"\");\r",
+											"\r",
+											"// // 🟡 Ключи фильтров\r",
+											"// pm.environment.set(\"productFilterSizeKey\", \"Size\");\r",
+											"// pm.environment.set(\"productFilterColorKey\", \"Color\");\r",
+											"\r",
+											"// // 🟢 Значения фильтров\r",
+											"// pm.environment.set(\"productFilterSizeValue\", pick([\"S\", \"M\", \"L\", \"XL\"]));\r",
+											"// pm.environment.set(\"productFilterColorValue\", pick([\"Black\", \"White\", \"Red\", \"Blue\"]));\r",
+											"\r",
+											"// // 🟠 Цены\r",
+											"// const min = rndInt(10, 100);\r",
+											"// const max = rndInt(min + 10, min + 300);\r",
+											"// pm.environment.set(\"productMinPrice\", min);\r",
+											"// pm.environment.set(\"productMaxPrice\", max);\r",
+											"\r",
+											"// // 🔵 Пагинация и сортировка\r",
+											"// pm.environment.set(\"productPage\", 1);\r",
+											"// pm.environment.set(\"productPageSize\", 20);\r",
+											"// pm.environment.set(\"productSortField\", pick([\"price\", \"name\", \"rating\", \"soldcount\", \"quantity\", \"reviewscount\"]));\r",
+											"// pm.environment.set(\"productSortOrder\", Math.random() < 0.5 ? \"asc\" : \"desc\");\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", () => {\r",
+											"  pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"// const data = pm.response.json();\r",
+											"// pm.test(\"Items are returned\", () => {\r",
+											"//   pm.expect(data.items.length).to.be.at.least(0);\r",
+											"// });\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/products",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"products"
+									],
+									"query": [
+										{
+											"key": "SearchTerm",
+											"value": "ut laboris sit mollit",
+											"disabled": true
+										},
+										{
+											"key": "CategoryId",
+											"value": "484d573c-47f9-103f-b34c-24cc14fe727b",
+											"disabled": true
+										},
+										{
+											"key": "Filters[proidente24]",
+											"value": "minim consectetur",
+											"disabled": true
+										},
+										{
+											"key": "Filters[laborum96d]",
+											"value": "elit ea",
+											"disabled": true
+										},
+										{
+											"key": "Filters[nisi8ae]",
+											"value": "laboris",
+											"disabled": true
+										},
+										{
+											"key": "MinPrice",
+											"value": "-12930565.462214977",
+											"disabled": true
+										},
+										{
+											"key": "MaxPrice",
+											"value": "-12930565.462214977",
+											"disabled": true
+										},
+										{
+											"key": "Parameters.Page",
+											"value": "69511263",
+											"disabled": true
+										},
+										{
+											"key": "Parameters.PageSize",
+											"value": "69511263",
+											"disabled": true
+										},
+										{
+											"key": "Parameters.SortBy",
+											"value": "ut laboris sit mollit",
+											"disabled": true
+										},
+										{
+											"key": "Parameters.SortOrder",
+											"value": "ut laboris sit mollit",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
 						{
 							"name": "Get Product by Id",
 							"event": [
@@ -4245,6 +4446,61 @@
 											"value": "desc",
 											"disabled": true
 										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Account",
+					"item": [
+						{
+							"name": "Get Me",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/account/users/me",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"account",
+										"users",
+										"me"
 									]
 								}
 							},

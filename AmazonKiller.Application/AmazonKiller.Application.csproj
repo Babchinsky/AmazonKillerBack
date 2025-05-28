@@ -30,6 +30,7 @@
         <Folder Include="Features\Products\Public\"/>
         <Folder Include="Features\Reviews\Account\"/>
         <Folder Include="Features\Reviews\Public\"/>
+        <Folder Include="Features\Users\Admin\"/>
     </ItemGroup>
 
     <ItemGroup>

@@ -1,9 +1,9 @@
-﻿using AmazonKiller.Application.Features.Users.Commands.BulkDeleteUsers;
-using AmazonKiller.Application.Features.Users.Commands.BulkRestoreUsers;
-using AmazonKiller.Application.Features.Users.Commands.DemoteAdmin;
-using AmazonKiller.Application.Features.Users.Commands.MakeUserAdmin;
-using AmazonKiller.Application.Features.Users.Queries.GetAllUsers;
-using AmazonKiller.Application.Features.Users.Queries.GetUserOrdersAdmin;
+﻿using AmazonKiller.Application.Features.Users.Admin.Commands.BulkDeleteUsers;
+using AmazonKiller.Application.Features.Users.Admin.Commands.BulkRestoreUsers;
+using AmazonKiller.Application.Features.Users.Admin.Commands.DemoteAdmin;
+using AmazonKiller.Application.Features.Users.Admin.Commands.MakeUserAdmin;
+using AmazonKiller.Application.Features.Users.Admin.Queries.GetAllUsers;
+using AmazonKiller.Application.Features.Users.Admin.Queries.GetUserOrdersAdmin;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

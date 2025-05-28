@@ -13,7 +13,7 @@ public class DeleteAccountHandler(ICurrentUserService currentUserService, IAccou
         var currentUserId = currentUserService.UserId;
         await accountRepo.ThrowIfDeletedAsync(currentUserId, ct);
 
-        var user = await accountRepo.GetCurrentUserWithTokensAsync(currentUserId, ct);
+        var user = await accountRepo.GetUserWithTokensByIdAsync(currentUserId, ct);
         if (user is null)
             throw new AppException("User not found", 404);
 

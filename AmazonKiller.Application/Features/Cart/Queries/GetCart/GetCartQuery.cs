@@ -1,4 +1,4 @@
-﻿using AmazonKiller.Application.DTOs.Account.Cart;
+﻿using AmazonKiller.Application.DTOs.Cart;
 using MediatR;
 
 namespace AmazonKiller.Application.Features.Cart.Queries.GetCart;

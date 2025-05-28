@@ -1,4 +1,4 @@
-﻿using AmazonKiller.Application.DTOs.Account.Orders;
+﻿using AmazonKiller.Application.DTOs.Orders;
 using MediatR;
 
 namespace AmazonKiller.Application.Features.Orders.Public.Queries.GetOrderDetails;

@@ -1,5 +1,5 @@
 ﻿using AmazonKiller.Application.Common.Models;
-using AmazonKiller.Application.DTOs.Account.Orders;
+using AmazonKiller.Application.DTOs.Orders;
 using AmazonKiller.Domain.Entities.Orders;
 using MediatR;
 

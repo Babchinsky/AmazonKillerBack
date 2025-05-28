@@ -1,4 +1,4 @@
-﻿using AmazonKiller.Application.DTOs.Account.Orders;
+﻿using AmazonKiller.Application.DTOs.Orders;
 using AmazonKiller.Application.Mappings.ImageUrlResolvers;
 using AmazonKiller.Domain.Entities.Orders;
 using AutoMapper;

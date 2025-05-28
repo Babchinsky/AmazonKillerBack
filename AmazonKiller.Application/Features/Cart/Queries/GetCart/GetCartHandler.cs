@@ -1,4 +1,4 @@
-﻿using AmazonKiller.Application.DTOs.Account.Cart;
+﻿using AmazonKiller.Application.DTOs.Cart;
 using AmazonKiller.Application.Interfaces.Repositories.Account;
 using AmazonKiller.Application.Interfaces.Services;
 using AutoMapper;

@@ -1,6 +1,6 @@
-﻿using AmazonKiller.Application.DTOs.Account.Orders;
-using AmazonKiller.Domain.Entities.Orders;
+﻿using AmazonKiller.Domain.Entities.Orders;
 using AmazonKiller.Application.Common.Helpers;
+using AmazonKiller.Application.DTOs.Orders;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 

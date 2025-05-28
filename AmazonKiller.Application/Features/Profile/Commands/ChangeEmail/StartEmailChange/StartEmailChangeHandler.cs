@@ -17,7 +17,7 @@ public class StartEmailChangeHandler(
         var currentUserId = currentUserService.UserId;
         await accountRepo.ThrowIfDeletedAsync(currentUserId, ct);
 
-        var user = await accountRepo.GetCurrentUserAsync(currentUserId, ct)
+        var user = await accountRepo.GetUserByIdAsync(currentUserId, ct)
                    ?? throw new AppException("User not found", 404);
 
         if (user.Email == cmd.NewEmail)

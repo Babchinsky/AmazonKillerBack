@@ -13,7 +13,7 @@ public class ChangeNameHandler(ICurrentUserService currentUserService, IAccountR
         var currentUserId = currentUserService.UserId;
         await accountRepo.ThrowIfDeletedAsync(currentUserId, ct);
 
-        var user = await accountRepo.GetCurrentUserAsync(currentUserId, ct)
+        var user = await accountRepo.GetUserByIdAsync(currentUserId, ct)
                    ?? throw new NotFoundException("User not found");
 
         if (user.FirstName == cmd.FirstName && user.LastName == cmd.LastName)

@@ -17,7 +17,7 @@ public class ChangePhotoHandler(
         var currentUserId = currentUserService.UserId;
         await accountRepo.ThrowIfDeletedAsync(currentUserId, ct);
 
-        var user = await accountRepo.GetCurrentUserAsync(currentUserId, ct)
+        var user = await accountRepo.GetUserByIdAsync(currentUserId, ct)
                    ?? throw new NotFoundException("User not found");
 
         var oldPhoto = user.ImageUrl;

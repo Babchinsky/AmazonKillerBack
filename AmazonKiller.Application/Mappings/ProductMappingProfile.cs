@@ -1,4 +1,4 @@
-﻿using AmazonKiller.Application.DTOs.Account.Cart;
+﻿using AmazonKiller.Application.DTOs.Cart;
 using AmazonKiller.Application.DTOs.Products;
 using AmazonKiller.Application.Features.Products.Admin.Commands.CreateUpdateProduct.CreateProduct;
 using AmazonKiller.Application.Mappings.ImageUrlResolvers.Products;

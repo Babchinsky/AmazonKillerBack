@@ -16,12 +16,12 @@ public class AccountRepository(AmazonDbContext db, IFileStorage fileStorage) : I
         return user?.Status == UserStatus.Deleted;
     }
 
-    public Task<User?> GetCurrentUserAsync(Guid userId, CancellationToken ct = default)
+    public Task<User?> GetUserByIdAsync(Guid userId, CancellationToken ct = default)
     {
         return db.Users.FindAsync([userId], ct).AsTask();
     }
 
-    public Task<User?> GetCurrentUserWithTokensAsync(Guid userId, CancellationToken ct)
+    public Task<User?> GetUserWithTokensByIdAsync(Guid userId, CancellationToken ct)
     {
         return db.Users.Include(u => u.RefreshTokens).FirstOrDefaultAsync(u => u.Id == userId, ct);
     }
