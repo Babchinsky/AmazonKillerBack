@@ -71,6 +71,30 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Collections",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: true),
+                    CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    MinPrice = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: true),
+                    MaxPrice = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Collections", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Collections_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Products",
                 columns: table => new
                 {
@@ -182,6 +206,25 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         name: "FK_RefreshTokens_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CollectionFilters",
+                columns: table => new
+                {
+                    CollectionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Key = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    Value = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CollectionFilters", x => new { x.CollectionId, x.Key, x.Value });
+                    table.ForeignKey(
+                        name: "FK_CollectionFilters_Collections_CollectionId",
+                        column: x => x.CollectionId,
+                        principalTable: "Collections",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -423,6 +466,16 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                 column: "ParentId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Collections_CategoryId",
+                table: "Collections",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Collections_IsActive",
+                table: "Collections",
+                column: "IsActive");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_EmailVerifications_Email_Type",
                 table: "EmailVerifications",
                 columns: new[] { "Email", "Type" });
@@ -507,6 +560,9 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                 name: "CartLists");
 
             migrationBuilder.DropTable(
+                name: "CollectionFilters");
+
+            migrationBuilder.DropTable(
                 name: "EmailVerifications");
 
             migrationBuilder.DropTable(
@@ -529,6 +585,9 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "WishlistItems");
+
+            migrationBuilder.DropTable(
+                name: "Collections");
 
             migrationBuilder.DropTable(
                 name: "Orders");

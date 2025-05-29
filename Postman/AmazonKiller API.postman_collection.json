@@ -2030,8 +2030,8 @@
 											"key": "Images",
 											"type": "file",
 											"src": [
-												"/C:/Users/alexs/OneDrive/Desktop/product1_photo.jpeg",
-												"/C:/Users/alexs/OneDrive/Desktop/product2_photo.jpg"
+												"/C:/Users/alexs/OneDrive/Desktop/Postman/product1_photo.jpeg",
+												"/C:/Users/alexs/OneDrive/Desktop/Postman/product2_photo.jpg"
 											]
 										},
 										{
@@ -4509,6 +4509,377 @@
 					]
 				}
 			]
+		},
+		{
+			"name": "Collections",
+			"item": [
+				{
+					"name": "Admin",
+					"item": [
+						{
+							"name": "Add Collection",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// Название коллекции\r",
+											"pm.collectionVariables.set(\"collectionTitle\", \"New Spring Collection\");\r",
+											"\r",
+											"// Цены\r",
+											"pm.collectionVariables.set(\"collectionMinPrice\", \"199.99\");\r",
+											"pm.collectionVariables.set(\"collectionMaxPrice\", \"599.99\");\r",
+											"\r",
+											"// JSON строка фильтров: ключ-значение\r",
+											"const filters = [\r",
+											"  { key: \"Color\", value: \"Red\" },\r",
+											"  { key: \"Size\", value: \"S\" }\r",
+											"];\r",
+											"pm.collectionVariables.set(\"collectionFilters\", JSON.stringify(filters));\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"✅ Status code is 201 Created\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const json = pm.response.json();\r",
+											"    const collectionId = json.id;\r",
+											"\r",
+											"    if (collectionId) {\r",
+											"        pm.environment.set(\"collectionId\", collectionId);\r",
+											"        console.log(\"✅ Saved collectionId:\", collectionId);\r",
+											"    } else {\r",
+											"        console.warn(\"⚠️ Response JSON does not contain 'id'\");\r",
+											"    }\r",
+											"} catch (err) {\r",
+											"    console.error(\"❌ Failed to parse response JSON\", err);\r",
+											"}\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{adminAccessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "multipart/form-data"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "Title",
+											"value": "{{collectionTitle}}",
+											"type": "text"
+										},
+										{
+											"key": "CategoryId",
+											"value": "{{categoryId}}",
+											"type": "text"
+										},
+										{
+											"key": "MinPrice",
+											"value": "{{collectionMinPrice}}",
+											"type": "text"
+										},
+										{
+											"key": "MaxPrice",
+											"value": "{{collectionMaxPrice}}",
+											"type": "text"
+										},
+										{
+											"key": "Filters",
+											"value": "{{collectionFilters}}",
+											"type": "text"
+										},
+										{
+											"key": "Image",
+											"type": "file",
+											"src": "/C:/Users/alexs/OneDrive/Desktop/Postman/review1.jpg"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/admin/collections",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"collections"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Collection",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// Название коллекции\r",
+											"pm.collectionVariables.set(\"collectionTitle\", \"Updated Collection Title\");\r",
+											"\r",
+											"// Цены\r",
+											"pm.collectionVariables.set(\"collectionMinPrice\", \"149.99\");\r",
+											"pm.collectionVariables.set(\"collectionMaxPrice\", \"799.00\");\r",
+											"\r",
+											"// JSON строка фильтров: ключ-значение\r",
+											"const filters = [\r",
+											"    { key: \"Color\", value: \"Black\" },\r",
+											"    { key: \"Size\", value: \"M\" }\r",
+											"];\r",
+											"pm.collectionVariables.set(\"collectionFilters\", JSON.stringify(filters));\r",
+											"\r",
+											"// (предполагается, что collectionId и collectionCategoryId уже заданы)\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{adminAccessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "multipart/form-data"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "Id",
+											"value": "{{collectionId}}",
+											"type": "text"
+										},
+										{
+											"key": "Title",
+											"value": "{{collectionTitle}}",
+											"type": "text"
+										},
+										{
+											"key": "CategoryId",
+											"value": "{{categoryId}}",
+											"type": "text"
+										},
+										{
+											"key": "MinPrice",
+											"value": "{{collectionMinPrice}}",
+											"type": "text"
+										},
+										{
+											"key": "MaxPrice",
+											"value": "{{collectionMaxPrice}}",
+											"type": "text"
+										},
+										{
+											"key": "Filters",
+											"value": "{{collectionFilters}}",
+											"type": "text"
+										},
+										{
+											"key": "Image",
+											"type": "file",
+											"src": "/C:/Users/alexs/OneDrive/Desktop/Postman/review2.jpg"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/admin/collections/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"collections",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "{{collectionId}}",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Collection",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 204\", function () {\r",
+											"    pm.response.to.have.status(204);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{adminAccessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/admin/collections/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"collections",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "{{collectionId}}",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Public",
+					"item": [
+						{
+							"name": "Get Collection by ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"const json = pm.response.json();\r",
+											"\r",
+											"if (json?.id) {\r",
+											"    pm.collectionVariables.set(\"collectionId\", json.id);\r",
+											"    console.log(\"✅ collectionId set:\", json.id);\r",
+											"} else {\r",
+											"    console.warn(\"⚠️ No 'id' found in response JSON\");\r",
+											"}\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"packages": {},
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/collections/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"collections",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "{{collectionId}}",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
 		}
 	],
 	"auth": {
@@ -4525,6 +4896,26 @@
 		{
 			"key": "baseUrl",
 			"value": "/"
+		},
+		{
+			"key": "collectionTitle",
+			"value": ""
+		},
+		{
+			"key": "collectionMinPrice",
+			"value": ""
+		},
+		{
+			"key": "collectionMaxPrice",
+			"value": ""
+		},
+		{
+			"key": "collectionFilters",
+			"value": ""
+		},
+		{
+			"key": "collectionId",
+			"value": ""
 		}
 	]
 }

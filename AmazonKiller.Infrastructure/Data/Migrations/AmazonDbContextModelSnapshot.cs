@@ -89,6 +89,52 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         });
                 });
 
+            modelBuilder.Entity("AmazonKiller.Domain.Entities.Collections.Collection", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ImageUrl")
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
+                    b.Property<decimal?>("MaxPrice")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal?>("MinPrice")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("IsActive");
+
+                    b.ToTable("Collections");
+                });
+
             modelBuilder.Entity("AmazonKiller.Domain.Entities.Common.Sequence", b =>
                 {
                     b.Property<string>("Name")
@@ -642,6 +688,42 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                     b.Navigation("Parent");
                 });
 
+            modelBuilder.Entity("AmazonKiller.Domain.Entities.Collections.Collection", b =>
+                {
+                    b.HasOne("AmazonKiller.Domain.Entities.Categories.Category", "Category")
+                        .WithMany("Collections")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.OwnsMany("AmazonKiller.Domain.Entities.Collections.CollectionFilter", "Filters", b1 =>
+                        {
+                            b1.Property<Guid>("CollectionId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<string>("Key")
+                                .HasMaxLength(30)
+                                .HasColumnType("nvarchar(30)");
+
+                            b1.Property<string>("Value")
+                                .HasMaxLength(30)
+                                .HasColumnType("nvarchar(30)");
+
+                            b1.HasKey("CollectionId", "Key", "Value");
+
+                            b1.ToTable("CollectionFilters", (string)null);
+
+                            b1.WithOwner("Collection")
+                                .HasForeignKey("CollectionId");
+
+                            b1.Navigation("Collection");
+                        });
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Filters");
+                });
+
             modelBuilder.Entity("AmazonKiller.Domain.Entities.Orders.Order", b =>
                 {
                     b.HasOne("AmazonKiller.Domain.Entities.Users.User", "User")
@@ -932,6 +1014,8 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
             modelBuilder.Entity("AmazonKiller.Domain.Entities.Categories.Category", b =>
                 {
                     b.Navigation("Children");
+
+                    b.Navigation("Collections");
 
                     b.Navigation("Products");
                 });

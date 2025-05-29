@@ -1,4 +1,5 @@
 ﻿using AmazonKiller.Domain.Entities.Categories;
+using AmazonKiller.Domain.Entities.Collections;
 using AmazonKiller.Domain.Entities.Common;
 using AmazonKiller.Domain.Entities.Orders;
 using AmazonKiller.Domain.Entities.Products;
@@ -34,6 +35,8 @@ public class AmazonDbContext(DbContextOptions<AmazonDbContext> options) : DbCont
 
     public DbSet<Wishlist> WishlistItems => Set<Wishlist>();
     public DbSet<CartList> CartLists => Set<CartList>();
+
+    public DbSet<Collection> Collections => Set<Collection>();
 
 
     protected override void OnModelCreating(ModelBuilder b)
