@@ -23,7 +23,8 @@ builder.Services.Configure<ForwardedHeadersOptions>(options =>
     options.KnownProxies.Clear();
 });
 
-builder.WebHost.UseUrls("http://0.0.0.0:80");
+var port = Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true" ? "80" : "5011";
+builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
 
 // ----------  DI ----------
 // builder.Services.AddControllers();
