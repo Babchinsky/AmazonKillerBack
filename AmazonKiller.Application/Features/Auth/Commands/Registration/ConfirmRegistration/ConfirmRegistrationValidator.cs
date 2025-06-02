@@ -9,7 +9,5 @@ public class ConfirmRegistrationValidator : AbstractValidator<ConfirmRegistratio
     {
         RuleFor(x => x.Email).ValidEmail();
         RuleFor(x => x.Code).Length(6);
-        RuleFor(x => x.FirstName).FirstName();
-        RuleFor(x => x.LastName).LastName();
     }
 }

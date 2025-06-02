@@ -6,7 +6,5 @@ namespace AmazonKiller.Application.Features.Auth.Commands.Registration.ConfirmRe
 public record ConfirmRegistrationCommand(
     string Email,
     string Code,
-    string DeviceId,
-    string FirstName,
-    string LastName
+    string DeviceId
 ) : IRequest<AuthTokensDto>;
