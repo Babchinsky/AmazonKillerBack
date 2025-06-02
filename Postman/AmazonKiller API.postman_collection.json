@@ -322,9 +322,19 @@
 											"// {{$guid}} -> встроенный генератор Postman\r",
 											"const deviceId = pm.variables.replaceIn('{{$guid}}');\r",
 											"pm.environment.set('deviceId', deviceId);\r",
+											"console.log('deviceId for confirm-registration:', deviceId);\r",
 											"\r",
-											"// (необязательно) лог в консоль Postman - удобно дебажить\r",
-											"console.log('deviceId for confirm-registration:', deviceId);"
+											"// ==== firstName / lastName ======================================\r",
+											"const firstNames = ['John', 'Alice', 'Michael', 'Emma', 'David', 'Olivia', 'Robert', 'Sophia'];\r",
+											"const lastNames = ['Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Garcia', 'Miller', 'Davis'];\r",
+											"\r",
+											"const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];\r",
+											"const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];\r",
+											"\r",
+											"pm.environment.set('firstName', firstName);\r",
+											"pm.environment.set('lastName', lastName);\r",
+											"\r",
+											"console.log(`Generated user: ${firstName} ${lastName}`);"
 										],
 										"type": "text/javascript",
 										"packages": {}
@@ -360,7 +370,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"email\": \"{{email}}\",\n  \"code\": \"{{verificationCode}}\",\n  \"deviceId\": \"{{deviceId}}\"\n}",
+									"raw": "{\n  \"email\": \"{{email}}\",\n  \"code\": \"{{verificationCode}}\",\n  \"deviceId\": \"{{deviceId}}\",\n  \"firstName\": \"{{firstName}}\",\n  \"lastName\": \"{{lastName}}\"\n}",
 									"options": {
 										"raw": {
 											"headerFamily": "json",
@@ -4532,7 +4542,7 @@
 											"\r",
 											"// JSON строка фильтров: ключ-значение\r",
 											"const filters = [\r",
-											"  { key: \"Color\", value: \"Red\" },\r",
+											"  { key: \"Color\", value: \"Black\" },\r",
 											"  { key: \"Size\", value: \"S\" }\r",
 											"];\r",
 											"pm.collectionVariables.set(\"collectionFilters\", JSON.stringify(filters));\r",
@@ -4812,6 +4822,68 @@
 				{
 					"name": "Public",
 					"item": [
+						{
+							"name": "Get All Collections by Filter",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/collections?CategoryId={{categoryId}}&Parameters.Page=1&Parameters.PageSize=20",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"collections"
+									],
+									"query": [
+										{
+											"key": "SearchTerm",
+											"value": "deserunt minim",
+											"disabled": true
+										},
+										{
+											"key": "CategoryId",
+											"value": "{{categoryId}}"
+										},
+										{
+											"key": "MinPrice",
+											"value": "199",
+											"disabled": true
+										},
+										{
+											"key": "MaxPrice",
+											"value": "599",
+											"disabled": true
+										},
+										{
+											"key": "Parameters.Page",
+											"value": "1"
+										},
+										{
+											"key": "Parameters.PageSize",
+											"value": "20"
+										},
+										{
+											"key": "Parameters.SortBy",
+											"value": "maxprice",
+											"disabled": true
+										},
+										{
+											"key": "Parameters.SortOrder",
+											"value": "asc",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
 						{
 							"name": "Get Collection by ID",
 							"event": [

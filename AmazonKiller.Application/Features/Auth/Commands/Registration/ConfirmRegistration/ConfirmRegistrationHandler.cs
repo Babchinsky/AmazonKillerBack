@@ -29,7 +29,9 @@ public class ConfirmRegistrationHandler(
             Id = Guid.NewGuid(),
             Email = cmd.Email,
             PasswordHash = entry.TempPasswordHash,
-            Role = Role.Customer
+            Role = Role.Customer,
+            FirstName = cmd.FirstName,
+            LastName = cmd.LastName
         };
 
         await userRepo.AddAsync(user, ct);

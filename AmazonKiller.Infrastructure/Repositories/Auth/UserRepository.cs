@@ -14,13 +14,6 @@ public class UserRepository(AmazonDbContext db) : IUserRepository
         await db.SaveChangesAsync(ct);
     }
 
-    public async Task AddAdminAsync(User user, CancellationToken ct)
-    {
-        user.Role = Role.Admin;
-        db.Users.Add(user);
-        await db.SaveChangesAsync(ct);
-    }
-
     public Task<bool> IsEmailTakenAsync(string email, CancellationToken ct)
     {
         return db.Users.AnyAsync(u => u.Email == email, ct);
