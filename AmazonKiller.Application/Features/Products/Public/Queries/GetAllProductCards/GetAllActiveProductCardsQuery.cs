@@ -12,5 +12,6 @@ public class GetAllActiveProductCardsQuery : IRequest<PagedList<ProductCardDto>>
     public Dictionary<string, string>? Filters { get; init; }
     public decimal? MinPrice { get; init; }
     public decimal? MaxPrice { get; init; }
+    public int? Rating { get; init; }
     public QueryParameters Parameters { get; init; } = new();
 }

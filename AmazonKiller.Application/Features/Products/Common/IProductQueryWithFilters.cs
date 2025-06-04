@@ -9,5 +9,6 @@ public interface IProductQueryWithFilters
     Dictionary<string, string>? Filters { get; }
     decimal? MinPrice { get; }
     decimal? MaxPrice { get; }
+    int? Rating { get; }
     QueryParameters Parameters { get; }
 }

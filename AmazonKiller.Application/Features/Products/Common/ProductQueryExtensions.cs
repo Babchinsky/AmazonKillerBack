@@ -28,6 +28,9 @@ public static class ProductQueryExtensions
         if (q.MaxPrice.HasValue)
             query = query.Where(p => p.Price <= q.MaxPrice);
 
+        if (q.Rating.HasValue)
+            query = query.Where(p => Math.Floor(p.Rating) == q.Rating.Value);
+
         if (q.Filters is null) return query;
 
         foreach (var (key, val) in q.Filters)
