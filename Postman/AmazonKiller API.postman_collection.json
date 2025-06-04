@@ -1431,7 +1431,7 @@
 									"listen": "prerequest",
 									"script": {
 										"exec": [
-											"const id1 = \"4FEF796A-2712-432C-B5A5-D68B282FEEFD\";\r",
+											"const id1 = \"13a2b10a-ebc0-4c30-a80f-b9b22195eb43\";\r",
 											"const id2 = \"27190D8C-75E9-4C4E-8EF0-FF579049A2D3\";\r",
 											"\r",
 											"const id3 = \"11111111-1111-1111-1111-111111111113\";\r",
@@ -4312,7 +4312,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"userIds\": [\n    \"9E5354E5-4F96-4243-A85B-E82465623F41\",\n    \"77777777-7777-7777-7777-777777777778\",\n    \"88888888-8888-8888-8888-888888888887\"\n  ]\n}",
+									"raw": "{\n  \"userIds\": [\n    \"B8AE04F8-C84D-430E-9210-0D35BB131EF4\",\n    \"77777777-7777-7777-7777-777777777778\",\n    \"88888888-8888-8888-8888-888888888887\"\n  ]\n}",
 									"options": {
 										"raw": {
 											"headerFamily": "json",
@@ -4397,6 +4397,20 @@
 						},
 						{
 							"name": "Get Users by Filter",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -4455,6 +4469,56 @@
 											"key": "Parameters.SortOrder",
 											"value": "desc",
 											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get User by ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{adminAccessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/admin/users/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "77777777-7777-7777-7777-777777777777"
 										}
 									]
 								}

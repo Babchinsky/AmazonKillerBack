@@ -3,7 +3,8 @@ using AmazonKiller.Application.Features.Users.Admin.Commands.BulkRestoreUsers;
 using AmazonKiller.Application.Features.Users.Admin.Commands.DemoteAdmin;
 using AmazonKiller.Application.Features.Users.Admin.Commands.MakeUserAdmin;
 using AmazonKiller.Application.Features.Users.Admin.Queries.GetAllUsers;
-using AmazonKiller.Application.Features.Users.Admin.Queries.GetUserOrdersAdmin;
+using AmazonKiller.Application.Features.Users.Admin.Queries.GetUserById;
+using AmazonKiller.Application.Features.Users.Admin.Queries.GetUserOrders;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,6 +20,13 @@ public class AdminUsersController(IMediator mediator) : ControllerBase
     public async Task<IActionResult> GetAll([FromQuery] GetAllUsersQuery query, CancellationToken ct)
     {
         var result = await mediator.Send(query, ct);
+        return Ok(result);
+    }
+
+    [HttpGet("{userId:guid}")]
+    public async Task<IActionResult> GetUserById(Guid userId, CancellationToken ct)
+    {
+        var result = await mediator.Send(new GetUserByIdQuery(userId), ct);
         return Ok(result);
     }
 
@@ -53,7 +61,7 @@ public class AdminUsersController(IMediator mediator) : ControllerBase
     [HttpGet("{userId:guid}/orders")]
     public async Task<IActionResult> GetUserOrders(Guid userId, CancellationToken ct)
     {
-        var result = await mediator.Send(new GetUserOrdersAdminQuery(userId), ct);
+        var result = await mediator.Send(new GetUserOrdersQuery(userId), ct);
         return Ok(result);
     }
 }
