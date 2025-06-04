@@ -23,7 +23,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Features\Auth\Commands\Registration\"/>
         <Folder Include="Features\Categories\Admin\Commands\"/>
         <Folder Include="Features\Categories\Public\"/>
         <Folder Include="Features\Products\Admin\Queries\"/>

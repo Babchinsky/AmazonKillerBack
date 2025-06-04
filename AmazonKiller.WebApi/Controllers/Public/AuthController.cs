@@ -1,6 +1,7 @@
 ﻿using AmazonKiller.Application.Features.Auth.Commands.Login;
 using AmazonKiller.Application.Features.Auth.Commands.Refresh;
 using AmazonKiller.Application.Features.Auth.Commands.RegisterAdmin;
+using AmazonKiller.Application.Features.Auth.Commands.Registration.CompleteRegistration;
 using AmazonKiller.Application.Features.Auth.Commands.Registration.ConfirmRegistration;
 using AmazonKiller.Application.Features.Auth.Commands.Registration.StartRegistration;
 using MediatR;
@@ -22,7 +23,15 @@ public class AuthController(IMediator mediator) : ControllerBase
     [HttpPost("register/confirm")]
     public async Task<IActionResult> Confirm([FromBody] ConfirmRegistrationCommand cmd, CancellationToken ct)
     {
-        return Ok(await mediator.Send(cmd, ct));
+        await mediator.Send(cmd, ct);
+        return NoContent();
+    }
+
+    [HttpPost("register/complete")]
+    public async Task<IActionResult> Complete([FromBody] CompleteRegistrationCommand cmd, CancellationToken ct)
+    {
+        var result = await mediator.Send(cmd, ct);
+        return Ok(result);
     }
 
     [HttpPost("login")]

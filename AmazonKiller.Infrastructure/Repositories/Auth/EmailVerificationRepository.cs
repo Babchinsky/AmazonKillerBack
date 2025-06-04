@@ -2,6 +2,7 @@
 using AmazonKiller.Domain.Entities.Users;
 using AmazonKiller.Infrastructure.Data;
 using AmazonKiller.Shared.Constants;
+using AmazonKiller.Shared.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -80,5 +81,18 @@ public class EmailVerificationRepository(AmazonDbContext db, IConfiguration conf
         await db.SaveChangesAsync(ct);
 
         return code;
+    }
+
+    public async Task MarkAsConfirmedAsync(string email, string code, CancellationToken ct)
+    {
+        var entry = await GetValidEntryAsync(email, code, ct);
+        if (entry is null)
+            throw new AppException("Invalid or expired code");
+
+        if (entry.IsConfirmed)
+            return;
+
+        entry.IsConfirmed = true;
+        await db.SaveChangesAsync(ct);
     }
 }

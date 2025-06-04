@@ -212,7 +212,7 @@
 			"name": "Authorization",
 			"item": [
 				{
-					"name": "Registration",
+					"name": "Register User",
 					"item": [
 						{
 							"name": "Start Registration",
@@ -316,8 +316,65 @@
 									"script": {
 										"exec": [
 											"// ==== verification code =========================================\r",
-											"pm.environment.set('verificationCode', '123456');   // фиксированный код из test-конфига\r",
-											"\r",
+											"pm.environment.set('verificationCode', '123456');   // фиксированный код из test-конфига"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test('Успешное подтверждение кода', () => {\r",
+											"    pm.response.to.have.status(204);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"{{email}}\",\n  \"code\": \"{{verificationCode}}\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/auth/register/confirm",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"register",
+										"confirm"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Complete Registration",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
 											"// ==== deviceId ==================================================\r",
 											"// {{$guid}} -> встроенный генератор Postman\r",
 											"const deviceId = pm.variables.replaceIn('{{$guid}}');\r",
@@ -344,7 +401,7 @@
 									"listen": "test",
 									"script": {
 										"exec": [
-											"pm.test('Успешное подтверждение регистрации', () => {\r",
+											"pm.test('Успешная регистрация', () => {\r",
 											"    pm.response.to.have.status(200);\r",
 											"});\r",
 											"\r",
@@ -370,7 +427,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"email\": \"{{email}}\",\n  \"code\": \"{{verificationCode}}\",\n  \"deviceId\": \"{{deviceId}}\"\n}",
+									"raw": "{\n  \"email\": \"{{email}}\",\n  \"code\": \"{{verificationCode}}\",\n  \"firstName\": \"{{firstName}}\",\n  \"lastName\": \"{{lastName}}\",\n  \"deviceId\": \"{{deviceId}}\"\n}",
 									"options": {
 										"raw": {
 											"headerFamily": "json",
@@ -379,7 +436,7 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/api/auth/register/confirm",
+									"raw": "{{baseUrl}}/api/auth/register/complete",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -387,125 +444,125 @@
 										"api",
 										"auth",
 										"register",
-										"confirm"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Register Admin",
-							"event": [
-								{
-									"listen": "prerequest",
-									"script": {
-										"exec": [
-											"const rand = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;\r",
-											"\r",
-											"const getRandomChar = (chars) => chars[rand(0, chars.length - 1)];\r",
-											"\r",
-											"const upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';\r",
-											"const lower = 'abcdefghijklmnopqrstuvwxyz';\r",
-											"const digits = '0123456789';\r",
-											"const all = upper + lower + digits;\r",
-											"\r",
-											"// Гарантируем хотя бы по одному символу из каждой группы\r",
-											"let password = \r",
-											"    getRandomChar(upper) + \r",
-											"    getRandomChar(lower) + \r",
-											"    getRandomChar(digits);\r",
-											"\r",
-											"// Остальные символы (до 12)\r",
-											"for (let i = 3; i < 12; i++) {\r",
-											"  password += getRandomChar(all);\r",
-											"}\r",
-											"\r",
-											"// Перемешаем символы\r",
-											"password = password.split('').sort(() => 0.5 - Math.random()).join('');\r",
-											"\r",
-											"// Имя, фамилия, email\r",
-											"const firstName = `Admin${rand(100, 999)}`;\r",
-											"const lastName = `Test${rand(100, 999)}`;\r",
-											"const email = `admin_${pm.variables.replaceIn('{{$timestamp}}')}@mail.com`;\r",
-											"const secret = pm.environment.get(\"adminSecret\") || \"REMOVED_ADMIN_SECRET\";\r",
-											"\r",
-											"// Генерация deviceId\r",
-											"const deviceId = crypto.randomUUID();  // встроено в Postman\r",
-											"\r",
-											"// Сохраняем переменные\r",
-											"pm.environment.set(\"adminEmail\", email);\r",
-											"pm.environment.set(\"adminPassword\", password);\r",
-											"pm.environment.set(\"adminFirstName\", firstName);\r",
-											"pm.environment.set(\"adminLastName\", lastName);\r",
-											"pm.environment.set(\"adminSecret\", secret);\r",
-											"pm.environment.set(\"deviceId3\", deviceId); // 👈 добавляем deviceId3\r",
-											"\r",
-											"// Лог\r",
-											"console.log({ email, password, firstName, lastName, secret, deviceId });\r",
-											""
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								},
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 200\", function () {\r",
-											"    pm.response.to.have.status(200);\r",
-											"});\r",
-											"\r",
-											"// Разбираем JSON-ответ\r",
-											"const data = pm.response.json();\r",
-											"\r",
-											"// Сохраняем токен в окружение\r",
-											"pm.environment.set('adminAccessToken', data.accessToken);\r",
-											"pm.environment.set('adminRefreshToken', data.refreshToken);\r",
-											"\r",
-											"// Логируем токен\r",
-											"console.log(\"Access token:\", data.accessToken);\r",
-											""
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"email\": \"{{adminEmail}}\",\n  \"password\": \"{{adminPassword}}\",\n  \"firstName\": \"{{adminFirstName}}\",\n  \"lastName\": \"{{adminLastName}}\",\n  \"secret\": \"{{adminSecret}}\",\n  \"deviceId\": \"{{deviceId}}\"\n}",
-									"options": {
-										"raw": {
-											"headerFamily": "json",
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{baseUrl}}/api/auth/register/admin",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"api",
-										"auth",
-										"register",
-										"admin"
+										"complete"
 									]
 								}
 							},
 							"response": []
 						}
 					]
+				},
+				{
+					"name": "Register Admin",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const rand = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;\r",
+									"\r",
+									"const getRandomChar = (chars) => chars[rand(0, chars.length - 1)];\r",
+									"\r",
+									"const upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';\r",
+									"const lower = 'abcdefghijklmnopqrstuvwxyz';\r",
+									"const digits = '0123456789';\r",
+									"const all = upper + lower + digits;\r",
+									"\r",
+									"// Гарантируем хотя бы по одному символу из каждой группы\r",
+									"let password = \r",
+									"    getRandomChar(upper) + \r",
+									"    getRandomChar(lower) + \r",
+									"    getRandomChar(digits);\r",
+									"\r",
+									"// Остальные символы (до 12)\r",
+									"for (let i = 3; i < 12; i++) {\r",
+									"  password += getRandomChar(all);\r",
+									"}\r",
+									"\r",
+									"// Перемешаем символы\r",
+									"password = password.split('').sort(() => 0.5 - Math.random()).join('');\r",
+									"\r",
+									"// Имя, фамилия, email\r",
+									"const firstName = `Admin${rand(100, 999)}`;\r",
+									"const lastName = `Test${rand(100, 999)}`;\r",
+									"const email = `admin_${pm.variables.replaceIn('{{$timestamp}}')}@mail.com`;\r",
+									"const secret = pm.environment.get(\"adminSecret\") || \"REMOVED_ADMIN_SECRET\";\r",
+									"\r",
+									"// Генерация deviceId\r",
+									"const deviceId = crypto.randomUUID();  // встроено в Postman\r",
+									"\r",
+									"// Сохраняем переменные\r",
+									"pm.environment.set(\"adminEmail\", email);\r",
+									"pm.environment.set(\"adminPassword\", password);\r",
+									"pm.environment.set(\"adminFirstName\", firstName);\r",
+									"pm.environment.set(\"adminLastName\", lastName);\r",
+									"pm.environment.set(\"adminSecret\", secret);\r",
+									"pm.environment.set(\"deviceId3\", deviceId); // 👈 добавляем deviceId3\r",
+									"\r",
+									"// Лог\r",
+									"console.log({ email, password, firstName, lastName, secret, deviceId });\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// Разбираем JSON-ответ\r",
+									"const data = pm.response.json();\r",
+									"\r",
+									"// Сохраняем токен в окружение\r",
+									"pm.environment.set('adminAccessToken', data.accessToken);\r",
+									"pm.environment.set('adminRefreshToken', data.refreshToken);\r",
+									"\r",
+									"// Логируем токен\r",
+									"console.log(\"Access token:\", data.accessToken);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"{{adminEmail}}\",\n  \"password\": \"{{adminPassword}}\",\n  \"firstName\": \"{{adminFirstName}}\",\n  \"lastName\": \"{{adminLastName}}\",\n  \"secret\": \"{{adminSecret}}\",\n  \"deviceId\": \"{{deviceId}}\"\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/register/admin",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"register",
+								"admin"
+							]
+						}
+					},
+					"response": []
 				},
 				{
 					"name": "Login",
@@ -2342,7 +2399,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/api/admin/products",
+									"raw": "{{baseUrl}}/api/admin/products?Rating=4",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -2389,13 +2446,17 @@
 										},
 										{
 											"key": "MinPrice",
-											"value": "{{productMinPrice}}",
+											"value": "200",
 											"disabled": true
 										},
 										{
 											"key": "MaxPrice",
-											"value": "{{productMaxPrice}}",
+											"value": "250",
 											"disabled": true
+										},
+										{
+											"key": "Rating",
+											"value": "4"
 										},
 										{
 											"key": "Parameters.Page",
@@ -3056,6 +3117,13 @@
 										"type": "text/javascript",
 										"packages": {}
 									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"packages": {},
+										"type": "text/javascript"
+									}
 								}
 							],
 							"request": {
@@ -3276,7 +3344,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/api/reviews?ProductId={{lastProductId}}",
+									"raw": "{{baseUrl}}/api/reviews",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -3287,7 +3355,8 @@
 									"query": [
 										{
 											"key": "ProductId",
-											"value": "{{lastProductId}}"
+											"value": "{{lastProductId}}",
+											"disabled": true
 										},
 										{
 											"key": "UserId",

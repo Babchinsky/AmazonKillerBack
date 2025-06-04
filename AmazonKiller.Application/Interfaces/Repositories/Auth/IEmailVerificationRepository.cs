@@ -11,4 +11,6 @@ public interface IEmailVerificationRepository
 
     Task<string> CreateAndSaveCodeAsync(string email, VerificationType type, string? tempPasswordHash, Guid? userId,
         CancellationToken ct);
+
+    Task MarkAsConfirmedAsync(string email, string code, CancellationToken ct);
 }

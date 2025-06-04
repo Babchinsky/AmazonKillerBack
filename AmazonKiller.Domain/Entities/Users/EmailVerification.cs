@@ -10,4 +10,5 @@ public class EmailVerification : BaseEntity
     public string? TempPasswordHash { get; init; } = string.Empty;
     public Guid? UserId { get; init; }
     public VerificationType Type { get; init; }
+    public bool IsConfirmed { get; set; } = false;
 }
