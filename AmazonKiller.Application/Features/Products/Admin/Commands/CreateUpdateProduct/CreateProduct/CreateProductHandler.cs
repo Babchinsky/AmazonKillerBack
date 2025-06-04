@@ -22,8 +22,8 @@ public class CreateProductHandler(
         if (category is null)
             throw new NotFoundException("Category not found.");
 
-        if (category.ParentId == null)
-            throw new AppException("Products can only be added to subcategories.");
+        // if (category.ParentId == null)
+        //     throw new AppException("Products can only be added to subcategories.");
 
         // 🧠 Обновляем PropertyKeys через сервис
         var usedKeys = cmd.ParsedAttributes.Select(a => a.Key).Distinct().ToList();

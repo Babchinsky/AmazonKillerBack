@@ -14,8 +14,10 @@ public class PropertyKeyUpdater(
         CancellationToken ct)
     {
         var category = await categoryRepo.GetByIdAsync(categoryId, ct);
-        if (category?.ParentId == null)
-            return; // Только подкатегории
+        // if (category?.ParentId == null)
+        //     return; // Только подкатегории
+        if (category is null)
+            return;
 
         var currentKeys = category.PropertyKeys.ToHashSet();
         var incomingKeys = usedKeysNow.Distinct().ToHashSet();

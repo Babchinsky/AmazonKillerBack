@@ -1,16 +1,19 @@
 ﻿using AmazonKiller.Domain.Entities.Categories;
+using AmazonKiller.Infrastructure.Data.Helpers;
 using Microsoft.EntityFrameworkCore;
 
 namespace AmazonKiller.Infrastructure.Data.Seed.CategoriesSeed;
 
 public static class WorkToolsCategorySeed
 {
-    public static void Seed(ModelBuilder modelBuilder)
+    public static void Seed(ModelBuilder modelBuilder, Dictionary<Guid, List<string>> keysMap)
     {
+        var rootId = new Guid("cc9bf323-2160-49b2-ae79-340781163eb2");
+
         modelBuilder.Entity<Category>().HasData(
             new Category
             {
-                Id = new Guid("cc9bf323-2160-49b2-ae79-340781163eb2"),
+                Id = rootId,
                 Name = "Work tools",
                 Status = CategoryStatus.Active,
                 Description = "Work tools category",
@@ -26,7 +29,8 @@ public static class WorkToolsCategorySeed
                 Description = "Hand Tools category",
                 ImageUrl = "https://example.com/images/hand_tools.jpg",
                 IconName = "hand tools",
-                ParentId = new Guid("cc9bf323-2160-49b2-ae79-340781163eb2")
+                ParentId = rootId,
+                PropertyKeys = SeedHelper.KeysOrNull(Guid.Parse("834ba378-fe57-4702-b85c-4cb0431d1909"), keysMap) ?? []
             },
             new Category
             {
@@ -36,7 +40,8 @@ public static class WorkToolsCategorySeed
                 Description = "Power Tools category",
                 ImageUrl = "https://example.com/images/power_tools.jpg",
                 IconName = "power tools",
-                ParentId = new Guid("cc9bf323-2160-49b2-ae79-340781163eb2")
+                ParentId = rootId,
+                PropertyKeys = SeedHelper.KeysOrNull(Guid.Parse("1c9d0336-9ac8-440a-b6b6-3698940f608c"), keysMap) ?? []
             },
             new Category
             {
@@ -46,7 +51,8 @@ public static class WorkToolsCategorySeed
                 Description = "Safety Gear category",
                 ImageUrl = "https://example.com/images/safety_gear.jpg",
                 IconName = "safety gear",
-                ParentId = new Guid("cc9bf323-2160-49b2-ae79-340781163eb2")
+                ParentId = rootId,
+                PropertyKeys = SeedHelper.KeysOrNull(Guid.Parse("18710447-a260-44f2-9a4b-77c0b246bbc5"), keysMap) ?? []
             },
             new Category
             {
@@ -56,7 +62,8 @@ public static class WorkToolsCategorySeed
                 Description = "Tool Storage category",
                 ImageUrl = "https://example.com/images/tool_storage.jpg",
                 IconName = "tool storage",
-                ParentId = new Guid("cc9bf323-2160-49b2-ae79-340781163eb2")
+                ParentId = rootId,
+                PropertyKeys = SeedHelper.KeysOrNull(Guid.Parse("158ebe6b-0e3d-48da-8893-5e3621dd2c4b"), keysMap) ?? []
             }
         );
     }

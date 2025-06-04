@@ -1174,8 +1174,8 @@
 											"const timestamp = Date.now();\r",
 											"pm.environment.set(\"categoryName\", `TestCategory_${timestamp}`); \r",
 											"\r",
-											"pm.environment.set(\"categoryParentId\", `11111111-1111-1111-1111-111111111111`);\r",
-											"// pm.environment.set(\"categoryParentId\", `\"64d59186-54f6-4304-9ce0-86296c927051\"`);\r",
+											"// pm.environment.set(\"categoryParentId\", `11111111-1111-1111-1111-111111111111`);\r",
+											"pm.environment.set(\"categoryParentId\", `76C9BB69-CC74-4518-BF06-016A3622E8C5`);\r",
 											"// pm.environment.set(\"categoryParentId\", null);\r",
 											"const parentId = pm.environment.get(\"categoryParentId\");\r",
 											"const isSubcategory = parentId && parentId !== \"null\" && parentId !== \"\";\r",
@@ -1282,7 +1282,8 @@
 										{
 											"key": "PropertyKeys",
 											"value": "{{categoryPropertyKeys}}",
-											"type": "text"
+											"type": "text",
+											"disabled": true
 										},
 										{
 											"key": "Image",
@@ -1780,7 +1781,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "{{categoryId}}",
+											"value": "76c9bb69-cc74-4518-bf06-016a3622e8c5",
 											"description": "(Required) "
 										}
 									]
@@ -2399,7 +2400,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/api/admin/products?Rating=4",
+									"raw": "{{baseUrl}}/api/admin/products?CategoryId={{categoryId}}",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -2416,8 +2417,7 @@
 										},
 										{
 											"key": "CategoryId",
-											"value": "{{categoryId}}",
-											"disabled": true
+											"value": "{{categoryId}}"
 										},
 										{
 											"key": "Filters[{{productFilterSizeKey}}]",
@@ -2456,7 +2456,8 @@
 										},
 										{
 											"key": "Rating",
-											"value": "4"
+											"value": "4",
+											"disabled": true
 										},
 										{
 											"key": "Parameters.Page",
@@ -2625,7 +2626,7 @@
 										},
 										{
 											"key": "CategoryId",
-											"value": "484d573c-47f9-103f-b34c-24cc14fe727b",
+											"value": "7AD3D843-1642-4E8A-A843-503928EF8154",
 											"disabled": true
 										},
 										{
@@ -2651,6 +2652,11 @@
 										{
 											"key": "MaxPrice",
 											"value": "-12930565.462214977",
+											"disabled": true
+										},
+										{
+											"key": "Rating",
+											"value": "4",
 											"disabled": true
 										},
 										{

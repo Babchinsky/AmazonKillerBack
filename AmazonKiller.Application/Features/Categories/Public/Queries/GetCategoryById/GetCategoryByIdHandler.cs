@@ -33,8 +33,11 @@ public class GetCategoryByIdHandler(
         var category = await categoryQueryService.GetByIdIfVisibleAsync(request.Id, isAdmin, ct)
                        ?? throw new NotFoundException("Category not found");
 
+        var descendantIds = await categoryQueryService.GetDescendantCategoryIdsAsync(request.Id, ct);
+        descendantIds.Add(request.Id);
+
         var productAttrs = await productRepo.Queryable()
-            .Where(p => p.CategoryId == request.Id)
+            .Where(p => descendantIds.Contains(p.CategoryId))
             .Select(p => p.Attributes)
             .ToListAsync(ct);
 

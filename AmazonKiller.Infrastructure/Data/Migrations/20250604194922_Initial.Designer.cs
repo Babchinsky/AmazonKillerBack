@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AmazonKiller.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AmazonDbContext))]
-    [Migration("20250604144801_AddIsConfirmedToEmailVerifications")]
-    partial class AddIsConfirmedToEmailVerifications
+    [Migration("20250604194922_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -66,30 +66,6 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                     b.HasIndex("ParentId");
 
                     b.ToTable("Categories");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("11111111-1111-1111-1111-111111111111"),
-                            Description = "A selection of books",
-                            IconName = "book",
-                            ImageUrl = "https://example.com/images/books.jpg",
-                            Name = "Books",
-                            PropertyKeys = "[]",
-                            RowVersion = new byte[0],
-                            Status = 0
-                        },
-                        new
-                        {
-                            Id = new Guid("22222222-2222-2222-2222-222222222222"),
-                            Description = "Tech gadgets and accessories",
-                            IconName = "devices",
-                            ImageUrl = "https://example.com/images/tech.jpg",
-                            Name = "Tech",
-                            PropertyKeys = "[]",
-                            RowVersion = new byte[0],
-                            Status = 0
-                        });
                 });
 
             modelBuilder.Entity("AmazonKiller.Domain.Entities.Collections.Collection", b =>
@@ -240,12 +216,6 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("InCartList")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("InWishlist")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -281,40 +251,6 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("Products");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("55555555-5555-5555-5555-555555555555"),
-                            CategoryId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            Code = "01JS9QNDAYKK2CFRT5AKZF1YAA",
-                            ImageUrls = "[]",
-                            InCartList = true,
-                            InWishlist = true,
-                            Name = "C# in Depth",
-                            Price = 39.99m,
-                            Quantity = 10,
-                            Rating = 5m,
-                            ReviewsCount = 0,
-                            RowVersion = new byte[0],
-                            SoldCount = 0
-                        },
-                        new
-                        {
-                            Id = new Guid("66666666-6666-6666-6666-666666666666"),
-                            CategoryId = new Guid("22222222-2222-2222-2222-222222222222"),
-                            Code = "01JS9QNDAYKK2CFRT5AKZF1YBB",
-                            ImageUrls = "[]",
-                            InCartList = false,
-                            InWishlist = false,
-                            Name = "Wireless Mouse",
-                            Price = 19.99m,
-                            Quantity = 50,
-                            Rating = 4m,
-                            ReviewsCount = 0,
-                            RowVersion = new byte[0],
-                            SoldCount = 0
-                        });
                 });
 
             modelBuilder.Entity("AmazonKiller.Domain.Entities.Products.ProductAttribute", b =>
@@ -421,21 +357,6 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Reviews");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
-                            Article = "Great book!",
-                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            ImageUrls = "[\"file1.jpg\",\"file2.jpg\"]",
-                            Message = "Very useful for learning advanced C#",
-                            ProductId = new Guid("55555555-5555-5555-5555-555555555555"),
-                            Rating = 5m,
-                            RowVersion = new byte[0],
-                            Tags = "[]",
-                            UserId = new Guid("77777777-7777-7777-7777-777777777777")
-                        });
                 });
 
             modelBuilder.Entity("AmazonKiller.Domain.Entities.Reviews.ReviewLike", b =>
@@ -489,17 +410,6 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("CartLists");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"),
-                            AddedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Price = 39.99m,
-                            ProductId = new Guid("55555555-5555-5555-5555-555555555555"),
-                            Quantity = 1,
-                            UserId = new Guid("77777777-7777-7777-7777-777777777777")
-                        });
                 });
 
             modelBuilder.Entity("AmazonKiller.Domain.Entities.Users.EmailVerification", b =>
@@ -628,32 +538,6 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("77777777-7777-7777-7777-777777777777"),
-                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Email = "user@example.com",
-                            FirstName = "Test",
-                            LastName = "User",
-                            PasswordHash = "$2a$11$0123456789ABCDEFFEDCB.S2Yzr2tczlChVlvkY9yqWo1rec6s2eC",
-                            Role = 0,
-                            RowVersion = new byte[0],
-                            Status = 0
-                        },
-                        new
-                        {
-                            Id = new Guid("88888888-8888-8888-8888-888888888888"),
-                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Email = "admin@example.com",
-                            FirstName = "Admin",
-                            LastName = "Root",
-                            PasswordHash = "$2a$11$0123456789ABCDEFFEDCB.f3zF6Kwis6bGMA186omDrGf1JNLP/eK",
-                            Role = 1,
-                            RowVersion = new byte[0],
-                            Status = 0
-                        });
                 });
 
             modelBuilder.Entity("AmazonKiller.Domain.Entities.Users.Wishlist", b =>
@@ -674,14 +558,6 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("WishlistItems");
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = new Guid("77777777-7777-7777-7777-777777777777"),
-                            ProductId = new Guid("55555555-5555-5555-5555-555555555555"),
-                            AddedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
-                        });
                 });
 
             modelBuilder.Entity("AmazonKiller.Domain.Entities.Categories.Category", b =>

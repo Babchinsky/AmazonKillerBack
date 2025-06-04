@@ -20,10 +20,14 @@ public class GetCategoryFiltersHandler(
             throw new NotFoundException("Category not found");
 
         var keys = category.PropertyKeys;
+        var descendantIds = await categoryQueryService.GetDescendantCategoryIdsAsync(q.CategoryId, ct);
+        descendantIds.Add(q.CategoryId);
+
         var products = await repo.Queryable()
-            .Where(p => p.CategoryId == q.CategoryId)
+            .Where(p => descendantIds.Contains(p.CategoryId))
             .Select(p => p.Attributes)
             .ToListAsync(ct);
+
 
         var result = new Dictionary<string, List<string>>();
 

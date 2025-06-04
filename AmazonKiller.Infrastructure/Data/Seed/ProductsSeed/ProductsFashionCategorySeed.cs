@@ -13,7 +13,7 @@ public static class ProductsFashionCategorySeed
             Code = "FAS-001",
             Price = 69.99m,
             Quantity = 50,
-            CategoryId = new Guid("49595c91-f315-4b2e-af8a-0f09c3145c03"),
+            CategoryId = new Guid("7eb489f4-2f55-4510-8e49-3965370c4989"),
             ImageUrls = [
                 "https://example.com/products/jacket1.jpg",
                 "https://example.com/products/jacket2.jpg",

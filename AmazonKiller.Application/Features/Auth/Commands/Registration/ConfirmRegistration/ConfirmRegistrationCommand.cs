@@ -1,5 +1,4 @@
-﻿using AmazonKiller.Application.DTOs.Auth;
-using MediatR;
+﻿using MediatR;
 
 namespace AmazonKiller.Application.Features.Auth.Commands.Registration.ConfirmRegistration;
 

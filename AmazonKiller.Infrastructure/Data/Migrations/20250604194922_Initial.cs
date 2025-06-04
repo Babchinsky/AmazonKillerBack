@@ -3,8 +3,6 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
-
 namespace AmazonKiller.Infrastructure.Data.Migrations
 {
     /// <inheritdoc />
@@ -109,8 +107,6 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                     ImageUrls = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Rating = table.Column<decimal>(type: "decimal(3,2)", precision: 3, scale: 2, nullable: false),
                     ReviewsCount = table.Column<int>(type: "int", nullable: false),
-                    InWishlist = table.Column<bool>(type: "bit", nullable: false),
-                    InCartList = table.Column<bool>(type: "bit", nullable: false),
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false)
                 },
                 constraints: table =>
@@ -134,7 +130,8 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                     ExpiresAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     TempPasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Type = table.Column<int>(type: "int", nullable: false)
+                    Type = table.Column<int>(type: "int", nullable: false),
+                    IsConfirmed = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -407,48 +404,6 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
-
-            migrationBuilder.InsertData(
-                table: "Categories",
-                columns: new[] { "Id", "Description", "IconName", "ImageUrl", "Name", "ParentId", "PropertyKeys", "Status" },
-                values: new object[,]
-                {
-                    { new Guid("11111111-1111-1111-1111-111111111111"), "A selection of books", "book", "https://example.com/images/books.jpg", "Books", null, "[]", 0 },
-                    { new Guid("22222222-2222-2222-2222-222222222222"), "Tech gadgets and accessories", "devices", "https://example.com/images/tech.jpg", "Tech", null, "[]", 0 }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Users",
-                columns: new[] { "Id", "CreatedAt", "Email", "FirstName", "ImageUrl", "LastName", "PasswordHash", "Role", "Status" },
-                values: new object[,]
-                {
-                    { new Guid("77777777-7777-7777-7777-777777777777"), new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "user@example.com", "Test", null, "User", "$2a$11$0123456789ABCDEFFEDCB.S2Yzr2tczlChVlvkY9yqWo1rec6s2eC", 0, 0 },
-                    { new Guid("88888888-8888-8888-8888-888888888888"), new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "admin@example.com", "Admin", null, "Root", "$2a$11$0123456789ABCDEFFEDCB.f3zF6Kwis6bGMA186omDrGf1JNLP/eK", 1, 0 }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Products",
-                columns: new[] { "Id", "CategoryId", "Code", "DiscountPercent", "ImageUrls", "InCartList", "InWishlist", "Name", "Price", "Quantity", "Rating", "ReviewsCount", "SoldCount" },
-                values: new object[,]
-                {
-                    { new Guid("55555555-5555-5555-5555-555555555555"), new Guid("11111111-1111-1111-1111-111111111111"), "01JS9QNDAYKK2CFRT5AKZF1YAA", null, "[]", true, true, "C# in Depth", 39.99m, 10, 5m, 0, 0 },
-                    { new Guid("66666666-6666-6666-6666-666666666666"), new Guid("22222222-2222-2222-2222-222222222222"), "01JS9QNDAYKK2CFRT5AKZF1YBB", null, "[]", false, false, "Wireless Mouse", 19.99m, 50, 4m, 0, 0 }
-                });
-
-            migrationBuilder.InsertData(
-                table: "CartLists",
-                columns: new[] { "Id", "AddedAt", "Price", "ProductId", "Quantity", "UserId" },
-                values: new object[] { new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"), new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), 39.99m, new Guid("55555555-5555-5555-5555-555555555555"), 1, new Guid("77777777-7777-7777-7777-777777777777") });
-
-            migrationBuilder.InsertData(
-                table: "Reviews",
-                columns: new[] { "Id", "Article", "CreatedAt", "ImageUrls", "Message", "ProductId", "Rating", "Tags", "UserId" },
-                values: new object[] { new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"), "Great book!", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "[\"file1.jpg\",\"file2.jpg\"]", "Very useful for learning advanced C#", new Guid("55555555-5555-5555-5555-555555555555"), 5m, "[]", new Guid("77777777-7777-7777-7777-777777777777") });
-
-            migrationBuilder.InsertData(
-                table: "WishlistItems",
-                columns: new[] { "ProductId", "UserId", "AddedAt" },
-                values: new object[] { new Guid("55555555-5555-5555-5555-555555555555"), new Guid("77777777-7777-7777-7777-777777777777"), new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc) });
 
             migrationBuilder.CreateIndex(
                 name: "IX_CartLists_ProductId",

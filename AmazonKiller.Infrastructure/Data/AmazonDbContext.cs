@@ -5,7 +5,6 @@ using AmazonKiller.Domain.Entities.Orders;
 using AmazonKiller.Domain.Entities.Products;
 using AmazonKiller.Domain.Entities.Reviews;
 using AmazonKiller.Domain.Entities.Users;
-using AmazonKiller.Infrastructure.Data.Seed;
 using Microsoft.EntityFrameworkCore;
 
 namespace AmazonKiller.Infrastructure.Data;
@@ -46,6 +45,6 @@ public class AmazonDbContext(DbContextOptions<AmazonDbContext> options) : DbCont
         b.ApplyConfigurationsFromAssembly(typeof(AmazonDbContext).Assembly);
 
         // Seed 
-        SeedData.Seed(b);
+        // SeedData.Seed(b);
     }
 }

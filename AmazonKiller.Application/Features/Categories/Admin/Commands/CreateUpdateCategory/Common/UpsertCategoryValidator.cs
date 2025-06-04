@@ -17,7 +17,7 @@ public abstract class UpsertCategoryValidator<T> : AbstractValidator<T>
             .WithMessage("Only .jpg, .jpeg, .png, .webp files are allowed");
 
         RuleFor(x => x.Image)
-            .Must(file => file == null || file.Length <= 2 * 1024 * 1024)
+            .Must(file => file is not { Length: > 2 * 1024 * 1024 })
             .WithMessage("Image must be <= 2MB");
 
 
@@ -27,7 +27,7 @@ public abstract class UpsertCategoryValidator<T> : AbstractValidator<T>
             RuleFor(x => x.PropertyKeys).Empty().WithMessage("Main categories should not have property keys");
         });
 
-        When(x => x.ParentId != null,
-            () => { RuleFor(x => x.PropertyKeys).NotNull().WithMessage("Subcategories must have property keys"); });
+        // When(x => x.ParentId != null,
+        //     () => { RuleFor(x => x.PropertyKeys).NotNull().WithMessage("Subcategories must have property keys"); });
     }
 }
