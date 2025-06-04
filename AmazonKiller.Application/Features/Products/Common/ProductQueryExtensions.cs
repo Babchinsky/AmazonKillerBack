@@ -7,20 +7,29 @@ namespace AmazonKiller.Application.Features.Products.Common;
 
 public static class ProductQueryExtensions
 {
-    public static IQueryable<Product> ApplyFilters(this IQueryable<Product> query, IProductQueryWithFilters q)
+    public static IQueryable<Product> ApplyFilters(
+        this IQueryable<Product> query,
+        IProductQueryWithFilters q,
+        List<Guid>? categoryIds = null)
     {
         if (!string.IsNullOrWhiteSpace(q.SearchTerm))
         {
             var term = q.SearchTerm.Trim().ToLower();
-
             query = query.Where(p =>
                 p.Name.ToLower().Contains(term) ||
                 p.Code.ToLower().Contains(term) ||
                 p.Id.ToString().ToLower().Contains(term));
         }
 
-        if (q.CategoryId.HasValue)
-            query = query.Where(p => p.CategoryId == q.CategoryId);
+        // ✅ Новая логика: если переданы категории
+        if (categoryIds is not null && categoryIds.Count > 0)
+        {
+            query = query.Where(p => categoryIds.Contains(p.CategoryId));
+        }
+        else if (q.CategoryId.HasValue)
+        {
+            query = query.Where(p => p.CategoryId == q.CategoryId.Value);
+        }
 
         if (q.MinPrice.HasValue)
             query = query.Where(p => p.Price >= q.MinPrice);

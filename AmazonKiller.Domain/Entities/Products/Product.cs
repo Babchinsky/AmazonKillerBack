@@ -39,7 +39,4 @@ public class Product : VersionedEntity
     public decimal Rating { get; set; } // сохраняется и пересчитывается вручную
     public int ReviewsCount { get; set; } // сохраняется и пересчитывается вручную
     public ICollection<Review> Reviews { get; init; } = new List<Review>();
-
-    public bool InWishlist { get; init; }
-    public bool InCartList { get; init; }
 }

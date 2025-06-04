@@ -4,6 +4,7 @@ using AmazonKiller.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AmazonKiller.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AmazonDbContext))]
-    partial class AmazonDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250604155551_UpdateCategorySeedData")]
+    partial class UpdateCategorySeedData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -306,7 +309,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                             Id = new Guid("cc9bf323-2160-49b2-ae79-340781163eb2"),
                             Description = "Work tools category",
                             IconName = "work tools",
-                            ImageUrl = "https://example.com/images/worktools.jpg",
+                            ImageUrl = "https://example.com/images/work_tools.jpg",
                             Name = "Work tools",
                             PropertyKeys = "[]",
                             RowVersion = new byte[0],
@@ -510,6 +513,12 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("InCartList")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("InWishlist")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -545,92 +554,6 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("Products");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b"),
-                            CategoryId = new Guid("49595c91-f315-4b2e-af8a-0f09c3145c03"),
-                            Code = "FAS-001",
-                            ImageUrls = "[\"https://example.com/products/jacket1.jpg\",\"https://example.com/products/jacket2.jpg\"]",
-                            Name = "Men's Denim Jacket",
-                            Price = 69.99m,
-                            Quantity = 50,
-                            Rating = 4.5m,
-                            ReviewsCount = 100,
-                            RowVersion = new byte[0],
-                            SoldCount = 0
-                        },
-                        new
-                        {
-                            Id = new Guid("3c5a4868-3b2d-4352-9e12-502a56bce48a"),
-                            CategoryId = new Guid("7ad3d843-1642-4e8a-a843-503928ef8154"),
-                            Code = "SAM-001",
-                            ImageUrls = "[\"https://example.com/products/samsung1.jpg\",\"https://example.com/products/samsung2.jpg\"]",
-                            Name = "Samsung Galaxy S23 Ultra",
-                            Price = 1199.99m,
-                            Quantity = 50,
-                            Rating = 4.5m,
-                            ReviewsCount = 100,
-                            RowVersion = new byte[0],
-                            SoldCount = 0
-                        },
-                        new
-                        {
-                            Id = new Guid("a2c28a83-cfea-46ee-87e3-906f9e90f1aa"),
-                            CategoryId = new Guid("7ad3d843-1642-4e8a-a843-503928ef8154"),
-                            Code = "SONY-002",
-                            ImageUrls = "[\"https://example.com/products/sony1.jpg\",\"https://example.com/products/sony2.jpg\"]",
-                            Name = "Sony WH-1000XM5 Headphones",
-                            Price = 349.99m,
-                            Quantity = 50,
-                            Rating = 4.5m,
-                            ReviewsCount = 100,
-                            RowVersion = new byte[0],
-                            SoldCount = 0
-                        },
-                        new
-                        {
-                            Id = new Guid("a055168e-3130-4b0a-8495-60e25d62e057"),
-                            CategoryId = new Guid("8980e70c-3345-4885-8518-cfcda95b3078"),
-                            Code = "HOU-001",
-                            ImageUrls = "[\"https://example.com/products/dyson1.jpg\",\"https://example.com/products/dyson2.jpg\"]",
-                            Name = "Dyson V15 Detect Vacuum Cleaner",
-                            Price = 699.0m,
-                            Quantity = 50,
-                            Rating = 4.5m,
-                            ReviewsCount = 100,
-                            RowVersion = new byte[0],
-                            SoldCount = 0
-                        },
-                        new
-                        {
-                            Id = new Guid("74a46f1c-1054-408d-89dc-8ca00285660f"),
-                            CategoryId = new Guid("0dfa0836-09c9-4a2d-b74a-9b2085976dcf"),
-                            Code = "FUR-001",
-                            ImageUrls = "[\"https://example.com/products/coffee_table1.jpg\",\"https://example.com/products/coffee_table2.jpg\"]",
-                            Name = "Modern Wooden Coffee Table",
-                            Price = 149.99m,
-                            Quantity = 50,
-                            Rating = 4.5m,
-                            ReviewsCount = 100,
-                            RowVersion = new byte[0],
-                            SoldCount = 0
-                        },
-                        new
-                        {
-                            Id = new Guid("4c73d114-2aa1-4f4c-aa7a-48038f1f95fc"),
-                            CategoryId = new Guid("cc9bf323-2160-49b2-ae79-340781163eb2"),
-                            Code = "WTL-001",
-                            ImageUrls = "[\"https://example.com/products/makita1.jpg\",\"https://example.com/products/makita2.jpg\"]",
-                            Name = "Makita Cordless Hammer Drill",
-                            Price = 229.99m,
-                            Quantity = 50,
-                            Rating = 4.5m,
-                            ReviewsCount = 100,
-                            RowVersion = new byte[0],
-                            SoldCount = 0
-                        });
                 });
 
             modelBuilder.Entity("AmazonKiller.Domain.Entities.Products.ProductAttribute", b =>
@@ -657,176 +580,6 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("ProductAttributes");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("f75be0e7-0d41-45e8-87d7-e53060c87cd4"),
-                            Key = "Material",
-                            ProductId = new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b"),
-                            Value = "100% Cotton"
-                        },
-                        new
-                        {
-                            Id = new Guid("34b80662-4ddf-44df-aeab-0a131d4ca441"),
-                            Key = "Fit",
-                            ProductId = new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b"),
-                            Value = "Regular"
-                        },
-                        new
-                        {
-                            Id = new Guid("93731c22-16a2-4c9e-b4d8-3aa7485d5acb"),
-                            Key = "Color",
-                            ProductId = new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b"),
-                            Value = "Blue"
-                        },
-                        new
-                        {
-                            Id = new Guid("ac51bf93-88a8-4b39-b106-b8a7f5c4db92"),
-                            Key = "Season",
-                            ProductId = new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b"),
-                            Value = "All seasons"
-                        },
-                        new
-                        {
-                            Id = new Guid("31ed2059-8d7c-440e-849c-92b82fa07535"),
-                            Key = "Display",
-                            ProductId = new Guid("3c5a4868-3b2d-4352-9e12-502a56bce48a"),
-                            Value = "6.8-inch AMOLED"
-                        },
-                        new
-                        {
-                            Id = new Guid("5d1af968-e023-4bf1-a58b-4d6701785946"),
-                            Key = "Battery",
-                            ProductId = new Guid("3c5a4868-3b2d-4352-9e12-502a56bce48a"),
-                            Value = "5000mAh"
-                        },
-                        new
-                        {
-                            Id = new Guid("2d3c46bc-1bd0-45c0-a695-6b3ea0cea55d"),
-                            Key = "Camera",
-                            ProductId = new Guid("3c5a4868-3b2d-4352-9e12-502a56bce48a"),
-                            Value = "200MP"
-                        },
-                        new
-                        {
-                            Id = new Guid("45890b2d-4656-4bf5-bea8-8d68cef13afa"),
-                            Key = "Storage",
-                            ProductId = new Guid("3c5a4868-3b2d-4352-9e12-502a56bce48a"),
-                            Value = "256GB"
-                        },
-                        new
-                        {
-                            Id = new Guid("eb86dc2a-68a2-4f38-a498-4d21a2dfd366"),
-                            Key = "Type",
-                            ProductId = new Guid("a2c28a83-cfea-46ee-87e3-906f9e90f1aa"),
-                            Value = "Over-ear"
-                        },
-                        new
-                        {
-                            Id = new Guid("bdb82599-d1ed-4257-8429-0c5bf8ba3094"),
-                            Key = "Noise Cancellation",
-                            ProductId = new Guid("a2c28a83-cfea-46ee-87e3-906f9e90f1aa"),
-                            Value = "Yes"
-                        },
-                        new
-                        {
-                            Id = new Guid("8f9b1a9b-6472-4251-b3b9-0dc488ac3ca3"),
-                            Key = "Battery Life",
-                            ProductId = new Guid("a2c28a83-cfea-46ee-87e3-906f9e90f1aa"),
-                            Value = "30 hours"
-                        },
-                        new
-                        {
-                            Id = new Guid("1940fec2-48f2-40ab-a4a0-199adcce9e52"),
-                            Key = "Connectivity",
-                            ProductId = new Guid("a2c28a83-cfea-46ee-87e3-906f9e90f1aa"),
-                            Value = "Bluetooth 5.2"
-                        },
-                        new
-                        {
-                            Id = new Guid("5a29ac69-487d-4609-b29e-3b6f30b088ce"),
-                            Key = "Type",
-                            ProductId = new Guid("a055168e-3130-4b0a-8495-60e25d62e057"),
-                            Value = "Cordless"
-                        },
-                        new
-                        {
-                            Id = new Guid("7ba0bf0e-ed40-4e27-a0ac-85dd45279867"),
-                            Key = "Battery Life",
-                            ProductId = new Guid("a055168e-3130-4b0a-8495-60e25d62e057"),
-                            Value = "60 minutes"
-                        },
-                        new
-                        {
-                            Id = new Guid("7c252a25-5c76-4e8b-be65-22e8651667ed"),
-                            Key = "Dustbin Capacity",
-                            ProductId = new Guid("a055168e-3130-4b0a-8495-60e25d62e057"),
-                            Value = "0.76L"
-                        },
-                        new
-                        {
-                            Id = new Guid("b559db54-4289-499f-88dc-35a4c9978e4c"),
-                            Key = "Power",
-                            ProductId = new Guid("a055168e-3130-4b0a-8495-60e25d62e057"),
-                            Value = "230AW"
-                        },
-                        new
-                        {
-                            Id = new Guid("a6a26067-18e9-4543-8828-8069f09a411f"),
-                            Key = "Material",
-                            ProductId = new Guid("74a46f1c-1054-408d-89dc-8ca00285660f"),
-                            Value = "Oak wood"
-                        },
-                        new
-                        {
-                            Id = new Guid("50c7325d-5a50-4494-8356-c4ae304e70f5"),
-                            Key = "Dimensions",
-                            ProductId = new Guid("74a46f1c-1054-408d-89dc-8ca00285660f"),
-                            Value = "120x60x45 cm"
-                        },
-                        new
-                        {
-                            Id = new Guid("163febea-12c5-4ba7-af3e-5b3d5fa01e4f"),
-                            Key = "Weight",
-                            ProductId = new Guid("74a46f1c-1054-408d-89dc-8ca00285660f"),
-                            Value = "18kg"
-                        },
-                        new
-                        {
-                            Id = new Guid("4946c132-8ec4-41ce-891d-4788067a4a66"),
-                            Key = "Finish",
-                            ProductId = new Guid("74a46f1c-1054-408d-89dc-8ca00285660f"),
-                            Value = "Natural varnish"
-                        },
-                        new
-                        {
-                            Id = new Guid("e0e1e5c9-55d8-4d16-bca2-e45a0d3553cc"),
-                            Key = "Voltage",
-                            ProductId = new Guid("4c73d114-2aa1-4f4c-aa7a-48038f1f95fc"),
-                            Value = "18V"
-                        },
-                        new
-                        {
-                            Id = new Guid("90bba9ca-cc95-405e-8a8e-da471eafcde2"),
-                            Key = "Chuck Size",
-                            ProductId = new Guid("4c73d114-2aa1-4f4c-aa7a-48038f1f95fc"),
-                            Value = "13mm"
-                        },
-                        new
-                        {
-                            Id = new Guid("f46c7e06-8dfe-48e9-b47e-9953e159ae69"),
-                            Key = "Speed",
-                            ProductId = new Guid("4c73d114-2aa1-4f4c-aa7a-48038f1f95fc"),
-                            Value = "0-2000 RPM"
-                        },
-                        new
-                        {
-                            Id = new Guid("07d62dcb-0736-4687-b066-92c3cde5fa9d"),
-                            Key = "Battery",
-                            ProductId = new Guid("4c73d114-2aa1-4f4c-aa7a-48038f1f95fc"),
-                            Value = "2 x 5.0Ah Li-ion"
-                        });
                 });
 
             modelBuilder.Entity("AmazonKiller.Domain.Entities.Products.ProductFeature", b =>
@@ -853,176 +606,6 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("ProductFeatures");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("f7f4c40c-82d3-488f-bf1a-9094dc2048b0"),
-                            Description = "Casual yet rugged",
-                            Name = "Style",
-                            ProductId = new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b")
-                        },
-                        new
-                        {
-                            Id = new Guid("905cdea9-9662-4f42-82d4-c0b24e957ee8"),
-                            Description = "Pairs with any outfit",
-                            Name = "Versatility",
-                            ProductId = new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b")
-                        },
-                        new
-                        {
-                            Id = new Guid("38c8f67f-7b05-4f06-8856-546a4e499d5c"),
-                            Description = "Made to last",
-                            Name = "Durability",
-                            ProductId = new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b")
-                        },
-                        new
-                        {
-                            Id = new Guid("7aeefca5-b681-41cf-baef-0ab5306f250a"),
-                            Description = "Machine washable",
-                            Name = "Care",
-                            ProductId = new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b")
-                        },
-                        new
-                        {
-                            Id = new Guid("c6676eab-a776-4380-9b0e-a07b10da8236"),
-                            Description = "Snapdragon 8 Gen 2",
-                            Name = "Performance",
-                            ProductId = new Guid("3c5a4868-3b2d-4352-9e12-502a56bce48a")
-                        },
-                        new
-                        {
-                            Id = new Guid("9f7ba4ac-9b83-41bc-9fc9-53896c0fcd17"),
-                            Description = "Pro-grade camera system",
-                            Name = "Camera Quality",
-                            ProductId = new Guid("3c5a4868-3b2d-4352-9e12-502a56bce48a")
-                        },
-                        new
-                        {
-                            Id = new Guid("1e8754f1-993e-4586-b0df-d16475bcd262"),
-                            Description = "All-day usage",
-                            Name = "Battery Life",
-                            ProductId = new Guid("3c5a4868-3b2d-4352-9e12-502a56bce48a")
-                        },
-                        new
-                        {
-                            Id = new Guid("015d3ed7-c231-405e-bbd2-ef99c8171603"),
-                            Description = "Premium glass and metal",
-                            Name = "Build",
-                            ProductId = new Guid("3c5a4868-3b2d-4352-9e12-502a56bce48a")
-                        },
-                        new
-                        {
-                            Id = new Guid("7833296c-251c-4868-9bc2-3da59b3cd811"),
-                            Description = "High-resolution audio",
-                            Name = "Sound",
-                            ProductId = new Guid("a2c28a83-cfea-46ee-87e3-906f9e90f1aa")
-                        },
-                        new
-                        {
-                            Id = new Guid("b6634cd8-0a8c-4ada-b8cc-310b490c6058"),
-                            Description = "Soft ear cushions",
-                            Name = "Comfort",
-                            ProductId = new Guid("a2c28a83-cfea-46ee-87e3-906f9e90f1aa")
-                        },
-                        new
-                        {
-                            Id = new Guid("542a9d5b-af5f-4709-82b1-ed83b2d9143d"),
-                            Description = "Touch-enabled",
-                            Name = "Controls",
-                            ProductId = new Guid("a2c28a83-cfea-46ee-87e3-906f9e90f1aa")
-                        },
-                        new
-                        {
-                            Id = new Guid("edb89e51-144c-48a7-8fbf-7a645abc970b"),
-                            Description = "Foldable design",
-                            Name = "Portability",
-                            ProductId = new Guid("a2c28a83-cfea-46ee-87e3-906f9e90f1aa")
-                        },
-                        new
-                        {
-                            Id = new Guid("75e0cc52-9a6b-4157-b453-57f390790cf4"),
-                            Description = "Laser detects microscopic dust",
-                            Name = "Performance",
-                            ProductId = new Guid("a055168e-3130-4b0a-8495-60e25d62e057")
-                        },
-                        new
-                        {
-                            Id = new Guid("1822758b-de5a-4f53-aea5-c624d90add9b"),
-                            Description = "Intelligent optimization",
-                            Name = "Efficiency",
-                            ProductId = new Guid("a055168e-3130-4b0a-8495-60e25d62e057")
-                        },
-                        new
-                        {
-                            Id = new Guid("9b6befa0-ebf3-4701-a70c-a8bb3c8689a1"),
-                            Description = "Whole-machine HEPA filtration",
-                            Name = "Filter",
-                            ProductId = new Guid("a055168e-3130-4b0a-8495-60e25d62e057")
-                        },
-                        new
-                        {
-                            Id = new Guid("7c49174a-ea92-4119-b3bb-2951ffbaba67"),
-                            Description = "Multiple attachments included",
-                            Name = "Tools",
-                            ProductId = new Guid("a055168e-3130-4b0a-8495-60e25d62e057")
-                        },
-                        new
-                        {
-                            Id = new Guid("35198d10-7fbf-4919-aa3f-527c7e76abcb"),
-                            Description = "Sleek and minimal",
-                            Name = "Design",
-                            ProductId = new Guid("74a46f1c-1054-408d-89dc-8ca00285660f")
-                        },
-                        new
-                        {
-                            Id = new Guid("6334b668-3933-4abb-8d5d-4324bb4ed08a"),
-                            Description = "Solid wood construction",
-                            Name = "Durability",
-                            ProductId = new Guid("74a46f1c-1054-408d-89dc-8ca00285660f")
-                        },
-                        new
-                        {
-                            Id = new Guid("b6e56093-2fc5-473d-818a-26a9e5b52f82"),
-                            Description = "Easy to wipe clean",
-                            Name = "Maintenance",
-                            ProductId = new Guid("74a46f1c-1054-408d-89dc-8ca00285660f")
-                        },
-                        new
-                        {
-                            Id = new Guid("f4eb7825-2ffd-4d1f-a9ba-5635ea698534"),
-                            Description = "Quick setup included",
-                            Name = "Assembly",
-                            ProductId = new Guid("74a46f1c-1054-408d-89dc-8ca00285660f")
-                        },
-                        new
-                        {
-                            Id = new Guid("49b29ac4-ed20-4592-8690-304aa1e80df3"),
-                            Description = "High torque for tough jobs",
-                            Name = "Performance",
-                            ProductId = new Guid("4c73d114-2aa1-4f4c-aa7a-48038f1f95fc")
-                        },
-                        new
-                        {
-                            Id = new Guid("8166c8f2-21fd-439c-ad3f-1eabe29bc76f"),
-                            Description = "Ergonomic grip",
-                            Name = "Comfort",
-                            ProductId = new Guid("4c73d114-2aa1-4f4c-aa7a-48038f1f95fc")
-                        },
-                        new
-                        {
-                            Id = new Guid("c4c5a991-e2cd-4d1b-a176-036f70667cb7"),
-                            Description = "For dark areas",
-                            Name = "LED Light",
-                            ProductId = new Guid("4c73d114-2aa1-4f4c-aa7a-48038f1f95fc")
-                        },
-                        new
-                        {
-                            Id = new Guid("a3c061b9-91f9-4d01-be37-4eb05da33ac5"),
-                            Description = "Metal gear housing",
-                            Name = "Durability",
-                            ProductId = new Guid("4c73d114-2aa1-4f4c-aa7a-48038f1f95fc")
-                        });
                 });
 
             modelBuilder.Entity("AmazonKiller.Domain.Entities.Reviews.Review", b =>
@@ -1258,128 +841,6 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("7a612c2e-ebc1-4a30-ac54-cccb566a1086"),
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "michaelterrell1@example.com",
-                            FirstName = "Kathy",
-                            LastName = "Thomas",
-                            PasswordHash = "$2b$12$JthvV5eK9b0BX972kty2PuNuUd4Nk3wGLklIlj0HX2wInNS/78H7u",
-                            Role = 0,
-                            RowVersion = new byte[0],
-                            Status = 0
-                        },
-                        new
-                        {
-                            Id = new Guid("fa67eef0-62a7-4e61-83ef-5a054e84ce41"),
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "april992@example.com",
-                            FirstName = "Amanda",
-                            LastName = "Decker",
-                            PasswordHash = "$2b$12$smw9z353sKgENxXVnQs6g.1EHa6UYkFh9jpq/ILRjrzDzY5lS9Nxa",
-                            Role = 0,
-                            RowVersion = new byte[0],
-                            Status = 0
-                        },
-                        new
-                        {
-                            Id = new Guid("82bf572a-ab40-4571-b1a2-ec9dcf9ccb7d"),
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "mjones3@example.com",
-                            FirstName = "Samantha",
-                            LastName = "Moore",
-                            PasswordHash = "$2b$12$XL/cSsxTSvYunP0ws3PTfOowebceqDPLauAE1qJcpljQwPgXXvTIG",
-                            Role = 0,
-                            RowVersion = new byte[0],
-                            Status = 0
-                        },
-                        new
-                        {
-                            Id = new Guid("b116a743-b108-494a-abb5-a0c9673edbef"),
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "heather934@example.com",
-                            FirstName = "Brittany",
-                            LastName = "Edwards",
-                            PasswordHash = "$2b$12$KPKg2yfoi0KQriKvrpKtYe3lGI67jJMkfncwg79HN1K0ln/PQwkym",
-                            Role = 0,
-                            RowVersion = new byte[0],
-                            Status = 0
-                        },
-                        new
-                        {
-                            Id = new Guid("2583c105-264b-45ee-a535-3b939f4dd428"),
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "suzannegonzalez5@example.com",
-                            FirstName = "Jennifer",
-                            LastName = "Delacruz",
-                            PasswordHash = "$2b$12$bUoOhVkj0HkDTCZlh8/n9O2m7s7.FwtwsJYj4fiR4OnZN2cKl9S9K",
-                            Role = 0,
-                            RowVersion = new byte[0],
-                            Status = 0
-                        },
-                        new
-                        {
-                            Id = new Guid("741ddf70-bcb9-44ba-a666-246072dd8c82"),
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "kimberly906@example.com",
-                            FirstName = "Daniel",
-                            LastName = "Kaiser",
-                            PasswordHash = "$2b$12$zhpKLnHJl9jZxDcwwGhbyO8yDViIlu0E.WrbucVxYqfSvZxJqIMzm",
-                            Role = 0,
-                            RowVersion = new byte[0],
-                            Status = 0
-                        },
-                        new
-                        {
-                            Id = new Guid("4f33466b-00cd-424d-9c5a-2356d9fc179d"),
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "eric737@example.com",
-                            FirstName = "John",
-                            LastName = "Hernandez",
-                            PasswordHash = "$2b$12$hZMooIIRDBrx/2SZ9FbS9uuT/M4esP1.z1UFFvLHfKrcLYLccRTz6",
-                            Role = 0,
-                            RowVersion = new byte[0],
-                            Status = 0
-                        },
-                        new
-                        {
-                            Id = new Guid("0986d7ae-31ff-42d8-a9d4-450625e8dd76"),
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "hallshaun8@example.com",
-                            FirstName = "Charles",
-                            LastName = "Cook",
-                            PasswordHash = "$2b$12$B./Bh7QhdcmttuAWXIt8dOp5Hul0w7YjOCMBCnGUfHQV4NvKfQ8Xe",
-                            Role = 0,
-                            RowVersion = new byte[0],
-                            Status = 0
-                        },
-                        new
-                        {
-                            Id = new Guid("9f73b2c1-71c7-434b-8fcd-b3ca7a6eae98"),
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "cannonkelly9@example.com",
-                            FirstName = "Christopher",
-                            LastName = "Salazar",
-                            PasswordHash = "$2b$12$r9HYkq1hv0wiwZh05W6fq.6b3qoZxXrOfr/xrFSA//x69Qu77mOJO",
-                            Role = 0,
-                            RowVersion = new byte[0],
-                            Status = 0
-                        },
-                        new
-                        {
-                            Id = new Guid("a4f0b9c1-47e8-46ff-a9e5-d388693cffef"),
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "nparrish10@example.com",
-                            FirstName = "Jason",
-                            LastName = "Meza",
-                            PasswordHash = "$2b$12$ix2jyWO01HHxwhtmLFIFXO/JbQ8eqT.IaJw5xrGAgcXbN/HL7ZIZO",
-                            Role = 0,
-                            RowVersion = new byte[0],
-                            Status = 0
-                        });
                 });
 
             modelBuilder.Entity("AmazonKiller.Domain.Entities.Users.Wishlist", b =>

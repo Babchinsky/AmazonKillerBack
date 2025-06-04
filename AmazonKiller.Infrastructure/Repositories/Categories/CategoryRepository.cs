@@ -9,16 +9,6 @@ namespace AmazonKiller.Infrastructure.Repositories.Categories;
 
 public class CategoryRepository(AmazonDbContext db, IFileStorage fileStorage) : ICategoryRepository
 {
-    // ---- дерево -------------------------------------------------
-    public Task<List<Category>> GetTreeAsync(CancellationToken ct)
-    {
-        return db.Categories
-            .Include(c => c.Children.OrderBy(x => x.Name))
-            .Where(c => c.ParentId == null)
-            .OrderBy(c => c.Name)
-            .ToListAsync(ct);
-    }
-
     // ---- CRUD ---------------------------------------------------
     public Task<List<Category>> GetAllAsync(CancellationToken ct)
     {

@@ -78,4 +78,22 @@ public class CategoryQueryService(
                 Collect(c.Id);
         }
     }
+    
+    public async Task<List<Guid>> GetDescendantCategoryIdsAsync(Guid parentId, CancellationToken ct = default)
+    {
+        var all = await repo.GetAllAsync(ct);
+        var ids = new List<Guid> { parentId };
+
+        Collect(parentId);
+        return ids;
+
+        void Collect(Guid id)
+        {
+            foreach (var child in all.Where(c => c.ParentId == id))
+            {
+                ids.Add(child.Id);
+                Collect(child.Id);
+            }
+        }
+    }
 }
