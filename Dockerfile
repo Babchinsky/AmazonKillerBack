@@ -1,20 +1,26 @@
-﻿# Используем .NET SDK для сборки
+﻿# Сборка
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /app
 
-# Копируем sln и csproj, восстанавливаем зависимости
-COPY *.sln .
-COPY AmazonKiller.WebApi/*.csproj ./AmazonKiller.WebApi/
-RUN dotnet restore ./AmazonKiller.WebApi/AmazonKiller.WebApi.csproj
+# Копируем sln и csproj
+COPY AmazonKillerBack.sln ./
+COPY AmazonKiller.Application/AmazonKiller.Application.csproj ./AmazonKiller.Application/
+COPY AmazonKiller.Domain/AmazonKiller.Domain.csproj ./AmazonKiller.Domain/
+COPY AmazonKiller.Infrastructure/AmazonKiller.Infrastructure.csproj ./AmazonKiller.Infrastructure/
+COPY AmazonKiller.Shared/AmazonKiller.Shared.csproj ./AmazonKiller.Shared/
+COPY AmazonKiller.WebApi/AmazonKiller.WebApi.csproj ./AmazonKiller.WebApi/
 
-# Копируем остальной код
+# Восстанавливаем зависимости
+RUN dotnet restore AmazonKiller.WebApi/AmazonKiller.WebApi.csproj
+
+# Копируем остальной исходный код
 COPY . .
-WORKDIR /app/AmazonKiller.WebApi
 
-# Публикуем приложение
+# Сборка
+WORKDIR /app/AmazonKiller.WebApi
 RUN dotnet publish -c Release -o /app/out
 
-# Используем рантайм
+# Рантайм
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
 WORKDIR /app
 COPY --from=build /app/out .
