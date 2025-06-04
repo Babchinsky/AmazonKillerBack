@@ -51,4 +51,19 @@ public class CollectionRepository(AmazonDbContext db, IFileStorage fileStorage) 
         if (imageUrls.Count > 0)
             await fileStorage.DeleteBatchSafeAsync(imageUrls, ct);
     }
+
+    public async Task DeleteRangeAsync(IEnumerable<Collection> collections, CancellationToken ct)
+    {
+        var enumerable = collections.ToList();
+        var imageUrls = enumerable
+            .Where(c => !string.IsNullOrWhiteSpace(c.ImageUrl))
+            .Select(c => c.ImageUrl!)
+            .ToList();
+
+        db.Collections.RemoveRange(enumerable);
+        await db.SaveChangesAsync(ct);
+
+        if (imageUrls.Count > 0)
+            await fileStorage.DeleteBatchSafeAsync(imageUrls, ct);
+    }
 }

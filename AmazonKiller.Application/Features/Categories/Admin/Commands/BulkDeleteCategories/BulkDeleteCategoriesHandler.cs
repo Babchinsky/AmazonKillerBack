@@ -1,4 +1,5 @@
 using AmazonKiller.Application.DTOs.Common;
+using AmazonKiller.Application.Interfaces.Repositories.Collections;
 using AmazonKiller.Application.Interfaces.Repositories.Products;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -7,7 +8,8 @@ namespace AmazonKiller.Application.Features.Categories.Admin.Commands.BulkDelete
 
 public class BulkDeleteCategoriesHandler(
     ICategoryRepository categoryRepo,
-    IProductRepository productRepo)
+    IProductRepository productRepo,
+    ICollectionRepository collectionRepo)
     : IRequestHandler<BulkDeleteCategoriesCommand, BulkDeleteResultDto>
 {
     public async Task<BulkDeleteResultDto> Handle(BulkDeleteCategoriesCommand cmd, CancellationToken ct)
@@ -24,14 +26,22 @@ public class BulkDeleteCategoriesHandler(
         var notFoundIds = rootIds.Where(id => !foundIds.Contains(id)).ToList();
         var matchedIds = idsToDelete.Except(notFoundIds).ToList();
 
-        // Удаляем продукты
+        // Delete products
         var productsToDelete = await productRepo.Queryable()
             .Where(p => matchedIds.Contains(p.CategoryId))
             .ToListAsync(ct);
         await productRepo.DeleteRangeAsync(productsToDelete, ct);
 
-        // Удаляем категории
-        var categoriesToDelete = allCategories.Where(c => matchedIds.Contains(c.Id)).ToList();
+        // Delete collections
+        var collectionsToDelete = await collectionRepo.Queryable()
+            .Where(c => matchedIds.Contains(c.CategoryId))
+            .ToListAsync(ct);
+        await collectionRepo.DeleteRangeAsync(collectionsToDelete, ct);
+
+        // Delete Categories
+        var categoriesToDelete = allCategories
+            .Where(c => matchedIds.Contains(c.Id))
+            .ToList();
         await categoryRepo.DeleteRangeAsync(categoriesToDelete, ct);
 
         return new BulkDeleteResultDto

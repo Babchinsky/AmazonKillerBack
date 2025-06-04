@@ -9,4 +9,5 @@ public interface ICollectionRepository
     Task AddAsync(Collection collection, CancellationToken ct = default);
     Task UpdateAsync(Collection collection, CancellationToken ct = default);
     Task DeleteAsync(Collection collection, CancellationToken ct = default);
+    Task DeleteRangeAsync(IEnumerable<Collection> collections, CancellationToken ct);
 }
