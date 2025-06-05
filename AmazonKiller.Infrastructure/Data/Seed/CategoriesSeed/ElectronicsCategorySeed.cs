@@ -19,7 +19,8 @@ public static class ElectronicsCategorySeed
                 Description = "Electronics category",
                 ImageUrl = "https://example.com/images/electronics.jpg",
                 IconName = "electronics",
-                ParentId = null
+                ParentId = null,
+                PropertyKeys = SeedHelper.KeysOrNull(rootId, keysMap) ?? []
             },
             new Category
             {

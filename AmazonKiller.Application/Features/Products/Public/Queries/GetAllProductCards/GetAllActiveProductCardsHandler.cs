@@ -26,7 +26,9 @@ public class GetAllActiveProductCardsHandler(
         if (q.CategoryId.HasValue)
             filterCategoryIds = await categoryQueryService.GetDescendantCategoryIdsAsync(q.CategoryId.Value, ct);
 
-        var query = productRepo.Queryable().AsNoTracking()
+        var query = productRepo.Queryable()
+            .Include(p => p.Category)
+            .AsNoTracking()
             .ApplyCategoryVisibilityFilter(activeCategoryIds)
             .ApplyFilters(q, filterCategoryIds)
             .ApplySorting(q.Parameters);

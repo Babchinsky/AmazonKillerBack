@@ -24,11 +24,13 @@ public sealed class ProductMappingProfile : Profile
             .ForMember(d => d.ImageUrls, o => o.MapFrom<ProductImageUrlResolver>())
             .ForMember(d => d.RowVersion, o => o.MapFrom(s => Convert.ToBase64String(s.RowVersion)))
             .ForMember(d => d.Attributes, o => o.MapFrom(s => s.Attributes))
-            .ForMember(d => d.Features, o => o.MapFrom(s => s.Features));
+            .ForMember(d => d.Features, o => o.MapFrom(s => s.Features))
+            .ForMember(d => d.CategoryName, o => o.MapFrom(s => s.Category.Name));
 
         // 3. Домен → ProductCardDto (для карточек)
         CreateMap<Product, ProductCardDto>()
-            .ForMember(d => d.ImageUrl, o => o.MapFrom<ProductMainImageUrlResolver>());
+            .ForMember(d => d.ImageUrl, o => o.MapFrom<ProductMainImageUrlResolver>())
+            .ForMember(d => d.CategoryName, o => o.MapFrom(s => s.Category.Name));
 
         // 4. Домен → CartItemDto (для карточек)
         // Product → CartItemDto

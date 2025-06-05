@@ -17,7 +17,9 @@ public class GetAllProductsAdminHandler(
 {
     public async Task<PagedList<ProductCardDto>> Handle(GetAllProductsAdminQuery q, CancellationToken ct)
     {
-        var query = productRepo.Queryable().AsNoTracking()
+        var query = productRepo.Queryable()
+            .Include(p => p.Category)
+            .AsNoTracking()
             .ApplyFilters(q)
             .ApplySorting(q.Parameters);
 

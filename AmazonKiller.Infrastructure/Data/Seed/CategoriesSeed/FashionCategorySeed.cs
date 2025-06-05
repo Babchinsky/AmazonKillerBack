@@ -19,7 +19,8 @@ public static class FashionCategorySeed
                 Description = "Fashion category",
                 ImageUrl = "https://example.com/images/fashion.jpg",
                 IconName = "fashion",
-                ParentId = null
+                ParentId = null,
+                PropertyKeys = SeedHelper.KeysOrNull(rootId, keysMap) ?? []
             },
             new Category
             {

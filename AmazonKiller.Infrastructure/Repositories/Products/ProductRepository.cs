@@ -30,6 +30,7 @@ public sealed class ProductRepository(AmazonDbContext db, IFileStorage fileStora
         return db.Products
             .Include(p => p.Attributes)
             .Include(p => p.Features)
+            .Include(p => p.Category)
             .FirstOrDefaultAsync(p => p.Id == id, ct);
     }
 
@@ -129,14 +130,9 @@ public sealed class ProductRepository(AmazonDbContext db, IFileStorage fileStora
 
         await fileStorage.DeleteBatchSafeAsync(imagesToDelete, ct);
     }
-
-    public Task<bool> IsExistsAsync(Guid id)
-    {
-        return db.Products.AnyAsync(p => p.Id == id);
-    }
-
+    
     public IQueryable<Product> Queryable()
     {
-        return db.Products.AsQueryable();
+        return db.Products;
     }
 }

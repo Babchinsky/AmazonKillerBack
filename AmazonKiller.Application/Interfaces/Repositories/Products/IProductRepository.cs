@@ -27,7 +27,5 @@ public interface IProductRepository
 
     Task DeleteRangeAsync(IEnumerable<Product> products, CancellationToken ct);
 
-    Task<bool> IsExistsAsync(Guid id);
-
     IQueryable<Product> Queryable();
 }

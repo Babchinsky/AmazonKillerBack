@@ -19,7 +19,8 @@ public static class WorkToolsCategorySeed
                 Description = "Work tools category",
                 ImageUrl = "https://example.com/images/worktools.jpg",
                 IconName = "work tools",
-                ParentId = null
+                ParentId = null,
+                PropertyKeys = SeedHelper.KeysOrNull(rootId, keysMap) ?? []
             },
             new Category
             {

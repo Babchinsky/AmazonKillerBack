@@ -9,6 +9,7 @@ public record ProductDto
     public int ReviewsCount { get; init; }
     public List<string> ImageUrls { get; init; } = [];
     public Guid CategoryId { get; init; }
+    public string CategoryName { get; init; } = string.Empty;
     public decimal Price { get; init; }
     public decimal? DiscountPercent { get; init; }
     public int Quantity { get; init; }

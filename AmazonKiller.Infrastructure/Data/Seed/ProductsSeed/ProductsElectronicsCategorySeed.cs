@@ -13,7 +13,7 @@ public static class ProductsElectronicsCategorySeed
             Code = "SAM-001",
             Price = 1199.99m,
             Quantity = 50,
-            CategoryId = new Guid("7ad3d843-1642-4e8a-a843-503928ef8154"),
+            CategoryId = new Guid("d2deb989-35c5-4ca1-a748-12411d3ac3a4"),
             ImageUrls = [
                 "https://example.com/products/samsung1.jpg",
                 "https://example.com/products/samsung2.jpg",
@@ -75,7 +75,7 @@ public static class ProductsElectronicsCategorySeed
             Code = "SONY-002",
             Price = 349.99m,
             Quantity = 50,
-            CategoryId = new Guid("7ad3d843-1642-4e8a-a843-503928ef8154"),
+            CategoryId = new Guid("c1cd879d-175e-4ff5-b354-054f9f82ce98"),
             ImageUrls = [
                 "https://example.com/products/sony1.jpg",
                 "https://example.com/products/sony2.jpg",

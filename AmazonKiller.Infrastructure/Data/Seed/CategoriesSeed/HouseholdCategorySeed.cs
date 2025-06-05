@@ -19,7 +19,8 @@ public static class HouseholdCategorySeed
                 Description = "Household category",
                 ImageUrl = "https://example.com/images/household.jpg",
                 IconName = "household",
-                ParentId = null
+                ParentId = null,
+                PropertyKeys = SeedHelper.KeysOrNull(rootId, keysMap) ?? []
             },
             new Category
             {
