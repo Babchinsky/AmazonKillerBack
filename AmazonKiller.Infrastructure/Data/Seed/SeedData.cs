@@ -2,6 +2,7 @@
 using AmazonKiller.Infrastructure.Data.Seed.CartLists;
 using AmazonKiller.Infrastructure.Data.Seed.Categories;
 using AmazonKiller.Infrastructure.Data.Seed.Collections;
+using AmazonKiller.Infrastructure.Data.Seed.Orders;
 using AmazonKiller.Infrastructure.Data.Seed.Products;
 using AmazonKiller.Infrastructure.Data.Seed.Reviews;
 using AmazonKiller.Infrastructure.Data.Seed.Users;
@@ -82,5 +83,7 @@ public static class SeedData
         WishlistsSeed.Seed(modelBuilder);
 
         CartListSeed.Seed(modelBuilder);
+
+        OrdersSeed.Seed(modelBuilder);
     }
 }

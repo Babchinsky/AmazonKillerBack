@@ -464,6 +464,25 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Collections",
+                columns: new[] { "Id", "CategoryId", "ImageUrl", "IsActive", "MaxPrice", "MinPrice", "Title" },
+                values: new object[,]
+                {
+                    { new Guid("10000000-0000-0000-0000-000000000004"), new Guid("0dfa0836-09c9-4a2d-b74a-9b2085976dcf"), "https://example.com/collections/tables.jpg", true, 160m, 120m, "Modern Coffee Tables" },
+                    { new Guid("10000000-0000-0000-0000-000000000005"), new Guid("cc9bf323-2160-49b2-ae79-340781163eb2"), "https://example.com/collections/makita.jpg", true, 250m, 200m, "Makita Power Tools" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Orders",
+                columns: new[] { "Id", "Info_Delivery_Address_ApartmentNumber", "Info_Delivery_Address_City", "Info_Delivery_Address_Country", "Info_Delivery_Address_HouseNumber", "Info_Delivery_Address_Id", "Info_Delivery_Address_PostCode", "Info_Delivery_Address_State", "Info_Delivery_Address_Street", "Info_Delivery_Email", "Info_Delivery_FirstName", "Info_Delivery_LastName", "OrderNumber", "Status", "TotalPrice", "UserId", "Info_Id", "Info_OrderedAt", "Info_Payment_CardNumber", "Info_Payment_Cvv", "Info_Payment_ExpirationDate", "Info_Payment_PaymentType" },
+                values: new object[,]
+                {
+                    { new Guid("2f2339d3-98a9-4039-b5fe-fa6d8e9d66ba"), null, "Kyiv", "Ukraine", "45B", new Guid("00000000-0000-0000-0000-000000000a02"), "02000", null, "Central Ave", "olena@example.com", "Olena", "Rudenko", "ORD-1002", 4, 1489.96m, new Guid("fa67eef0-62a7-4e61-83ef-5a054e84ce41"), new Guid("00000000-0000-0000-0000-00000000c002"), new DateTime(2024, 1, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, 0 },
+                    { new Guid("4e6f98ed-d665-470b-992b-dd872c86abe2"), null, "Lviv", "Ukraine", "78C", new Guid("00000000-0000-0000-0000-000000000a03"), "79000", null, "Green Blvd", "ivan@example.com", "Ivan", "Petrenko", "ORD-1003", 4, 689.97m, new Guid("82bf572a-ab40-4571-b1a2-ec9dcf9ccb7d"), new Guid("00000000-0000-0000-0000-00000000c003"), new DateTime(2024, 1, 3, 0, 0, 0, 0, DateTimeKind.Unspecified), "5555555555554444", "456", "08/26", 1 },
+                    { new Guid("8d39ee25-6be0-46aa-8a1f-75407bd3fa0d"), null, "Odessa", "Ukraine", "123A", new Guid("00000000-0000-0000-0000-000000000a01"), "65000", null, "Main St", "pavlo@example.com", "Pavlo", "Babchynskyi", "ORD-1001", 4, 139.98m, new Guid("7a612c2e-ebc1-4a30-ac54-cccb566a1086"), new Guid("00000000-0000-0000-0000-00000000c001"), new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "4111111111111111", "123", "12/25", 1 }
+                });
+
+            migrationBuilder.InsertData(
                 table: "Products",
                 columns: new[] { "Id", "CategoryId", "Code", "DiscountPercent", "ImageUrls", "Name", "Price", "Quantity", "Rating", "ReviewsCount", "SoldCount" },
                 values: new object[,]
@@ -471,6 +490,36 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                     { new Guid("4c73d114-2aa1-4f4c-aa7a-48038f1f95fc"), new Guid("cc9bf323-2160-49b2-ae79-340781163eb2"), "WTL-001", null, "[\"https://example.com/products/makita1.jpg\",\"https://example.com/products/makita2.jpg\"]", "Makita Cordless Hammer Drill", 229.99m, 50, 4.5m, 100, 0 },
                     { new Guid("74a46f1c-1054-408d-89dc-8ca00285660f"), new Guid("0dfa0836-09c9-4a2d-b74a-9b2085976dcf"), "FUR-001", null, "[\"https://example.com/products/coffee_table1.jpg\",\"https://example.com/products/coffee_table2.jpg\"]", "Modern Wooden Coffee Table", 149.99m, 50, 4.5m, 100, 0 },
                     { new Guid("a055168e-3130-4b0a-8495-60e25d62e057"), new Guid("8980e70c-3345-4885-8518-cfcda95b3078"), "HOU-001", null, "[\"https://example.com/products/dyson1.jpg\",\"https://example.com/products/dyson2.jpg\"]", "Dyson V15 Detect Vacuum Cleaner", 699.0m, 50, 4.5m, 100, 0 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "CollectionFilters",
+                columns: new[] { "CollectionId", "Key", "Value" },
+                values: new object[,]
+                {
+                    { new Guid("10000000-0000-0000-0000-000000000004"), "Finish", "Natural varnish" },
+                    { new Guid("10000000-0000-0000-0000-000000000004"), "Material", "Oak wood" },
+                    { new Guid("10000000-0000-0000-0000-000000000005"), "Battery", "2 x 5.0Ah Li-ion" },
+                    { new Guid("10000000-0000-0000-0000-000000000005"), "Voltage", "18V" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Collections",
+                columns: new[] { "Id", "CategoryId", "ImageUrl", "IsActive", "MaxPrice", "MinPrice", "Title" },
+                values: new object[,]
+                {
+                    { new Guid("10000000-0000-0000-0000-000000000001"), new Guid("d2deb989-35c5-4ca1-a748-12411d3ac3a4"), "https://example.com/collections/galaxy.jpg", true, 1300m, 1000m, "Galaxy Highlights" },
+                    { new Guid("10000000-0000-0000-0000-000000000002"), new Guid("c1cd879d-175e-4ff5-b354-054f9f82ce98"), "https://example.com/collections/sony.jpg", true, 400m, 300m, "Sony Audio Bestsellers" },
+                    { new Guid("10000000-0000-0000-0000-000000000003"), new Guid("7eb489f4-2f55-4510-8e49-3965370c4989"), "https://example.com/collections/denim.jpg", true, 100m, 50m, "Denim Essentials" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "OrderItems",
+                columns: new[] { "Id", "OrderId", "OrderedAt", "Price", "ProductId", "Quantity" },
+                values: new object[,]
+                {
+                    { new Guid("00000000-0000-0000-0000-00000000b003"), new Guid("2f2339d3-98a9-4039-b5fe-fa6d8e9d66ba"), new DateTime(2024, 1, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), 149.99m, new Guid("74a46f1c-1054-408d-89dc-8ca00285660f"), 2 },
+                    { new Guid("00000000-0000-0000-0000-00000000b004"), new Guid("4e6f98ed-d665-470b-992b-dd872c86abe2"), new DateTime(2024, 1, 3, 0, 0, 0, 0, DateTimeKind.Unspecified), 229.99m, new Guid("4c73d114-2aa1-4f4c-aa7a-48038f1f95fc"), 3 }
                 });
 
             migrationBuilder.InsertData(
@@ -530,6 +579,52 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                     { new Guid("00000000-0000-0000-0000-000000000006"), "Beast of a drill", "[]", "Very powerful and long-lasting battery. Great for home use.", new Guid("4c73d114-2aa1-4f4c-aa7a-48038f1f95fc"), 5.0m, "[\"power\",\"performance\"]", new Guid("741ddf70-bcb9-44ba-a666-246072dd8c82") },
                     { new Guid("00000000-0000-0000-0000-000000000008"), "Impressive cleaning", "[]", "Powerful suction and laser feature is actually helpful.", new Guid("a055168e-3130-4b0a-8495-60e25d62e057"), 4.8m, "[\"vacuum\",\"laser\"]", new Guid("0986d7ae-31ff-42d8-a9d4-450625e8dd76") },
                     { new Guid("00000000-0000-0000-0000-000000000009"), "Simple and elegant", "[]", "Easy to assemble, light weight, looks clean and modern.", new Guid("74a46f1c-1054-408d-89dc-8ca00285660f"), 4.6m, "[\"design\",\"assembly\"]", new Guid("9f73b2c1-71c7-434b-8fcd-b3ca7a6eae98") }
+                });
+
+            migrationBuilder.InsertData(
+                table: "WishlistItems",
+                columns: new[] { "ProductId", "UserId", "AddedAt" },
+                values: new object[,]
+                {
+                    { new Guid("a055168e-3130-4b0a-8495-60e25d62e057"), new Guid("2583c105-264b-45ee-a535-3b939f4dd428"), new DateTime(2024, 1, 5, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { new Guid("4c73d114-2aa1-4f4c-aa7a-48038f1f95fc"), new Guid("741ddf70-bcb9-44ba-a666-246072dd8c82"), new DateTime(2024, 1, 6, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { new Guid("74a46f1c-1054-408d-89dc-8ca00285660f"), new Guid("a4f0b9c1-47e8-46ff-a9e5-d388693cffef"), new DateTime(2024, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { new Guid("74a46f1c-1054-408d-89dc-8ca00285660f"), new Guid("b116a743-b108-494a-abb5-a0c9673edbef"), new DateTime(2024, 1, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) }
+                });
+
+            migrationBuilder.InsertData(
+                table: "CartLists",
+                columns: new[] { "Id", "AddedAt", "Price", "ProductId", "Quantity", "UserId" },
+                values: new object[,]
+                {
+                    { new Guid("229de273-0066-4a4a-8678-21eb61416578"), new DateTime(2024, 1, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), 69.99m, new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b"), 1, new Guid("a4f0b9c1-47e8-46ff-a9e5-d388693cffef") },
+                    { new Guid("85caea79-0bb1-4649-9102-142eb37c7664"), new DateTime(2024, 1, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), 1199.99m, new Guid("3c5a4868-3b2d-4352-9e12-502a56bce48a"), 1, new Guid("fa67eef0-62a7-4e61-83ef-5a054e84ce41") },
+                    { new Guid("a2437747-dfe4-4d24-8cdf-5e44abbd2c7f"), new DateTime(2024, 1, 19, 0, 0, 0, 0, DateTimeKind.Unspecified), 1199.99m, new Guid("3c5a4868-3b2d-4352-9e12-502a56bce48a"), 3, new Guid("a4f0b9c1-47e8-46ff-a9e5-d388693cffef") },
+                    { new Guid("ab6454d8-69c2-4e81-8313-d2cdc0b1cf9c"), new DateTime(2024, 1, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 349.99m, new Guid("a2c28a83-cfea-46ee-87e3-906f9e90f1aa"), 3, new Guid("fa67eef0-62a7-4e61-83ef-5a054e84ce41") },
+                    { new Guid("c51758a1-f536-463b-a921-cc9206a34927"), new DateTime(2024, 1, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), 69.99m, new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b"), 2, new Guid("0986d7ae-31ff-42d8-a9d4-450625e8dd76") }
+                });
+
+            migrationBuilder.InsertData(
+                table: "CollectionFilters",
+                columns: new[] { "CollectionId", "Key", "Value" },
+                values: new object[,]
+                {
+                    { new Guid("10000000-0000-0000-0000-000000000001"), "Battery", "5000mAh" },
+                    { new Guid("10000000-0000-0000-0000-000000000001"), "Camera", "200MP" },
+                    { new Guid("10000000-0000-0000-0000-000000000001"), "Storage", "256GB" },
+                    { new Guid("10000000-0000-0000-0000-000000000002"), "Noise Cancellation", "Yes" },
+                    { new Guid("10000000-0000-0000-0000-000000000002"), "Type", "Over-ear" },
+                    { new Guid("10000000-0000-0000-0000-000000000003"), "Fit", "Regular" },
+                    { new Guid("10000000-0000-0000-0000-000000000003"), "Material", "100% Cotton" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "OrderItems",
+                columns: new[] { "Id", "OrderId", "OrderedAt", "Price", "ProductId", "Quantity" },
+                values: new object[,]
+                {
+                    { new Guid("00000000-0000-0000-0000-00000000b001"), new Guid("8d39ee25-6be0-46aa-8a1f-75407bd3fa0d"), new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 69.99m, new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b"), 2 },
+                    { new Guid("00000000-0000-0000-0000-00000000b002"), new Guid("2f2339d3-98a9-4039-b5fe-fa6d8e9d66ba"), new DateTime(2024, 1, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), 1199.99m, new Guid("3c5a4868-3b2d-4352-9e12-502a56bce48a"), 1 }
                 });
 
             migrationBuilder.InsertData(
@@ -594,6 +689,19 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                     { new Guid("00000000-0000-0000-0000-000000000010"), "Camera is next level", "[]", "200MP might be overkill, but wow, it delivers detail.", new Guid("3c5a4868-3b2d-4352-9e12-502a56bce48a"), 4.9m, "[\"camera\"]", new Guid("a4f0b9c1-47e8-46ff-a9e5-d388693cffef") },
                     { new Guid("00000000-0000-0000-0000-000000000011"), "Good value", "[]", "High-quality fabric, didn’t expect it for this price.", new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b"), 4.4m, "[\"value\",\"material\"]", new Guid("2583c105-264b-45ee-a535-3b939f4dd428") },
                     { new Guid("00000000-0000-0000-0000-000000000012"), "Not for running", "[]", "Slips off easily if you're jogging. Great otherwise.", new Guid("a2c28a83-cfea-46ee-87e3-906f9e90f1aa"), 3.9m, "[\"use case\"]", new Guid("a4f0b9c1-47e8-46ff-a9e5-d388693cffef") }
+                });
+
+            migrationBuilder.InsertData(
+                table: "WishlistItems",
+                columns: new[] { "ProductId", "UserId", "AddedAt" },
+                values: new object[,]
+                {
+                    { new Guid("a2c28a83-cfea-46ee-87e3-906f9e90f1aa"), new Guid("0986d7ae-31ff-42d8-a9d4-450625e8dd76"), new DateTime(2024, 1, 8, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { new Guid("3c5a4868-3b2d-4352-9e12-502a56bce48a"), new Guid("4f33466b-00cd-424d-9c5a-2356d9fc179d"), new DateTime(2024, 1, 7, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { new Guid("3c5a4868-3b2d-4352-9e12-502a56bce48a"), new Guid("7a612c2e-ebc1-4a30-ac54-cccb566a1086"), new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b"), new Guid("82bf572a-ab40-4571-b1a2-ec9dcf9ccb7d"), new DateTime(2024, 1, 3, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b"), new Guid("9f73b2c1-71c7-434b-8fcd-b3ca7a6eae98"), new DateTime(2024, 1, 9, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { new Guid("a2c28a83-cfea-46ee-87e3-906f9e90f1aa"), new Guid("fa67eef0-62a7-4e61-83ef-5a054e84ce41"), new DateTime(2024, 1, 2, 0, 0, 0, 0, DateTimeKind.Unspecified) }
                 });
 
             migrationBuilder.InsertData(

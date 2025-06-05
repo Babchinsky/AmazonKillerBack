@@ -510,6 +510,35 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Orders");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("8d39ee25-6be0-46aa-8a1f-75407bd3fa0d"),
+                            OrderNumber = "ORD-1001",
+                            RowVersion = new byte[0],
+                            Status = 4,
+                            TotalPrice = 139.98m,
+                            UserId = new Guid("7a612c2e-ebc1-4a30-ac54-cccb566a1086")
+                        },
+                        new
+                        {
+                            Id = new Guid("2f2339d3-98a9-4039-b5fe-fa6d8e9d66ba"),
+                            OrderNumber = "ORD-1002",
+                            RowVersion = new byte[0],
+                            Status = 4,
+                            TotalPrice = 1489.96m,
+                            UserId = new Guid("fa67eef0-62a7-4e61-83ef-5a054e84ce41")
+                        },
+                        new
+                        {
+                            Id = new Guid("4e6f98ed-d665-470b-992b-dd872c86abe2"),
+                            OrderNumber = "ORD-1003",
+                            RowVersion = new byte[0],
+                            Status = 4,
+                            TotalPrice = 689.97m,
+                            UserId = new Guid("82bf572a-ab40-4571-b1a2-ec9dcf9ccb7d")
+                        });
                 });
 
             modelBuilder.Entity("AmazonKiller.Domain.Entities.Orders.OrderItem", b =>
@@ -543,6 +572,44 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                     b.ToTable("OrderItems", t =>
                         {
                             t.HasCheckConstraint("CK_OrderItem_Quantity_Positive", "[Quantity] > 0");
+                        });
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0000-00000000b001"),
+                            OrderId = new Guid("8d39ee25-6be0-46aa-8a1f-75407bd3fa0d"),
+                            OrderedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Price = 69.99m,
+                            ProductId = new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b"),
+                            Quantity = 2
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0000-00000000b002"),
+                            OrderId = new Guid("2f2339d3-98a9-4039-b5fe-fa6d8e9d66ba"),
+                            OrderedAt = new DateTime(2024, 1, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Price = 1199.99m,
+                            ProductId = new Guid("3c5a4868-3b2d-4352-9e12-502a56bce48a"),
+                            Quantity = 1
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0000-00000000b003"),
+                            OrderId = new Guid("2f2339d3-98a9-4039-b5fe-fa6d8e9d66ba"),
+                            OrderedAt = new DateTime(2024, 1, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Price = 149.99m,
+                            ProductId = new Guid("74a46f1c-1054-408d-89dc-8ca00285660f"),
+                            Quantity = 2
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0000-00000000b004"),
+                            OrderId = new Guid("4e6f98ed-d665-470b-992b-dd872c86abe2"),
+                            OrderedAt = new DateTime(2024, 1, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Price = 229.99m,
+                            ProductId = new Guid("4c73d114-2aa1-4f4c-aa7a-48038f1f95fc"),
+                            Quantity = 3
                         });
                 });
 
@@ -2020,10 +2087,65 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
 
                                             b3.WithOwner()
                                                 .HasForeignKey("DeliveryInfoOrderInfoOrderId");
+
+                                            b3.HasData(
+                                                new
+                                                {
+                                                    DeliveryInfoOrderInfoOrderId = new Guid("8d39ee25-6be0-46aa-8a1f-75407bd3fa0d"),
+                                                    City = "Odessa",
+                                                    Country = "Ukraine",
+                                                    HouseNumber = "123A",
+                                                    Id = new Guid("00000000-0000-0000-0000-000000000a01"),
+                                                    PostCode = "65000",
+                                                    Street = "Main St"
+                                                },
+                                                new
+                                                {
+                                                    DeliveryInfoOrderInfoOrderId = new Guid("2f2339d3-98a9-4039-b5fe-fa6d8e9d66ba"),
+                                                    City = "Kyiv",
+                                                    Country = "Ukraine",
+                                                    HouseNumber = "45B",
+                                                    Id = new Guid("00000000-0000-0000-0000-000000000a02"),
+                                                    PostCode = "02000",
+                                                    Street = "Central Ave"
+                                                },
+                                                new
+                                                {
+                                                    DeliveryInfoOrderInfoOrderId = new Guid("4e6f98ed-d665-470b-992b-dd872c86abe2"),
+                                                    City = "Lviv",
+                                                    Country = "Ukraine",
+                                                    HouseNumber = "78C",
+                                                    Id = new Guid("00000000-0000-0000-0000-000000000a03"),
+                                                    PostCode = "79000",
+                                                    Street = "Green Blvd"
+                                                });
                                         });
 
                                     b2.Navigation("Address")
                                         .IsRequired();
+
+                                    b2.HasData(
+                                        new
+                                        {
+                                            OrderInfoOrderId = new Guid("8d39ee25-6be0-46aa-8a1f-75407bd3fa0d"),
+                                            Email = "pavlo@example.com",
+                                            FirstName = "Pavlo",
+                                            LastName = "Babchynskyi"
+                                        },
+                                        new
+                                        {
+                                            OrderInfoOrderId = new Guid("2f2339d3-98a9-4039-b5fe-fa6d8e9d66ba"),
+                                            Email = "olena@example.com",
+                                            FirstName = "Olena",
+                                            LastName = "Rudenko"
+                                        },
+                                        new
+                                        {
+                                            OrderInfoOrderId = new Guid("4e6f98ed-d665-470b-992b-dd872c86abe2"),
+                                            Email = "ivan@example.com",
+                                            FirstName = "Ivan",
+                                            LastName = "Petrenko"
+                                        });
                                 });
 
                             b1.OwnsOne("AmazonKiller.Domain.Entities.Orders.PaymentInfo", "Payment", b2 =>
@@ -2049,6 +2171,29 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
 
                                     b2.WithOwner()
                                         .HasForeignKey("OrderInfoOrderId");
+
+                                    b2.HasData(
+                                        new
+                                        {
+                                            OrderInfoOrderId = new Guid("8d39ee25-6be0-46aa-8a1f-75407bd3fa0d"),
+                                            CardNumber = "4111111111111111",
+                                            Cvv = "123",
+                                            ExpirationDate = "12/25",
+                                            PaymentType = 1
+                                        },
+                                        new
+                                        {
+                                            OrderInfoOrderId = new Guid("2f2339d3-98a9-4039-b5fe-fa6d8e9d66ba"),
+                                            PaymentType = 0
+                                        },
+                                        new
+                                        {
+                                            OrderInfoOrderId = new Guid("4e6f98ed-d665-470b-992b-dd872c86abe2"),
+                                            CardNumber = "5555555555554444",
+                                            Cvv = "456",
+                                            ExpirationDate = "08/26",
+                                            PaymentType = 1
+                                        });
                                 });
 
                             b1.Navigation("Delivery")
@@ -2056,6 +2201,26 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
 
                             b1.Navigation("Payment")
                                 .IsRequired();
+
+                            b1.HasData(
+                                new
+                                {
+                                    OrderId = new Guid("8d39ee25-6be0-46aa-8a1f-75407bd3fa0d"),
+                                    Id = new Guid("00000000-0000-0000-0000-00000000c001"),
+                                    OrderedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                                },
+                                new
+                                {
+                                    OrderId = new Guid("2f2339d3-98a9-4039-b5fe-fa6d8e9d66ba"),
+                                    Id = new Guid("00000000-0000-0000-0000-00000000c002"),
+                                    OrderedAt = new DateTime(2024, 1, 2, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                                },
+                                new
+                                {
+                                    OrderId = new Guid("4e6f98ed-d665-470b-992b-dd872c86abe2"),
+                                    Id = new Guid("00000000-0000-0000-0000-00000000c003"),
+                                    OrderedAt = new DateTime(2024, 1, 3, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                                });
                         });
 
                     b.Navigation("Info")
