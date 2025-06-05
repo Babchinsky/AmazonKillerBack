@@ -4,6 +4,7 @@ using AmazonKiller.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AmazonKiller.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AmazonDbContext))]
-    partial class AmazonDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250605163305_WishlistsSeed")]
+    partial class WishlistsSeed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1425,53 +1428,6 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("CartLists");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("c51758a1-f536-463b-a921-cc9206a34927"),
-                            AddedAt = new DateTime(2024, 1, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Price = 69.99m,
-                            ProductId = new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b"),
-                            Quantity = 2,
-                            UserId = new Guid("0986d7ae-31ff-42d8-a9d4-450625e8dd76")
-                        },
-                        new
-                        {
-                            Id = new Guid("a2437747-dfe4-4d24-8cdf-5e44abbd2c7f"),
-                            AddedAt = new DateTime(2024, 1, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Price = 1199.99m,
-                            ProductId = new Guid("3c5a4868-3b2d-4352-9e12-502a56bce48a"),
-                            Quantity = 3,
-                            UserId = new Guid("a4f0b9c1-47e8-46ff-a9e5-d388693cffef")
-                        },
-                        new
-                        {
-                            Id = new Guid("ab6454d8-69c2-4e81-8313-d2cdc0b1cf9c"),
-                            AddedAt = new DateTime(2024, 1, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Price = 349.99m,
-                            ProductId = new Guid("a2c28a83-cfea-46ee-87e3-906f9e90f1aa"),
-                            Quantity = 3,
-                            UserId = new Guid("fa67eef0-62a7-4e61-83ef-5a054e84ce41")
-                        },
-                        new
-                        {
-                            Id = new Guid("229de273-0066-4a4a-8678-21eb61416578"),
-                            AddedAt = new DateTime(2024, 1, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Price = 69.99m,
-                            ProductId = new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b"),
-                            Quantity = 1,
-                            UserId = new Guid("a4f0b9c1-47e8-46ff-a9e5-d388693cffef")
-                        },
-                        new
-                        {
-                            Id = new Guid("85caea79-0bb1-4649-9102-142eb37c7664"),
-                            AddedAt = new DateTime(2024, 1, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Price = 1199.99m,
-                            ProductId = new Guid("3c5a4868-3b2d-4352-9e12-502a56bce48a"),
-                            Quantity = 1,
-                            UserId = new Guid("fa67eef0-62a7-4e61-83ef-5a054e84ce41")
-                        });
                 });
 
             modelBuilder.Entity("AmazonKiller.Domain.Entities.Users.EmailVerification", b =>
@@ -1742,68 +1698,6 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("WishlistItems");
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = new Guid("7a612c2e-ebc1-4a30-ac54-cccb566a1086"),
-                            ProductId = new Guid("3c5a4868-3b2d-4352-9e12-502a56bce48a"),
-                            AddedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            UserId = new Guid("fa67eef0-62a7-4e61-83ef-5a054e84ce41"),
-                            ProductId = new Guid("a2c28a83-cfea-46ee-87e3-906f9e90f1aa"),
-                            AddedAt = new DateTime(2024, 1, 2, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            UserId = new Guid("82bf572a-ab40-4571-b1a2-ec9dcf9ccb7d"),
-                            ProductId = new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b"),
-                            AddedAt = new DateTime(2024, 1, 3, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            UserId = new Guid("b116a743-b108-494a-abb5-a0c9673edbef"),
-                            ProductId = new Guid("74a46f1c-1054-408d-89dc-8ca00285660f"),
-                            AddedAt = new DateTime(2024, 1, 4, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            UserId = new Guid("2583c105-264b-45ee-a535-3b939f4dd428"),
-                            ProductId = new Guid("a055168e-3130-4b0a-8495-60e25d62e057"),
-                            AddedAt = new DateTime(2024, 1, 5, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            UserId = new Guid("741ddf70-bcb9-44ba-a666-246072dd8c82"),
-                            ProductId = new Guid("4c73d114-2aa1-4f4c-aa7a-48038f1f95fc"),
-                            AddedAt = new DateTime(2024, 1, 6, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            UserId = new Guid("4f33466b-00cd-424d-9c5a-2356d9fc179d"),
-                            ProductId = new Guid("3c5a4868-3b2d-4352-9e12-502a56bce48a"),
-                            AddedAt = new DateTime(2024, 1, 7, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            UserId = new Guid("0986d7ae-31ff-42d8-a9d4-450625e8dd76"),
-                            ProductId = new Guid("a2c28a83-cfea-46ee-87e3-906f9e90f1aa"),
-                            AddedAt = new DateTime(2024, 1, 8, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            UserId = new Guid("9f73b2c1-71c7-434b-8fcd-b3ca7a6eae98"),
-                            ProductId = new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b"),
-                            AddedAt = new DateTime(2024, 1, 9, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            UserId = new Guid("a4f0b9c1-47e8-46ff-a9e5-d388693cffef"),
-                            ProductId = new Guid("74a46f1c-1054-408d-89dc-8ca00285660f"),
-                            AddedAt = new DateTime(2024, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        });
                 });
 
             modelBuilder.Entity("AmazonKiller.Domain.Entities.Categories.Category", b =>

@@ -1,9 +1,11 @@
 ﻿using AmazonKiller.Domain.Entities.Products;
+using AmazonKiller.Infrastructure.Data.Seed.CartLists;
 using AmazonKiller.Infrastructure.Data.Seed.Categories;
 using AmazonKiller.Infrastructure.Data.Seed.Collections;
 using AmazonKiller.Infrastructure.Data.Seed.Products;
 using AmazonKiller.Infrastructure.Data.Seed.Reviews;
 using AmazonKiller.Infrastructure.Data.Seed.Users;
+using AmazonKiller.Infrastructure.Data.Seed.Wishlists;
 using Microsoft.EntityFrameworkCore;
 
 namespace AmazonKiller.Infrastructure.Data.Seed;
@@ -76,5 +78,9 @@ public static class SeedData
         ReviewLikesSeed.Seed(modelBuilder);
 
         CollectionsSeed.Seed(modelBuilder);
+
+        WishlistsSeed.Seed(modelBuilder);
+
+        CartListSeed.Seed(modelBuilder);
     }
 }
