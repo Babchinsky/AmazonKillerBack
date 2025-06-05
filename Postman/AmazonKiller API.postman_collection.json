@@ -1271,8 +1271,9 @@
 										},
 										{
 											"key": "ParentId",
-											"value": "{{categoryParentId}}",
-											"type": "text"
+											"value": "{{categoryId}}",
+											"type": "text",
+											"disabled": true
 										},
 										{
 											"key": "IconName",
@@ -1719,7 +1720,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "570d5e19-43b3-4bf2-b7b5-0ee31e708bb5",
+											"value": "{{categoryId}}",
 											"description": "(Required) "
 										}
 									]
@@ -1976,10 +1977,10 @@
 											"/* ------------- пул исходных данных ------------- */\r",
 											"const ATTR_BANK = [\r",
 											"    { key: \"Color\",  value: \"Black\"   },\r",
-											"    // { key: \"Color\",  value: \"White\"   },\r",
+											"    { key: \"Color\",  value: \"White\"   },\r",
 											"    { key: \"Color\",  value: \"Red\"     },\r",
 											"    { key: \"Size\",   value: \"S\"       },\r",
-											"    // { key: \"Size\",   value: \"M\"       },\r",
+											"    { key: \"Size\",   value: \"M\"       },\r",
 											"    { key: \"Size\",   value: \"L\"       },\r",
 											"    { key: \"Material\", value: \"Cotton\"},\r",
 											"    { key: \"Material\", value: \"Leather\"},\r",
@@ -2097,7 +2098,7 @@
 										{
 											"key": "Images",
 											"type": "file",
-											"src": "/C:/Users/alexs/OneDrive/Desktop/Postman/product1_photo.jpeg"
+											"src": "/C:/Users/alexs/OneDrive/Desktop/Postman/product3.jpg"
 										},
 										{
 											"key": "Attributes",
@@ -2397,7 +2398,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/api/admin/products?CategoryId={{categoryId}}",
+									"raw": "{{baseUrl}}/api/admin/products?CategoryId=7AD3D843-1642-4E8A-A843-503928EF8154",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -2414,7 +2415,7 @@
 										},
 										{
 											"key": "CategoryId",
-											"value": "{{categoryId}}"
+											"value": "7AD3D843-1642-4E8A-A843-503928EF8154"
 										},
 										{
 											"key": "Filters[{{productFilterSizeKey}}]",
@@ -2607,7 +2608,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/api/products",
+									"raw": "{{baseUrl}}/api/products?CategoryId=7AD3D843-1642-4E8A-A843-503928EF8154",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -2623,8 +2624,7 @@
 										},
 										{
 											"key": "CategoryId",
-											"value": "7AD3D843-1642-4E8A-A843-503928EF8154",
-											"disabled": true
+											"value": "7AD3D843-1642-4E8A-A843-503928EF8154"
 										},
 										{
 											"key": "Filters[proidente24]",
@@ -2704,8 +2704,11 @@
 								{
 									"listen": "prerequest",
 									"script": {
-										"packages": {},
-										"type": "text/javascript"
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
 									}
 								}
 							],
@@ -2725,7 +2728,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "{{lastProductId}}",
+											"value": "3c5a4868-3b2d-4352-9e12-502a56bce48a",
 											"description": "(Required) "
 										}
 									]
@@ -3166,7 +3169,7 @@
 							"response": []
 						},
 						{
-							"name": "Delete Review",
+							"name": "Delete Own Review",
 							"event": [
 								{
 									"listen": "test",
@@ -3395,6 +3398,65 @@
 											"key": "Parameters.SortOrder",
 											"value": "desc",
 											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Admin",
+					"item": [
+						{
+							"name": "Delete Review",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"🗑️ Review deleted successfully\", function () {\r",
+											"    pm.response.to.have.status(204);\r",
+											"    pm.response.to.not.have.body; // Убедимся, что тело действительно пустое\r",
+											"    console.log(\"✅ Review deleted (204 No Content)\");\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{adminAccessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/admin/reviews/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"reviews",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "{{reviewId}}",
+											"description": "(Required) "
 										}
 									]
 								}

@@ -1,7 +1,7 @@
 ﻿using AmazonKiller.Application.DTOs.Reviews;
 using AmazonKiller.Application.Features.Reviews.Account.Commands.CreateUpdateReview.CreateReview;
 using AmazonKiller.Application.Features.Reviews.Account.Commands.CreateUpdateReview.UpdateReview;
-using AmazonKiller.Application.Features.Reviews.Account.Commands.DeleteReview;
+using AmazonKiller.Application.Features.Reviews.Account.Commands.DeleteOwnReview;
 using AmazonKiller.Application.Features.Reviews.Account.Commands.LikeReview;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -29,7 +29,7 @@ public class AccountReviewsController(IMediator mediator) : ControllerBase
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> Delete(Guid id, CancellationToken ct)
     {
-        var result = await mediator.Send(new DeleteReviewCommand(id), ct);
+        var result = await mediator.Send(new DeleteOwnReviewCommand(id), ct);
         return result ? NoContent() : NotFound();
     }
 
