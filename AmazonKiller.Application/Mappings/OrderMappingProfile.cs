@@ -23,6 +23,7 @@ public class OrderMappingProfile : Profile
 
         CreateMap<OrderItem, OrderItemDto>()
             .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom<OrderItemImageUrlResolver>())
-            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Product.Name));
+            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Product.Name))
+            .ForMember(dest => dest.Code, opt => opt.MapFrom(src => src.Product.Code));
     }
 }
