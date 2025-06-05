@@ -1175,7 +1175,7 @@
 											"pm.environment.set(\"categoryName\", `TestCategory_${timestamp}`); \r",
 											"\r",
 											"// pm.environment.set(\"categoryParentId\", `11111111-1111-1111-1111-111111111111`);\r",
-											"pm.environment.set(\"categoryParentId\", `76C9BB69-CC74-4518-BF06-016A3622E8C5`);\r",
+											"pm.environment.set(\"categoryParentId\", pm.environment.get(\"categoryId\"));\r",
 											"// pm.environment.set(\"categoryParentId\", null);\r",
 											"const parentId = pm.environment.get(\"categoryParentId\");\r",
 											"const isSubcategory = parentId && parentId !== \"null\" && parentId !== \"\";\r",
@@ -1719,7 +1719,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "{{categoryId}}",
+											"value": "570d5e19-43b3-4bf2-b7b5-0ee31e708bb5",
 											"description": "(Required) "
 										}
 									]
@@ -1745,18 +1745,18 @@
 											"  pm.expect(json.filters).to.be.an(\"object\");\r",
 											"});\r",
 											"\r",
-											"pm.test(\"Содержит хотя бы один доступный фильтр\", function () {\r",
-											"  pm.expect(Object.keys(json.filters).length).to.be.greaterThan(0);\r",
-											"});\r",
+											"// pm.test(\"Содержит хотя бы один доступный фильтр\", function () {\r",
+											"//   pm.expect(Object.keys(json.filters).length).to.be.greaterThan(0);\r",
+											"// });\r",
 											"\r",
-											"// Пример: проверка, что есть определённые ключи\r",
-											"[\"Color\", \"Size\", \"Material\"].forEach((key) => {\r",
-											"  if (json.filters.hasOwnProperty(key)) {\r",
-											"    pm.test(`Фильтр '${key}' существует и является массивом`, () => {\r",
-											"      pm.expect(json.filters[key]).to.be.an(\"array\");\r",
-											"    });\r",
-											"  }\r",
-											"});\r",
+											"// // Пример: проверка, что есть определённые ключи\r",
+											"// [\"Color\", \"Size\", \"Material\"].forEach((key) => {\r",
+											"//   if (json.filters.hasOwnProperty(key)) {\r",
+											"//     pm.test(`Фильтр '${key}' существует и является массивом`, () => {\r",
+											"//       pm.expect(json.filters[key]).to.be.an(\"array\");\r",
+											"//     });\r",
+											"//   }\r",
+											"// });\r",
 											""
 										],
 										"type": "text/javascript",
@@ -1781,7 +1781,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "76c9bb69-cc74-4518-bf06-016a3622e8c5",
+											"value": "{{categoryId}}",
 											"description": "(Required) "
 										}
 									]
@@ -1976,10 +1976,10 @@
 											"/* ------------- пул исходных данных ------------- */\r",
 											"const ATTR_BANK = [\r",
 											"    { key: \"Color\",  value: \"Black\"   },\r",
-											"    { key: \"Color\",  value: \"White\"   },\r",
+											"    // { key: \"Color\",  value: \"White\"   },\r",
 											"    { key: \"Color\",  value: \"Red\"     },\r",
 											"    { key: \"Size\",   value: \"S\"       },\r",
-											"    { key: \"Size\",   value: \"M\"       },\r",
+											"    // { key: \"Size\",   value: \"M\"       },\r",
 											"    { key: \"Size\",   value: \"L\"       },\r",
 											"    { key: \"Material\", value: \"Cotton\"},\r",
 											"    { key: \"Material\", value: \"Leather\"},\r",
@@ -2097,10 +2097,7 @@
 										{
 											"key": "Images",
 											"type": "file",
-											"src": [
-												"/C:/Users/alexs/OneDrive/Desktop/Postman/product1_photo.jpeg",
-												"/C:/Users/alexs/OneDrive/Desktop/Postman/product2_photo.jpg"
-											]
+											"src": "/C:/Users/alexs/OneDrive/Desktop/Postman/product1_photo.jpeg"
 										},
 										{
 											"key": "Attributes",

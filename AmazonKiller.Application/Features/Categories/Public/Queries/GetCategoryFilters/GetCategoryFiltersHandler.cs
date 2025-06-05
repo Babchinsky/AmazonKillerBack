@@ -15,11 +15,9 @@ public class GetCategoryFiltersHandler(
     public async Task<CategoryFiltersDto> Handle(GetCategoryFiltersQuery q, CancellationToken ct)
     {
         var category = await categoryQueryService.GetByIdIfVisibleAsync(q.CategoryId, false, ct);
-
         if (category is null)
             throw new NotFoundException("Category not found");
 
-        var keys = category.PropertyKeys;
         var descendantIds = await categoryQueryService.GetDescendantCategoryIdsAsync(q.CategoryId, ct);
         descendantIds.Add(q.CategoryId);
 
@@ -28,10 +26,14 @@ public class GetCategoryFiltersHandler(
             .Select(p => p.Attributes)
             .ToListAsync(ct);
 
-
         var result = new Dictionary<string, List<string>>();
 
-        foreach (var key in keys)
+        var allKeys = products
+            .SelectMany(attrList => attrList)
+            .Select(a => a.Key)
+            .Distinct();
+
+        foreach (var key in allKeys)
         {
             var values = products
                 .SelectMany(attrList => attrList)

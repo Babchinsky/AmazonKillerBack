@@ -41,8 +41,14 @@ public class GetCategoryByIdHandler(
             .Select(p => p.Attributes)
             .ToListAsync(ct);
 
+        // Собираем все уникальные ключи из продуктов
+        var allKeys = productAttrs
+            .SelectMany(attrs => attrs)
+            .Select(a => a.Key)
+            .Distinct();
+
         var filters = new Dictionary<string, List<string>>();
-        foreach (var key in category.PropertyKeys)
+        foreach (var key in allKeys)
         {
             var values = productAttrs
                 .SelectMany(attrs => attrs)
