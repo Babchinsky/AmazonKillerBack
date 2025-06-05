@@ -16,9 +16,9 @@ namespace AmazonKiller.WebApi.Controllers.Admin;
 public class AdminCategoriesController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
-    public async Task<IActionResult> GetAll(CancellationToken ct)
+    public async Task<IActionResult> GetAll([FromQuery] GetAllCategoriesAdminQuery query, CancellationToken ct)
     {
-        var result = await mediator.Send(new GetAllCategoriesAdminQuery(), ct);
+        var result = await mediator.Send(query, ct);
         return Ok(result);
     }
 

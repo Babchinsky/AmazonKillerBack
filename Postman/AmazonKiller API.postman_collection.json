@@ -1208,41 +1208,6 @@
 										"exec": [
 											"pm.test(\"Response status code is 200\", function () {\r",
 											"  pm.expect(pm.response.code).to.equal(200);\r",
-											"});\r",
-											"\r",
-											"\r",
-											"pm.test(\"Response has the required fields - id and name\", function () {\r",
-											"    const responseData = pm.response.json();\r",
-											"    \r",
-											"    pm.expect(responseData).to.be.an('array');\r",
-											"    responseData.forEach(function(category) {\r",
-											"        pm.expect(category).to.have.property('id');\r",
-											"        pm.expect(category).to.have.property('name');\r",
-											"    });\r",
-											"});\r",
-											"\r",
-											"\r",
-											"pm.test(\"ID is a non-empty string\", function () {\r",
-											"  const responseData = pm.response.json();\r",
-											"  \r",
-											"  pm.expect(responseData).to.be.an('array');\r",
-											"  responseData.forEach(function(category) {\r",
-											"    pm.expect(category.id).to.be.a('string').and.to.have.lengthOf.at.least(1, \"ID should be a non-empty string\");\r",
-											"  });\r",
-											"});\r",
-											"\r",
-											"\r",
-											"pm.test(\"Name is a non-empty string\", function () {\r",
-											"  const responseData = pm.response.json();\r",
-											"  \r",
-											"  responseData.forEach(function(category) {\r",
-											"    pm.expect(category.name).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Name should not be empty\");\r",
-											"  });\r",
-											"});\r",
-											"\r",
-											"\r",
-											"pm.test(\"Content type is application/json\", function () {\r",
-											"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
 											"});"
 										],
 										"type": "text/javascript",
@@ -1269,7 +1234,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/api/admin/categories",
+									"raw": "{{baseUrl}}/api/admin/categories?Parameters.Page=1&Parameters.PageSize=20&Parameters.SortBy=name&Parameters.SortOrder=asc",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -1277,6 +1242,24 @@
 										"api",
 										"admin",
 										"categories"
+									],
+									"query": [
+										{
+											"key": "Parameters.Page",
+											"value": "1"
+										},
+										{
+											"key": "Parameters.PageSize",
+											"value": "20"
+										},
+										{
+											"key": "Parameters.SortBy",
+											"value": "name"
+										},
+										{
+											"key": "Parameters.SortOrder",
+											"value": "asc"
+										}
 									]
 								}
 							},
@@ -1543,41 +1526,7 @@
 											"pm.test(\"Response status code is 200\", function () {\r",
 											"  pm.expect(pm.response.code).to.equal(200);\r",
 											"});\r",
-											"\r",
-											"\r",
-											"pm.test(\"Response has the required fields - id and name\", function () {\r",
-											"    const responseData = pm.response.json();\r",
-											"    \r",
-											"    pm.expect(responseData).to.be.an('array');\r",
-											"    responseData.forEach(function(category) {\r",
-											"        pm.expect(category).to.have.property('id');\r",
-											"        pm.expect(category).to.have.property('name');\r",
-											"    });\r",
-											"});\r",
-											"\r",
-											"\r",
-											"pm.test(\"ID is a non-empty string\", function () {\r",
-											"  const responseData = pm.response.json();\r",
-											"  \r",
-											"  pm.expect(responseData).to.be.an('array');\r",
-											"  responseData.forEach(function(category) {\r",
-											"    pm.expect(category.id).to.be.a('string').and.to.have.lengthOf.at.least(1, \"ID should be a non-empty string\");\r",
-											"  });\r",
-											"});\r",
-											"\r",
-											"\r",
-											"pm.test(\"Name is a non-empty string\", function () {\r",
-											"  const responseData = pm.response.json();\r",
-											"  \r",
-											"  responseData.forEach(function(category) {\r",
-											"    pm.expect(category.name).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Name should not be empty\");\r",
-											"  });\r",
-											"});\r",
-											"\r",
-											"\r",
-											"pm.test(\"Content type is application/json\", function () {\r",
-											"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
-											"});"
+											""
 										],
 										"type": "text/javascript",
 										"packages": {}
@@ -1591,374 +1540,31 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/api/categories",
+									"raw": "{{baseUrl}}/api/categories?Parameters.Page=1&Parameters.PageSize=20&Parameters.SortBy=name&Parameters.SortOrder=asc",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"api",
 										"categories"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Get Active Category Filters by Id",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Статус ответа 200\", function () {\r",
-											"  pm.response.to.have.status(200);\r",
-											"});\r",
-											"\r",
-											"const json = pm.response.json();\r",
-											"\r",
-											"pm.test(\"Ответ содержит объект filters\", function () {\r",
-											"  pm.expect(json).to.have.property(\"filters\");\r",
-											"  pm.expect(json.filters).to.be.an(\"object\");\r",
-											"});\r",
-											"\r",
-											"// pm.test(\"Содержит хотя бы один доступный фильтр\", function () {\r",
-											"//   pm.expect(Object.keys(json.filters).length).to.be.greaterThan(0);\r",
-											"// });\r",
-											"\r",
-											"// // Пример: проверка, что есть определённые ключи\r",
-											"// [\"Color\", \"Size\", \"Material\"].forEach((key) => {\r",
-											"//   if (json.filters.hasOwnProperty(key)) {\r",
-											"//     pm.test(`Фильтр '${key}' существует и является массивом`, () => {\r",
-											"//       pm.expect(json.filters[key]).to.be.an(\"array\");\r",
-											"//     });\r",
-											"//   }\r",
-											"// });\r",
-											""
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/api/categories/:id/filters",
-									"host": [
-										"{{baseUrl}}"
 									],
-									"path": [
-										"api",
-										"categories",
-										":id",
-										"filters"
-									],
-									"variable": [
+									"query": [
 										{
-											"key": "id",
-											"value": "{{categoryId}}",
-											"description": "(Required) "
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Get Active Category by Id",
-							"event": [
-								{
-									"listen": "prerequest",
-									"script": {
-										"exec": [
-											"// Временно — подставь вручную нужный ID\r",
-											"// pm.environment.set(\"categoryId\", \"11111111-1111-1111-1111-111111111111\");\r",
-											""
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								},
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"// ✅ Проверка, что запрос выполнен успешно\r",
-											"pm.test(\"Status code is 200\", function () {\r",
-											"    pm.expect(pm.response.code).to.equal(200);\r",
-											"});\r",
-											"\r",
-											"// ✅ Проверка, что ответ — JSON\r",
-											"pm.test(\"Content-Type is application/json\", function () {\r",
-											"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
-											"});\r",
-											"\r",
-											"// ✅ Проверка структуры объекта категории\r",
-											"pm.test(\"Response has valid category structure\", function () {\r",
-											"    const category = pm.response.json();\r",
-											"\r",
-											"    pm.expect(category).to.be.an(\"object\");\r",
-											"    pm.expect(category).to.have.property(\"id\").that.is.a(\"string\");\r",
-											"    pm.expect(category).to.have.property(\"name\").that.is.a(\"string\");\r",
-											"    pm.expect(category).to.have.property(\"status\");\r",
-											"    pm.expect(category).to.have.property(\"parentId\");\r",
-											"\r",
-											"    // ✅ Сохраняем id и rowVersion в окружение\r",
-											"    if (category.id && category.rowVersion) {\r",
-											"        pm.environment.set(\"categoryId\", category.id);\r",
-											"        pm.environment.set(\"categoryRowVersion\", category.rowVersion);\r",
-											"        console.log(\"Saved categoryId:\", category.id);\r",
-											"        console.log(\"Saved categoryRowVersion:\", category.rowVersion);\r",
-											"    } else {\r",
-											"        console.warn(\"ID or rowVersion not found in response\");\r",
-											"    }\r",
-											"});\r",
-											""
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								}
-							],
-							"request": {
-								"auth": {
-									"type": "noauth"
-								},
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/api/categories/:id",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"api",
-										"categories",
-										":id"
-									],
-									"variable": [
+											"key": "Parameters.Page",
+											"value": "1"
+										},
 										{
-											"key": "id",
-											"value": "{{categoryId}}",
-											"description": "(Required) "
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Check Active Category Exists",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 200\", function () {\r",
-											"    pm.response.to.have.status(200);\r",
-											"});\r",
-											"\r",
-											"pm.test(\"Response is boolean\", function () {\r",
-											"    const body = pm.response.json();\r",
-											"    pm.expect(typeof body).to.eql(\"boolean\");\r",
-											"});\r",
-											"\r",
-											"// Сохраняем результат в переменную окружения\r",
-											"const exists = pm.response.json();\r",
-											"pm.environment.set(\"categoryExists\", exists);\r",
-											"console.log(\"Category exists:\", exists);\r",
-											""
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "text/plain"
-									}
-								],
-								"url": {
-									"raw": "{{baseUrl}}/api/categories/:id/exists",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"api",
-										"categories",
-										":id",
-										"exists"
-									],
-									"variable": [
+											"key": "Parameters.PageSize",
+											"value": "20"
+										},
 										{
-											"key": "id",
-											"value": "{{categoryId}}",
-											"description": "(Required) "
+											"key": "Parameters.SortBy",
+											"value": "name"
+										},
+										{
+											"key": "Parameters.SortOrder",
+											"value": "asc"
 										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Get Category Tree",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Response status code is 200\", function () {\r",
-											"  pm.expect(pm.response.code).to.equal(200);\r",
-											"});\r",
-											"\r",
-											"\r",
-											"pm.test(\"Content type is application/json\", function () {\r",
-											"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
-											"});\r",
-											"\r",
-											"\r",
-											"pm.test(\"Validate the structure of the response object\", function () {\r",
-											"    const responseData = pm.response.json();\r",
-											"    \r",
-											"    pm.expect(responseData).to.be.an('array');\r",
-											"    responseData.forEach(function(category){\r",
-											"        pm.expect(category).to.be.an('object');\r",
-											"        pm.expect(category.id).to.be.a('string');\r",
-											"        pm.expect(category.name).to.be.a('string');\r",
-											"        pm.expect(category.status).to.exist;\r",
-											"        pm.expect(category.children).to.be.an('array');\r",
-											"    });\r",
-											"});\r",
-											"\r",
-											"\r",
-											"pm.test(\"Id, name, and status fields are present and non-empty\", function () {\r",
-											"    const responseData = pm.response.json();\r",
-											"    \r",
-											"    pm.expect(responseData).to.be.an('array');\r",
-											"    \r",
-											"    responseData.forEach(function(category) {\r",
-											"        pm.expect(category.id).to.exist.and.to.have.lengthOf.at.least(1, \"Id should not be empty\");\r",
-											"        pm.expect(category.name).to.exist.and.to.have.lengthOf.at.least(1, \"Name should not be empty\");\r",
-											"        pm.expect(category.status).to.exist.and.to.have.lengthOf.at.least(1, \"Status should not be empty\");\r",
-											"    });\r",
-											"});\r",
-											"\r",
-											"\r",
-											"pm.test(\"Children array is present (any length)\", function () {\r",
-											"    const responseData = pm.response.json();\r",
-											"    \r",
-											"    pm.expect(responseData).to.be.an('array');\r",
-											"    \r",
-											"    responseData.forEach(function(item) {\r",
-											"        pm.expect(item.children).to.exist.and.to.be.an('array');\r",
-											"    });\r",
-											"});"
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								}
-							],
-							"request": {
-								"auth": {
-									"type": "noauth"
-								},
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "text/plain"
-									}
-								],
-								"url": {
-									"raw": "{{baseUrl}}/api/categories/tree",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"api",
-										"categories",
-										"tree"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Public Copy",
-					"item": [
-						{
-							"name": "Get Active Categories",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Response status code is 200\", function () {\r",
-											"  pm.expect(pm.response.code).to.equal(200);\r",
-											"});\r",
-											"\r",
-											"\r",
-											"pm.test(\"Response has the required fields - id and name\", function () {\r",
-											"    const responseData = pm.response.json();\r",
-											"    \r",
-											"    pm.expect(responseData).to.be.an('array');\r",
-											"    responseData.forEach(function(category) {\r",
-											"        pm.expect(category).to.have.property('id');\r",
-											"        pm.expect(category).to.have.property('name');\r",
-											"    });\r",
-											"});\r",
-											"\r",
-											"\r",
-											"pm.test(\"ID is a non-empty string\", function () {\r",
-											"  const responseData = pm.response.json();\r",
-											"  \r",
-											"  pm.expect(responseData).to.be.an('array');\r",
-											"  responseData.forEach(function(category) {\r",
-											"    pm.expect(category.id).to.be.a('string').and.to.have.lengthOf.at.least(1, \"ID should be a non-empty string\");\r",
-											"  });\r",
-											"});\r",
-											"\r",
-											"\r",
-											"pm.test(\"Name is a non-empty string\", function () {\r",
-											"  const responseData = pm.response.json();\r",
-											"  \r",
-											"  responseData.forEach(function(category) {\r",
-											"    pm.expect(category.name).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Name should not be empty\");\r",
-											"  });\r",
-											"});\r",
-											"\r",
-											"\r",
-											"pm.test(\"Content type is application/json\", function () {\r",
-											"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
-											"});"
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								}
-							],
-							"request": {
-								"auth": {
-									"type": "noauth"
-								},
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/api/categories",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"api",
-										"categories"
 									]
 								}
 							},
@@ -4201,7 +3807,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"productId\": \"{{lastProductId}}\",\n  \"quantity\": 2\n}",
+									"raw": "{\n  \"productId\": \"{{lastProductId}}\",\n  \"quantity\": 5\n}",
 									"options": {
 										"raw": {
 											"headerFamily": "json",

@@ -1,4 +1,5 @@
-﻿using AmazonKiller.Application.DTOs.Categories;
+﻿using AmazonKiller.Application.Common.Models;
+using AmazonKiller.Application.DTOs.Categories;
 using AmazonKiller.Application.Features.Categories.Public.Queries.GetAllCategories;
 using AmazonKiller.Application.Features.Categories.Public.Queries.GetCategoryById;
 using AmazonKiller.Application.Features.Categories.Public.Queries.GetCategoryFilters;
@@ -14,9 +15,9 @@ namespace AmazonKiller.WebApi.Controllers.Public;
 public class CategoriesController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
-    public Task<List<CategoryDto>> GetAll(CancellationToken ct)
+    public Task<PagedList<CategoryDto>> GetAll([FromQuery] GetAllCategoriesQuery q, CancellationToken ct)
     {
-        return mediator.Send(new GetAllCategoriesQuery(), ct);
+        return mediator.Send(q, ct);
     }
 
     [HttpGet("tree")]

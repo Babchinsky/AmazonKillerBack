@@ -106,4 +106,9 @@ public class CategoryRepository(AmazonDbContext db, IFileStorage fileStorage) : 
             }
         }
     }
+
+    public IQueryable<Category> Query()
+    {
+        return db.Categories.AsNoTracking();
+    }
 }

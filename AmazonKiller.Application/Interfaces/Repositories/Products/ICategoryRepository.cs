@@ -14,4 +14,5 @@ public interface ICategoryRepository
     Task DeleteRangeAsync(IEnumerable<Category> categories, CancellationToken ct);
     Task<List<Guid>> GetAllActiveCategoryIdsAsync(CancellationToken ct = default);
     Task UpdateWithCascadeStatusAsync(Category updatedCategory, CancellationToken ct);
+    IQueryable<Category> Query();
 }

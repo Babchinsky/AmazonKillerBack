@@ -9,4 +9,5 @@ public interface ICategoryQueryService
     Task<List<Category>> GetTreeVisibleAsync(CancellationToken ct);
     Task<List<Category>> GetAllVisibleCategoriesAsync(CancellationToken ct);
     Task<List<Guid>> GetDescendantCategoryIdsAsync(Guid parentId, CancellationToken ct = default);
+    Task<IQueryable<Category>> QueryVisibleCategoriesAsync(CancellationToken ct);
 }

@@ -89,4 +89,12 @@ public class CategoryQueryService(
             }
         }
     }
+
+    public async Task<IQueryable<Category>> QueryVisibleCategoriesAsync(CancellationToken ct)
+    {
+        var all = await repo.GetAllAsync(ct);
+        var visibleIds = GetActiveIdsRecursive(all);
+
+        return repo.Query().Where(c => visibleIds.Contains(c.Id));
+    }
 }
