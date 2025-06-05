@@ -1,5 +1,5 @@
 ﻿using AmazonKiller.Application.DTOs.Categories;
-using AmazonKiller.Application.Interfaces.Services;
+using AmazonKiller.Application.Interfaces.Services.Categories;
 using AutoMapper;
 using MediatR;
 

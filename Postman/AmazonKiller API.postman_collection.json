@@ -8,207 +8,6 @@
 	},
 	"item": [
 		{
-			"name": "Addresses",
-			"item": [
-				{
-					"name": "Get Countries",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Response status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});\r",
-									"\r",
-									"\r",
-									"pm.test(\"Response Content-Type is application/json\", function () {\r",
-									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
-									"});\r",
-									"\r",
-									"\r",
-									"pm.test(\"Response body is a non-empty array\", function () {\r",
-									"  const responseData = pm.response.json();\r",
-									"  \r",
-									"  pm.expect(responseData).to.be.an('array').that.is.not.empty;\r",
-									"});\r",
-									"\r",
-									"\r",
-									"pm.test(\"Each element in the array is a non-empty string\", function () {\r",
-									"    const responseData = pm.response.json();\r",
-									"    \r",
-									"    pm.expect(responseData).to.be.an('array');\r",
-									"    responseData.forEach(function(element) {\r",
-									"        pm.expect(element).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");\r",
-									"    });\r",
-									"});\r",
-									"\r",
-									"\r",
-									"pm.test(\"Response time is less than 200ms\", function () {\r",
-									"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
-									"});"
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/api/countries",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"api",
-								"countries"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Regions",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Response status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});\r",
-									"\r",
-									"\r",
-									"pm.test(\"Response has content type 'application/json'\", function () {\r",
-									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
-									"});\r",
-									"\r",
-									"\r",
-									"pm.test(\"Response body is an array\", function () {\r",
-									"    const responseData = pm.response.json();\r",
-									"    \r",
-									"    pm.expect(responseData).to.be.an('array');\r",
-									"});\r",
-									"\r",
-									"\r",
-									"pm.test(\"Response body array is not empty\", function () {\r",
-									"    const responseData = pm.response.json();\r",
-									"    \r",
-									"    pm.expect(responseData).to.be.an('array').that.is.not.empty;\r",
-									"});\r",
-									"\r",
-									"\r",
-									"pm.test(\"Ответ содержит массив строк с названиями регионов\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"    \r",
-									"    const data = pm.response.json();\r",
-									"    pm.expect(data).to.be.an(\"array\");\r",
-									"    pm.expect(data.length).to.be.above(0);\r",
-									"    pm.expect(data[0]).to.be.a(\"string\");\r",
-									"});\r",
-									"\r",
-									"const regions = pm.response.json();\r",
-									"const randomRegion = regions[Math.floor(Math.random() * regions.length)];\r",
-									"\r",
-									"pm.environment.set(\"region\", randomRegion);\r",
-									"console.log(\"Выбранный регион:\", randomRegion);\r",
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/api/nova-poshta/regions",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"api",
-								"nova-poshta",
-								"regions"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Cities",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"// Проверка кода ответа\r",
-									"pm.test(\"Response status code is 200\", function () {\r",
-									"    pm.expect(pm.response.code).to.equal(200);\r",
-									"});\r",
-									"\r",
-									"// Проверка Content-Type\r",
-									"pm.test(\"Content type is application/json\", function () {\r",
-									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
-									"});\r",
-									"\r",
-									"// Проверка, что тело — массив\r",
-									"const responseData = pm.response.json();\r",
-									"pm.test(\"Response is an array\", function () {\r",
-									"    pm.expect(responseData).to.be.an('array');\r",
-									"});\r",
-									"\r",
-									"// Проверка наличия параметра region\r",
-									"pm.test(\"Region parameter is present in the request URL\", function () {\r",
-									"    const regionParam = pm.request.url.query.find(q => q.key === \"region\");\r",
-									"    pm.expect(regionParam).to.not.be.undefined;\r",
-									"    pm.expect(regionParam.value).to.be.a('string').and.not.empty;\r",
-									"});\r",
-									"\r",
-									"// Информативно: есть ли данные\r",
-									"pm.test(\"Response array is not empty\", function () {\r",
-									"    if (responseData.length === 0) {\r",
-									"        console.warn(\"❗Города не найдены для региона:\", pm.environment.get(\"region\"));\r",
-									"    } else {\r",
-									"        pm.expect(responseData.length).to.be.above(0);\r",
-									"    }\r",
-									"});\r",
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/api/nova-poshta/cities?region={{region}}",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"api",
-								"nova-poshta",
-								"cities"
-							],
-							"query": [
-								{
-									"key": "region",
-									"value": "{{region}}"
-								}
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
 			"name": "Authorization",
 			"item": [
 				{
@@ -1484,6 +1283,165 @@
 							"response": []
 						},
 						{
+							"name": "Get Category by Id",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// Временно — подставь вручную нужный ID\r",
+											"// pm.environment.set(\"categoryId\", \"11111111-1111-1111-1111-111111111111\");\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// ✅ Проверка, что запрос выполнен успешно\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.expect(pm.response.code).to.equal(200);\r",
+											"});\r",
+											"\r",
+											"// ✅ Проверка, что ответ — JSON\r",
+											"pm.test(\"Content-Type is application/json\", function () {\r",
+											"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+											"});\r",
+											"\r",
+											"// ✅ Проверка структуры объекта категории\r",
+											"pm.test(\"Response has valid category structure\", function () {\r",
+											"    const category = pm.response.json();\r",
+											"\r",
+											"    pm.expect(category).to.be.an(\"object\");\r",
+											"    pm.expect(category).to.have.property(\"id\").that.is.a(\"string\");\r",
+											"    pm.expect(category).to.have.property(\"name\").that.is.a(\"string\");\r",
+											"    pm.expect(category).to.have.property(\"status\");\r",
+											"    pm.expect(category).to.have.property(\"parentId\");\r",
+											"\r",
+											"    // ✅ Сохраняем id и rowVersion в окружение\r",
+											"    if (category.id && category.rowVersion) {\r",
+											"        pm.environment.set(\"categoryId\", category.id);\r",
+											"        pm.environment.set(\"categoryRowVersion\", category.rowVersion);\r",
+											"        console.log(\"Saved categoryId:\", category.id);\r",
+											"        console.log(\"Saved categoryRowVersion:\", category.rowVersion);\r",
+											"    } else {\r",
+											"        console.warn(\"ID or rowVersion not found in response\");\r",
+											"    }\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{adminAccessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/admin/categories/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"categories",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "{{categoryId}}",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Check Category Exists",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response is boolean\", function () {\r",
+											"    const body = pm.response.json();\r",
+											"    pm.expect(typeof body).to.eql(\"boolean\");\r",
+											"});\r",
+											"\r",
+											"// Сохраняем результат в переменную окружения\r",
+											"const exists = pm.response.json();\r",
+											"pm.environment.set(\"categoryExists\", exists);\r",
+											"console.log(\"Category exists:\", exists);\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{adminAccessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/admin/categories/:id/exists",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"categories",
+										":id",
+										"exists"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "{{categoryId}}",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "Bulk Delete Categories",
 							"event": [
 								{
@@ -1646,7 +1604,69 @@
 							"response": []
 						},
 						{
-							"name": "Get Category by Id",
+							"name": "Get Active Category Filters by Id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Статус ответа 200\", function () {\r",
+											"  pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"const json = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Ответ содержит объект filters\", function () {\r",
+											"  pm.expect(json).to.have.property(\"filters\");\r",
+											"  pm.expect(json.filters).to.be.an(\"object\");\r",
+											"});\r",
+											"\r",
+											"// pm.test(\"Содержит хотя бы один доступный фильтр\", function () {\r",
+											"//   pm.expect(Object.keys(json.filters).length).to.be.greaterThan(0);\r",
+											"// });\r",
+											"\r",
+											"// // Пример: проверка, что есть определённые ключи\r",
+											"// [\"Color\", \"Size\", \"Material\"].forEach((key) => {\r",
+											"//   if (json.filters.hasOwnProperty(key)) {\r",
+											"//     pm.test(`Фильтр '${key}' существует и является массивом`, () => {\r",
+											"//       pm.expect(json.filters[key]).to.be.an(\"array\");\r",
+											"//     });\r",
+											"//   }\r",
+											"// });\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/categories/:id/filters",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"categories",
+										":id",
+										"filters"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "{{categoryId}}",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Active Category by Id",
 							"event": [
 								{
 									"listen": "prerequest",
@@ -1729,7 +1749,223 @@
 							"response": []
 						},
 						{
-							"name": "Get Category Filters by Id",
+							"name": "Check Active Category Exists",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response is boolean\", function () {\r",
+											"    const body = pm.response.json();\r",
+											"    pm.expect(typeof body).to.eql(\"boolean\");\r",
+											"});\r",
+											"\r",
+											"// Сохраняем результат в переменную окружения\r",
+											"const exists = pm.response.json();\r",
+											"pm.environment.set(\"categoryExists\", exists);\r",
+											"console.log(\"Category exists:\", exists);\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/categories/:id/exists",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"categories",
+										":id",
+										"exists"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "{{categoryId}}",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Category Tree",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 200\", function () {\r",
+											"  pm.expect(pm.response.code).to.equal(200);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Content type is application/json\", function () {\r",
+											"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Validate the structure of the response object\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(responseData).to.be.an('array');\r",
+											"    responseData.forEach(function(category){\r",
+											"        pm.expect(category).to.be.an('object');\r",
+											"        pm.expect(category.id).to.be.a('string');\r",
+											"        pm.expect(category.name).to.be.a('string');\r",
+											"        pm.expect(category.status).to.exist;\r",
+											"        pm.expect(category.children).to.be.an('array');\r",
+											"    });\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Id, name, and status fields are present and non-empty\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(responseData).to.be.an('array');\r",
+											"    \r",
+											"    responseData.forEach(function(category) {\r",
+											"        pm.expect(category.id).to.exist.and.to.have.lengthOf.at.least(1, \"Id should not be empty\");\r",
+											"        pm.expect(category.name).to.exist.and.to.have.lengthOf.at.least(1, \"Name should not be empty\");\r",
+											"        pm.expect(category.status).to.exist.and.to.have.lengthOf.at.least(1, \"Status should not be empty\");\r",
+											"    });\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Children array is present (any length)\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(responseData).to.be.an('array');\r",
+											"    \r",
+											"    responseData.forEach(function(item) {\r",
+											"        pm.expect(item.children).to.exist.and.to.be.an('array');\r",
+											"    });\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/categories/tree",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"categories",
+										"tree"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Public Copy",
+					"item": [
+						{
+							"name": "Get Active Categories",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 200\", function () {\r",
+											"  pm.expect(pm.response.code).to.equal(200);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Response has the required fields - id and name\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(responseData).to.be.an('array');\r",
+											"    responseData.forEach(function(category) {\r",
+											"        pm.expect(category).to.have.property('id');\r",
+											"        pm.expect(category).to.have.property('name');\r",
+											"    });\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"ID is a non-empty string\", function () {\r",
+											"  const responseData = pm.response.json();\r",
+											"  \r",
+											"  pm.expect(responseData).to.be.an('array');\r",
+											"  responseData.forEach(function(category) {\r",
+											"    pm.expect(category.id).to.be.a('string').and.to.have.lengthOf.at.least(1, \"ID should be a non-empty string\");\r",
+											"  });\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Name is a non-empty string\", function () {\r",
+											"  const responseData = pm.response.json();\r",
+											"  \r",
+											"  responseData.forEach(function(category) {\r",
+											"    pm.expect(category.name).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Name should not be empty\");\r",
+											"  });\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Content type is application/json\", function () {\r",
+											"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/categories",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"categories"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Active Category Filters by Id",
 							"event": [
 								{
 									"listen": "test",
@@ -1791,7 +2027,90 @@
 							"response": []
 						},
 						{
-							"name": "Check Category Exists",
+							"name": "Get Active Category by Id",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// Временно — подставь вручную нужный ID\r",
+											"// pm.environment.set(\"categoryId\", \"11111111-1111-1111-1111-111111111111\");\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// ✅ Проверка, что запрос выполнен успешно\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.expect(pm.response.code).to.equal(200);\r",
+											"});\r",
+											"\r",
+											"// ✅ Проверка, что ответ — JSON\r",
+											"pm.test(\"Content-Type is application/json\", function () {\r",
+											"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+											"});\r",
+											"\r",
+											"// ✅ Проверка структуры объекта категории\r",
+											"pm.test(\"Response has valid category structure\", function () {\r",
+											"    const category = pm.response.json();\r",
+											"\r",
+											"    pm.expect(category).to.be.an(\"object\");\r",
+											"    pm.expect(category).to.have.property(\"id\").that.is.a(\"string\");\r",
+											"    pm.expect(category).to.have.property(\"name\").that.is.a(\"string\");\r",
+											"    pm.expect(category).to.have.property(\"status\");\r",
+											"    pm.expect(category).to.have.property(\"parentId\");\r",
+											"\r",
+											"    // ✅ Сохраняем id и rowVersion в окружение\r",
+											"    if (category.id && category.rowVersion) {\r",
+											"        pm.environment.set(\"categoryId\", category.id);\r",
+											"        pm.environment.set(\"categoryRowVersion\", category.rowVersion);\r",
+											"        console.log(\"Saved categoryId:\", category.id);\r",
+											"        console.log(\"Saved categoryRowVersion:\", category.rowVersion);\r",
+											"    } else {\r",
+											"        console.warn(\"ID or rowVersion not found in response\");\r",
+											"    }\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/categories/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"categories",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "{{categoryId}}",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Check Active Category Exists",
 							"event": [
 								{
 									"listen": "test",
@@ -2398,7 +2717,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/api/admin/products?CategoryId=7AD3D843-1642-4E8A-A843-503928EF8154",
+									"raw": "{{baseUrl}}/api/admin/products",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -2415,7 +2734,8 @@
 										},
 										{
 											"key": "CategoryId",
-											"value": "7AD3D843-1642-4E8A-A843-503928EF8154"
+											"value": "7AD3D843-1642-4E8A-A843-503928EF8154",
+											"disabled": true
 										},
 										{
 											"key": "Filters[{{productFilterSizeKey}}]",
@@ -2476,6 +2796,135 @@
 											"key": "Parameters.SortOrder",
 											"value": "{{productSortOrder}}",
 											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Product by Id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"// Сохраняем rowVersion в переменную окружения\r",
+											"const response = pm.response.json();\r",
+											"pm.environment.set(\"productRowVersion\", response.rowVersion);\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{adminAccessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/admin/products/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"products",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "{{lastProductId}}",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Check Product Exists",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Проверка статуса 200 OK\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"// Проверка, что возвращается булевый результат\r",
+											"pm.test(\"Body is boolean\", function () {\r",
+											"    const json = pm.response.json();\r",
+											"    pm.expect(typeof json).to.eql(\"boolean\");\r",
+											"});\r",
+											"\r",
+											"// Сохраняем результат как переменную окружения\r",
+											"pm.environment.set(\"productExists\", pm.response.json());\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{adminAccessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/admin/products/:id/exists",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"products",
+										":id",
+										"exists"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "{{lastProductId}}",
+											"description": "(Required) "
 										}
 									]
 								}
@@ -2608,7 +3057,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/api/products?CategoryId=7AD3D843-1642-4E8A-A843-503928EF8154",
+									"raw": "{{baseUrl}}/api/products",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -2624,7 +3073,8 @@
 										},
 										{
 											"key": "CategoryId",
-											"value": "7AD3D843-1642-4E8A-A843-503928EF8154"
+											"value": "7AD3D843-1642-4E8A-A843-503928EF8154",
+											"disabled": true
 										},
 										{
 											"key": "Filters[proidente24]",
@@ -2682,7 +3132,7 @@
 							"response": []
 						},
 						{
-							"name": "Get Product by Id",
+							"name": "Get Active Product by Id",
 							"event": [
 								{
 									"listen": "test",
@@ -2728,7 +3178,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "3c5a4868-3b2d-4352-9e12-502a56bce48a",
+											"value": "{{lastProductId}}",
 											"description": "(Required) "
 										}
 									]
@@ -2737,7 +3187,7 @@
 							"response": []
 						},
 						{
-							"name": "Check Product Exists",
+							"name": "Check Active Product Exists",
 							"event": [
 								{
 									"listen": "test",
@@ -5148,6 +5598,207 @@
 							"response": []
 						}
 					]
+				}
+			]
+		},
+		{
+			"name": "Addresses",
+			"item": [
+				{
+					"name": "Get Countries",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response Content-Type is application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response body is a non-empty array\", function () {\r",
+									"  const responseData = pm.response.json();\r",
+									"  \r",
+									"  pm.expect(responseData).to.be.an('array').that.is.not.empty;\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Each element in the array is a non-empty string\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('array');\r",
+									"    responseData.forEach(function(element) {\r",
+									"        pm.expect(element).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/countries",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"countries"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Regions",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response has content type 'application/json'\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response body is an array\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('array');\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response body array is not empty\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('array').that.is.not.empty;\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Ответ содержит массив строк с названиями регионов\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    \r",
+									"    const data = pm.response.json();\r",
+									"    pm.expect(data).to.be.an(\"array\");\r",
+									"    pm.expect(data.length).to.be.above(0);\r",
+									"    pm.expect(data[0]).to.be.a(\"string\");\r",
+									"});\r",
+									"\r",
+									"const regions = pm.response.json();\r",
+									"const randomRegion = regions[Math.floor(Math.random() * regions.length)];\r",
+									"\r",
+									"pm.environment.set(\"region\", randomRegion);\r",
+									"console.log(\"Выбранный регион:\", randomRegion);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/nova-poshta/regions",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"nova-poshta",
+								"regions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Cities",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Проверка кода ответа\r",
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"});\r",
+									"\r",
+									"// Проверка Content-Type\r",
+									"pm.test(\"Content type is application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"// Проверка, что тело — массив\r",
+									"const responseData = pm.response.json();\r",
+									"pm.test(\"Response is an array\", function () {\r",
+									"    pm.expect(responseData).to.be.an('array');\r",
+									"});\r",
+									"\r",
+									"// Проверка наличия параметра region\r",
+									"pm.test(\"Region parameter is present in the request URL\", function () {\r",
+									"    const regionParam = pm.request.url.query.find(q => q.key === \"region\");\r",
+									"    pm.expect(regionParam).to.not.be.undefined;\r",
+									"    pm.expect(regionParam.value).to.be.a('string').and.not.empty;\r",
+									"});\r",
+									"\r",
+									"// Информативно: есть ли данные\r",
+									"pm.test(\"Response array is not empty\", function () {\r",
+									"    if (responseData.length === 0) {\r",
+									"        console.warn(\"❗Города не найдены для региона:\", pm.environment.get(\"region\"));\r",
+									"    } else {\r",
+									"        pm.expect(responseData.length).to.be.above(0);\r",
+									"    }\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/nova-poshta/cities?region={{region}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"nova-poshta",
+								"cities"
+							],
+							"query": [
+								{
+									"key": "region",
+									"value": "{{region}}"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}

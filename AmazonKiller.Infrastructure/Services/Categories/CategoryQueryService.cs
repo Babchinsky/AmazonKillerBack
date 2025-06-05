@@ -1,30 +1,26 @@
 ﻿using AmazonKiller.Application.Interfaces.Repositories.Products;
-using AmazonKiller.Application.Interfaces.Services;
+using AmazonKiller.Application.Interfaces.Services.Categories;
 using AmazonKiller.Domain.Entities.Categories;
 
-namespace AmazonKiller.Infrastructure.Services;
+namespace AmazonKiller.Infrastructure.Services.Categories;
 
 public class CategoryQueryService(
     ICategoryRepository repo) : ICategoryQueryService
 {
-    public async Task<Category?> GetByIdIfVisibleAsync(Guid id, bool isAdmin, CancellationToken ct)
+    public async Task<Category?> GetByIdIfVisibleAsync(Guid id, CancellationToken ct)
     {
         var cat = await repo.GetByIdAsync(id, ct);
         if (cat is null) return null;
-
-        if (isAdmin) return cat;
 
         var all = await repo.GetAllAsync(ct);
         var visible = GetActiveIdsRecursive(all);
         return visible.Contains(cat.Id) ? cat : null;
     }
 
-    public async Task<bool> IsVisibleAsync(Guid id, bool isAdmin, CancellationToken ct)
+    public async Task<bool> IsVisibleAsync(Guid id, CancellationToken ct)
     {
         var cat = await repo.GetByIdAsync(id, ct);
         if (cat is null) return false;
-
-        if (isAdmin) return true;
 
         var all = await repo.GetAllAsync(ct);
         var visible = GetActiveIdsRecursive(all);
@@ -50,12 +46,9 @@ public class CategoryQueryService(
         }
     }
 
-    public async Task<List<Category>> GetAllVisibleCategoriesAsync(bool isAdmin, CancellationToken ct)
+    public async Task<List<Category>> GetAllVisibleCategoriesAsync(CancellationToken ct)
     {
         var all = await repo.GetAllAsync(ct);
-
-        if (isAdmin)
-            return all;
 
         var visibleIds = GetActiveIdsRecursive(all);
 
@@ -78,7 +71,7 @@ public class CategoryQueryService(
                 Collect(c.Id);
         }
     }
-    
+
     public async Task<List<Guid>> GetDescendantCategoryIdsAsync(Guid parentId, CancellationToken ct = default)
     {
         var all = await repo.GetAllAsync(ct);

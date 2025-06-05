@@ -1,6 +1,7 @@
 using AmazonKiller.Application.DTOs.Products;
 using AmazonKiller.Application.Interfaces.Repositories.Products;
 using AmazonKiller.Application.Interfaces.Services;
+using AmazonKiller.Application.Interfaces.Services.Products;
 using AutoMapper;
 using MediatR;
 

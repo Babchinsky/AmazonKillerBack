@@ -1,8 +1,7 @@
 using AmazonKiller.Application.DTOs.Products;
-using AmazonKiller.Application.Interfaces.Repositories.Account;
 using AmazonKiller.Application.Interfaces.Repositories.Products;
-using AmazonKiller.Application.Interfaces.Services;
-using AmazonKiller.Domain.Entities.Users;
+using AmazonKiller.Application.Interfaces.Services.Categories;
+using AmazonKiller.Shared.Exceptions;
 using AutoMapper;
 using MediatR;
 
@@ -11,31 +10,21 @@ namespace AmazonKiller.Application.Features.Products.Public.Queries.GetProductBy
 public class GetProductByIdHandler(
     IProductRepository productRepo,
     ICategoryQueryService categoryQueryService,
-    ICurrentUserService currentUserService,
-    IAccountRepository accountRepo,
     IMapper mapper)
-    : IRequestHandler<GetProductByIdQuery, ProductDto?>
+    : IRequestHandler<GetProductByIdQuery, ProductDto>
 {
-    public async Task<ProductDto?> Handle(GetProductByIdQuery request, CancellationToken ct)
+    public async Task<ProductDto> Handle(GetProductByIdQuery request, CancellationToken ct)
     {
         var product = await productRepo.GetByIdAsync(request.Id, ct);
-        if (product == null) return null;
+        if (product == null)
+            throw new NotFoundException("Product not found");
 
-        bool isAdmin;
-        try
-        {
-            isAdmin = await accountRepo.GetRoleAsync(currentUserService.UserId, ct) == Role.Admin;
-        }
-        catch (UnauthorizedAccessException)
-        {
-            isAdmin = false;
-        }
-
-        var visibleCategories = await categoryQueryService.GetAllVisibleCategoriesAsync(isAdmin, ct);
+        var visibleCategories = await categoryQueryService.GetAllVisibleCategoriesAsync(ct);
         var visibleIds = visibleCategories.Select(c => c.Id).ToHashSet();
 
-        return visibleIds.Contains(product.CategoryId)
-            ? mapper.Map<ProductDto>(product)
-            : null;
+        if (!visibleIds.Contains(product.CategoryId))
+            throw new NotFoundException("Product is not accessible");
+
+        return mapper.Map<ProductDto>(product);
     }
 }

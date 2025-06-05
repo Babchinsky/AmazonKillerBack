@@ -1,8 +1,8 @@
 ﻿using AmazonKiller.Application.Interfaces.Repositories.Products;
-using AmazonKiller.Application.Interfaces.Services;
+using AmazonKiller.Application.Interfaces.Services.Products;
 using Microsoft.EntityFrameworkCore;
 
-namespace AmazonKiller.Infrastructure.Services;
+namespace AmazonKiller.Infrastructure.Services.Products;
 
 public class PropertyKeyUpdater(
     ICategoryRepository categoryRepo,

@@ -29,7 +29,7 @@
         <Folder Include="wwwroot\"/>
         <Folder Include="wwwroot\uploads\"/>
         <Folder Include="wwwroot\uploads\2025\"/>
-        <Folder Include="wwwroot\uploads\2025\06\" />
+        <Folder Include="wwwroot\uploads\2025\06\"/>
     </ItemGroup>
 
 </Project>

@@ -25,7 +25,6 @@
     <ItemGroup>
         <Folder Include="Features\Categories\Admin\Commands\"/>
         <Folder Include="Features\Categories\Public\"/>
-        <Folder Include="Features\Products\Admin\Queries\"/>
         <Folder Include="Features\Products\Public\"/>
         <Folder Include="Features\Reviews\Account\"/>
         <Folder Include="Features\Reviews\Public\"/>

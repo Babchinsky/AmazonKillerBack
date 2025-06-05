@@ -1,6 +1,6 @@
 ﻿using AmazonKiller.Application.DTOs.Categories;
 using AmazonKiller.Application.Interfaces.Repositories.Products;
-using AmazonKiller.Application.Interfaces.Services;
+using AmazonKiller.Application.Interfaces.Services.Categories;
 using AmazonKiller.Shared.Exceptions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -14,7 +14,7 @@ public class GetCategoryFiltersHandler(
 {
     public async Task<CategoryFiltersDto> Handle(GetCategoryFiltersQuery q, CancellationToken ct)
     {
-        var category = await categoryQueryService.GetByIdIfVisibleAsync(q.CategoryId, false, ct);
+        var category = await categoryQueryService.GetByIdIfVisibleAsync(q.CategoryId, ct);
         if (category is null)
             throw new NotFoundException("Category not found");
 

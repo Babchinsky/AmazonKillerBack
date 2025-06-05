@@ -1,4 +1,4 @@
-﻿namespace AmazonKiller.Application.Interfaces.Services;
+﻿namespace AmazonKiller.Application.Interfaces.Services.Products;
 
 public interface IPropertyKeyUpdater
 {

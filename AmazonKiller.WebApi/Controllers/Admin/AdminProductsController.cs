@@ -2,6 +2,8 @@
 using AmazonKiller.Application.Features.Products.Admin.Commands.CreateUpdateProduct.CreateProduct;
 using AmazonKiller.Application.Features.Products.Admin.Commands.CreateUpdateProduct.UpdateProduct;
 using AmazonKiller.Application.Features.Products.Admin.Queries.GetAllProductsAdmin;
+using AmazonKiller.Application.Features.Products.Admin.Queries.GetProductByIdAdmin;
+using AmazonKiller.Application.Features.Products.Admin.Queries.IsProductExistsAdmin;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -18,6 +20,19 @@ public class AdminProductsController(IMediator mediator) : ControllerBase
     {
         var list = await mediator.Send(q, ct);
         return Ok(list);
+    }
+
+    [HttpGet("{id:guid}")]
+    public async Task<IActionResult> GetById(Guid id, CancellationToken ct)
+    {
+        var dto = await mediator.Send(new GetProductByIdAdminQuery(id), ct); // admin version
+        return Ok(dto);
+    }
+
+    [HttpGet("{id:guid}/exists")]
+    public Task<bool> Exists(Guid id, CancellationToken ct)
+    {
+        return mediator.Send(new IsProductExistsAdminQuery(id), ct);
     }
 
     [HttpPost]

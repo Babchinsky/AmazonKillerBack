@@ -3,7 +3,7 @@ using AmazonKiller.Application.Common.Models;
 using AmazonKiller.Application.DTOs.Products;
 using AmazonKiller.Application.Features.Products.Common;
 using AmazonKiller.Application.Interfaces.Repositories.Products;
-using AmazonKiller.Application.Interfaces.Services;
+using AmazonKiller.Application.Interfaces.Services.Categories;
 using AmazonKiller.Domain.Entities.Products;
 using AutoMapper;
 using MediatR;

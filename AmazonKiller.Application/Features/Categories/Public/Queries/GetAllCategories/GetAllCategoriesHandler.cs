@@ -1,5 +1,5 @@
 using AmazonKiller.Application.DTOs.Categories;
-using AmazonKiller.Application.Interfaces.Services;
+using AmazonKiller.Application.Interfaces.Services.Categories;
 using AutoMapper;
 using MediatR;
 
@@ -12,7 +12,7 @@ public class GetAllCategoriesHandler(
 {
     public async Task<List<CategoryDto>> Handle(GetAllCategoriesQuery _, CancellationToken ct)
     {
-        var categories = await categoryQueryService.GetAllVisibleCategoriesAsync(false, ct);
+        var categories = await categoryQueryService.GetAllVisibleCategoriesAsync(ct);
 
         return mapper.Map<List<CategoryDto>>(categories);
     }

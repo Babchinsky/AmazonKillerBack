@@ -12,6 +12,8 @@ public static class SeedHelper
         return BCrypt.Net.BCrypt.HashPassword(password, FixedSalt);
     }
 
-    public static List<string>? KeysOrNull(Guid categoryId, Dictionary<Guid, List<string>> map) =>
-        map.TryGetValue(categoryId, out var keys) && keys.Count != 0 ? keys : null;
+    public static List<string>? KeysOrNull(Guid categoryId, Dictionary<Guid, List<string>> map)
+    {
+        return map.TryGetValue(categoryId, out var keys) && keys.Count != 0 ? keys : null;
+    }
 }

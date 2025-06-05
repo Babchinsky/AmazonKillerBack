@@ -23,13 +23,8 @@ public static class ProductQueryExtensions
 
         // ✅ Новая логика: если переданы категории
         if (categoryIds is not null && categoryIds.Count > 0)
-        {
             query = query.Where(p => categoryIds.Contains(p.CategoryId));
-        }
-        else if (q.CategoryId.HasValue)
-        {
-            query = query.Where(p => p.CategoryId == q.CategoryId.Value);
-        }
+        else if (q.CategoryId.HasValue) query = query.Where(p => p.CategoryId == q.CategoryId.Value);
 
         if (q.MinPrice.HasValue)
             query = query.Where(p => p.Price >= q.MinPrice);

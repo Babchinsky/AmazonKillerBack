@@ -130,7 +130,7 @@ public sealed class ProductRepository(AmazonDbContext db, IFileStorage fileStora
 
         await fileStorage.DeleteBatchSafeAsync(imagesToDelete, ct);
     }
-    
+
     public IQueryable<Product> Queryable()
     {
         return db.Products;
