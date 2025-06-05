@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AmazonKiller.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AmazonDbContext))]
-    [Migration("20250605092440_Initial")]
+    [Migration("20250605160656_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -1080,6 +1080,164 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Reviews");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0000-000000000001"),
+                            Article = "Excellent phone",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ImageUrls = "[]",
+                            Message = "Battery lasts all day. The screen is incredibly bright and vivid.",
+                            ProductId = new Guid("3c5a4868-3b2d-4352-9e12-502a56bce48a"),
+                            Rating = 5.0m,
+                            RowVersion = new byte[0],
+                            Tags = "[\"battery\",\"screen\"]",
+                            UserId = new Guid("7a612c2e-ebc1-4a30-ac54-cccb566a1086")
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0000-000000000002"),
+                            Article = "Good but expensive",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ImageUrls = "[]",
+                            Message = "Features are great, but the price is a bit high.",
+                            ProductId = new Guid("3c5a4868-3b2d-4352-9e12-502a56bce48a"),
+                            Rating = 4.0m,
+                            RowVersion = new byte[0],
+                            Tags = "[\"price\"]",
+                            UserId = new Guid("fa67eef0-62a7-4e61-83ef-5a054e84ce41")
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0000-000000000003"),
+                            Article = "Top sound quality",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ImageUrls = "[]",
+                            Message = "Perfect for flights. Noise cancelling works like magic.",
+                            ProductId = new Guid("a2c28a83-cfea-46ee-87e3-906f9e90f1aa"),
+                            Rating = 5.0m,
+                            RowVersion = new byte[0],
+                            Tags = "[\"sound\",\"noise cancelling\"]",
+                            UserId = new Guid("82bf572a-ab40-4571-b1a2-ec9dcf9ccb7d")
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0000-000000000004"),
+                            Article = "Comfortable",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ImageUrls = "[]",
+                            Message = "Long usage with no discomfort. Battery could be better though.",
+                            ProductId = new Guid("a2c28a83-cfea-46ee-87e3-906f9e90f1aa"),
+                            Rating = 4.2m,
+                            RowVersion = new byte[0],
+                            Tags = "[\"comfort\",\"battery\"]",
+                            UserId = new Guid("b116a743-b108-494a-abb5-a0c9673edbef")
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0000-000000000005"),
+                            Article = "Stylish and solid",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ImageUrls = "[]",
+                            Message = "Looks very elegant and feels sturdy. Love the natural finish.",
+                            ProductId = new Guid("74a46f1c-1054-408d-89dc-8ca00285660f"),
+                            Rating = 4.7m,
+                            RowVersion = new byte[0],
+                            Tags = "[\"design\",\"durability\"]",
+                            UserId = new Guid("2583c105-264b-45ee-a535-3b939f4dd428")
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0000-000000000006"),
+                            Article = "Beast of a drill",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ImageUrls = "[]",
+                            Message = "Very powerful and long-lasting battery. Great for home use.",
+                            ProductId = new Guid("4c73d114-2aa1-4f4c-aa7a-48038f1f95fc"),
+                            Rating = 5.0m,
+                            RowVersion = new byte[0],
+                            Tags = "[\"power\",\"performance\"]",
+                            UserId = new Guid("741ddf70-bcb9-44ba-a666-246072dd8c82")
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0000-000000000007"),
+                            Article = "Classic style",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ImageUrls = "[]",
+                            Message = "Fits perfectly and looks good with anything. My go-to jacket.",
+                            ProductId = new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b"),
+                            Rating = 4.9m,
+                            RowVersion = new byte[0],
+                            Tags = "[\"fit\",\"style\"]",
+                            UserId = new Guid("4f33466b-00cd-424d-9c5a-2356d9fc179d")
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0000-000000000008"),
+                            Article = "Impressive cleaning",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ImageUrls = "[]",
+                            Message = "Powerful suction and laser feature is actually helpful.",
+                            ProductId = new Guid("a055168e-3130-4b0a-8495-60e25d62e057"),
+                            Rating = 4.8m,
+                            RowVersion = new byte[0],
+                            Tags = "[\"vacuum\",\"laser\"]",
+                            UserId = new Guid("0986d7ae-31ff-42d8-a9d4-450625e8dd76")
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0000-000000000009"),
+                            Article = "Simple and elegant",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ImageUrls = "[]",
+                            Message = "Easy to assemble, light weight, looks clean and modern.",
+                            ProductId = new Guid("74a46f1c-1054-408d-89dc-8ca00285660f"),
+                            Rating = 4.6m,
+                            RowVersion = new byte[0],
+                            Tags = "[\"design\",\"assembly\"]",
+                            UserId = new Guid("9f73b2c1-71c7-434b-8fcd-b3ca7a6eae98")
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0000-000000000010"),
+                            Article = "Camera is next level",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ImageUrls = "[]",
+                            Message = "200MP might be overkill, but wow, it delivers detail.",
+                            ProductId = new Guid("3c5a4868-3b2d-4352-9e12-502a56bce48a"),
+                            Rating = 4.9m,
+                            RowVersion = new byte[0],
+                            Tags = "[\"camera\"]",
+                            UserId = new Guid("a4f0b9c1-47e8-46ff-a9e5-d388693cffef")
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0000-000000000011"),
+                            Article = "Good value",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ImageUrls = "[]",
+                            Message = "High-quality fabric, didn’t expect it for this price.",
+                            ProductId = new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b"),
+                            Rating = 4.4m,
+                            RowVersion = new byte[0],
+                            Tags = "[\"value\",\"material\"]",
+                            UserId = new Guid("2583c105-264b-45ee-a535-3b939f4dd428")
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0000-000000000012"),
+                            Article = "Not for running",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ImageUrls = "[]",
+                            Message = "Slips off easily if you're jogging. Great otherwise.",
+                            ProductId = new Guid("a2c28a83-cfea-46ee-87e3-906f9e90f1aa"),
+                            Rating = 3.9m,
+                            RowVersion = new byte[0],
+                            Tags = "[\"use case\"]",
+                            UserId = new Guid("a4f0b9c1-47e8-46ff-a9e5-d388693cffef")
+                        });
                 });
 
             modelBuilder.Entity("AmazonKiller.Domain.Entities.Reviews.ReviewLike", b =>
@@ -1098,6 +1256,86 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                     b.HasIndex("ReviewId");
 
                     b.ToTable("ReviewLikes");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = new Guid("fa67eef0-62a7-4e61-83ef-5a054e84ce41"),
+                            ReviewId = new Guid("00000000-0000-0000-0000-000000000001"),
+                            LikedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            UserId = new Guid("b116a743-b108-494a-abb5-a0c9673edbef"),
+                            ReviewId = new Guid("00000000-0000-0000-0000-000000000001"),
+                            LikedAt = new DateTime(2024, 1, 2, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            UserId = new Guid("a4f0b9c1-47e8-46ff-a9e5-d388693cffef"),
+                            ReviewId = new Guid("00000000-0000-0000-0000-000000000002"),
+                            LikedAt = new DateTime(2024, 1, 3, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            UserId = new Guid("7a612c2e-ebc1-4a30-ac54-cccb566a1086"),
+                            ReviewId = new Guid("00000000-0000-0000-0000-000000000003"),
+                            LikedAt = new DateTime(2024, 1, 4, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            UserId = new Guid("741ddf70-bcb9-44ba-a666-246072dd8c82"),
+                            ReviewId = new Guid("00000000-0000-0000-0000-000000000004"),
+                            LikedAt = new DateTime(2024, 1, 5, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            UserId = new Guid("0986d7ae-31ff-42d8-a9d4-450625e8dd76"),
+                            ReviewId = new Guid("00000000-0000-0000-0000-000000000005"),
+                            LikedAt = new DateTime(2024, 1, 6, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            UserId = new Guid("2583c105-264b-45ee-a535-3b939f4dd428"),
+                            ReviewId = new Guid("00000000-0000-0000-0000-000000000006"),
+                            LikedAt = new DateTime(2024, 1, 7, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            UserId = new Guid("4f33466b-00cd-424d-9c5a-2356d9fc179d"),
+                            ReviewId = new Guid("00000000-0000-0000-0000-000000000007"),
+                            LikedAt = new DateTime(2024, 1, 8, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            UserId = new Guid("9f73b2c1-71c7-434b-8fcd-b3ca7a6eae98"),
+                            ReviewId = new Guid("00000000-0000-0000-0000-000000000008"),
+                            LikedAt = new DateTime(2024, 1, 9, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            UserId = new Guid("fa67eef0-62a7-4e61-83ef-5a054e84ce41"),
+                            ReviewId = new Guid("00000000-0000-0000-0000-000000000009"),
+                            LikedAt = new DateTime(2024, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            UserId = new Guid("82bf572a-ab40-4571-b1a2-ec9dcf9ccb7d"),
+                            ReviewId = new Guid("00000000-0000-0000-0000-000000000010"),
+                            LikedAt = new DateTime(2024, 1, 11, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            UserId = new Guid("a4f0b9c1-47e8-46ff-a9e5-d388693cffef"),
+                            ReviewId = new Guid("00000000-0000-0000-0000-000000000011"),
+                            LikedAt = new DateTime(2024, 1, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            UserId = new Guid("b116a743-b108-494a-abb5-a0c9673edbef"),
+                            ReviewId = new Guid("00000000-0000-0000-0000-000000000012"),
+                            LikedAt = new DateTime(2024, 1, 13, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
                 });
 
             modelBuilder.Entity("AmazonKiller.Domain.Entities.Users.CartList", b =>

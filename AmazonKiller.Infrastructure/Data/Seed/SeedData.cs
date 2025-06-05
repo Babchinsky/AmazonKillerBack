@@ -1,6 +1,7 @@
 ﻿using AmazonKiller.Domain.Entities.Products;
 using AmazonKiller.Infrastructure.Data.Seed.CategoriesSeed;
 using AmazonKiller.Infrastructure.Data.Seed.ProductsSeed;
+using AmazonKiller.Infrastructure.Data.Seed.Reviews;
 using Microsoft.EntityFrameworkCore;
 
 namespace AmazonKiller.Infrastructure.Data.Seed;
@@ -68,5 +69,8 @@ public static class SeedData
 
         // 4. Остальные сиды
         UsersSeed.Seed(modelBuilder);
+
+        ReviewsSeed.Seed(modelBuilder);
+        ReviewLikesSeed.Seed(modelBuilder);
     }
 }

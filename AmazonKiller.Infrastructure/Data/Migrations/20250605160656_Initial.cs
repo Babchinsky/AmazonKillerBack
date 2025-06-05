@@ -522,6 +522,17 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Reviews",
+                columns: new[] { "Id", "Article", "ImageUrls", "Message", "ProductId", "Rating", "Tags", "UserId" },
+                values: new object[,]
+                {
+                    { new Guid("00000000-0000-0000-0000-000000000005"), "Stylish and solid", "[]", "Looks very elegant and feels sturdy. Love the natural finish.", new Guid("74a46f1c-1054-408d-89dc-8ca00285660f"), 4.7m, "[\"design\",\"durability\"]", new Guid("2583c105-264b-45ee-a535-3b939f4dd428") },
+                    { new Guid("00000000-0000-0000-0000-000000000006"), "Beast of a drill", "[]", "Very powerful and long-lasting battery. Great for home use.", new Guid("4c73d114-2aa1-4f4c-aa7a-48038f1f95fc"), 5.0m, "[\"power\",\"performance\"]", new Guid("741ddf70-bcb9-44ba-a666-246072dd8c82") },
+                    { new Guid("00000000-0000-0000-0000-000000000008"), "Impressive cleaning", "[]", "Powerful suction and laser feature is actually helpful.", new Guid("a055168e-3130-4b0a-8495-60e25d62e057"), 4.8m, "[\"vacuum\",\"laser\"]", new Guid("0986d7ae-31ff-42d8-a9d4-450625e8dd76") },
+                    { new Guid("00000000-0000-0000-0000-000000000009"), "Simple and elegant", "[]", "Easy to assemble, light weight, looks clean and modern.", new Guid("74a46f1c-1054-408d-89dc-8ca00285660f"), 4.6m, "[\"design\",\"assembly\"]", new Guid("9f73b2c1-71c7-434b-8fcd-b3ca7a6eae98") }
+                });
+
+            migrationBuilder.InsertData(
                 table: "ProductAttributes",
                 columns: new[] { "Id", "Key", "ProductId", "Value" },
                 values: new object[,]
@@ -557,6 +568,48 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                     { new Guid("c6676eab-a776-4380-9b0e-a07b10da8236"), "Snapdragon 8 Gen 2", "Performance", new Guid("3c5a4868-3b2d-4352-9e12-502a56bce48a") },
                     { new Guid("edb89e51-144c-48a7-8fbf-7a645abc970b"), "Foldable design", "Portability", new Guid("a2c28a83-cfea-46ee-87e3-906f9e90f1aa") },
                     { new Guid("f7f4c40c-82d3-488f-bf1a-9094dc2048b0"), "Casual yet rugged", "Style", new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b") }
+                });
+
+            migrationBuilder.InsertData(
+                table: "ReviewLikes",
+                columns: new[] { "ReviewId", "UserId", "LikedAt" },
+                values: new object[,]
+                {
+                    { new Guid("00000000-0000-0000-0000-000000000005"), new Guid("0986d7ae-31ff-42d8-a9d4-450625e8dd76"), new DateTime(2024, 1, 6, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { new Guid("00000000-0000-0000-0000-000000000006"), new Guid("2583c105-264b-45ee-a535-3b939f4dd428"), new DateTime(2024, 1, 7, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { new Guid("00000000-0000-0000-0000-000000000008"), new Guid("9f73b2c1-71c7-434b-8fcd-b3ca7a6eae98"), new DateTime(2024, 1, 9, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { new Guid("00000000-0000-0000-0000-000000000009"), new Guid("fa67eef0-62a7-4e61-83ef-5a054e84ce41"), new DateTime(2024, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified) }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Reviews",
+                columns: new[] { "Id", "Article", "ImageUrls", "Message", "ProductId", "Rating", "Tags", "UserId" },
+                values: new object[,]
+                {
+                    { new Guid("00000000-0000-0000-0000-000000000001"), "Excellent phone", "[]", "Battery lasts all day. The screen is incredibly bright and vivid.", new Guid("3c5a4868-3b2d-4352-9e12-502a56bce48a"), 5.0m, "[\"battery\",\"screen\"]", new Guid("7a612c2e-ebc1-4a30-ac54-cccb566a1086") },
+                    { new Guid("00000000-0000-0000-0000-000000000002"), "Good but expensive", "[]", "Features are great, but the price is a bit high.", new Guid("3c5a4868-3b2d-4352-9e12-502a56bce48a"), 4.0m, "[\"price\"]", new Guid("fa67eef0-62a7-4e61-83ef-5a054e84ce41") },
+                    { new Guid("00000000-0000-0000-0000-000000000003"), "Top sound quality", "[]", "Perfect for flights. Noise cancelling works like magic.", new Guid("a2c28a83-cfea-46ee-87e3-906f9e90f1aa"), 5.0m, "[\"sound\",\"noise cancelling\"]", new Guid("82bf572a-ab40-4571-b1a2-ec9dcf9ccb7d") },
+                    { new Guid("00000000-0000-0000-0000-000000000004"), "Comfortable", "[]", "Long usage with no discomfort. Battery could be better though.", new Guid("a2c28a83-cfea-46ee-87e3-906f9e90f1aa"), 4.2m, "[\"comfort\",\"battery\"]", new Guid("b116a743-b108-494a-abb5-a0c9673edbef") },
+                    { new Guid("00000000-0000-0000-0000-000000000007"), "Classic style", "[]", "Fits perfectly and looks good with anything. My go-to jacket.", new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b"), 4.9m, "[\"fit\",\"style\"]", new Guid("4f33466b-00cd-424d-9c5a-2356d9fc179d") },
+                    { new Guid("00000000-0000-0000-0000-000000000010"), "Camera is next level", "[]", "200MP might be overkill, but wow, it delivers detail.", new Guid("3c5a4868-3b2d-4352-9e12-502a56bce48a"), 4.9m, "[\"camera\"]", new Guid("a4f0b9c1-47e8-46ff-a9e5-d388693cffef") },
+                    { new Guid("00000000-0000-0000-0000-000000000011"), "Good value", "[]", "High-quality fabric, didn’t expect it for this price.", new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b"), 4.4m, "[\"value\",\"material\"]", new Guid("2583c105-264b-45ee-a535-3b939f4dd428") },
+                    { new Guid("00000000-0000-0000-0000-000000000012"), "Not for running", "[]", "Slips off easily if you're jogging. Great otherwise.", new Guid("a2c28a83-cfea-46ee-87e3-906f9e90f1aa"), 3.9m, "[\"use case\"]", new Guid("a4f0b9c1-47e8-46ff-a9e5-d388693cffef") }
+                });
+
+            migrationBuilder.InsertData(
+                table: "ReviewLikes",
+                columns: new[] { "ReviewId", "UserId", "LikedAt" },
+                values: new object[,]
+                {
+                    { new Guid("00000000-0000-0000-0000-000000000007"), new Guid("4f33466b-00cd-424d-9c5a-2356d9fc179d"), new DateTime(2024, 1, 8, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { new Guid("00000000-0000-0000-0000-000000000004"), new Guid("741ddf70-bcb9-44ba-a666-246072dd8c82"), new DateTime(2024, 1, 5, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { new Guid("00000000-0000-0000-0000-000000000003"), new Guid("7a612c2e-ebc1-4a30-ac54-cccb566a1086"), new DateTime(2024, 1, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { new Guid("00000000-0000-0000-0000-000000000010"), new Guid("82bf572a-ab40-4571-b1a2-ec9dcf9ccb7d"), new DateTime(2024, 1, 11, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { new Guid("00000000-0000-0000-0000-000000000002"), new Guid("a4f0b9c1-47e8-46ff-a9e5-d388693cffef"), new DateTime(2024, 1, 3, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { new Guid("00000000-0000-0000-0000-000000000011"), new Guid("a4f0b9c1-47e8-46ff-a9e5-d388693cffef"), new DateTime(2024, 1, 12, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { new Guid("00000000-0000-0000-0000-000000000001"), new Guid("b116a743-b108-494a-abb5-a0c9673edbef"), new DateTime(2024, 1, 2, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { new Guid("00000000-0000-0000-0000-000000000012"), new Guid("b116a743-b108-494a-abb5-a0c9673edbef"), new DateTime(2024, 1, 13, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { new Guid("00000000-0000-0000-0000-000000000001"), new Guid("fa67eef0-62a7-4e61-83ef-5a054e84ce41"), new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) }
                 });
 
             migrationBuilder.CreateIndex(
