@@ -1,7 +1,7 @@
 using AmazonKiller.Domain.Entities.Products;
 using Microsoft.EntityFrameworkCore;
 
-namespace AmazonKiller.Infrastructure.Data.Seed.ProductsSeed;
+namespace AmazonKiller.Infrastructure.Data.Seed.Products;
 
 public static class ProductsWorkToolsCategorySeed
 {

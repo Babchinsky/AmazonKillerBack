@@ -33,7 +33,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Data\Seed\ProductsSeed\"/>
+        <Folder Include="Data\Seed\Products\" />
     </ItemGroup>
 
 </Project>

@@ -2,7 +2,7 @@
 using AmazonKiller.Infrastructure.Data.Helpers;
 using Microsoft.EntityFrameworkCore;
 
-namespace AmazonKiller.Infrastructure.Data.Seed.CategoriesSeed;
+namespace AmazonKiller.Infrastructure.Data.Seed.Categories;
 
 public static class FashionCategorySeed
 {

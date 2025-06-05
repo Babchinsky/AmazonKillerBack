@@ -1,7 +1,7 @@
 using AmazonKiller.Domain.Entities.Users;
 using Microsoft.EntityFrameworkCore;
 
-namespace AmazonKiller.Infrastructure.Data.Seed;
+namespace AmazonKiller.Infrastructure.Data.Seed.Users;
 
 public static class UsersSeed
 {
