@@ -2,6 +2,7 @@
 using AmazonKiller.Application.Interfaces.Repositories.Admin.Users;
 using AmazonKiller.Application.Interfaces.Repositories.Auth;
 using AmazonKiller.Application.Interfaces.Repositories.Collections;
+using AmazonKiller.Application.Interfaces.Repositories.Payments;
 using AmazonKiller.Application.Interfaces.Repositories.Products;
 using AmazonKiller.Application.Interfaces.Repositories.Reviews;
 using AmazonKiller.Application.Interfaces.Services;
@@ -23,6 +24,7 @@ using AmazonKiller.Infrastructure.Services.Auth;
 using AmazonKiller.Infrastructure.Services.Categories;
 using AmazonKiller.Infrastructure.Services.Emails;
 using AmazonKiller.Infrastructure.Services.FileStorage;
+using AmazonKiller.Infrastructure.Services.Orders;
 using AmazonKiller.Infrastructure.Services.Products;
 using AmazonKiller.Infrastructure.Services.Recalculation;
 using Microsoft.AspNetCore.Http;
@@ -41,10 +43,11 @@ public static class InfrastructureServiceCollectionExtensions
         services.TryAddScoped<IVerificationEmailSender, VerificationEmailSender>();
         services.TryAddScoped<IEmailSender, GmailEmailSender>();
         services.TryAddScoped<ICurrentRequestContext, CurrentRequestContext>();
-        
+        services.TryAddScoped<IPaymentService, StripePaymentService>();
+
         // Recalculate after Seeding
         services.TryAddScoped<IProductRatingService, ProductRatingService>();
-        services.AddScoped<ICategoryFilterService,    CategoryFilterService>();
+        services.TryAddScoped<ICategoryFilterService, CategoryFilterService>();
 
         // External integrations
         services.AddHttpClient<INovaPoshtaService, NovaPoshtaService>();

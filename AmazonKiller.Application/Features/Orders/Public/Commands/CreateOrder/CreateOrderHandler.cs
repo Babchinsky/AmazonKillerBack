@@ -1,4 +1,5 @@
 ﻿using AmazonKiller.Application.Interfaces.Repositories.Account;
+using AmazonKiller.Application.Interfaces.Repositories.Payments;
 using AmazonKiller.Application.Interfaces.Repositories.Products;
 using AmazonKiller.Application.Interfaces.Services;
 using AmazonKiller.Domain.Entities.Orders;
@@ -13,7 +14,8 @@ public class CreateOrderHandler(
     IAccountRepository accountRepo,
     IProductRepository productRepo,
     ICurrentUserService currentUserService,
-    ISequenceService sequenceService)
+    ISequenceService sequenceService,
+    IPaymentService paymentService)
     : IRequestHandler<CreateOrderCommand, Guid>
 {
     public async Task<Guid> Handle(CreateOrderCommand req, CancellationToken ct)
@@ -77,6 +79,21 @@ public class CreateOrderHandler(
             var product = await productRepo.GetByIdAsync(item.ProductId, ct);
             if (product is not null)
                 product.SoldCount += item.Quantity;
+        }
+
+        if (req.PaymentType == PaymentType.Card)
+        {
+            var paymentMethodId = req.StripePaymentMethodId ?? "pm_card_visa";
+
+            var paymentIntentId = await paymentService.CreatePaymentIntentAsync(
+                order.TotalPrice,
+                paymentMethodId
+            );
+
+            var confirmed = await paymentService.ConfirmPaymentAsync(paymentIntentId);
+
+            if (!confirmed)
+                throw new AppException("Card payment failed.");
         }
 
         var orderId = await orderRepo.CreateOrderAsync(order, ct);

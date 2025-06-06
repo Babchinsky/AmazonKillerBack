@@ -39,6 +39,7 @@ builder.Services
 
 builder.Services.Configure<NovaPoshtaOptions>(builder.Configuration.GetSection("NovaPoshta"));
 builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("Email"));
+builder.Services.Configure<StripeSettingsOptions>(builder.Configuration.GetSection("Stripe"));
 
 // ---------- JWT ----------
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
