@@ -25,21 +25,26 @@ public static class SeedData
         Electronics_IPhone15ProMax.Seed(modelBuilder);
         Electronics_BoseQCUltra.Seed(modelBuilder);
         Electronics_LenovoLaptop.Seed(modelBuilder);
+        Electronics_SonyCamera.Seed(modelBuilder);
 
         Fashion_MensDenimJacket.Seed(modelBuilder);
         Fashion_ZaraFloralDress.Seed(modelBuilder);
         Fashion_WomensSneakers.Seed(modelBuilder);
+        Fashion_WomensHat.Seed(modelBuilder);
 
         Furniture_ModernCoffeeTable.Seed(modelBuilder);
         Furniture_IkeaLackTable.Seed(modelBuilder);
         Furniture_BedsideTable.Seed(modelBuilder);
+        Furniture_OfficeChair.Seed(modelBuilder);
 
         Household_DysonV15.Seed(modelBuilder);
         Household_ToiletBrushSet.Seed(modelBuilder);
+        Household_LaundryBasket.Seed(modelBuilder);
 
         WorkTools_DeWaltDrill.Seed(modelBuilder);
         WorkTools_MakitaDrill.Seed(modelBuilder);
         WorkTools_UtilityGloves.Seed(modelBuilder);
+        WorkTools_SafetyHelmet.Seed(modelBuilder);
 
         // 3. Сидим категории с PropertyKeys
         FashionCategorySeed.Seed(modelBuilder);
