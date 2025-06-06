@@ -17,8 +17,7 @@ public static class WorkToolsCategorySeed
                 Status = CategoryStatus.Active,
                 Description = "Work tools category",
                 ImageUrl = "https://example.com/images/worktools.jpg",
-                IconName = "hammer",
-                ParentId = null
+                IconName = "hammer"
             },
             new Category
             {
@@ -27,7 +26,6 @@ public static class WorkToolsCategorySeed
                 Status = CategoryStatus.Active,
                 Description = "Hand Tools category",
                 ImageUrl = "https://example.com/images/hand_tools.jpg",
-                IconName = "hand tools",
                 ParentId = rootId
             },
             new Category
@@ -37,7 +35,6 @@ public static class WorkToolsCategorySeed
                 Status = CategoryStatus.Active,
                 Description = "Power Tools category",
                 ImageUrl = "https://example.com/images/power_tools.jpg",
-                IconName = "power tools",
                 ParentId = rootId
             },
             new Category
@@ -47,7 +44,6 @@ public static class WorkToolsCategorySeed
                 Status = CategoryStatus.Active,
                 Description = "Safety Gear category",
                 ImageUrl = "https://example.com/images/safety_gear.jpg",
-                IconName = "safety gear",
                 ParentId = rootId
             },
             new Category
@@ -57,7 +53,6 @@ public static class WorkToolsCategorySeed
                 Status = CategoryStatus.Active,
                 Description = "Tool Storage category",
                 ImageUrl = "https://example.com/images/tool_storage.jpg",
-                IconName = "tool storage",
                 ParentId = rootId
             }
         );

@@ -19,21 +19,27 @@ public static class SeedData
     public static void Seed(ModelBuilder modelBuilder)
     {
         // 1. Сидим продукты — они будут использоваться для анализа атрибутов
+
         Electronics_SamsungS23Ultra.Seed(modelBuilder);
         Electronics_SonyWH1000XM5.Seed(modelBuilder);
         Electronics_IPhone15ProMax.Seed(modelBuilder);
         Electronics_BoseQCUltra.Seed(modelBuilder);
+        Electronics_LenovoLaptop.Seed(modelBuilder);
 
         Fashion_MensDenimJacket.Seed(modelBuilder);
         Fashion_ZaraFloralDress.Seed(modelBuilder);
+        Fashion_WomensSneakers.Seed(modelBuilder);
 
         Furniture_ModernCoffeeTable.Seed(modelBuilder);
         Furniture_IkeaLackTable.Seed(modelBuilder);
+        Furniture_BedsideTable.Seed(modelBuilder);
 
         Household_DysonV15.Seed(modelBuilder);
+        Household_ToiletBrushSet.Seed(modelBuilder);
 
         WorkTools_DeWaltDrill.Seed(modelBuilder);
         WorkTools_MakitaDrill.Seed(modelBuilder);
+        WorkTools_UtilityGloves.Seed(modelBuilder);
 
         // 3. Сидим категории с PropertyKeys
         FashionCategorySeed.Seed(modelBuilder);

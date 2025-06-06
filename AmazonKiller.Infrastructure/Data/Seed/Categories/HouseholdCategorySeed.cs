@@ -17,8 +17,7 @@ public static class HouseholdCategorySeed
                 Status = CategoryStatus.Active,
                 Description = "Household category",
                 ImageUrl = "https://example.com/images/household.jpg",
-                IconName = "cleaning-spray",
-                ParentId = null
+                IconName = "cleaning-spray"
             },
             new Category
             {
@@ -27,7 +26,6 @@ public static class HouseholdCategorySeed
                 Status = CategoryStatus.Active,
                 Description = "Kitchen Appliances category",
                 ImageUrl = "https://example.com/images/kitchen_appliances.jpg",
-                IconName = "kitchen appliances",
                 ParentId = rootId
             },
             new Category
@@ -37,7 +35,6 @@ public static class HouseholdCategorySeed
                 Status = CategoryStatus.Active,
                 Description = "Cleaning Supplies category",
                 ImageUrl = "https://example.com/images/cleaning_supplies.jpg",
-                IconName = "cleaning supplies",
                 ParentId = rootId
             },
             new Category
@@ -47,7 +44,6 @@ public static class HouseholdCategorySeed
                 Status = CategoryStatus.Active,
                 Description = "Storage category",
                 ImageUrl = "https://example.com/images/storage.jpg",
-                IconName = "storage",
                 ParentId = rootId
             },
             new Category
@@ -57,7 +53,6 @@ public static class HouseholdCategorySeed
                 Status = CategoryStatus.Active,
                 Description = "Bathroom category",
                 ImageUrl = "https://example.com/images/bathroom.jpg",
-                IconName = "bathroom",
                 ParentId = rootId
             }
         );

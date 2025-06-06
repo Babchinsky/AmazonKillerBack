@@ -17,8 +17,7 @@ public static class ElectronicsCategorySeed
                 Status = CategoryStatus.Active,
                 Description = "Electronics category",
                 ImageUrl = "https://example.com/images/electronics.jpg",
-                IconName = "computer",
-                ParentId = null,
+                IconName = "computer"
             },
             new Category
             {
@@ -27,7 +26,6 @@ public static class ElectronicsCategorySeed
                 Status = CategoryStatus.Active,
                 Description = "Smartphones category",
                 ImageUrl = "https://example.com/images/smartphones.jpg",
-                IconName = "smartphones",
                 ParentId = rootId
             },
             new Category
@@ -37,7 +35,6 @@ public static class ElectronicsCategorySeed
                 Status = CategoryStatus.Active,
                 Description = "Laptops category",
                 ImageUrl = "https://example.com/images/laptops.jpg",
-                IconName = "laptops",
                 ParentId = rootId
             },
             new Category
@@ -47,7 +44,6 @@ public static class ElectronicsCategorySeed
                 Status = CategoryStatus.Active,
                 Description = "Cameras category",
                 ImageUrl = "https://example.com/images/cameras.jpg",
-                IconName = "cameras",
                 ParentId = rootId
             },
             new Category
@@ -57,7 +53,6 @@ public static class ElectronicsCategorySeed
                 Status = CategoryStatus.Active,
                 Description = "Audio Devices category",
                 ImageUrl = "https://example.com/images/audio_devices.jpg",
-                IconName = "audio devices",
                 ParentId = rootId
             }
         );

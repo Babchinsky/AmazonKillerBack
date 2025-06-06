@@ -17,8 +17,7 @@ public static class FurnitureCategorySeed
                 Status = CategoryStatus.Active,
                 Description = "Furniture category",
                 ImageUrl = "https://example.com/images/furniture.jpg",
-                IconName = "sofa",
-                ParentId = null
+                IconName = "sofa"
             },
             new Category
             {
@@ -27,7 +26,6 @@ public static class FurnitureCategorySeed
                 Status = CategoryStatus.Active,
                 Description = "Living Room category",
                 ImageUrl = "https://example.com/images/living_room.jpg",
-                IconName = "living room",
                 ParentId = rootId
             },
             new Category
@@ -37,7 +35,6 @@ public static class FurnitureCategorySeed
                 Status = CategoryStatus.Active,
                 Description = "Bedroom category",
                 ImageUrl = "https://example.com/images/bedroom.jpg",
-                IconName = "bedroom",
                 ParentId = rootId
             },
             new Category
@@ -47,7 +44,6 @@ public static class FurnitureCategorySeed
                 Status = CategoryStatus.Active,
                 Description = "Office Furniture category",
                 ImageUrl = "https://example.com/images/office_furniture.jpg",
-                IconName = "office furniture",
                 ParentId = rootId
             },
             new Category
@@ -57,7 +53,6 @@ public static class FurnitureCategorySeed
                 Status = CategoryStatus.Active,
                 Description = "Outdoor category",
                 ImageUrl = "https://example.com/images/outdoor.jpg",
-                IconName = "outdoor",
                 ParentId = rootId
             }
         );

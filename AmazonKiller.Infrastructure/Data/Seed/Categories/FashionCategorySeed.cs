@@ -17,8 +17,7 @@ public static class FashionCategorySeed
                 Status = CategoryStatus.Active,
                 Description = "Fashion category",
                 ImageUrl = "https://example.com/images/fashion.jpg",
-                IconName = "hanger",
-                ParentId = null
+                IconName = "hanger"
             },
             new Category
             {
@@ -27,7 +26,6 @@ public static class FashionCategorySeed
                 Status = CategoryStatus.Active,
                 Description = "Men's Clothing category",
                 ImageUrl = "https://example.com/images/mens_clothing.jpg",
-                IconName = "men's clothing",
                 ParentId = rootId
             },
             new Category
@@ -37,7 +35,6 @@ public static class FashionCategorySeed
                 Status = CategoryStatus.Active,
                 Description = "Women's Clothing category",
                 ImageUrl = "https://example.com/images/womens_clothing.jpg",
-                IconName = "women's clothing",
                 ParentId = rootId
             },
             new Category
@@ -47,7 +44,6 @@ public static class FashionCategorySeed
                 Status = CategoryStatus.Active,
                 Description = "Shoes category",
                 ImageUrl = "https://example.com/images/shoes.jpg",
-                IconName = "shoes",
                 ParentId = rootId
             },
             new Category
@@ -57,7 +53,6 @@ public static class FashionCategorySeed
                 Status = CategoryStatus.Active,
                 Description = "Accessories category",
                 ImageUrl = "https://example.com/images/accessories.jpg",
-                IconName = "accessories",
                 ParentId = rootId
             }
         );
