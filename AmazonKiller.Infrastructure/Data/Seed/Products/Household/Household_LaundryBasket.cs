@@ -16,7 +16,7 @@ public static class Household_LaundryBasket
             Code = "HOU-003",
             Price = 19.99m,
             Quantity = 100,
-            CategoryId = Guid.Parse("6fa8707d-97d7-41a1-9c31-50f07b8466f4"),
+            CategoryId = Guid.Parse("0e6feb3f-f795-4541-8cc6-7d7047951eb9"),
             ImageUrls =
             [
                 "https://content2.rozetka.com.ua/goods/images/big/378171578.jpg",

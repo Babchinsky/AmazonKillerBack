@@ -16,7 +16,7 @@ public static class Fashion_WomensHat
             Code = "FAS-005",
             Price = 34.99m,
             Quantity = 40,
-            CategoryId = Guid.Parse("4f528321-f67e-4b7f-b5fa-8a5f2eec93f4"),
+            CategoryId = Guid.Parse("69f22c76-7202-44e6-9132-09fd09c55632"),
             ImageUrls =
             [
                 "https://img.kwcdn.com/product/open/17a385505e6240aaa133bfb681d557a5-goods.jpeg?imageView2/2/w/800/q/70/format/webp",

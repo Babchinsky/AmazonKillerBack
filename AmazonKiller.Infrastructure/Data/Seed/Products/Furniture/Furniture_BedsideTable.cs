@@ -13,7 +13,7 @@ public static class Furniture_BedsideTable
         {
             Id = productId,
             Name = "Minimalist Bedside Table",
-            Code = "FUR-003",
+            Code = "FUR-004",
             Price = 59.99m,
             Quantity = 40,
             CategoryId = Guid.Parse("c9f81657-73a1-4b53-bf80-b59121eae433"),

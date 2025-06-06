@@ -16,7 +16,7 @@ public static class Furniture_OfficeChair
             Code = "FUR-003",
             Price = 249.99m,
             Quantity = 50,
-            CategoryId = Guid.Parse("fe0cc97e-2f84-456e-bd53-cb9435d94343"),
+            CategoryId = Guid.Parse("2f3ad03d-c8a3-4c12-bf7c-db764e634fc4"),
             ImageUrls =
             [
                 "https://kupistul.ua/public/upload/catalogGood/kreslo-flex-mesh-cherniy-cherniy-106850112-0995.jpg",

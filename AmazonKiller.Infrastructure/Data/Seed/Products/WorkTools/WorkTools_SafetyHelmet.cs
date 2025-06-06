@@ -16,7 +16,7 @@ public static class WorkTools_SafetyHelmet
             Code = "TOOL-005",
             Price = 35.99m,
             Quantity = 150,
-            CategoryId = Guid.Parse("d15224c7-41c1-4a87-963c-9c0de97cb5a7"),
+            CategoryId = Guid.Parse("18710447-a260-44f2-9a4b-77c0b246bbc5"),
             ImageUrls =
             [
                 "https://biko.ua/image/cache/catalog/product/19139/195700-500x500.jpg",

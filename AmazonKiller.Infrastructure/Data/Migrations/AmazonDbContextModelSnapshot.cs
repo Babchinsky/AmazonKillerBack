@@ -780,7 +780,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         new
                         {
                             Id = new Guid("7777bbbb-cccc-dddd-eeee-ffff00000001"),
-                            CategoryId = new Guid("4f528321-f67e-4b7f-b5fa-8a5f2eec93f4"),
+                            CategoryId = new Guid("69f22c76-7202-44e6-9132-09fd09c55632"),
                             Code = "FAS-005",
                             ImageUrls = "[\"https://img.kwcdn.com/product/open/17a385505e6240aaa133bfb681d557a5-goods.jpeg?imageView2/2/w/800/q/70/format/webp\",\"https://img.kwcdn.com/product/open/61685065fd0e459d9af558fcf949ee83-goods.jpeg?imageView2/2/w/800/q/70/format/webp\"]",
                             Name = "Stylish Women's Summer Hat",
@@ -823,7 +823,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         {
                             Id = new Guid("2ad39762-dbd2-4959-bf36-03f30e3a3a1c"),
                             CategoryId = new Guid("c9f81657-73a1-4b53-bf80-b59121eae433"),
-                            Code = "FUR-003",
+                            Code = "FUR-004",
                             ImageUrls = "[\"https://cdn1.jysk.com/getimage/wd3.medium/236364\",\"https://cdn1.jysk.com/getimage/wd3.medium/236369\",\"https://cdn1.jysk.com/getimage/wd3.medium/236365\"]",
                             Name = "Minimalist Bedside Table",
                             Price = 59.99m,
@@ -836,7 +836,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         new
                         {
                             Id = new Guid("8888aaaa-bbbb-cccc-dddd-eeee00000002"),
-                            CategoryId = new Guid("fe0cc97e-2f84-456e-bd53-cb9435d94343"),
+                            CategoryId = new Guid("2f3ad03d-c8a3-4c12-bf7c-db764e634fc4"),
                             Code = "FUR-003",
                             ImageUrls = "[\"https://kupistul.ua/public/upload/catalogGood/kreslo-flex-mesh-cherniy-cherniy-106850112-0995.jpg\",\"https://kupistul.ua/public/upload/catalogGoodPhoto/kreslo-flex-mesh-cherniy-cherniy-106850112-77445.jpg\",\"https://kupistul.ua/public/upload/catalogGoodPhoto/kreslo-flex-mesh-cherniy-cherniy-106850112-77446.jpg\"]",
                             Name = "Ergonomic Office Chair with Lumbar Support",
@@ -878,7 +878,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         new
                         {
                             Id = new Guid("8888aaaa-bbbb-cccc-dddd-eeee00000003"),
-                            CategoryId = new Guid("6fa8707d-97d7-41a1-9c31-50f07b8466f4"),
+                            CategoryId = new Guid("0e6feb3f-f795-4541-8cc6-7d7047951eb9"),
                             Code = "HOU-003",
                             ImageUrls = "[\"https://content2.rozetka.com.ua/goods/images/big/378171578.jpg\",\"https://content2.rozetka.com.ua/goods/images/big/378171579.jpg\",\"https://content1.rozetka.com.ua/goods/images/big/378171580.jpg\"]",
                             Name = "Collapsible Laundry Basket",
@@ -934,7 +934,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         new
                         {
                             Id = new Guid("8888aaaa-bbbb-cccc-dddd-eeee00000005"),
-                            CategoryId = new Guid("d15224c7-41c1-4a87-963c-9c0de97cb5a7"),
+                            CategoryId = new Guid("18710447-a260-44f2-9a4b-77c0b246bbc5"),
                             Code = "TOOL-005",
                             ImageUrls = "[\"https://biko.ua/image/cache/catalog/product/19139/195700-500x500.jpg\",\"https://biko.ua/image/cache/catalog/product/19139/5bbab5-500x500.jpg\"]",
                             Name = "3M Safety Helmet H-700 Series",
