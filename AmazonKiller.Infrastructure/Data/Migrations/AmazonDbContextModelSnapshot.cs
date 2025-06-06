@@ -84,7 +84,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                             ImageUrl = "https://example.com/images/mens_clothing.jpg",
                             Name = "Men's Clothing",
                             ParentId = new Guid("49595c91-f315-4b2e-af8a-0f09c3145c03"),
-                            PropertyKeys = "[\"Material\",\"Fit\",\"Color\",\"Season\"]",
+                            PropertyKeys = "[]",
                             RowVersion = new byte[0],
                             Status = 0
                         },
@@ -96,7 +96,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                             ImageUrl = "https://example.com/images/womens_clothing.jpg",
                             Name = "Women's Clothing",
                             ParentId = new Guid("49595c91-f315-4b2e-af8a-0f09c3145c03"),
-                            PropertyKeys = "[\"Material\",\"Fit\",\"Length\",\"Pattern\"]",
+                            PropertyKeys = "[]",
                             RowVersion = new byte[0],
                             Status = 0
                         },
@@ -143,7 +143,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                             ImageUrl = "https://example.com/images/smartphones.jpg",
                             Name = "Smartphones",
                             ParentId = new Guid("7ad3d843-1642-4e8a-a843-503928ef8154"),
-                            PropertyKeys = "[\"Display\",\"Battery\",\"Camera\",\"Storage\",\"Chip\"]",
+                            PropertyKeys = "[]",
                             RowVersion = new byte[0],
                             Status = 0
                         },
@@ -179,7 +179,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                             ImageUrl = "https://example.com/images/audio_devices.jpg",
                             Name = "Audio Devices",
                             ParentId = new Guid("7ad3d843-1642-4e8a-a843-503928ef8154"),
-                            PropertyKeys = "[\"Type\",\"Noise Cancellation\",\"Battery Life\",\"Connectivity\",\"Charging\"]",
+                            PropertyKeys = "[]",
                             RowVersion = new byte[0],
                             Status = 0
                         },
@@ -190,7 +190,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                             IconName = "cleaning-spray",
                             ImageUrl = "https://example.com/images/household.jpg",
                             Name = "Household",
-                            PropertyKeys = "[\"Type\",\"Battery Life\",\"Dustbin Capacity\",\"Power\"]",
+                            PropertyKeys = "[]",
                             RowVersion = new byte[0],
                             Status = 0
                         },
@@ -249,7 +249,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                             IconName = "sofa",
                             ImageUrl = "https://example.com/images/furniture.jpg",
                             Name = "Furniture",
-                            PropertyKeys = "[\"Material\",\"Dimensions\",\"Weight\",\"Finish\"]",
+                            PropertyKeys = "[]",
                             RowVersion = new byte[0],
                             Status = 0
                         },
@@ -261,7 +261,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                             ImageUrl = "https://example.com/images/living_room.jpg",
                             Name = "Living Room",
                             ParentId = new Guid("0dfa0836-09c9-4a2d-b74a-9b2085976dcf"),
-                            PropertyKeys = "[\"Material\",\"Dimensions\",\"Weight\",\"Finish\"]",
+                            PropertyKeys = "[]",
                             RowVersion = new byte[0],
                             Status = 0
                         },
@@ -308,7 +308,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                             IconName = "hammer",
                             ImageUrl = "https://example.com/images/worktools.jpg",
                             Name = "Work tools",
-                            PropertyKeys = "[\"Voltage\",\"Chuck Size\",\"Speed\",\"Battery\"]",
+                            PropertyKeys = "[]",
                             RowVersion = new byte[0],
                             Status = 0
                         },
@@ -332,7 +332,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                             ImageUrl = "https://example.com/images/power_tools.jpg",
                             Name = "Power Tools",
                             ParentId = new Guid("cc9bf323-2160-49b2-ae79-340781163eb2"),
-                            PropertyKeys = "[\"Voltage\",\"Speed\",\"Battery\",\"Chuck Size\"]",
+                            PropertyKeys = "[]",
                             RowVersion = new byte[0],
                             Status = 0
                         },
@@ -680,8 +680,8 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                             Name = "Samsung Galaxy S23 Ultra",
                             Price = 1199.99m,
                             Quantity = 50,
-                            Rating = 4.5m,
-                            ReviewsCount = 100,
+                            Rating = 0m,
+                            ReviewsCount = 0,
                             RowVersion = new byte[0],
                             SoldCount = 0
                         },
@@ -694,8 +694,8 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                             Name = "Sony WH-1000XM5 Headphones",
                             Price = 349.99m,
                             Quantity = 50,
-                            Rating = 4.5m,
-                            ReviewsCount = 100,
+                            Rating = 0m,
+                            ReviewsCount = 0,
                             RowVersion = new byte[0],
                             SoldCount = 0
                         },
@@ -708,8 +708,8 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                             Name = "Apple iPhone 15 Pro Max",
                             Price = 1399.99m,
                             Quantity = 40,
-                            Rating = 4.7m,
-                            ReviewsCount = 200,
+                            Rating = 0m,
+                            ReviewsCount = 0,
                             RowVersion = new byte[0],
                             SoldCount = 0
                         },
@@ -722,8 +722,8 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                             Name = "Bose QuietComfort Ultra",
                             Price = 379.99m,
                             Quantity = 35,
-                            Rating = 4.6m,
-                            ReviewsCount = 150,
+                            Rating = 0m,
+                            ReviewsCount = 0,
                             RowVersion = new byte[0],
                             SoldCount = 0
                         },
@@ -736,8 +736,8 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                             Name = "Men's Denim Jacket",
                             Price = 69.99m,
                             Quantity = 50,
-                            Rating = 4.5m,
-                            ReviewsCount = 100,
+                            Rating = 0m,
+                            ReviewsCount = 0,
                             RowVersion = new byte[0],
                             SoldCount = 0
                         },
@@ -750,8 +750,8 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                             Name = "Zara Floral Midi Dress",
                             Price = 89.99m,
                             Quantity = 70,
-                            Rating = 4.4m,
-                            ReviewsCount = 90,
+                            Rating = 0m,
+                            ReviewsCount = 0,
                             RowVersion = new byte[0],
                             SoldCount = 0
                         },
@@ -764,8 +764,8 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                             Name = "Modern Wooden Coffee Table",
                             Price = 149.99m,
                             Quantity = 50,
-                            Rating = 4.5m,
-                            ReviewsCount = 100,
+                            Rating = 0m,
+                            ReviewsCount = 0,
                             RowVersion = new byte[0],
                             SoldCount = 0
                         },
@@ -778,8 +778,8 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                             Name = "IKEA LACK Coffee Table",
                             Price = 39.99m,
                             Quantity = 80,
-                            Rating = 4.2m,
-                            ReviewsCount = 320,
+                            Rating = 0m,
+                            ReviewsCount = 0,
                             RowVersion = new byte[0],
                             SoldCount = 0
                         },
@@ -792,8 +792,8 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                             Name = "Dyson V15 Detect Vacuum Cleaner",
                             Price = 699.0m,
                             Quantity = 50,
-                            Rating = 4.5m,
-                            ReviewsCount = 100,
+                            Rating = 0m,
+                            ReviewsCount = 0,
                             RowVersion = new byte[0],
                             SoldCount = 0
                         },
@@ -806,8 +806,8 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                             Name = "DeWalt DCD996 Cordless Drill",
                             Price = 199.99m,
                             Quantity = 60,
-                            Rating = 4.8m,
-                            ReviewsCount = 180,
+                            Rating = 0m,
+                            ReviewsCount = 0,
                             RowVersion = new byte[0],
                             SoldCount = 0
                         },
@@ -820,8 +820,8 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                             Name = "Makita Cordless Hammer Drill",
                             Price = 229.99m,
                             Quantity = 50,
-                            Rating = 4.5m,
-                            ReviewsCount = 100,
+                            Rating = 0m,
+                            ReviewsCount = 0,
                             RowVersion = new byte[0],
                             SoldCount = 0
                         });

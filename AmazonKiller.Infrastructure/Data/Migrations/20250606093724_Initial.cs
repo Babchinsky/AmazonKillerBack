@@ -412,11 +412,11 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                 columns: new[] { "Id", "Description", "IconName", "ImageUrl", "Name", "ParentId", "PropertyKeys", "Status" },
                 values: new object[,]
                 {
-                    { new Guid("0dfa0836-09c9-4a2d-b74a-9b2085976dcf"), "Furniture category", "furniture", "https://example.com/images/furniture.jpg", "Furniture", null, "[\"Material\",\"Dimensions\",\"Weight\",\"Finish\"]", 0 },
-                    { new Guid("49595c91-f315-4b2e-af8a-0f09c3145c03"), "Fashion category", "fashion", "https://example.com/images/fashion.jpg", "Fashion", null, "[]", 0 },
-                    { new Guid("7ad3d843-1642-4e8a-a843-503928ef8154"), "Electronics category", "electronics", "https://example.com/images/electronics.jpg", "Electronics", null, "[]", 0 },
-                    { new Guid("8980e70c-3345-4885-8518-cfcda95b3078"), "Household category", "household", "https://example.com/images/household.jpg", "Household", null, "[\"Type\",\"Battery Life\",\"Dustbin Capacity\",\"Power\"]", 0 },
-                    { new Guid("cc9bf323-2160-49b2-ae79-340781163eb2"), "Work tools category", "work tools", "https://example.com/images/worktools.jpg", "Work tools", null, "[\"Voltage\",\"Chuck Size\",\"Speed\",\"Battery\"]", 0 }
+                    { new Guid("0dfa0836-09c9-4a2d-b74a-9b2085976dcf"), "Furniture category", "sofa", "https://example.com/images/furniture.jpg", "Furniture", null, "[]", 0 },
+                    { new Guid("49595c91-f315-4b2e-af8a-0f09c3145c03"), "Fashion category", "hanger", "https://example.com/images/fashion.jpg", "Fashion", null, "[]", 0 },
+                    { new Guid("7ad3d843-1642-4e8a-a843-503928ef8154"), "Electronics category", "computer", "https://example.com/images/electronics.jpg", "Electronics", null, "[]", 0 },
+                    { new Guid("8980e70c-3345-4885-8518-cfcda95b3078"), "Household category", "cleaning-spray", "https://example.com/images/household.jpg", "Household", null, "[]", 0 },
+                    { new Guid("cc9bf323-2160-49b2-ae79-340781163eb2"), "Work tools category", "hammer", "https://example.com/images/worktools.jpg", "Work tools", null, "[]", 0 }
                 });
 
             migrationBuilder.InsertData(
@@ -452,14 +452,14 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                     { new Guid("3b464a7d-878c-4b8b-b44f-c78a2b59be3a"), "Accessories category", "accessories", "https://example.com/images/accessories.jpg", "Accessories", new Guid("49595c91-f315-4b2e-af8a-0f09c3145c03"), "[]", 0 },
                     { new Guid("68ae1c83-85c1-4002-bb32-d00ac9b3a1bb"), "Living Room category", "living room", "https://example.com/images/living_room.jpg", "Living Room", new Guid("0dfa0836-09c9-4a2d-b74a-9b2085976dcf"), "[]", 0 },
                     { new Guid("69f22c76-7202-44e6-9132-09fd09c55632"), "Women's Clothing category", "women's clothing", "https://example.com/images/womens_clothing.jpg", "Women's Clothing", new Guid("49595c91-f315-4b2e-af8a-0f09c3145c03"), "[]", 0 },
-                    { new Guid("7eb489f4-2f55-4510-8e49-3965370c4989"), "Men's Clothing category", "men's clothing", "https://example.com/images/mens_clothing.jpg", "Men's Clothing", new Guid("49595c91-f315-4b2e-af8a-0f09c3145c03"), "[\"Material\",\"Fit\",\"Color\",\"Season\"]", 0 },
+                    { new Guid("7eb489f4-2f55-4510-8e49-3965370c4989"), "Men's Clothing category", "men's clothing", "https://example.com/images/mens_clothing.jpg", "Men's Clothing", new Guid("49595c91-f315-4b2e-af8a-0f09c3145c03"), "[]", 0 },
                     { new Guid("7f3e369a-0b7d-4178-84bf-e4194fac9ed2"), "Outdoor category", "outdoor", "https://example.com/images/outdoor.jpg", "Outdoor", new Guid("0dfa0836-09c9-4a2d-b74a-9b2085976dcf"), "[]", 0 },
                     { new Guid("834ba378-fe57-4702-b85c-4cb0431d1909"), "Hand Tools category", "hand tools", "https://example.com/images/hand_tools.jpg", "Hand Tools", new Guid("cc9bf323-2160-49b2-ae79-340781163eb2"), "[]", 0 },
                     { new Guid("8fc8707d-97d7-41a1-9c31-50f07b8466f4"), "Cameras category", "cameras", "https://example.com/images/cameras.jpg", "Cameras", new Guid("7ad3d843-1642-4e8a-a843-503928ef8154"), "[]", 0 },
                     { new Guid("be4e31b6-3b78-4d99-a3fa-7cb8a7bc4a8b"), "Shoes category", "shoes", "https://example.com/images/shoes.jpg", "Shoes", new Guid("49595c91-f315-4b2e-af8a-0f09c3145c03"), "[]", 0 },
-                    { new Guid("c1cd879d-175e-4ff5-b354-054f9f82ce98"), "Audio Devices category", "audio devices", "https://example.com/images/audio_devices.jpg", "Audio Devices", new Guid("7ad3d843-1642-4e8a-a843-503928ef8154"), "[\"Type\",\"Noise Cancellation\",\"Battery Life\",\"Connectivity\"]", 0 },
+                    { new Guid("c1cd879d-175e-4ff5-b354-054f9f82ce98"), "Audio Devices category", "audio devices", "https://example.com/images/audio_devices.jpg", "Audio Devices", new Guid("7ad3d843-1642-4e8a-a843-503928ef8154"), "[]", 0 },
                     { new Guid("c9f81657-73a1-4b53-bf80-b59121eae433"), "Bedroom category", "bedroom", "https://example.com/images/bedroom.jpg", "Bedroom", new Guid("0dfa0836-09c9-4a2d-b74a-9b2085976dcf"), "[]", 0 },
-                    { new Guid("d2deb989-35c5-4ca1-a748-12411d3ac3a4"), "Smartphones category", "smartphones", "https://example.com/images/smartphones.jpg", "Smartphones", new Guid("7ad3d843-1642-4e8a-a843-503928ef8154"), "[\"Display\",\"Battery\",\"Camera\",\"Storage\"]", 0 },
+                    { new Guid("d2deb989-35c5-4ca1-a748-12411d3ac3a4"), "Smartphones category", "smartphones", "https://example.com/images/smartphones.jpg", "Smartphones", new Guid("7ad3d843-1642-4e8a-a843-503928ef8154"), "[]", 0 },
                     { new Guid("d94af679-24f4-4ab2-ae1e-ba3689143579"), "Storage category", "storage", "https://example.com/images/storage.jpg", "Storage", new Guid("8980e70c-3345-4885-8518-cfcda95b3078"), "[]", 0 }
                 });
 
@@ -487,9 +487,9 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                 columns: new[] { "Id", "CategoryId", "Code", "DiscountPercent", "ImageUrls", "Name", "Price", "Quantity", "Rating", "ReviewsCount", "SoldCount" },
                 values: new object[,]
                 {
-                    { new Guid("4c73d114-2aa1-4f4c-aa7a-48038f1f95fc"), new Guid("cc9bf323-2160-49b2-ae79-340781163eb2"), "WTL-001", null, "[\"https://example.com/products/makita1.jpg\",\"https://example.com/products/makita2.jpg\"]", "Makita Cordless Hammer Drill", 229.99m, 50, 4.5m, 100, 0 },
-                    { new Guid("74a46f1c-1054-408d-89dc-8ca00285660f"), new Guid("0dfa0836-09c9-4a2d-b74a-9b2085976dcf"), "FUR-001", null, "[\"https://example.com/products/coffee_table1.jpg\",\"https://example.com/products/coffee_table2.jpg\"]", "Modern Wooden Coffee Table", 149.99m, 50, 4.5m, 100, 0 },
-                    { new Guid("a055168e-3130-4b0a-8495-60e25d62e057"), new Guid("8980e70c-3345-4885-8518-cfcda95b3078"), "HOU-001", null, "[\"https://example.com/products/dyson1.jpg\",\"https://example.com/products/dyson2.jpg\"]", "Dyson V15 Detect Vacuum Cleaner", 699.0m, 50, 4.5m, 100, 0 }
+                    { new Guid("4c73d114-2aa1-4f4c-aa7a-48038f1f95fc"), new Guid("cc9bf323-2160-49b2-ae79-340781163eb2"), "WTL-001", null, "[\"https://content2.rozetka.com.ua/goods/images/big/333625233.jpg\",\"https://content2.rozetka.com.ua/goods/images/big/367185899.jpg\"]", "Makita Cordless Hammer Drill", 229.99m, 50, 0m, 0, 0 },
+                    { new Guid("74a46f1c-1054-408d-89dc-8ca00285660f"), new Guid("0dfa0836-09c9-4a2d-b74a-9b2085976dcf"), "FUR-001", null, "[\"https://cdn2.jysk.com/getimage/wd3.medium/256592\",\"https://cdn2.jysk.com/getimage/wd3.medium/254304\"]", "Modern Wooden Coffee Table", 149.99m, 50, 0m, 0, 0 },
+                    { new Guid("a055168e-3130-4b0a-8495-60e25d62e057"), new Guid("8980e70c-3345-4885-8518-cfcda95b3078"), "HOU-001", null, "[\"https://content1.rozetka.com.ua/goods/images/big/396437112.jpg\",\"https://content.rozetka.com.ua/goods/images/big/396437105.jpg\",\"https://content2.rozetka.com.ua/goods/images/big/396437106.jpg\"]", "Dyson V15 Detect Vacuum Cleaner", 699.0m, 50, 0m, 0, 0 }
                 });
 
             migrationBuilder.InsertData(
@@ -565,9 +565,14 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                 columns: new[] { "Id", "CategoryId", "Code", "DiscountPercent", "ImageUrls", "Name", "Price", "Quantity", "Rating", "ReviewsCount", "SoldCount" },
                 values: new object[,]
                 {
-                    { new Guid("3c5a4868-3b2d-4352-9e12-502a56bce48a"), new Guid("d2deb989-35c5-4ca1-a748-12411d3ac3a4"), "SAM-001", null, "[\"https://example.com/products/samsung1.jpg\",\"https://example.com/products/samsung2.jpg\"]", "Samsung Galaxy S23 Ultra", 1199.99m, 50, 4.5m, 100, 0 },
-                    { new Guid("a2c28a83-cfea-46ee-87e3-906f9e90f1aa"), new Guid("c1cd879d-175e-4ff5-b354-054f9f82ce98"), "SONY-002", null, "[\"https://example.com/products/sony1.jpg\",\"https://example.com/products/sony2.jpg\"]", "Sony WH-1000XM5 Headphones", 349.99m, 50, 4.5m, 100, 0 },
-                    { new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b"), new Guid("7eb489f4-2f55-4510-8e49-3965370c4989"), "FAS-001", null, "[\"https://example.com/products/jacket1.jpg\",\"https://example.com/products/jacket2.jpg\"]", "Men's Denim Jacket", 69.99m, 50, 4.5m, 100, 0 }
+                    { new Guid("12a5f27a-59d1-4961-86d7-14a787f8eec8"), new Guid("c1cd879d-175e-4ff5-b354-054f9f82ce98"), "BOSE-001", null, "[\"https://content2.rozetka.com.ua/goods/images/big/382915623.jpg\",\"https://content1.rozetka.com.ua/goods/images/big/382915624.jpg\",\"https://content1.rozetka.com.ua/goods/images/big/382915625.jpg\",\"https://content.rozetka.com.ua/goods/images/big/382915629.jpg\"]", "Bose QuietComfort Ultra", 379.99m, 35, 0m, 0, 0 },
+                    { new Guid("3c5a4868-3b2d-4352-9e12-502a56bce48a"), new Guid("d2deb989-35c5-4ca1-a748-12411d3ac3a4"), "SAM-001", null, "[\"https://content.rozetka.com.ua/goods/images/big/398092199.jpg\",\"https://content1.rozetka.com.ua/goods/images/big/398092200.jpg\",\"https://content.rozetka.com.ua/goods/images/big/398092201.jpg\",\"https://content.rozetka.com.ua/goods/images/big/398092202.jpg\",\"https://content.rozetka.com.ua/goods/images/big/398092203.jpg\",\"https://content1.rozetka.com.ua/goods/images/big/398092204.jpg\",\"https://content2.rozetka.com.ua/goods/images/big/398092205.jpg\",\"https://content.rozetka.com.ua/goods/images/big/398092206.jpg\"]", "Samsung Galaxy S23 Ultra", 1199.99m, 50, 0m, 0, 0 },
+                    { new Guid("3c7b48ff-2b17-456e-b6d9-1e4701c56ab2"), new Guid("1c9d0336-9ac8-440a-b6b6-3698940f608c"), "WTL-002", null, "[\"https://content2.rozetka.com.ua/goods/images/big/11956995.jpg\"]", "DeWalt DCD996 Cordless Drill", 199.99m, 60, 0m, 0, 0 },
+                    { new Guid("6f4c984f-7baf-4a39-aab3-018202f20de5"), new Guid("69f22c76-7202-44e6-9132-09fd09c55632"), "FAS-002", null, "[\"https://static.zara.net/assets/public/5383/1e3a/567f4efa9ab2/540875121096/04772368808-p/04772368808-p.jpg?ts=1747906901087\\u0026w=750\",\"https://static.zara.net/assets/public/1739/0738/387f4ed59035/81ddaea8d349/04772368808-a2/04772368808-a2.jpg?ts=1747906905715\\u0026w=750\",\"https://static.zara.net/assets/public/6eda/d9b8/33b748b0941d/85074a50ec93/04772368808-a4/04772368808-a4.jpg?ts=1747906897381\\u0026w=563\"]", "Zara Floral Midi Dress", 89.99m, 70, 0m, 0, 0 },
+                    { new Guid("a2c28a83-cfea-46ee-87e3-906f9e90f1aa"), new Guid("c1cd879d-175e-4ff5-b354-054f9f82ce98"), "SONY-002", null, "[\"https://content2.rozetka.com.ua/goods/images/big/296707484.jpg\",\"https://content2.rozetka.com.ua/goods/images/big/296707485.jpg\"]", "Sony WH-1000XM5 Headphones", 349.99m, 50, 0m, 0, 0 },
+                    { new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b"), new Guid("7eb489f4-2f55-4510-8e49-3965370c4989"), "FAS-001", null, "[\"https://xcdn.next.co.uk/common/items/default/default/itemimages/3_4Ratio/product/lge/E66531s.jpg?im=Resize,width=750\",\"https://xcdn.next.co.uk/common/items/default/default/itemimages/3_4Ratio/product/lge/E66531s3.jpg?im=Resize,width=480\"]", "Men's Denim Jacket", 69.99m, 50, 0m, 0, 0 },
+                    { new Guid("b7a6497f-c4cb-4d7c-afe5-167c02cbf170"), new Guid("68ae1c83-85c1-4002-bb32-d00ac9b3a1bb"), "FUR-002", null, "[\"https://home-club.com.ua//images/thumbs/0018524_-_510.jpeg\",\"https://home-club.com.ua//images/thumbs/0310065_-.jpeg\",\"https://home-club.com.ua//images/thumbs/0043920_-.jpeg\"]", "IKEA LACK Coffee Table", 39.99m, 80, 0m, 0, 0 },
+                    { new Guid("ea96f23c-13b2-4b2c-b4a6-ec7d8c19aef5"), new Guid("d2deb989-35c5-4ca1-a748-12411d3ac3a4"), "APP-002", null, "[\"https://content2.rozetka.com.ua/goods/images/big/524114081.jpg\",\"https://content1.rozetka.com.ua/goods/images/big/524114107.jpg\",\"https://content1.rozetka.com.ua/goods/images/big/524114117.jpg\",\"https://content2.rozetka.com.ua/goods/images/big/524114126.jpg\",\"https://content1.rozetka.com.ua/goods/images/big/524114144.jpg\"]", "Apple iPhone 15 Pro Max", 1399.99m, 40, 0m, 0, 0 }
                 });
 
             migrationBuilder.InsertData(
@@ -632,17 +637,37 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                 columns: new[] { "Id", "Key", "ProductId", "Value" },
                 values: new object[,]
                 {
+                    { new Guid("184d5fd1-4e1d-42c2-9b58-d5d3c1b2235a"), "Fit", new Guid("6f4c984f-7baf-4a39-aab3-018202f20de5"), "Relaxed" },
                     { new Guid("1940fec2-48f2-40ab-a4a0-199adcce9e52"), "Connectivity", new Guid("a2c28a83-cfea-46ee-87e3-906f9e90f1aa"), "Bluetooth 5.2" },
                     { new Guid("2d3c46bc-1bd0-45c0-a695-6b3ea0cea55d"), "Camera", new Guid("3c5a4868-3b2d-4352-9e12-502a56bce48a"), "200MP" },
                     { new Guid("31ed2059-8d7c-440e-849c-92b82fa07535"), "Display", new Guid("3c5a4868-3b2d-4352-9e12-502a56bce48a"), "6.8-inch AMOLED" },
                     { new Guid("34b80662-4ddf-44df-aeab-0a131d4ca441"), "Fit", new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b"), "Regular" },
+                    { new Guid("3a57dbde-0659-4377-a618-5477c3f1c6ae"), "Length", new Guid("6f4c984f-7baf-4a39-aab3-018202f20de5"), "Midi" },
+                    { new Guid("3b15cf2c-d0a6-45bb-a99f-2f0fa66cf91c"), "Chip", new Guid("ea96f23c-13b2-4b2c-b4a6-ec7d8c19aef5"), "A17 Pro" },
+                    { new Guid("3d768f6d-11d5-4033-8b6e-c2674d37b44a"), "Pattern", new Guid("6f4c984f-7baf-4a39-aab3-018202f20de5"), "Floral" },
+                    { new Guid("44c10d0d-414c-4a75-baff-b5246a6e688b"), "Noise Cancellation", new Guid("12a5f27a-59d1-4961-86d7-14a787f8eec8"), "Adaptive" },
                     { new Guid("45890b2d-4656-4bf5-bea8-8d68cef13afa"), "Storage", new Guid("3c5a4868-3b2d-4352-9e12-502a56bce48a"), "256GB" },
                     { new Guid("5d1af968-e023-4bf1-a58b-4d6701785946"), "Battery", new Guid("3c5a4868-3b2d-4352-9e12-502a56bce48a"), "5000mAh" },
+                    { new Guid("6c6b5864-33a0-4ec0-9a7e-34d73d226289"), "Chuck Size", new Guid("3c7b48ff-2b17-456e-b6d9-1e4701c56ab2"), "13mm" },
+                    { new Guid("6fa61d21-700f-4c0e-a04f-c1a1a8a2745b"), "Battery Life", new Guid("12a5f27a-59d1-4961-86d7-14a787f8eec8"), "24 hours" },
+                    { new Guid("75c1376d-1ae0-405f-a46d-15c805e3e212"), "Charging", new Guid("12a5f27a-59d1-4961-86d7-14a787f8eec8"), "USB-C Fast Charging" },
+                    { new Guid("7aa17ee1-6b46-4d41-8ae2-4f2f2931e0aa"), "Finish", new Guid("b7a6497f-c4cb-4d7c-afe5-167c02cbf170"), "White" },
+                    { new Guid("83cfd9cb-24a9-4056-bb90-85986b3b6310"), "Storage", new Guid("ea96f23c-13b2-4b2c-b4a6-ec7d8c19aef5"), "256GB" },
                     { new Guid("8f9b1a9b-6472-4251-b3b9-0dc488ac3ca3"), "Battery Life", new Guid("a2c28a83-cfea-46ee-87e3-906f9e90f1aa"), "30 hours" },
                     { new Guid("93731c22-16a2-4c9e-b4d8-3aa7485d5acb"), "Color", new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b"), "Blue" },
+                    { new Guid("a49880a3-4ba6-4bb0-8015-4bc83b6dbbcd"), "Camera", new Guid("ea96f23c-13b2-4b2c-b4a6-ec7d8c19aef5"), "48MP Triple-lens" },
+                    { new Guid("aa64df41-c001-4d1a-91b7-0807f2b5c0de"), "Type", new Guid("12a5f27a-59d1-4961-86d7-14a787f8eec8"), "Over-ear" },
                     { new Guid("ac51bf93-88a8-4b39-b106-b8a7f5c4db92"), "Season", new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b"), "All seasons" },
+                    { new Guid("b5bdf51b-e460-4e8a-8c44-22625f91ae45"), "Display", new Guid("ea96f23c-13b2-4b2c-b4a6-ec7d8c19aef5"), "6.7-inch OLED" },
+                    { new Guid("b8bc8f7a-267f-43a8-b81e-360d250209c3"), "Speed", new Guid("3c7b48ff-2b17-456e-b6d9-1e4701c56ab2"), "0–2000 RPM" },
                     { new Guid("bdb82599-d1ed-4257-8429-0c5bf8ba3094"), "Noise Cancellation", new Guid("a2c28a83-cfea-46ee-87e3-906f9e90f1aa"), "Yes" },
+                    { new Guid("c1f7efb2-8dbb-4d6e-890b-91873cc0f8a2"), "Material", new Guid("6f4c984f-7baf-4a39-aab3-018202f20de5"), "Viscose" },
+                    { new Guid("c8d6d4e7-3c25-41f4-9c3c-144143d3cb94"), "Material", new Guid("b7a6497f-c4cb-4d7c-afe5-167c02cbf170"), "Particleboard" },
+                    { new Guid("e0701d10-c221-4032-b3a5-4a05c69f56c5"), "Weight", new Guid("b7a6497f-c4cb-4d7c-afe5-167c02cbf170"), "5.8kg" },
                     { new Guid("eb86dc2a-68a2-4f38-a498-4d21a2dfd366"), "Type", new Guid("a2c28a83-cfea-46ee-87e3-906f9e90f1aa"), "Over-ear" },
+                    { new Guid("ec9f4ff8-dc66-4a6a-a88d-dfd03275e05a"), "Dimensions", new Guid("b7a6497f-c4cb-4d7c-afe5-167c02cbf170"), "90x55 cm" },
+                    { new Guid("f31206e4-8237-4db1-b3a0-544b26dd5865"), "Voltage", new Guid("3c7b48ff-2b17-456e-b6d9-1e4701c56ab2"), "20V" },
+                    { new Guid("f5035e59-f0f6-4db6-8160-0df17931a1c8"), "Battery", new Guid("3c7b48ff-2b17-456e-b6d9-1e4701c56ab2"), "2x 5.0Ah Li-ion" },
                     { new Guid("f75be0e7-0d41-45e8-87d7-e53060c87cd4"), "Material", new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b"), "100% Cotton" }
                 });
 
@@ -652,17 +677,37 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                 values: new object[,]
                 {
                     { new Guid("015d3ed7-c231-405e-bbd2-ef99c8171603"), "Premium glass and metal", "Build", new Guid("3c5a4868-3b2d-4352-9e12-502a56bce48a") },
+                    { new Guid("06695e1f-8d42-498c-8d34-e3281d49753b"), "Cinematic mode & Night photography", "Camera System", new Guid("ea96f23c-13b2-4b2c-b4a6-ec7d8c19aef5") },
+                    { new Guid("146e8860-5f1a-4086-85a1-bcbe5e16a982"), "Tool-free assembly", "Assembly", new Guid("b7a6497f-c4cb-4d7c-afe5-167c02cbf170") },
+                    { new Guid("1c6c2255-9535-4520-84ee-b00db4a2225d"), "Ergonomic handle", "Grip", new Guid("3c7b48ff-2b17-456e-b6d9-1e4701c56ab2") },
+                    { new Guid("1e4cc7b4-51a5-4bfb-8e36-1ce9a2a6c8b0"), "Brushless motor", "Performance", new Guid("3c7b48ff-2b17-456e-b6d9-1e4701c56ab2") },
                     { new Guid("1e8754f1-993e-4586-b0df-d16475bcd262"), "All-day usage", "Battery Life", new Guid("3c5a4868-3b2d-4352-9e12-502a56bce48a") },
+                    { new Guid("2a222bb7-cc32-4e2f-9ad3-2ad2aaf1fc6f"), "Heavy-duty construction", "Durability", new Guid("3c7b48ff-2b17-456e-b6d9-1e4701c56ab2") },
+                    { new Guid("2e5c6e3a-bb5f-42f7-b933-0e21dcdb267f"), "Plush cushioning", "Comfort", new Guid("12a5f27a-59d1-4961-86d7-14a787f8eec8") },
                     { new Guid("38c8f67f-7b05-4f06-8856-546a4e499d5c"), "Made to last", "Durability", new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b") },
+                    { new Guid("431d02bb-1446-4d9a-8f71-207b6d0ffbe1"), "Simple and modern", "Design", new Guid("b7a6497f-c4cb-4d7c-afe5-167c02cbf170") },
                     { new Guid("542a9d5b-af5f-4709-82b1-ed83b2d9143d"), "Touch-enabled", "Controls", new Guid("a2c28a83-cfea-46ee-87e3-906f9e90f1aa") },
+                    { new Guid("56e75d3f-9fb5-4d8c-a986-8985a8aa96c1"), "Titanium frame", "Build Quality", new Guid("ea96f23c-13b2-4b2c-b4a6-ec7d8c19aef5") },
+                    { new Guid("6ab182fd-45bb-4747-93d7-4533cdd9f88c"), "LED work light", "Convenience", new Guid("3c7b48ff-2b17-456e-b6d9-1e4701c56ab2") },
+                    { new Guid("76bdc733-91d3-48f1-a447-b78e0e4b9991"), "Smooth iOS experience", "Performance", new Guid("ea96f23c-13b2-4b2c-b4a6-ec7d8c19aef5") },
+                    { new Guid("781153a3-0555-49ae-987e-09dbde5172ee"), "Suitable for casual and formal", "Versatility", new Guid("6f4c984f-7baf-4a39-aab3-018202f20de5") },
                     { new Guid("7833296c-251c-4868-9bc2-3da59b3cd811"), "High-resolution audio", "Sound", new Guid("a2c28a83-cfea-46ee-87e3-906f9e90f1aa") },
                     { new Guid("7aeefca5-b681-41cf-baef-0ab5306f250a"), "Machine washable", "Care", new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b") },
                     { new Guid("905cdea9-9662-4f42-82d4-c0b24e957ee8"), "Pairs with any outfit", "Versatility", new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b") },
+                    { new Guid("93c3210e-48e6-4fc4-8783-47bdc8601694"), "Touch & voice control", "Controls", new Guid("12a5f27a-59d1-4961-86d7-14a787f8eec8") },
                     { new Guid("9f7ba4ac-9b83-41bc-9fc9-53896c0fcd17"), "Pro-grade camera system", "Camera Quality", new Guid("3c5a4868-3b2d-4352-9e12-502a56bce48a") },
+                    { new Guid("a3a37d1e-26e9-40f0-b935-1e5e43b83e02"), "Budget-friendly option", "Affordability", new Guid("b7a6497f-c4cb-4d7c-afe5-167c02cbf170") },
+                    { new Guid("a5fd738e-6d61-49f7-b51c-dcdbbcd27644"), "Breathable fabric", "Comfort", new Guid("6f4c984f-7baf-4a39-aab3-018202f20de5") },
+                    { new Guid("a90fa301-e8e3-4097-a507-cdc1a9f5b008"), "Lightweight design", "Portability", new Guid("b7a6497f-c4cb-4d7c-afe5-167c02cbf170") },
                     { new Guid("b6634cd8-0a8c-4ada-b8cc-310b490c6058"), "Soft ear cushions", "Comfort", new Guid("a2c28a83-cfea-46ee-87e3-906f9e90f1aa") },
+                    { new Guid("b9b205bb-9a76-4456-a0cb-dc28e4fce1c5"), "Elegant and breezy", "Style", new Guid("6f4c984f-7baf-4a39-aab3-018202f20de5") },
                     { new Guid("c6676eab-a776-4380-9b0e-a07b10da8236"), "Snapdragon 8 Gen 2", "Performance", new Guid("3c5a4868-3b2d-4352-9e12-502a56bce48a") },
+                    { new Guid("da2c2ff2-1c38-4a23-a8cc-25b4f4ec2680"), "Modern aesthetic", "Design", new Guid("12a5f27a-59d1-4961-86d7-14a787f8eec8") },
+                    { new Guid("e4c01f56-8e2e-4866-a98f-6c4f69f63f6f"), "Up to 29 hours video playback", "Battery Life", new Guid("ea96f23c-13b2-4b2c-b4a6-ec7d8c19aef5") },
                     { new Guid("edb89e51-144c-48a7-8fbf-7a645abc970b"), "Foldable design", "Portability", new Guid("a2c28a83-cfea-46ee-87e3-906f9e90f1aa") },
-                    { new Guid("f7f4c40c-82d3-488f-bf1a-9094dc2048b0"), "Casual yet rugged", "Style", new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b") }
+                    { new Guid("f00725dc-2d23-4ff3-93b6-bcb9fdf8f293"), "CustomTune technology", "Sound Quality", new Guid("12a5f27a-59d1-4961-86d7-14a787f8eec8") },
+                    { new Guid("f7f4c40c-82d3-488f-bf1a-9094dc2048b0"), "Casual yet rugged", "Style", new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b") },
+                    { new Guid("fbf426f5-78e4-4d4f-b183-3fcf3870e04b"), "Machine washable", "Care", new Guid("6f4c984f-7baf-4a39-aab3-018202f20de5") }
                 });
 
             migrationBuilder.InsertData(

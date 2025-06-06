@@ -19,9 +19,7 @@ public static class Electronics_SonyWH1000XM5
             [
                 "https://content2.rozetka.com.ua/goods/images/big/296707484.jpg",
                 "https://content2.rozetka.com.ua/goods/images/big/296707485.jpg"
-            ],
-            Rating = 4.5m,
-            ReviewsCount = 100
+            ]
         });
         modelBuilder.Entity<ProductAttribute>().HasData(new ProductAttribute
         {

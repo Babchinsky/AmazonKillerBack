@@ -24,9 +24,7 @@ public static class Electronics_IPhone15ProMax
                 "https://content1.rozetka.com.ua/goods/images/big/524114117.jpg",
                 "https://content2.rozetka.com.ua/goods/images/big/524114126.jpg",
                 "https://content1.rozetka.com.ua/goods/images/big/524114144.jpg"
-            ],
-            Rating = 4.7m,
-            ReviewsCount = 200
+            ]
         });
 
         modelBuilder.Entity<ProductAttribute>().HasData(

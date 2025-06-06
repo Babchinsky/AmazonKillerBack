@@ -19,9 +19,7 @@ public static class Furniture_ModernCoffeeTable
             [
                 "https://cdn2.jysk.com/getimage/wd3.medium/256592",
                 "https://cdn2.jysk.com/getimage/wd3.medium/254304"
-            ],
-            Rating = 4.5m,
-            ReviewsCount = 100
+            ]
         });
         modelBuilder.Entity<ProductAttribute>().HasData(new ProductAttribute
         {

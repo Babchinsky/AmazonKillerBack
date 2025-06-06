@@ -19,9 +19,7 @@ public static class WorkTools_MakitaDrill
             [
                 "https://content2.rozetka.com.ua/goods/images/big/333625233.jpg",
                 "https://content2.rozetka.com.ua/goods/images/big/367185899.jpg"
-            ],
-            Rating = 4.5m,
-            ReviewsCount = 100
+            ]
         });
         modelBuilder.Entity<ProductAttribute>().HasData(new ProductAttribute
         {

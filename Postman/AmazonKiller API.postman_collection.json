@@ -1088,7 +1088,7 @@
 										{
 											"key": "Image",
 											"type": "file",
-											"src": "/C:/Users/alexs/OneDrive/Desktop/category1.jpg"
+											"src": "/C:/Users/alexs/OneDrive/Desktop/Postman/product2_photo.jpg"
 										}
 									]
 								},
@@ -1707,7 +1707,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "{{categoryId}}",
+											"value": "d2deb989-35c5-4ca1-a748-12411d3ac3a4",
 											"description": "(Required) "
 										}
 									]
@@ -2663,7 +2663,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/api/products",
+									"raw": "{{baseUrl}}/api/products?CategoryId=d2deb989-35c5-4ca1-a748-12411d3ac3a4",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -2679,8 +2679,7 @@
 										},
 										{
 											"key": "CategoryId",
-											"value": "7AD3D843-1642-4E8A-A843-503928EF8154",
-											"disabled": true
+											"value": "d2deb989-35c5-4ca1-a748-12411d3ac3a4"
 										},
 										{
 											"key": "Filters[proidente24]",
@@ -2784,7 +2783,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "{{lastProductId}}",
+											"value": "3c5a4868-3b2d-4352-9e12-502a56bce48a",
 											"description": "(Required) "
 										}
 									]
@@ -5087,7 +5086,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/api/collections?CategoryId={{categoryId}}&Parameters.Page=1&Parameters.PageSize=20",
+									"raw": "{{baseUrl}}/api/collections",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -5103,7 +5102,8 @@
 										},
 										{
 											"key": "CategoryId",
-											"value": "{{categoryId}}"
+											"value": "{{categoryId}}",
+											"disabled": true
 										},
 										{
 											"key": "MinPrice",
@@ -5117,11 +5117,13 @@
 										},
 										{
 											"key": "Parameters.Page",
-											"value": "1"
+											"value": "1",
+											"disabled": true
 										},
 										{
 											"key": "Parameters.PageSize",
-											"value": "20"
+											"value": "20",
+											"disabled": true
 										},
 										{
 											"key": "Parameters.SortBy",
@@ -5166,8 +5168,11 @@
 								{
 									"listen": "prerequest",
 									"script": {
-										"packages": {},
-										"type": "text/javascript"
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
 									}
 								}
 							],
@@ -5195,7 +5200,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "{{collectionId}}",
+											"value": "10000000-0000-0000-0000-000000000001",
 											"description": "(Required) "
 										}
 									]
@@ -5401,6 +5406,71 @@
 									"key": "region",
 									"value": "{{region}}"
 								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "(System) Maintenance",
+			"item": [
+				{
+					"name": "Recalculate Ratings in Products",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{adminAccessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/admin/maintenance/recalculate-ratings",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"maintenance",
+								"recalculate-ratings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Recalculate Categories Filters",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{adminAccessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/admin/maintenance/recalculate-category-filters",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"maintenance",
+								"recalculate-category-filters"
 							]
 						}
 					},

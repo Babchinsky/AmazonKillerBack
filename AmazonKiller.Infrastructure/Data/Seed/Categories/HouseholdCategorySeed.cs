@@ -1,12 +1,11 @@
 ﻿using AmazonKiller.Domain.Entities.Categories;
-using AmazonKiller.Infrastructure.Data.Helpers;
 using Microsoft.EntityFrameworkCore;
 
 namespace AmazonKiller.Infrastructure.Data.Seed.Categories;
 
 public static class HouseholdCategorySeed
 {
-    public static void Seed(ModelBuilder modelBuilder, Dictionary<Guid, List<string>> keysMap)
+    public static void Seed(ModelBuilder modelBuilder)
     {
         var rootId = new Guid("8980e70c-3345-4885-8518-cfcda95b3078");
 
@@ -19,8 +18,7 @@ public static class HouseholdCategorySeed
                 Description = "Household category",
                 ImageUrl = "https://example.com/images/household.jpg",
                 IconName = "cleaning-spray",
-                ParentId = null,
-                PropertyKeys = SeedHelper.KeysOrNull(rootId, keysMap) ?? []
+                ParentId = null
             },
             new Category
             {
@@ -30,8 +28,7 @@ public static class HouseholdCategorySeed
                 Description = "Kitchen Appliances category",
                 ImageUrl = "https://example.com/images/kitchen_appliances.jpg",
                 IconName = "kitchen appliances",
-                ParentId = rootId,
-                PropertyKeys = SeedHelper.KeysOrNull(Guid.Parse("0e6feb3f-f795-4541-8cc6-7d7047951eb9"), keysMap) ?? []
+                ParentId = rootId
             },
             new Category
             {
@@ -41,8 +38,7 @@ public static class HouseholdCategorySeed
                 Description = "Cleaning Supplies category",
                 ImageUrl = "https://example.com/images/cleaning_supplies.jpg",
                 IconName = "cleaning supplies",
-                ParentId = rootId,
-                PropertyKeys = SeedHelper.KeysOrNull(Guid.Parse("1b6f5f96-233d-4b82-b30f-27643f6b62eb"), keysMap) ?? []
+                ParentId = rootId
             },
             new Category
             {
@@ -52,8 +48,7 @@ public static class HouseholdCategorySeed
                 Description = "Storage category",
                 ImageUrl = "https://example.com/images/storage.jpg",
                 IconName = "storage",
-                ParentId = rootId,
-                PropertyKeys = SeedHelper.KeysOrNull(Guid.Parse("d94af679-24f4-4ab2-ae1e-ba3689143579"), keysMap) ?? []
+                ParentId = rootId
             },
             new Category
             {
@@ -63,8 +58,7 @@ public static class HouseholdCategorySeed
                 Description = "Bathroom category",
                 ImageUrl = "https://example.com/images/bathroom.jpg",
                 IconName = "bathroom",
-                ParentId = rootId,
-                PropertyKeys = SeedHelper.KeysOrNull(Guid.Parse("2f4f0438-f456-4770-9d49-1a46ed4ec88a"), keysMap) ?? []
+                ParentId = rootId
             }
         );
     }

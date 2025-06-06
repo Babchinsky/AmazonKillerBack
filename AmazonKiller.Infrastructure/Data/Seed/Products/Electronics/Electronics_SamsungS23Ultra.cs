@@ -25,9 +25,7 @@ public static class Electronics_SamsungS23Ultra
                 "https://content1.rozetka.com.ua/goods/images/big/398092204.jpg",
                 "https://content2.rozetka.com.ua/goods/images/big/398092205.jpg",
                 "https://content.rozetka.com.ua/goods/images/big/398092206.jpg"
-            ],
-            Rating = 4.5m,
-            ReviewsCount = 100
+            ]
         });
         modelBuilder.Entity<ProductAttribute>().HasData(new ProductAttribute
         {

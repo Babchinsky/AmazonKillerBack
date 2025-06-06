@@ -22,9 +22,7 @@ public static class Fashion_ZaraFloralDress
                 "https://static.zara.net/assets/public/5383/1e3a/567f4efa9ab2/540875121096/04772368808-p/04772368808-p.jpg?ts=1747906901087&w=750",
                 "https://static.zara.net/assets/public/1739/0738/387f4ed59035/81ddaea8d349/04772368808-a2/04772368808-a2.jpg?ts=1747906905715&w=750",
                 "https://static.zara.net/assets/public/6eda/d9b8/33b748b0941d/85074a50ec93/04772368808-a4/04772368808-a4.jpg?ts=1747906897381&w=563"
-            ],
-            Rating = 4.4m,
-            ReviewsCount = 90
+            ]
         });
 
         modelBuilder.Entity<ProductAttribute>().HasData(

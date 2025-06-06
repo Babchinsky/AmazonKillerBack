@@ -19,9 +19,7 @@ public static class Fashion_MensDenimJacket
             [
                 "https://xcdn.next.co.uk/common/items/default/default/itemimages/3_4Ratio/product/lge/E66531s.jpg?im=Resize,width=750",
                 "https://xcdn.next.co.uk/common/items/default/default/itemimages/3_4Ratio/product/lge/E66531s3.jpg?im=Resize,width=480"
-            ],
-            Rating = 4.5m,
-            ReviewsCount = 100
+            ]
         });
         modelBuilder.Entity<ProductAttribute>().HasData(new ProductAttribute
         {

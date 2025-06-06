@@ -20,9 +20,7 @@ public static class Household_DysonV15
                 "https://content1.rozetka.com.ua/goods/images/big/396437112.jpg",
                 "https://content.rozetka.com.ua/goods/images/big/396437105.jpg",
                 "https://content2.rozetka.com.ua/goods/images/big/396437106.jpg"
-            ],
-            Rating = 4.5m,
-            ReviewsCount = 100
+            ]
         });
         modelBuilder.Entity<ProductAttribute>().HasData(new ProductAttribute
         {

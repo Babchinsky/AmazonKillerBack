@@ -1,4 +1,4 @@
-﻿namespace AmazonKiller.Infrastructure.Data.Helpers;
+﻿namespace AmazonKiller.Infrastructure.Data.Seed.Helpers;
 
 public static class SeedHelper
 {

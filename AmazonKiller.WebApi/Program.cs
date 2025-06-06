@@ -1,5 +1,6 @@
 using System.Text;
 using AmazonKiller.Application.DependencyInjection;
+using AmazonKiller.Application.Interfaces.Services.Recalculation;
 using AmazonKiller.Application.Options;
 using AmazonKiller.Infrastructure.Data;
 using AmazonKiller.Infrastructure.DependencyInjection;
@@ -105,11 +106,16 @@ var app = builder.Build();
 // --- Автоматическая миграция БД ---
 using (var scope = app.Services.CreateScope())
 {
-    // var env = scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>();
     var db = scope.ServiceProvider.GetRequiredService<AmazonDbContext>();
+    db.Database.Migrate();
 
-    // if (!env.IsEnvironment("Testing")) 
-    db.Database.Migrate(); // Только если не тесты!
+    // рейтинги
+    await scope.ServiceProvider.GetRequiredService<IProductRatingService>()
+        .RecalculateAsync();
+
+    // фильтры категорий
+    await scope.ServiceProvider.GetRequiredService<ICategoryFilterService>()
+        .RecalculateAsync();
 }
 
 app.UseForwardedHeaders();

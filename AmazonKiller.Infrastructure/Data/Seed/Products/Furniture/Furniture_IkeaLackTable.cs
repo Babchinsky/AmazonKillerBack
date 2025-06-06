@@ -22,9 +22,7 @@ public static class Furniture_IkeaLackTable
                 "https://home-club.com.ua//images/thumbs/0018524_-_510.jpeg",
                 "https://home-club.com.ua//images/thumbs/0310065_-.jpeg",
                 "https://home-club.com.ua//images/thumbs/0043920_-.jpeg"
-            ],
-            Rating = 4.2m,
-            ReviewsCount = 320
+            ]
         });
 
         modelBuilder.Entity<ProductAttribute>().HasData(

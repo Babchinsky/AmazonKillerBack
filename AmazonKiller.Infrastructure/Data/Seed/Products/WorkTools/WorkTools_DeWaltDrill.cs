@@ -20,9 +20,7 @@ public static class WorkTools_DeWaltDrill
             ImageUrls =
             [
                 "https://content2.rozetka.com.ua/goods/images/big/11956995.jpg"
-            ],
-            Rating = 4.8m,
-            ReviewsCount = 180
+            ]
         });
 
         modelBuilder.Entity<ProductAttribute>().HasData(
