@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AmazonKiller.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AmazonDbContext))]
-    [Migration("20250606110119_Initial")]
+    [Migration("20250606112701_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -740,6 +740,20 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         },
                         new
                         {
+                            Id = new Guid("7777eeee-ffff-aaaa-bbbb-cccc00000001"),
+                            CategoryId = new Guid("8fc8707d-97d7-41a1-9c31-50f07b8466f4"),
+                            Code = "ELE-006",
+                            ImageUrls = "[\"https://images.samsung.com/is/image/samsung/p6pim/ua/qe55s95dauxua/gallery/ua-oled-s95d-qe55s95dauxua-544778064?$684_547_JPG$\",\"https://images.samsung.com/is/image/samsung/p6pim/ua/qe55s95dauxua/gallery/ua-oled-s95d-qe55s95dauxua-541007467?$684_547_JPG$\",\"https://images.samsung.com/is/image/samsung/p6pim/ua/qe55s95dauxua/gallery/ua-oled-s95d-qe55s95dauxua-544308036?$684_547_JPG$\"]",
+                            Name = "Samsung QLED 4K Smart TV 55\"",
+                            Price = 1099.99m,
+                            Quantity = 15,
+                            Rating = 0m,
+                            ReviewsCount = 0,
+                            RowVersion = new byte[0],
+                            SoldCount = 0
+                        },
+                        new
+                        {
                             Id = new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b"),
                             CategoryId = new Guid("7eb489f4-2f55-4510-8e49-3965370c4989"),
                             Code = "FAS-001",
@@ -789,6 +803,20 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                             Name = "Stylish Women's Summer Hat",
                             Price = 34.99m,
                             Quantity = 40,
+                            Rating = 0m,
+                            ReviewsCount = 0,
+                            RowVersion = new byte[0],
+                            SoldCount = 0
+                        },
+                        new
+                        {
+                            Id = new Guid("7777ffff-aaaa-bbbb-cccc-dddd00000002"),
+                            CategoryId = new Guid("7eb489f4-2f55-4510-8e49-3965370c4989"),
+                            Code = "FAS-006",
+                            ImageUrls = "[\"https://content2.rozetka.com.ua/goods/images/big/331352901.jpg\",\"https://content1.rozetka.com.ua/goods/images/big/331352912.jpg\",\"https://content1.rozetka.com.ua/goods/images/big/331352917.jpg\"]",
+                            Name = "Men's Genuine Leather Jacket",
+                            Price = 179.99m,
+                            Quantity = 20,
                             Rating = 0m,
                             ReviewsCount = 0,
                             RowVersion = new byte[0],
@@ -852,6 +880,20 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         },
                         new
                         {
+                            Id = new Guid("7777dddd-aaaa-bbbb-cccc-eeee00000003"),
+                            CategoryId = new Guid("c9f81657-73a1-4b53-bf80-b59121eae433"),
+                            Code = "FUR-006",
+                            ImageUrls = "[\"https://cdn1.jysk.com/getimage/wd3.large/245914\",\"https://cdn1.jysk.com/getimage/wd3.large/245910\",\"https://cdn1.jysk.com/getimage/wd3.large/161839\",\"https://cdn1.jysk.com/getimage/wd3.large/161840\"]",
+                            Name = "Solid Wood Bookshelf 5-Tier",
+                            Price = 129.99m,
+                            Quantity = 30,
+                            Rating = 0m,
+                            ReviewsCount = 0,
+                            RowVersion = new byte[0],
+                            SoldCount = 0
+                        },
+                        new
+                        {
                             Id = new Guid("a055168e-3130-4b0a-8495-60e25d62e057"),
                             CategoryId = new Guid("8980e70c-3345-4885-8518-cfcda95b3078"),
                             Code = "HOU-001",
@@ -887,6 +929,34 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                             Name = "Collapsible Laundry Basket",
                             Price = 19.99m,
                             Quantity = 100,
+                            Rating = 0m,
+                            ReviewsCount = 0,
+                            RowVersion = new byte[0],
+                            SoldCount = 0
+                        },
+                        new
+                        {
+                            Id = new Guid("7777eeee-aaaa-bbbb-cccc-dddd00000006"),
+                            CategoryId = new Guid("8980e70c-3345-4885-8518-cfcda95b3078"),
+                            Code = "HOU-006",
+                            ImageUrls = "[\"https://content.rozetka.com.ua/goods/images/big/529433930.jpg\",\"https://content1.rozetka.com.ua/goods/images/big/469768391.jpg\"]",
+                            Name = "Philips Series 3000i Air Purifier",
+                            Price = 319.00m,
+                            Quantity = 35,
+                            Rating = 0m,
+                            ReviewsCount = 0,
+                            RowVersion = new byte[0],
+                            SoldCount = 0
+                        },
+                        new
+                        {
+                            Id = new Guid("7777eeee-aaaa-bbbb-cccc-dddd00000004"),
+                            CategoryId = new Guid("8980e70c-3345-4885-8518-cfcda95b3078"),
+                            Code = "HOU-007",
+                            ImageUrls = "[\"https://ecosoft.ua/upload/resize_cache/iblock/d40/564_564_140cd750bba9870f18aada2478b24840a/ru_filtr_obratnogo_osmosa_ecosoft_standard_pro_mo550mecostd_ua_filtr_zvorotnogo_osmosu_ecosoft_stand.webp\",\"https://ecosoft.ua/upload/resize_cache/iblock/527/564_564_140cd750bba9870f18aada2478b24840a/mo550ecostd_1_opt.webp\",\"https://ecosoft.ua/upload/resize_cache/iblock/391/564_564_140cd750bba9870f18aada2478b24840a/mo550ecostd_4_opt.webp\"]",
+                            Name = "AquaPro RO+UV+UF Water Purifier",
+                            Price = 199.99m,
+                            Quantity = 45,
                             Rating = 0m,
                             ReviewsCount = 0,
                             RowVersion = new byte[0],
@@ -943,6 +1013,20 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                             Name = "3M Safety Helmet H-700 Series",
                             Price = 35.99m,
                             Quantity = 150,
+                            Rating = 0m,
+                            ReviewsCount = 0,
+                            RowVersion = new byte[0],
+                            SoldCount = 0
+                        },
+                        new
+                        {
+                            Id = new Guid("7777ffff-aaaa-bbbb-cccc-dddd00000005"),
+                            CategoryId = new Guid("834ba378-fe57-4702-b85c-4cb0431d1909"),
+                            Code = "TOOL-010",
+                            ImageUrls = "[\"https://content1.rozetka.com.ua/goods/images/big/318774509.jpg\",\"https://content.rozetka.com.ua/goods/images/big/318774562.png\",\"https://content2.rozetka.com.ua/goods/images/big/318774588.jpg\"]",
+                            Name = "Bosch GSB 180-LI Cordless Drill",
+                            Price = 139.99m,
+                            Quantity = 60,
                             Rating = 0m,
                             ReviewsCount = 0,
                             RowVersion = new byte[0],
@@ -1146,6 +1230,34 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         },
                         new
                         {
+                            Id = new Guid("00000000-0000-0000-0000-000000000151"),
+                            Key = "Screen Size",
+                            ProductId = new Guid("7777eeee-ffff-aaaa-bbbb-cccc00000001"),
+                            Value = "55 inch"
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0000-000000000152"),
+                            Key = "Resolution",
+                            ProductId = new Guid("7777eeee-ffff-aaaa-bbbb-cccc00000001"),
+                            Value = "4K Ultra HD"
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0000-000000000153"),
+                            Key = "Display Type",
+                            ProductId = new Guid("7777eeee-ffff-aaaa-bbbb-cccc00000001"),
+                            Value = "QLED"
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0000-000000000154"),
+                            Key = "Smart TV",
+                            ProductId = new Guid("7777eeee-ffff-aaaa-bbbb-cccc00000001"),
+                            Value = "Yes"
+                        },
+                        new
+                        {
                             Id = new Guid("f75be0e7-0d41-45e8-87d7-e53060c87cd4"),
                             Key = "Material",
                             ProductId = new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b"),
@@ -1248,6 +1360,27 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                             Key = "Size",
                             ProductId = new Guid("7777bbbb-cccc-dddd-eeee-ffff00000001"),
                             Value = "One Size Fits Most"
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0000-000000000161"),
+                            Key = "Material",
+                            ProductId = new Guid("7777ffff-aaaa-bbbb-cccc-dddd00000002"),
+                            Value = "Genuine Leather"
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0000-000000000162"),
+                            Key = "Color",
+                            ProductId = new Guid("7777ffff-aaaa-bbbb-cccc-dddd00000002"),
+                            Value = "Black"
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0000-000000000163"),
+                            Key = "Size",
+                            ProductId = new Guid("7777ffff-aaaa-bbbb-cccc-dddd00000002"),
+                            Value = "M-XXL"
                         },
                         new
                         {
@@ -1363,6 +1496,27 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         },
                         new
                         {
+                            Id = new Guid("00000000-0000-0000-0000-000000000181"),
+                            Key = "Material",
+                            ProductId = new Guid("7777dddd-aaaa-bbbb-cccc-eeee00000003"),
+                            Value = "Pine Wood"
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0000-000000000182"),
+                            Key = "Color",
+                            ProductId = new Guid("7777dddd-aaaa-bbbb-cccc-eeee00000003"),
+                            Value = "Walnut Brown"
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0000-000000000183"),
+                            Key = "Shelves",
+                            ProductId = new Guid("7777dddd-aaaa-bbbb-cccc-eeee00000003"),
+                            Value = "5"
+                        },
+                        new
+                        {
                             Id = new Guid("5a29ac69-487d-4609-b29e-3b6f30b088ce"),
                             Key = "Type",
                             ProductId = new Guid("a055168e-3130-4b0a-8495-60e25d62e057"),
@@ -1444,6 +1598,48 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                             Key = "Weight",
                             ProductId = new Guid("8888aaaa-bbbb-cccc-dddd-eeee00000003"),
                             Value = "0.5kg"
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0000-000000000481"),
+                            Key = "Coverage Area",
+                            ProductId = new Guid("7777eeee-aaaa-bbbb-cccc-dddd00000006"),
+                            Value = "104 m²"
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0000-000000000482"),
+                            Key = "CADR",
+                            ProductId = new Guid("7777eeee-aaaa-bbbb-cccc-dddd00000006"),
+                            Value = "400 m³/h"
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0000-000000000483"),
+                            Key = "Filter Type",
+                            ProductId = new Guid("7777eeee-aaaa-bbbb-cccc-dddd00000006"),
+                            Value = "HEPA + Carbon"
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0000-000000000191"),
+                            Key = "Technology",
+                            ProductId = new Guid("7777eeee-aaaa-bbbb-cccc-dddd00000004"),
+                            Value = "RO+UV+UF"
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0000-000000000192"),
+                            Key = "Storage Capacity",
+                            ProductId = new Guid("7777eeee-aaaa-bbbb-cccc-dddd00000004"),
+                            Value = "8 Liters"
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0000-000000000193"),
+                            Key = "Power",
+                            ProductId = new Guid("7777eeee-aaaa-bbbb-cccc-dddd00000004"),
+                            Value = "36W"
                         },
                         new
                         {
@@ -1556,6 +1752,27 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                             Key = "Standard",
                             ProductId = new Guid("8888aaaa-bbbb-cccc-dddd-eeee00000005"),
                             Value = "ANSI/ISEA Z89.1-2014"
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0000-000000000261"),
+                            Key = "Type",
+                            ProductId = new Guid("7777ffff-aaaa-bbbb-cccc-dddd00000005"),
+                            Value = "Cordless Drill"
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0000-000000000262"),
+                            Key = "Battery",
+                            ProductId = new Guid("7777ffff-aaaa-bbbb-cccc-dddd00000005"),
+                            Value = "18V Li-ion"
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0000-000000000263"),
+                            Key = "Max Torque",
+                            ProductId = new Guid("7777ffff-aaaa-bbbb-cccc-dddd00000005"),
+                            Value = "54 Nm"
                         });
                 });
 
@@ -1755,6 +1972,27 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         },
                         new
                         {
+                            Id = new Guid("00000000-0000-0000-0000-000000000251"),
+                            Description = "Supports Bixby, Alexa, and Google Assistant",
+                            Name = "Voice Control",
+                            ProductId = new Guid("7777eeee-ffff-aaaa-bbbb-cccc00000001")
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0000-000000000252"),
+                            Description = "Quantum HDR with deep contrast",
+                            Name = "HDR",
+                            ProductId = new Guid("7777eeee-ffff-aaaa-bbbb-cccc00000001")
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0000-000000000253"),
+                            Description = "Slim look with almost no bezel",
+                            Name = "Design",
+                            ProductId = new Guid("7777eeee-ffff-aaaa-bbbb-cccc00000001")
+                        },
+                        new
+                        {
                             Id = new Guid("f7f4c40c-82d3-488f-bf1a-9094dc2048b0"),
                             Description = "Casual yet rugged",
                             Name = "Style",
@@ -1850,6 +2088,20 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                             Description = "Breathable and lightweight",
                             Name = "Design",
                             ProductId = new Guid("7777bbbb-cccc-dddd-eeee-ffff00000001")
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0000-000000000261"),
+                            Description = "Classic biker look with zipper closure",
+                            Name = "Style",
+                            ProductId = new Guid("7777ffff-aaaa-bbbb-cccc-dddd00000002")
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0000-000000000262"),
+                            Description = "Fully lined for winter use",
+                            Name = "Warmth",
+                            ProductId = new Guid("7777ffff-aaaa-bbbb-cccc-dddd00000002")
                         },
                         new
                         {
@@ -1958,6 +2210,20 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         },
                         new
                         {
+                            Id = new Guid("00000000-0000-0000-0000-000000000281"),
+                            Description = "Supports up to 30kg per shelf",
+                            Name = "Durability",
+                            ProductId = new Guid("7777dddd-aaaa-bbbb-cccc-eeee00000003")
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0000-000000000282"),
+                            Description = "Rustic farmhouse design",
+                            Name = "Style",
+                            ProductId = new Guid("7777dddd-aaaa-bbbb-cccc-eeee00000003")
+                        },
+                        new
+                        {
                             Id = new Guid("75e0cc52-9a6b-4157-b453-57f390790cf4"),
                             Description = "Laser detects microscopic dust",
                             Name = "Performance",
@@ -2039,6 +2305,34 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                             Description = "Ideal for dorms, apartments, or travel",
                             Name = "Use",
                             ProductId = new Guid("8888aaaa-bbbb-cccc-dddd-eeee00000003")
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0000-000000000481"),
+                            Description = "App control and air quality feedback",
+                            Name = "Smart Features",
+                            ProductId = new Guid("7777eeee-aaaa-bbbb-cccc-dddd00000006")
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0000-000000000482"),
+                            Description = "Operates as low as 33 dB",
+                            Name = "Silent Mode",
+                            ProductId = new Guid("7777eeee-aaaa-bbbb-cccc-dddd00000006")
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0000-000000000291"),
+                            Description = "Removes bacteria, viruses, and TDS",
+                            Name = "Purification",
+                            ProductId = new Guid("7777eeee-aaaa-bbbb-cccc-dddd00000004")
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0000-000000000292"),
+                            Description = "Wall-mounted with transparent cover",
+                            Name = "Design",
+                            ProductId = new Guid("7777eeee-aaaa-bbbb-cccc-dddd00000004")
                         },
                         new
                         {
@@ -2144,6 +2438,20 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                             Description = "Accessory slots for face shields and earmuffs",
                             Name = "Compatibility",
                             ProductId = new Guid("8888aaaa-bbbb-cccc-dddd-eeee00000005")
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0000-000000000361"),
+                            Description = "2-speed gearbox for optimized performance",
+                            Name = "Speed",
+                            ProductId = new Guid("7777ffff-aaaa-bbbb-cccc-dddd00000005")
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0000-000000000362"),
+                            Description = "Robust housing and overload protection",
+                            Name = "Durability",
+                            ProductId = new Guid("7777ffff-aaaa-bbbb-cccc-dddd00000005")
                         });
                 });
 
