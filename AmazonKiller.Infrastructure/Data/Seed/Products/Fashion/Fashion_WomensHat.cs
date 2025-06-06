@@ -27,17 +27,17 @@ public static class Fashion_WomensHat
         modelBuilder.Entity<ProductAttribute>().HasData(
             new ProductAttribute
             {
-                Id = Guid.Parse("00000000-0000-0000-0000-000000000301"), ProductId = productId, Key = "Material",
+                Id = Guid.Parse("00000000-0000-0000-0000-000000000331"), ProductId = productId, Key = "Material",
                 Value = "Straw"
             },
             new ProductAttribute
             {
-                Id = Guid.Parse("00000000-0000-0000-0000-000000000302"), ProductId = productId, Key = "Color",
+                Id = Guid.Parse("00000000-0000-0000-0000-000000000332"), ProductId = productId, Key = "Color",
                 Value = "Beige"
             },
             new ProductAttribute
             {
-                Id = Guid.Parse("00000000-0000-0000-0000-000000000303"), ProductId = productId, Key = "Size",
+                Id = Guid.Parse("00000000-0000-0000-0000-000000000333"), ProductId = productId, Key = "Size",
                 Value = "One Size Fits Most"
             }
         );
@@ -45,12 +45,12 @@ public static class Fashion_WomensHat
         modelBuilder.Entity<ProductFeature>().HasData(
             new ProductFeature
             {
-                Id = Guid.Parse("00000000-0000-0000-0000-000000000401"), ProductId = productId, Name = "Sun Protection",
+                Id = Guid.Parse("00000000-0000-0000-0000-000000000431"), ProductId = productId, Name = "Sun Protection",
                 Description = "Wide brim blocks UV rays"
             },
             new ProductFeature
             {
-                Id = Guid.Parse("00000000-0000-0000-0000-000000000402"), ProductId = productId, Name = "Design",
+                Id = Guid.Parse("00000000-0000-0000-0000-000000000432"), ProductId = productId, Name = "Design",
                 Description = "Breathable and lightweight"
             }
         );

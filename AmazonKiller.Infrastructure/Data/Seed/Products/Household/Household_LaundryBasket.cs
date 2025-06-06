@@ -28,22 +28,22 @@ public static class Household_LaundryBasket
         modelBuilder.Entity<ProductAttribute>().HasData(
             new ProductAttribute
             {
-                Id = Guid.Parse("00000000-0000-0000-0000-000000000301"), ProductId = productId, Key = "Material",
+                Id = Guid.Parse("00000000-0000-0000-0000-000000000311"), ProductId = productId, Key = "Material",
                 Value = "Polyester"
             },
             new ProductAttribute
             {
-                Id = Guid.Parse("00000000-0000-0000-0000-000000000302"), ProductId = productId, Key = "Capacity",
+                Id = Guid.Parse("00000000-0000-0000-0000-000000000312"), ProductId = productId, Key = "Capacity",
                 Value = "60L"
             },
             new ProductAttribute
             {
-                Id = Guid.Parse("00000000-0000-0000-0000-000000000303"), ProductId = productId, Key = "Foldable",
+                Id = Guid.Parse("00000000-0000-0000-0000-000000000313"), ProductId = productId, Key = "Foldable",
                 Value = "Yes"
             },
             new ProductAttribute
             {
-                Id = Guid.Parse("00000000-0000-0000-0000-000000000304"), ProductId = productId, Key = "Weight",
+                Id = Guid.Parse("00000000-0000-0000-0000-000000000314"), ProductId = productId, Key = "Weight",
                 Value = "0.5kg"
             }
         );
