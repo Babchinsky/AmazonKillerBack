@@ -18,7 +18,7 @@ public static class FashionCategorySeed
                 Status = CategoryStatus.Active,
                 Description = "Fashion category",
                 ImageUrl = "https://example.com/images/fashion.jpg",
-                IconName = "fashion",
+                IconName = "hanger",
                 ParentId = null,
                 PropertyKeys = SeedHelper.KeysOrNull(rootId, keysMap) ?? []
             },

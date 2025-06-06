@@ -4,6 +4,7 @@ using AmazonKiller.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AmazonKiller.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AmazonDbContext))]
-    partial class AmazonDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250606075223_SeedProducts")]
+    partial class SeedProducts
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -69,7 +72,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         {
                             Id = new Guid("49595c91-f315-4b2e-af8a-0f09c3145c03"),
                             Description = "Fashion category",
-                            IconName = "hanger",
+                            IconName = "fashion",
                             ImageUrl = "https://example.com/images/fashion.jpg",
                             Name = "Fashion",
                             PropertyKeys = "[]",
@@ -96,7 +99,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                             ImageUrl = "https://example.com/images/womens_clothing.jpg",
                             Name = "Women's Clothing",
                             ParentId = new Guid("49595c91-f315-4b2e-af8a-0f09c3145c03"),
-                            PropertyKeys = "[\"Material\",\"Fit\",\"Length\",\"Pattern\"]",
+                            PropertyKeys = "[]",
                             RowVersion = new byte[0],
                             Status = 0
                         },
@@ -128,7 +131,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         {
                             Id = new Guid("7ad3d843-1642-4e8a-a843-503928ef8154"),
                             Description = "Electronics category",
-                            IconName = "computer",
+                            IconName = "electronics",
                             ImageUrl = "https://example.com/images/electronics.jpg",
                             Name = "Electronics",
                             PropertyKeys = "[]",
@@ -143,7 +146,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                             ImageUrl = "https://example.com/images/smartphones.jpg",
                             Name = "Smartphones",
                             ParentId = new Guid("7ad3d843-1642-4e8a-a843-503928ef8154"),
-                            PropertyKeys = "[\"Display\",\"Battery\",\"Camera\",\"Storage\",\"Chip\"]",
+                            PropertyKeys = "[\"Display\",\"Battery\",\"Camera\",\"Storage\"]",
                             RowVersion = new byte[0],
                             Status = 0
                         },
@@ -179,7 +182,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                             ImageUrl = "https://example.com/images/audio_devices.jpg",
                             Name = "Audio Devices",
                             ParentId = new Guid("7ad3d843-1642-4e8a-a843-503928ef8154"),
-                            PropertyKeys = "[\"Type\",\"Noise Cancellation\",\"Battery Life\",\"Connectivity\",\"Charging\"]",
+                            PropertyKeys = "[\"Type\",\"Noise Cancellation\",\"Battery Life\",\"Connectivity\"]",
                             RowVersion = new byte[0],
                             Status = 0
                         },
@@ -187,7 +190,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         {
                             Id = new Guid("8980e70c-3345-4885-8518-cfcda95b3078"),
                             Description = "Household category",
-                            IconName = "cleaning-spray",
+                            IconName = "household",
                             ImageUrl = "https://example.com/images/household.jpg",
                             Name = "Household",
                             PropertyKeys = "[\"Type\",\"Battery Life\",\"Dustbin Capacity\",\"Power\"]",
@@ -246,7 +249,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         {
                             Id = new Guid("0dfa0836-09c9-4a2d-b74a-9b2085976dcf"),
                             Description = "Furniture category",
-                            IconName = "sofa",
+                            IconName = "furniture",
                             ImageUrl = "https://example.com/images/furniture.jpg",
                             Name = "Furniture",
                             PropertyKeys = "[\"Material\",\"Dimensions\",\"Weight\",\"Finish\"]",
@@ -261,7 +264,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                             ImageUrl = "https://example.com/images/living_room.jpg",
                             Name = "Living Room",
                             ParentId = new Guid("0dfa0836-09c9-4a2d-b74a-9b2085976dcf"),
-                            PropertyKeys = "[\"Material\",\"Dimensions\",\"Weight\",\"Finish\"]",
+                            PropertyKeys = "[]",
                             RowVersion = new byte[0],
                             Status = 0
                         },
@@ -305,7 +308,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         {
                             Id = new Guid("cc9bf323-2160-49b2-ae79-340781163eb2"),
                             Description = "Work tools category",
-                            IconName = "hammer",
+                            IconName = "work tools",
                             ImageUrl = "https://example.com/images/worktools.jpg",
                             Name = "Work tools",
                             PropertyKeys = "[\"Voltage\",\"Chuck Size\",\"Speed\",\"Battery\"]",
@@ -332,7 +335,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                             ImageUrl = "https://example.com/images/power_tools.jpg",
                             Name = "Power Tools",
                             ParentId = new Guid("cc9bf323-2160-49b2-ae79-340781163eb2"),
-                            PropertyKeys = "[\"Voltage\",\"Speed\",\"Battery\",\"Chuck Size\"]",
+                            PropertyKeys = "[]",
                             RowVersion = new byte[0],
                             Status = 0
                         },
@@ -673,6 +676,20 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                     b.HasData(
                         new
                         {
+                            Id = new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b"),
+                            CategoryId = new Guid("7eb489f4-2f55-4510-8e49-3965370c4989"),
+                            Code = "FAS-001",
+                            ImageUrls = "[\"https://example.com/products/jacket1.jpg\",\"https://example.com/products/jacket2.jpg\"]",
+                            Name = "Men's Denim Jacket",
+                            Price = 69.99m,
+                            Quantity = 50,
+                            Rating = 4.5m,
+                            ReviewsCount = 100,
+                            RowVersion = new byte[0],
+                            SoldCount = 0
+                        },
+                        new
+                        {
                             Id = new Guid("3c5a4868-3b2d-4352-9e12-502a56bce48a"),
                             CategoryId = new Guid("d2deb989-35c5-4ca1-a748-12411d3ac3a4"),
                             Code = "SAM-001",
@@ -690,7 +707,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                             Id = new Guid("a2c28a83-cfea-46ee-87e3-906f9e90f1aa"),
                             CategoryId = new Guid("c1cd879d-175e-4ff5-b354-054f9f82ce98"),
                             Code = "SONY-002",
-                            ImageUrls = "[\"https://content2.rozetka.com.ua/goods/images/big/296707484.jpg\",\"https://content2.rozetka.com.ua/goods/images/big/296707485.jpg\"]",
+                            ImageUrls = "[\"https://example.com/products/sony1.jpg\",\"https://example.com/products/sony2.jpg\"]",
                             Name = "Sony WH-1000XM5 Headphones",
                             Price = 349.99m,
                             Quantity = 50,
@@ -701,94 +718,10 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("ea96f23c-13b2-4b2c-b4a6-ec7d8c19aef5"),
-                            CategoryId = new Guid("d2deb989-35c5-4ca1-a748-12411d3ac3a4"),
-                            Code = "APP-002",
-                            ImageUrls = "[\"https://content2.rozetka.com.ua/goods/images/big/524114081.jpg\",\"https://content1.rozetka.com.ua/goods/images/big/524114107.jpg\",\"https://content1.rozetka.com.ua/goods/images/big/524114117.jpg\",\"https://content2.rozetka.com.ua/goods/images/big/524114126.jpg\",\"https://content1.rozetka.com.ua/goods/images/big/524114144.jpg\"]",
-                            Name = "Apple iPhone 15 Pro Max",
-                            Price = 1399.99m,
-                            Quantity = 40,
-                            Rating = 4.7m,
-                            ReviewsCount = 200,
-                            RowVersion = new byte[0],
-                            SoldCount = 0
-                        },
-                        new
-                        {
-                            Id = new Guid("12a5f27a-59d1-4961-86d7-14a787f8eec8"),
-                            CategoryId = new Guid("c1cd879d-175e-4ff5-b354-054f9f82ce98"),
-                            Code = "BOSE-001",
-                            ImageUrls = "[\"https://content2.rozetka.com.ua/goods/images/big/382915623.jpg\",\"https://content1.rozetka.com.ua/goods/images/big/382915624.jpg\",\"https://content1.rozetka.com.ua/goods/images/big/382915625.jpg\",\"https://content.rozetka.com.ua/goods/images/big/382915629.jpg\"]",
-                            Name = "Bose QuietComfort Ultra",
-                            Price = 379.99m,
-                            Quantity = 35,
-                            Rating = 4.6m,
-                            ReviewsCount = 150,
-                            RowVersion = new byte[0],
-                            SoldCount = 0
-                        },
-                        new
-                        {
-                            Id = new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b"),
-                            CategoryId = new Guid("7eb489f4-2f55-4510-8e49-3965370c4989"),
-                            Code = "FAS-001",
-                            ImageUrls = "[\"https://xcdn.next.co.uk/common/items/default/default/itemimages/3_4Ratio/product/lge/E66531s.jpg?im=Resize,width=750\",\"https://xcdn.next.co.uk/common/items/default/default/itemimages/3_4Ratio/product/lge/E66531s3.jpg?im=Resize,width=480\"]",
-                            Name = "Men's Denim Jacket",
-                            Price = 69.99m,
-                            Quantity = 50,
-                            Rating = 4.5m,
-                            ReviewsCount = 100,
-                            RowVersion = new byte[0],
-                            SoldCount = 0
-                        },
-                        new
-                        {
-                            Id = new Guid("6f4c984f-7baf-4a39-aab3-018202f20de5"),
-                            CategoryId = new Guid("69f22c76-7202-44e6-9132-09fd09c55632"),
-                            Code = "FAS-002",
-                            ImageUrls = "[\"https://static.zara.net/assets/public/5383/1e3a/567f4efa9ab2/540875121096/04772368808-p/04772368808-p.jpg?ts=1747906901087\\u0026w=750\",\"https://static.zara.net/assets/public/1739/0738/387f4ed59035/81ddaea8d349/04772368808-a2/04772368808-a2.jpg?ts=1747906905715\\u0026w=750\",\"https://static.zara.net/assets/public/6eda/d9b8/33b748b0941d/85074a50ec93/04772368808-a4/04772368808-a4.jpg?ts=1747906897381\\u0026w=563\"]",
-                            Name = "Zara Floral Midi Dress",
-                            Price = 89.99m,
-                            Quantity = 70,
-                            Rating = 4.4m,
-                            ReviewsCount = 90,
-                            RowVersion = new byte[0],
-                            SoldCount = 0
-                        },
-                        new
-                        {
-                            Id = new Guid("74a46f1c-1054-408d-89dc-8ca00285660f"),
-                            CategoryId = new Guid("0dfa0836-09c9-4a2d-b74a-9b2085976dcf"),
-                            Code = "FUR-001",
-                            ImageUrls = "[\"https://cdn2.jysk.com/getimage/wd3.medium/256592\",\"https://cdn2.jysk.com/getimage/wd3.medium/254304\"]",
-                            Name = "Modern Wooden Coffee Table",
-                            Price = 149.99m,
-                            Quantity = 50,
-                            Rating = 4.5m,
-                            ReviewsCount = 100,
-                            RowVersion = new byte[0],
-                            SoldCount = 0
-                        },
-                        new
-                        {
-                            Id = new Guid("b7a6497f-c4cb-4d7c-afe5-167c02cbf170"),
-                            CategoryId = new Guid("68ae1c83-85c1-4002-bb32-d00ac9b3a1bb"),
-                            Code = "FUR-002",
-                            ImageUrls = "[\"https://home-club.com.ua//images/thumbs/0018524_-_510.jpeg\",\"https://home-club.com.ua//images/thumbs/0310065_-.jpeg\",\"https://home-club.com.ua//images/thumbs/0043920_-.jpeg\"]",
-                            Name = "IKEA LACK Coffee Table",
-                            Price = 39.99m,
-                            Quantity = 80,
-                            Rating = 4.2m,
-                            ReviewsCount = 320,
-                            RowVersion = new byte[0],
-                            SoldCount = 0
-                        },
-                        new
-                        {
                             Id = new Guid("a055168e-3130-4b0a-8495-60e25d62e057"),
                             CategoryId = new Guid("8980e70c-3345-4885-8518-cfcda95b3078"),
                             Code = "HOU-001",
-                            ImageUrls = "[\"https://content1.rozetka.com.ua/goods/images/big/396437112.jpg\",\"https://content.rozetka.com.ua/goods/images/big/396437105.jpg\",\"https://content2.rozetka.com.ua/goods/images/big/396437106.jpg\"]",
+                            ImageUrls = "[\"https://example.com/products/dyson1.jpg\",\"https://example.com/products/dyson2.jpg\"]",
                             Name = "Dyson V15 Detect Vacuum Cleaner",
                             Price = 699.0m,
                             Quantity = 50,
@@ -799,15 +732,15 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("3c7b48ff-2b17-456e-b6d9-1e4701c56ab2"),
-                            CategoryId = new Guid("1c9d0336-9ac8-440a-b6b6-3698940f608c"),
-                            Code = "WTL-002",
-                            ImageUrls = "[\"https://content2.rozetka.com.ua/goods/images/big/11956995.jpg\"]",
-                            Name = "DeWalt DCD996 Cordless Drill",
-                            Price = 199.99m,
-                            Quantity = 60,
-                            Rating = 4.8m,
-                            ReviewsCount = 180,
+                            Id = new Guid("74a46f1c-1054-408d-89dc-8ca00285660f"),
+                            CategoryId = new Guid("0dfa0836-09c9-4a2d-b74a-9b2085976dcf"),
+                            Code = "FUR-001",
+                            ImageUrls = "[\"https://example.com/products/coffee_table1.jpg\",\"https://example.com/products/coffee_table2.jpg\"]",
+                            Name = "Modern Wooden Coffee Table",
+                            Price = 149.99m,
+                            Quantity = 50,
+                            Rating = 4.5m,
+                            ReviewsCount = 100,
                             RowVersion = new byte[0],
                             SoldCount = 0
                         },
@@ -816,7 +749,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                             Id = new Guid("4c73d114-2aa1-4f4c-aa7a-48038f1f95fc"),
                             CategoryId = new Guid("cc9bf323-2160-49b2-ae79-340781163eb2"),
                             Code = "WTL-001",
-                            ImageUrls = "[\"https://content2.rozetka.com.ua/goods/images/big/333625233.jpg\",\"https://content2.rozetka.com.ua/goods/images/big/367185899.jpg\"]",
+                            ImageUrls = "[\"https://example.com/products/makita1.jpg\",\"https://example.com/products/makita2.jpg\"]",
                             Name = "Makita Cordless Hammer Drill",
                             Price = 229.99m,
                             Quantity = 50,
@@ -853,6 +786,34 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                     b.ToTable("ProductAttributes");
 
                     b.HasData(
+                        new
+                        {
+                            Id = new Guid("f75be0e7-0d41-45e8-87d7-e53060c87cd4"),
+                            Key = "Material",
+                            ProductId = new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b"),
+                            Value = "100% Cotton"
+                        },
+                        new
+                        {
+                            Id = new Guid("34b80662-4ddf-44df-aeab-0a131d4ca441"),
+                            Key = "Fit",
+                            ProductId = new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b"),
+                            Value = "Regular"
+                        },
+                        new
+                        {
+                            Id = new Guid("93731c22-16a2-4c9e-b4d8-3aa7485d5acb"),
+                            Key = "Color",
+                            ProductId = new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b"),
+                            Value = "Blue"
+                        },
+                        new
+                        {
+                            Id = new Guid("ac51bf93-88a8-4b39-b106-b8a7f5c4db92"),
+                            Key = "Season",
+                            ProductId = new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b"),
+                            Value = "All seasons"
+                        },
                         new
                         {
                             Id = new Guid("31ed2059-8d7c-440e-849c-92b82fa07535"),
@@ -911,174 +872,6 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("b5bdf51b-e460-4e8a-8c44-22625f91ae45"),
-                            Key = "Display",
-                            ProductId = new Guid("ea96f23c-13b2-4b2c-b4a6-ec7d8c19aef5"),
-                            Value = "6.7-inch OLED"
-                        },
-                        new
-                        {
-                            Id = new Guid("3b15cf2c-d0a6-45bb-a99f-2f0fa66cf91c"),
-                            Key = "Chip",
-                            ProductId = new Guid("ea96f23c-13b2-4b2c-b4a6-ec7d8c19aef5"),
-                            Value = "A17 Pro"
-                        },
-                        new
-                        {
-                            Id = new Guid("a49880a3-4ba6-4bb0-8015-4bc83b6dbbcd"),
-                            Key = "Camera",
-                            ProductId = new Guid("ea96f23c-13b2-4b2c-b4a6-ec7d8c19aef5"),
-                            Value = "48MP Triple-lens"
-                        },
-                        new
-                        {
-                            Id = new Guid("83cfd9cb-24a9-4056-bb90-85986b3b6310"),
-                            Key = "Storage",
-                            ProductId = new Guid("ea96f23c-13b2-4b2c-b4a6-ec7d8c19aef5"),
-                            Value = "256GB"
-                        },
-                        new
-                        {
-                            Id = new Guid("aa64df41-c001-4d1a-91b7-0807f2b5c0de"),
-                            Key = "Type",
-                            ProductId = new Guid("12a5f27a-59d1-4961-86d7-14a787f8eec8"),
-                            Value = "Over-ear"
-                        },
-                        new
-                        {
-                            Id = new Guid("44c10d0d-414c-4a75-baff-b5246a6e688b"),
-                            Key = "Noise Cancellation",
-                            ProductId = new Guid("12a5f27a-59d1-4961-86d7-14a787f8eec8"),
-                            Value = "Adaptive"
-                        },
-                        new
-                        {
-                            Id = new Guid("6fa61d21-700f-4c0e-a04f-c1a1a8a2745b"),
-                            Key = "Battery Life",
-                            ProductId = new Guid("12a5f27a-59d1-4961-86d7-14a787f8eec8"),
-                            Value = "24 hours"
-                        },
-                        new
-                        {
-                            Id = new Guid("75c1376d-1ae0-405f-a46d-15c805e3e212"),
-                            Key = "Charging",
-                            ProductId = new Guid("12a5f27a-59d1-4961-86d7-14a787f8eec8"),
-                            Value = "USB-C Fast Charging"
-                        },
-                        new
-                        {
-                            Id = new Guid("f75be0e7-0d41-45e8-87d7-e53060c87cd4"),
-                            Key = "Material",
-                            ProductId = new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b"),
-                            Value = "100% Cotton"
-                        },
-                        new
-                        {
-                            Id = new Guid("34b80662-4ddf-44df-aeab-0a131d4ca441"),
-                            Key = "Fit",
-                            ProductId = new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b"),
-                            Value = "Regular"
-                        },
-                        new
-                        {
-                            Id = new Guid("93731c22-16a2-4c9e-b4d8-3aa7485d5acb"),
-                            Key = "Color",
-                            ProductId = new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b"),
-                            Value = "Blue"
-                        },
-                        new
-                        {
-                            Id = new Guid("ac51bf93-88a8-4b39-b106-b8a7f5c4db92"),
-                            Key = "Season",
-                            ProductId = new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b"),
-                            Value = "All seasons"
-                        },
-                        new
-                        {
-                            Id = new Guid("c1f7efb2-8dbb-4d6e-890b-91873cc0f8a2"),
-                            Key = "Material",
-                            ProductId = new Guid("6f4c984f-7baf-4a39-aab3-018202f20de5"),
-                            Value = "Viscose"
-                        },
-                        new
-                        {
-                            Id = new Guid("184d5fd1-4e1d-42c2-9b58-d5d3c1b2235a"),
-                            Key = "Fit",
-                            ProductId = new Guid("6f4c984f-7baf-4a39-aab3-018202f20de5"),
-                            Value = "Relaxed"
-                        },
-                        new
-                        {
-                            Id = new Guid("3a57dbde-0659-4377-a618-5477c3f1c6ae"),
-                            Key = "Length",
-                            ProductId = new Guid("6f4c984f-7baf-4a39-aab3-018202f20de5"),
-                            Value = "Midi"
-                        },
-                        new
-                        {
-                            Id = new Guid("3d768f6d-11d5-4033-8b6e-c2674d37b44a"),
-                            Key = "Pattern",
-                            ProductId = new Guid("6f4c984f-7baf-4a39-aab3-018202f20de5"),
-                            Value = "Floral"
-                        },
-                        new
-                        {
-                            Id = new Guid("a6a26067-18e9-4543-8828-8069f09a411f"),
-                            Key = "Material",
-                            ProductId = new Guid("74a46f1c-1054-408d-89dc-8ca00285660f"),
-                            Value = "Oak wood"
-                        },
-                        new
-                        {
-                            Id = new Guid("50c7325d-5a50-4494-8356-c4ae304e70f5"),
-                            Key = "Dimensions",
-                            ProductId = new Guid("74a46f1c-1054-408d-89dc-8ca00285660f"),
-                            Value = "120x60x45 cm"
-                        },
-                        new
-                        {
-                            Id = new Guid("163febea-12c5-4ba7-af3e-5b3d5fa01e4f"),
-                            Key = "Weight",
-                            ProductId = new Guid("74a46f1c-1054-408d-89dc-8ca00285660f"),
-                            Value = "18kg"
-                        },
-                        new
-                        {
-                            Id = new Guid("4946c132-8ec4-41ce-891d-4788067a4a66"),
-                            Key = "Finish",
-                            ProductId = new Guid("74a46f1c-1054-408d-89dc-8ca00285660f"),
-                            Value = "Natural varnish"
-                        },
-                        new
-                        {
-                            Id = new Guid("c8d6d4e7-3c25-41f4-9c3c-144143d3cb94"),
-                            Key = "Material",
-                            ProductId = new Guid("b7a6497f-c4cb-4d7c-afe5-167c02cbf170"),
-                            Value = "Particleboard"
-                        },
-                        new
-                        {
-                            Id = new Guid("ec9f4ff8-dc66-4a6a-a88d-dfd03275e05a"),
-                            Key = "Dimensions",
-                            ProductId = new Guid("b7a6497f-c4cb-4d7c-afe5-167c02cbf170"),
-                            Value = "90x55 cm"
-                        },
-                        new
-                        {
-                            Id = new Guid("e0701d10-c221-4032-b3a5-4a05c69f56c5"),
-                            Key = "Weight",
-                            ProductId = new Guid("b7a6497f-c4cb-4d7c-afe5-167c02cbf170"),
-                            Value = "5.8kg"
-                        },
-                        new
-                        {
-                            Id = new Guid("7aa17ee1-6b46-4d41-8ae2-4f2f2931e0aa"),
-                            Key = "Finish",
-                            ProductId = new Guid("b7a6497f-c4cb-4d7c-afe5-167c02cbf170"),
-                            Value = "White"
-                        },
-                        new
-                        {
                             Id = new Guid("5a29ac69-487d-4609-b29e-3b6f30b088ce"),
                             Key = "Type",
                             ProductId = new Guid("a055168e-3130-4b0a-8495-60e25d62e057"),
@@ -1107,31 +900,31 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("f31206e4-8237-4db1-b3a0-544b26dd5865"),
-                            Key = "Voltage",
-                            ProductId = new Guid("3c7b48ff-2b17-456e-b6d9-1e4701c56ab2"),
-                            Value = "20V"
+                            Id = new Guid("a6a26067-18e9-4543-8828-8069f09a411f"),
+                            Key = "Material",
+                            ProductId = new Guid("74a46f1c-1054-408d-89dc-8ca00285660f"),
+                            Value = "Oak wood"
                         },
                         new
                         {
-                            Id = new Guid("b8bc8f7a-267f-43a8-b81e-360d250209c3"),
-                            Key = "Speed",
-                            ProductId = new Guid("3c7b48ff-2b17-456e-b6d9-1e4701c56ab2"),
-                            Value = "0–2000 RPM"
+                            Id = new Guid("50c7325d-5a50-4494-8356-c4ae304e70f5"),
+                            Key = "Dimensions",
+                            ProductId = new Guid("74a46f1c-1054-408d-89dc-8ca00285660f"),
+                            Value = "120x60x45 cm"
                         },
                         new
                         {
-                            Id = new Guid("f5035e59-f0f6-4db6-8160-0df17931a1c8"),
-                            Key = "Battery",
-                            ProductId = new Guid("3c7b48ff-2b17-456e-b6d9-1e4701c56ab2"),
-                            Value = "2x 5.0Ah Li-ion"
+                            Id = new Guid("163febea-12c5-4ba7-af3e-5b3d5fa01e4f"),
+                            Key = "Weight",
+                            ProductId = new Guid("74a46f1c-1054-408d-89dc-8ca00285660f"),
+                            Value = "18kg"
                         },
                         new
                         {
-                            Id = new Guid("6c6b5864-33a0-4ec0-9a7e-34d73d226289"),
-                            Key = "Chuck Size",
-                            ProductId = new Guid("3c7b48ff-2b17-456e-b6d9-1e4701c56ab2"),
-                            Value = "13mm"
+                            Id = new Guid("4946c132-8ec4-41ce-891d-4788067a4a66"),
+                            Key = "Finish",
+                            ProductId = new Guid("74a46f1c-1054-408d-89dc-8ca00285660f"),
+                            Value = "Natural varnish"
                         },
                         new
                         {
@@ -1191,6 +984,34 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                     b.HasData(
                         new
                         {
+                            Id = new Guid("f7f4c40c-82d3-488f-bf1a-9094dc2048b0"),
+                            Description = "Casual yet rugged",
+                            Name = "Style",
+                            ProductId = new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b")
+                        },
+                        new
+                        {
+                            Id = new Guid("905cdea9-9662-4f42-82d4-c0b24e957ee8"),
+                            Description = "Pairs with any outfit",
+                            Name = "Versatility",
+                            ProductId = new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b")
+                        },
+                        new
+                        {
+                            Id = new Guid("38c8f67f-7b05-4f06-8856-546a4e499d5c"),
+                            Description = "Made to last",
+                            Name = "Durability",
+                            ProductId = new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b")
+                        },
+                        new
+                        {
+                            Id = new Guid("7aeefca5-b681-41cf-baef-0ab5306f250a"),
+                            Description = "Machine washable",
+                            Name = "Care",
+                            ProductId = new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b")
+                        },
+                        new
+                        {
                             Id = new Guid("c6676eab-a776-4380-9b0e-a07b10da8236"),
                             Description = "Snapdragon 8 Gen 2",
                             Name = "Performance",
@@ -1247,174 +1068,6 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("56e75d3f-9fb5-4d8c-a986-8985a8aa96c1"),
-                            Description = "Titanium frame",
-                            Name = "Build Quality",
-                            ProductId = new Guid("ea96f23c-13b2-4b2c-b4a6-ec7d8c19aef5")
-                        },
-                        new
-                        {
-                            Id = new Guid("76bdc733-91d3-48f1-a447-b78e0e4b9991"),
-                            Description = "Smooth iOS experience",
-                            Name = "Performance",
-                            ProductId = new Guid("ea96f23c-13b2-4b2c-b4a6-ec7d8c19aef5")
-                        },
-                        new
-                        {
-                            Id = new Guid("06695e1f-8d42-498c-8d34-e3281d49753b"),
-                            Description = "Cinematic mode & Night photography",
-                            Name = "Camera System",
-                            ProductId = new Guid("ea96f23c-13b2-4b2c-b4a6-ec7d8c19aef5")
-                        },
-                        new
-                        {
-                            Id = new Guid("e4c01f56-8e2e-4866-a98f-6c4f69f63f6f"),
-                            Description = "Up to 29 hours video playback",
-                            Name = "Battery Life",
-                            ProductId = new Guid("ea96f23c-13b2-4b2c-b4a6-ec7d8c19aef5")
-                        },
-                        new
-                        {
-                            Id = new Guid("f00725dc-2d23-4ff3-93b6-bcb9fdf8f293"),
-                            Description = "CustomTune technology",
-                            Name = "Sound Quality",
-                            ProductId = new Guid("12a5f27a-59d1-4961-86d7-14a787f8eec8")
-                        },
-                        new
-                        {
-                            Id = new Guid("2e5c6e3a-bb5f-42f7-b933-0e21dcdb267f"),
-                            Description = "Plush cushioning",
-                            Name = "Comfort",
-                            ProductId = new Guid("12a5f27a-59d1-4961-86d7-14a787f8eec8")
-                        },
-                        new
-                        {
-                            Id = new Guid("93c3210e-48e6-4fc4-8783-47bdc8601694"),
-                            Description = "Touch & voice control",
-                            Name = "Controls",
-                            ProductId = new Guid("12a5f27a-59d1-4961-86d7-14a787f8eec8")
-                        },
-                        new
-                        {
-                            Id = new Guid("da2c2ff2-1c38-4a23-a8cc-25b4f4ec2680"),
-                            Description = "Modern aesthetic",
-                            Name = "Design",
-                            ProductId = new Guid("12a5f27a-59d1-4961-86d7-14a787f8eec8")
-                        },
-                        new
-                        {
-                            Id = new Guid("f7f4c40c-82d3-488f-bf1a-9094dc2048b0"),
-                            Description = "Casual yet rugged",
-                            Name = "Style",
-                            ProductId = new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b")
-                        },
-                        new
-                        {
-                            Id = new Guid("905cdea9-9662-4f42-82d4-c0b24e957ee8"),
-                            Description = "Pairs with any outfit",
-                            Name = "Versatility",
-                            ProductId = new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b")
-                        },
-                        new
-                        {
-                            Id = new Guid("38c8f67f-7b05-4f06-8856-546a4e499d5c"),
-                            Description = "Made to last",
-                            Name = "Durability",
-                            ProductId = new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b")
-                        },
-                        new
-                        {
-                            Id = new Guid("7aeefca5-b681-41cf-baef-0ab5306f250a"),
-                            Description = "Machine washable",
-                            Name = "Care",
-                            ProductId = new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b")
-                        },
-                        new
-                        {
-                            Id = new Guid("b9b205bb-9a76-4456-a0cb-dc28e4fce1c5"),
-                            Description = "Elegant and breezy",
-                            Name = "Style",
-                            ProductId = new Guid("6f4c984f-7baf-4a39-aab3-018202f20de5")
-                        },
-                        new
-                        {
-                            Id = new Guid("781153a3-0555-49ae-987e-09dbde5172ee"),
-                            Description = "Suitable for casual and formal",
-                            Name = "Versatility",
-                            ProductId = new Guid("6f4c984f-7baf-4a39-aab3-018202f20de5")
-                        },
-                        new
-                        {
-                            Id = new Guid("a5fd738e-6d61-49f7-b51c-dcdbbcd27644"),
-                            Description = "Breathable fabric",
-                            Name = "Comfort",
-                            ProductId = new Guid("6f4c984f-7baf-4a39-aab3-018202f20de5")
-                        },
-                        new
-                        {
-                            Id = new Guid("fbf426f5-78e4-4d4f-b183-3fcf3870e04b"),
-                            Description = "Machine washable",
-                            Name = "Care",
-                            ProductId = new Guid("6f4c984f-7baf-4a39-aab3-018202f20de5")
-                        },
-                        new
-                        {
-                            Id = new Guid("35198d10-7fbf-4919-aa3f-527c7e76abcb"),
-                            Description = "Sleek and minimal",
-                            Name = "Design",
-                            ProductId = new Guid("74a46f1c-1054-408d-89dc-8ca00285660f")
-                        },
-                        new
-                        {
-                            Id = new Guid("6334b668-3933-4abb-8d5d-4324bb4ed08a"),
-                            Description = "Solid wood construction",
-                            Name = "Durability",
-                            ProductId = new Guid("74a46f1c-1054-408d-89dc-8ca00285660f")
-                        },
-                        new
-                        {
-                            Id = new Guid("b6e56093-2fc5-473d-818a-26a9e5b52f82"),
-                            Description = "Easy to wipe clean",
-                            Name = "Maintenance",
-                            ProductId = new Guid("74a46f1c-1054-408d-89dc-8ca00285660f")
-                        },
-                        new
-                        {
-                            Id = new Guid("f4eb7825-2ffd-4d1f-a9ba-5635ea698534"),
-                            Description = "Quick setup included",
-                            Name = "Assembly",
-                            ProductId = new Guid("74a46f1c-1054-408d-89dc-8ca00285660f")
-                        },
-                        new
-                        {
-                            Id = new Guid("431d02bb-1446-4d9a-8f71-207b6d0ffbe1"),
-                            Description = "Simple and modern",
-                            Name = "Design",
-                            ProductId = new Guid("b7a6497f-c4cb-4d7c-afe5-167c02cbf170")
-                        },
-                        new
-                        {
-                            Id = new Guid("146e8860-5f1a-4086-85a1-bcbe5e16a982"),
-                            Description = "Tool-free assembly",
-                            Name = "Assembly",
-                            ProductId = new Guid("b7a6497f-c4cb-4d7c-afe5-167c02cbf170")
-                        },
-                        new
-                        {
-                            Id = new Guid("a3a37d1e-26e9-40f0-b935-1e5e43b83e02"),
-                            Description = "Budget-friendly option",
-                            Name = "Affordability",
-                            ProductId = new Guid("b7a6497f-c4cb-4d7c-afe5-167c02cbf170")
-                        },
-                        new
-                        {
-                            Id = new Guid("a90fa301-e8e3-4097-a507-cdc1a9f5b008"),
-                            Description = "Lightweight design",
-                            Name = "Portability",
-                            ProductId = new Guid("b7a6497f-c4cb-4d7c-afe5-167c02cbf170")
-                        },
-                        new
-                        {
                             Id = new Guid("75e0cc52-9a6b-4157-b453-57f390790cf4"),
                             Description = "Laser detects microscopic dust",
                             Name = "Performance",
@@ -1443,31 +1096,31 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("1e4cc7b4-51a5-4bfb-8e36-1ce9a2a6c8b0"),
-                            Description = "Brushless motor",
-                            Name = "Performance",
-                            ProductId = new Guid("3c7b48ff-2b17-456e-b6d9-1e4701c56ab2")
+                            Id = new Guid("35198d10-7fbf-4919-aa3f-527c7e76abcb"),
+                            Description = "Sleek and minimal",
+                            Name = "Design",
+                            ProductId = new Guid("74a46f1c-1054-408d-89dc-8ca00285660f")
                         },
                         new
                         {
-                            Id = new Guid("2a222bb7-cc32-4e2f-9ad3-2ad2aaf1fc6f"),
-                            Description = "Heavy-duty construction",
+                            Id = new Guid("6334b668-3933-4abb-8d5d-4324bb4ed08a"),
+                            Description = "Solid wood construction",
                             Name = "Durability",
-                            ProductId = new Guid("3c7b48ff-2b17-456e-b6d9-1e4701c56ab2")
+                            ProductId = new Guid("74a46f1c-1054-408d-89dc-8ca00285660f")
                         },
                         new
                         {
-                            Id = new Guid("6ab182fd-45bb-4747-93d7-4533cdd9f88c"),
-                            Description = "LED work light",
-                            Name = "Convenience",
-                            ProductId = new Guid("3c7b48ff-2b17-456e-b6d9-1e4701c56ab2")
+                            Id = new Guid("b6e56093-2fc5-473d-818a-26a9e5b52f82"),
+                            Description = "Easy to wipe clean",
+                            Name = "Maintenance",
+                            ProductId = new Guid("74a46f1c-1054-408d-89dc-8ca00285660f")
                         },
                         new
                         {
-                            Id = new Guid("1c6c2255-9535-4520-84ee-b00db4a2225d"),
-                            Description = "Ergonomic handle",
-                            Name = "Grip",
-                            ProductId = new Guid("3c7b48ff-2b17-456e-b6d9-1e4701c56ab2")
+                            Id = new Guid("f4eb7825-2ffd-4d1f-a9ba-5635ea698534"),
+                            Description = "Quick setup included",
+                            Name = "Assembly",
+                            ProductId = new Guid("74a46f1c-1054-408d-89dc-8ca00285660f")
                         },
                         new
                         {

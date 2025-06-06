@@ -18,7 +18,7 @@ public static class HouseholdCategorySeed
                 Status = CategoryStatus.Active,
                 Description = "Household category",
                 ImageUrl = "https://example.com/images/household.jpg",
-                IconName = "household",
+                IconName = "cleaning-spray",
                 ParentId = null,
                 PropertyKeys = SeedHelper.KeysOrNull(rootId, keysMap) ?? []
             },

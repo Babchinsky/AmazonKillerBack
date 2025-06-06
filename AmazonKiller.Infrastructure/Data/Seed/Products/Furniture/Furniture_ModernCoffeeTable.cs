@@ -1,9 +1,9 @@
 using AmazonKiller.Domain.Entities.Products;
 using Microsoft.EntityFrameworkCore;
 
-namespace AmazonKiller.Infrastructure.Data.Seed.Products;
+namespace AmazonKiller.Infrastructure.Data.Seed.Products.Furniture;
 
-public static class ProductsFurnitureCategorySeed
+public static class Furniture_ModernCoffeeTable
 {
     public static void Seed(ModelBuilder modelBuilder)
     {
@@ -17,8 +17,8 @@ public static class ProductsFurnitureCategorySeed
             CategoryId = new Guid("0dfa0836-09c9-4a2d-b74a-9b2085976dcf"),
             ImageUrls =
             [
-                "https://example.com/products/coffee_table1.jpg",
-                "https://example.com/products/coffee_table2.jpg"
+                "https://cdn2.jysk.com/getimage/wd3.medium/256592",
+                "https://cdn2.jysk.com/getimage/wd3.medium/254304"
             ],
             Rating = 4.5m,
             ReviewsCount = 100

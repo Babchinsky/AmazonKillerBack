@@ -32,8 +32,4 @@
         <EmbeddedResource Include="Services\Emails\Templates\VerificationCodeTemplate.html"/>
     </ItemGroup>
 
-    <ItemGroup>
-        <Folder Include="Data\Seed\Products\" />
-    </ItemGroup>
-
 </Project>

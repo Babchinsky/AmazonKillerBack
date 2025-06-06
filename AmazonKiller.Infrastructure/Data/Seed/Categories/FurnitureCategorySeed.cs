@@ -18,7 +18,7 @@ public static class FurnitureCategorySeed
                 Status = CategoryStatus.Active,
                 Description = "Furniture category",
                 ImageUrl = "https://example.com/images/furniture.jpg",
-                IconName = "furniture",
+                IconName = "sofa",
                 ParentId = null,
                 PropertyKeys = SeedHelper.KeysOrNull(rootId, keysMap) ?? []
             },

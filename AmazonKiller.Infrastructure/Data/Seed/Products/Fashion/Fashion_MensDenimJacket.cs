@@ -1,9 +1,9 @@
 using AmazonKiller.Domain.Entities.Products;
 using Microsoft.EntityFrameworkCore;
 
-namespace AmazonKiller.Infrastructure.Data.Seed.Products;
+namespace AmazonKiller.Infrastructure.Data.Seed.Products.Fashion;
 
-public static class ProductsFashionCategorySeed
+public static class Fashion_MensDenimJacket
 {
     public static void Seed(ModelBuilder modelBuilder)
     {
@@ -17,8 +17,8 @@ public static class ProductsFashionCategorySeed
             CategoryId = new Guid("7eb489f4-2f55-4510-8e49-3965370c4989"),
             ImageUrls =
             [
-                "https://example.com/products/jacket1.jpg",
-                "https://example.com/products/jacket2.jpg"
+                "https://xcdn.next.co.uk/common/items/default/default/itemimages/3_4Ratio/product/lge/E66531s.jpg?im=Resize,width=750",
+                "https://xcdn.next.co.uk/common/items/default/default/itemimages/3_4Ratio/product/lge/E66531s3.jpg?im=Resize,width=480"
             ],
             Rating = 4.5m,
             ReviewsCount = 100

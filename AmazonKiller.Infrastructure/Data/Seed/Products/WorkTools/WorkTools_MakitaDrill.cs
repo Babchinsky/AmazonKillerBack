@@ -1,9 +1,9 @@
 using AmazonKiller.Domain.Entities.Products;
 using Microsoft.EntityFrameworkCore;
 
-namespace AmazonKiller.Infrastructure.Data.Seed.Products;
+namespace AmazonKiller.Infrastructure.Data.Seed.Products.WorkTools;
 
-public static class ProductsWorkToolsCategorySeed
+public static class WorkTools_MakitaDrill
 {
     public static void Seed(ModelBuilder modelBuilder)
     {
@@ -17,8 +17,8 @@ public static class ProductsWorkToolsCategorySeed
             CategoryId = new Guid("cc9bf323-2160-49b2-ae79-340781163eb2"),
             ImageUrls =
             [
-                "https://example.com/products/makita1.jpg",
-                "https://example.com/products/makita2.jpg"
+                "https://content2.rozetka.com.ua/goods/images/big/333625233.jpg",
+                "https://content2.rozetka.com.ua/goods/images/big/367185899.jpg"
             ],
             Rating = 4.5m,
             ReviewsCount = 100

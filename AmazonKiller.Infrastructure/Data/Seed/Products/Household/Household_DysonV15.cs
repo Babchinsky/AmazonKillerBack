@@ -1,9 +1,9 @@
 using AmazonKiller.Domain.Entities.Products;
 using Microsoft.EntityFrameworkCore;
 
-namespace AmazonKiller.Infrastructure.Data.Seed.Products;
+namespace AmazonKiller.Infrastructure.Data.Seed.Products.Household;
 
-public static class ProductsHouseholdCategorySeed
+public static class Household_DysonV15
 {
     public static void Seed(ModelBuilder modelBuilder)
     {
@@ -17,8 +17,9 @@ public static class ProductsHouseholdCategorySeed
             CategoryId = new Guid("8980e70c-3345-4885-8518-cfcda95b3078"),
             ImageUrls =
             [
-                "https://example.com/products/dyson1.jpg",
-                "https://example.com/products/dyson2.jpg"
+                "https://content1.rozetka.com.ua/goods/images/big/396437112.jpg",
+                "https://content.rozetka.com.ua/goods/images/big/396437105.jpg",
+                "https://content2.rozetka.com.ua/goods/images/big/396437106.jpg"
             ],
             Rating = 4.5m,
             ReviewsCount = 100

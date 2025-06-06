@@ -3,7 +3,11 @@ using AmazonKiller.Infrastructure.Data.Seed.CartLists;
 using AmazonKiller.Infrastructure.Data.Seed.Categories;
 using AmazonKiller.Infrastructure.Data.Seed.Collections;
 using AmazonKiller.Infrastructure.Data.Seed.Orders;
-using AmazonKiller.Infrastructure.Data.Seed.Products;
+using AmazonKiller.Infrastructure.Data.Seed.Products.Electronics;
+using AmazonKiller.Infrastructure.Data.Seed.Products.Fashion;
+using AmazonKiller.Infrastructure.Data.Seed.Products.Furniture;
+using AmazonKiller.Infrastructure.Data.Seed.Products.Household;
+using AmazonKiller.Infrastructure.Data.Seed.Products.WorkTools;
 using AmazonKiller.Infrastructure.Data.Seed.Reviews;
 using AmazonKiller.Infrastructure.Data.Seed.Users;
 using AmazonKiller.Infrastructure.Data.Seed.Wishlists;
@@ -16,11 +20,21 @@ public static class SeedData
     public static void Seed(ModelBuilder modelBuilder)
     {
         // 1. Сидим продукты — они будут использоваться для анализа атрибутов
-        ProductsFashionCategorySeed.Seed(modelBuilder);
-        ProductsElectronicsCategorySeed.Seed(modelBuilder);
-        ProductsHouseholdCategorySeed.Seed(modelBuilder);
-        ProductsFurnitureCategorySeed.Seed(modelBuilder);
-        ProductsWorkToolsCategorySeed.Seed(modelBuilder);
+        Electronics_SamsungS23Ultra.Seed(modelBuilder);
+        Electronics_SonyWH1000XM5.Seed(modelBuilder);
+        Electronics_IPhone15ProMax.Seed(modelBuilder);
+        Electronics_BoseQCUltra.Seed(modelBuilder);
+
+        Fashion_MensDenimJacket.Seed(modelBuilder);
+        Fashion_ZaraFloralDress.Seed(modelBuilder);
+
+        Furniture_ModernCoffeeTable.Seed(modelBuilder);
+        Furniture_IkeaLackTable.Seed(modelBuilder);
+
+        Household_DysonV15.Seed(modelBuilder);
+
+        WorkTools_DeWaltDrill.Seed(modelBuilder);
+        WorkTools_MakitaDrill.Seed(modelBuilder);
 
         // 2. Считаем атрибуты продуктов и категории
         var attributes = new List<(Guid ProductId, string Key)>();
