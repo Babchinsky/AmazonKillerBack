@@ -25,7 +25,7 @@ public class Product : VersionedEntity
     public decimal? DiscountPercent { get; init; } // null ⇒ скидки нет, иначе 0–100 %
     public int SoldCount { get; set; }
 
-    public int Quantity { get; init; } // Кол-во на складе
+    public int Quantity { get; set; } // Кол-во на складе
 
     public List<string> ImageUrls { get; init; } = [];
     public List<ProductAttribute> Attributes { get; init; } = [];

@@ -77,8 +77,13 @@ public class CreateOrderHandler(
         foreach (var item in order.Items)
         {
             var product = await productRepo.GetByIdAsync(item.ProductId, ct);
-            if (product is not null)
-                product.SoldCount += item.Quantity;
+            if (product is null) continue;
+
+            if (product.Quantity < item.Quantity)
+                throw new AppException($"Not enough stock for product '{product.Name}'");
+
+            product.SoldCount += item.Quantity;
+            product.Quantity -= item.Quantity;
         }
 
         if (req.PaymentType == PaymentType.Card)
