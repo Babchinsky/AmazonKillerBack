@@ -10,6 +10,5 @@ public abstract class UpsertCategoryModel
     public CategoryStatus Status { get; init; }
     public Guid? ParentId { get; init; }
     public string? IconName { get; init; }
-    public List<string>? PropertyKeys { get; init; }
     public IFormFile? Image { get; init; } // получаем файл отсюда
 }

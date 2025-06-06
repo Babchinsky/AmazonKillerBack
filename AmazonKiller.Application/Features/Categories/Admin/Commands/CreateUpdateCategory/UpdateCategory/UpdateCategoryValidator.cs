@@ -13,5 +13,9 @@ public class UpdateCategoryValidator : AbstractValidator<UpdateCategoryCommand>
         RuleFor(x => x.RowVersion)
             .NotEmpty()
             .WithMessage("RowVersion is required.");
+
+        RuleFor(x => x.ActivePropertyKeys)
+            .Must(keys => keys?.Distinct().Count() == keys?.Count)
+            .WithMessage("Active property keys must be unique");
     }
 }

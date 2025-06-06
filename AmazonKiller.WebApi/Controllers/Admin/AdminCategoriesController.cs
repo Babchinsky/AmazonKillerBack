@@ -3,6 +3,7 @@ using AmazonKiller.Application.Features.Categories.Admin.Commands.CreateUpdateCa
 using AmazonKiller.Application.Features.Categories.Admin.Commands.CreateUpdateCategory.UpdateCategory;
 using AmazonKiller.Application.Features.Categories.Admin.Queries.GetAllCategoriesAdmin;
 using AmazonKiller.Application.Features.Categories.Admin.Queries.GetCategoryByIdAdmin;
+using AmazonKiller.Application.Features.Categories.Admin.Queries.GetCategoryPropertyKeysByIdAdmin;
 using AmazonKiller.Application.Features.Categories.Admin.Queries.IsCategoryExistsAdmin;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -54,6 +55,13 @@ public class AdminCategoriesController(IMediator mediator) : ControllerBase
     public async Task<IActionResult> BulkDelete([FromBody] BulkDeleteCategoriesCommand cmd, CancellationToken ct)
     {
         var result = await mediator.Send(cmd, ct);
+        return Ok(result);
+    }
+
+    [HttpGet("{id:guid}/property-keys")]
+    public async Task<IActionResult> GetPropertyKeys(Guid id, CancellationToken ct)
+    {
+        var result = await mediator.Send(new GetCategoryPropertyKeysByIdAdminQuery(id), ct);
         return Ok(result);
     }
 }

@@ -20,7 +20,7 @@ public class GetCategoryByIdHandler(
         var descendantIds = await categoryQueryService.GetDescendantCategoryIdsAsync(request.Id, ct);
         descendantIds.Add(request.Id);
 
-        var filters = await filterBuilder.BuildFiltersAsync(descendantIds, ct);
+        var filters = await filterBuilder.BuildFiltersAsync(descendantIds, ct, category.ActivePropertyKeys);
 
         var dto = mapper.Map<CategoryDetailsDto>(category) with
         {

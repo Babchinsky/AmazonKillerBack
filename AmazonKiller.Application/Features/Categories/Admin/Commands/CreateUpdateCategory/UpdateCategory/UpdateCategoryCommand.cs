@@ -7,5 +7,6 @@ namespace AmazonKiller.Application.Features.Categories.Admin.Commands.CreateUpda
 public class UpdateCategoryCommand : UpsertCategoryModel, IRequest<CategoryDto>
 {
     public Guid Id { get; init; }
+    public List<string>? ActivePropertyKeys { get; init; }
     public string RowVersion { get; init; } = string.Empty;
 }

@@ -2,5 +2,5 @@
 
 public interface ICategoryFilterService
 {
-    Task RecalculateAsync(CancellationToken ct = default);
+    Task RecalculateAsync(bool resetActive = false, CancellationToken ct = default);
 }

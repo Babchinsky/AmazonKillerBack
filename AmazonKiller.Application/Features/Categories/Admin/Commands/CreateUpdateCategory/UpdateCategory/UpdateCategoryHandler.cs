@@ -1,14 +1,17 @@
 using AmazonKiller.Application.DTOs.Categories;
 using AmazonKiller.Application.Interfaces.Repositories.Products;
 using AmazonKiller.Application.Interfaces.Services;
+using AmazonKiller.Application.Interfaces.Services.Categories;
 using AmazonKiller.Shared.Exceptions;
 using AutoMapper;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace AmazonKiller.Application.Features.Categories.Admin.Commands.CreateUpdateCategory.UpdateCategory;
 
 public class UpdateCategoryHandler(
     ICategoryRepository repo,
+    ICategoryQueryService categoryQueryService,
     IFileStorage fileStorage,
     IMapper mapper
 ) : IRequestHandler<UpdateCategoryCommand, CategoryDto>
@@ -20,6 +23,25 @@ public class UpdateCategoryHandler(
 
         // 🔒 Проверка RowVersion
         category.RowVersion = Convert.FromBase64String(request.RowVersion);
+
+        // 🧠 Получаем все связанные категории (текущую и потомков)
+        var allCategoryIds = await categoryQueryService.GetDescendantCategoryIdsAsync(request.Id, ct);
+        allCategoryIds.Add(request.Id);
+
+        var allCategories = await repo.Query()
+            .Where(c => allCategoryIds.Contains(c.Id))
+            .ToListAsync(ct);
+
+        var allPropertyKeys = allCategories
+            .SelectMany(c => c.PropertyKeys)
+            .ToHashSet();
+
+        if (request.ActivePropertyKeys is not null)
+        {
+            var invalidKeys = request.ActivePropertyKeys.Where(k => !allPropertyKeys.Contains(k)).ToList();
+            if (invalidKeys.Count > 0)
+                throw new AppException($"Invalid property keys: {string.Join(", ", invalidKeys)}");
+        }
 
         // 🔁 Сохраняем старый URL для возможного удаления
         var oldImageUrl = category.ImageUrl;
@@ -39,23 +61,32 @@ public class UpdateCategoryHandler(
         category.ParentId = request.ParentId;
         category.Description = request.Description;
         category.IconName = request.ParentId == null ? request.IconName : null;
-        category.PropertyKeys = request.ParentId != null ? request.PropertyKeys ?? [] : [];
+        category.ActivePropertyKeys = request.ActivePropertyKeys ?? [];
         category.ImageUrl = newImageUrl;
+
+        var imageChanged = request.Image != null && newImageUrl != oldImageUrl;
+        var updateSucceeded = false;
 
         try
         {
             await repo.UpdateWithCascadeStatusAsync(category, ct);
+            updateSucceeded = true;
+        }
+        catch (DbUpdateException ex) when (ex.InnerException?.Message.Contains("FOREIGN KEY") == true)
+        {
+            throw new AppException("Invalid parent category. The specified ParentId does not exist or is invalid.");
         }
         catch (Exception)
         {
-            // если упало — откатываем новый файл
-            if (request.Image != null && newImageUrl != oldImageUrl)
+            throw new AppException("An unexpected error occurred while updating the category.");
+        }
+        finally
+        {
+            if (!updateSucceeded && imageChanged)
                 await fileStorage.DeleteAsync(newImageUrl!, ct);
-            throw;
         }
 
-        // 🧹 Удаление старого изображения, если оно изменилось
-        if (request.Image != null && oldImageUrl != null && oldImageUrl != newImageUrl)
+        if (imageChanged && updateSucceeded && oldImageUrl != null)
             await fileStorage.DeleteAsync(oldImageUrl, ct);
 
         return mapper.Map<CategoryDto>(category);

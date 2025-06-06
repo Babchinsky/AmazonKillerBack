@@ -21,7 +21,7 @@ public class AdminMaintenanceController(
     [HttpPost("recalculate-category-filters")]
     public async Task<IActionResult> RecalcCategoryFilters(CancellationToken ct)
     {
-        await categoryFilterSvc.RecalculateAsync(ct);
+        await categoryFilterSvc.RecalculateAsync(false, ct);
         return NoContent();
     }
 }

@@ -38,7 +38,7 @@ public class CreateCategoryHandler(
             Description = request.Description,
             ImageUrl = imageUrl,
             IconName = request.ParentId == null ? request.IconName : null,
-            PropertyKeys = request.ParentId != null ? request.PropertyKeys ?? [] : [],
+            // PropertyKeys = request.ParentId != null ? request.PropertyKeys ?? [] : [],
             Status = request.Status
         };
 

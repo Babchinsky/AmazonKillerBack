@@ -1071,19 +1071,12 @@
 										{
 											"key": "ParentId",
 											"value": "{{categoryId}}",
-											"type": "text",
-											"disabled": true
+											"type": "text"
 										},
 										{
 											"key": "IconName",
 											"value": "{{categoryIconName}}",
 											"type": "text"
-										},
-										{
-											"key": "PropertyKeys",
-											"value": "{{categoryPropertyKeys}}",
-											"type": "text",
-											"disabled": true
 										},
 										{
 											"key": "Image",
@@ -1108,6 +1101,19 @@
 						},
 						{
 							"name": "Update Category",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"const keys = ['Color', 'Size']; \r",
+											"pm.environment.set('categoryActivePropertyKeys', keys.join(','));"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -1131,7 +1137,7 @@
 									"formdata": [
 										{
 											"key": "Id",
-											"value": "{{categoryId}}",
+											"value": "7ad3d843-1642-4e8a-a843-503928ef8154",
 											"type": "text"
 										},
 										{
@@ -1166,9 +1172,15 @@
 											"type": "text"
 										},
 										{
-											"key": "PropertyKeys",
-											"value": "{{categoryPropertyKeys}}",
+											"key": "ActivePropertyKeys[0]",
+											"value": "Display",
 											"type": "text"
+										},
+										{
+											"key": "ActivePropertyKeys[1]",
+											"value": "Size",
+											"type": "text",
+											"disabled": true
 										},
 										{
 											"key": "Image",
@@ -1191,7 +1203,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "{{categoryId}}",
+											"value": "7ad3d843-1642-4e8a-a843-503928ef8154",
 											"description": "(Required) "
 										}
 									]
@@ -1348,7 +1360,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "{{categoryId}}",
+											"value": "7ad3d843-1642-4e8a-a843-503928ef8154",
 											"description": "(Required) "
 										}
 									]
@@ -1417,6 +1429,44 @@
 										{
 											"key": "id",
 											"value": "{{categoryId}}",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Category Property Keys by ID",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{adminAccessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/admin/categories/:id/property-keys",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"categories",
+										":id",
+										"property-keys"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "7ad3d843-1642-4e8a-a843-503928ef8154",
 											"description": "(Required) "
 										}
 									]
@@ -1624,7 +1674,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "{{categoryId}}",
+											"value": "7ad3d843-1642-4e8a-a843-503928ef8154",
 											"description": "(Required) "
 										}
 									]
@@ -1707,7 +1757,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "d2deb989-35c5-4ca1-a748-12411d3ac3a4",
+											"value": "7ad3d843-1642-4e8a-a843-503928ef8154",
 											"description": "(Required) "
 										}
 									]
@@ -1901,15 +1951,15 @@
 											"\r",
 											"/* ------------- пул исходных данных ------------- */\r",
 											"const ATTR_BANK = [\r",
-											"    { key: \"Color\",  value: \"Black\"   },\r",
-											"    { key: \"Color\",  value: \"White\"   },\r",
-											"    { key: \"Color\",  value: \"Red\"     },\r",
-											"    { key: \"Size\",   value: \"S\"       },\r",
-											"    { key: \"Size\",   value: \"M\"       },\r",
-											"    { key: \"Size\",   value: \"L\"       },\r",
+											"    // { key: \"Color\",  value: \"Black\"   },\r",
+											"    // { key: \"Color\",  value: \"White\"   },\r",
+											"    // { key: \"Color\",  value: \"Red\"     },\r",
+											"    // { key: \"Size\",   value: \"S\"       },\r",
+											"    // { key: \"Size\",   value: \"M\"       },\r",
+											"    // { key: \"Size\",   value: \"L\"       },\r",
 											"    { key: \"Material\", value: \"Cotton\"},\r",
-											"    { key: \"Material\", value: \"Leather\"},\r",
-											"    { key: \"Origin\", value: \"USA\"     },\r",
+											"    // { key: \"Material\", value: \"Leather\"},\r",
+											"    // { key: \"Origin\", value: \"USA\"     },\r",
 											"    { key: \"Origin\", value: \"Ukraine\" }\r",
 											"];\r",
 											"\r",
@@ -2023,7 +2073,10 @@
 										{
 											"key": "Images",
 											"type": "file",
-											"src": "/C:/Users/alexs/OneDrive/Desktop/Postman/product3.jpg"
+											"src": [
+												"/C:/Users/alexs/OneDrive/Desktop/Postman/review1.jpg",
+												"/C:/Users/alexs/OneDrive/Desktop/Postman/review2.jpg"
+											]
 										},
 										{
 											"key": "Attributes",
@@ -2323,7 +2376,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/api/admin/products",
+									"raw": "{{baseUrl}}/api/admin/products?CategoryId=f9545813-aa3f-40b6-a6cc-4335fdae06d3",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -2340,8 +2393,7 @@
 										},
 										{
 											"key": "CategoryId",
-											"value": "7AD3D843-1642-4E8A-A843-503928EF8154",
-											"disabled": true
+											"value": "f9545813-aa3f-40b6-a6cc-4335fdae06d3"
 										},
 										{
 											"key": "Filters[{{productFilterSizeKey}}]",
@@ -2544,6 +2596,16 @@
 									"listen": "prerequest",
 									"script": {
 										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
 											"pm.test(\"Статус ответа 200\", function () {\r",
 											"    pm.response.to.have.status(200);\r",
 											"});"
@@ -2573,7 +2635,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"ids\": [\n    \"9736F4D1-47EC-4183-AEC9-436E54A78AC9\",\n    \"6D48F8EF-E9BF-4002-8F03-25E917E7CC4D\",\n    \"F2DC0734-5C89-4D3E-BC4E-77620D94D513\"\n  ]\n}",
+									"raw": "{\n  \"ids\": [\n    \"24958856-5E22-4DE5-BB61-971092BAA8A9\",\n    \"6D48F8EF-E9BF-4002-8F03-25E917E7CC4D\",\n    \"F2DC0734-5C89-4D3E-BC4E-77620D94D513\"\n  ]\n}",
 									"options": {
 										"raw": {
 											"headerFamily": "json",
@@ -2663,7 +2725,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/api/products?CategoryId=d2deb989-35c5-4ca1-a748-12411d3ac3a4",
+									"raw": "{{baseUrl}}/api/products?CategoryId=f9545813-aa3f-40b6-a6cc-4335fdae06d3",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -2679,7 +2741,7 @@
 										},
 										{
 											"key": "CategoryId",
-											"value": "d2deb989-35c5-4ca1-a748-12411d3ac3a4"
+											"value": "f9545813-aa3f-40b6-a6cc-4335fdae06d3"
 										},
 										{
 											"key": "Filters[proidente24]",
@@ -2783,7 +2845,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "3c5a4868-3b2d-4352-9e12-502a56bce48a",
+											"value": "7ad3d843-1642-4e8a-a843-503928ef8154",
 											"description": "(Required) "
 										}
 									]
@@ -3806,7 +3868,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"productId\": \"{{lastProductId}}\",\n  \"quantity\": 5\n}",
+									"raw": "{\n  \"productId\": \"3c5a4868-3b2d-4352-9e12-502a56bce48a\",\n  \"quantity\": 5\n}",
 									"options": {
 										"raw": {
 											"headerFamily": "json",

@@ -17,6 +17,7 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
         b.ConfigureRowVersion();
 
         b.PrimitiveCollection(c => c.PropertyKeys);
+        b.PrimitiveCollection(c => c.ActivePropertyKeys);
 
         b.HasOne(c => c.Parent)
             .WithMany(c => c.Children)

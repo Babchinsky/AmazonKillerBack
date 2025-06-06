@@ -6,33 +6,24 @@ namespace AmazonKiller.Infrastructure.Services.Categories;
 
 public class CategoryFilterBuilder(IProductRepository productRepo) : ICategoryFilterBuilder
 {
-    public async Task<Dictionary<string, List<string>>> BuildFiltersAsync(IEnumerable<Guid> categoryIds,
-        CancellationToken ct)
+    public async Task<Dictionary<string, List<string>>> BuildFiltersAsync(
+        IEnumerable<Guid> categoryIds,
+        CancellationToken ct,
+        IEnumerable<string>? allowedKeys = null)
     {
-        var productAttrs = await productRepo.Queryable()
+        var attributes = await productRepo.Queryable()
             .Where(p => categoryIds.Contains(p.CategoryId))
-            .Select(p => p.Attributes)
+            .SelectMany(p => p.Attributes)
             .ToListAsync(ct);
 
-        var allKeys = productAttrs
-            .SelectMany(attrs => attrs)
-            .Select(a => a.Key)
-            .Distinct();
+        var grouped = attributes
+            .GroupBy(a => a.Key)
+            .Where(g => allowedKeys == null || allowedKeys.Contains(g.Key)) // 👈 фильтрация по разрешённым ключам
+            .ToDictionary(
+                g => g.Key,
+                g => g.Select(a => a.Value).Distinct().ToList()
+            );
 
-        var filters = new Dictionary<string, List<string>>();
-        foreach (var key in allKeys)
-        {
-            var values = productAttrs
-                .SelectMany(attrs => attrs)
-                .Where(a => a.Key == key)
-                .Select(a => a.Value)
-                .Distinct()
-                .ToList();
-
-            if (values.Count > 0)
-                filters[key] = values;
-        }
-
-        return filters;
+        return grouped;
     }
 }

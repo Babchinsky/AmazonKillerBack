@@ -18,7 +18,8 @@ public class Category : VersionedEntity
     public string? ImageUrl { get; set; }
     public string? IconName { get; set; }
 
-    public ICollection<string> PropertyKeys { get; set; } = new List<string>();
+    public ICollection<string> PropertyKeys { get; set; } = new List<string>(); // Union of all keys in products
+    public ICollection<string> ActivePropertyKeys { get; set; } = new List<string>(); // Keys that should be shown in filters
     public ICollection<Collection> Collections { get; init; } = new List<Collection>();
     public ICollection<Product> Products { get; init; } = new List<Product>();
 }

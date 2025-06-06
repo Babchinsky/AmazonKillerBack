@@ -116,7 +116,7 @@ using (var scope = app.Services.CreateScope())
 
     // фильтры категорий
     await scope.ServiceProvider.GetRequiredService<ICategoryFilterService>()
-        .RecalculateAsync();
+        .RecalculateAsync(true);
 }
 
 app.UseForwardedHeaders();

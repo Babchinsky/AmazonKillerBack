@@ -24,7 +24,7 @@ public abstract class UpsertCategoryValidator<T> : AbstractValidator<T>
         When(x => x.ParentId == null, () =>
         {
             RuleFor(x => x.IconName).NotEmpty().WithMessage("Icon is required for main categories");
-            RuleFor(x => x.PropertyKeys).Empty().WithMessage("Main categories should not have property keys");
+            // RuleFor(x => x.PropertyKeys).Empty().WithMessage("Main categories should not have property keys");
         });
 
         // When(x => x.ParentId != null,

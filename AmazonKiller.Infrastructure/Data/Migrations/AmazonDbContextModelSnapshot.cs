@@ -28,6 +28,10 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.PrimitiveCollection<string>("ActivePropertyKeys")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
@@ -68,6 +72,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         new
                         {
                             Id = new Guid("49595c91-f315-4b2e-af8a-0f09c3145c03"),
+                            ActivePropertyKeys = "[]",
                             Description = "Fashion category",
                             IconName = "hanger",
                             ImageUrl = "https://example.com/images/fashion.jpg",
@@ -79,6 +84,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         new
                         {
                             Id = new Guid("7eb489f4-2f55-4510-8e49-3965370c4989"),
+                            ActivePropertyKeys = "[]",
                             Description = "Men's Clothing category",
                             ImageUrl = "https://example.com/images/mens_clothing.jpg",
                             Name = "Men's Clothing",
@@ -90,6 +96,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         new
                         {
                             Id = new Guid("69f22c76-7202-44e6-9132-09fd09c55632"),
+                            ActivePropertyKeys = "[]",
                             Description = "Women's Clothing category",
                             ImageUrl = "https://example.com/images/womens_clothing.jpg",
                             Name = "Women's Clothing",
@@ -101,6 +108,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         new
                         {
                             Id = new Guid("be4e31b6-3b78-4d99-a3fa-7cb8a7bc4a8b"),
+                            ActivePropertyKeys = "[]",
                             Description = "Shoes category",
                             ImageUrl = "https://example.com/images/shoes.jpg",
                             Name = "Shoes",
@@ -112,6 +120,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         new
                         {
                             Id = new Guid("3b464a7d-878c-4b8b-b44f-c78a2b59be3a"),
+                            ActivePropertyKeys = "[]",
                             Description = "Accessories category",
                             ImageUrl = "https://example.com/images/accessories.jpg",
                             Name = "Accessories",
@@ -123,6 +132,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         new
                         {
                             Id = new Guid("7ad3d843-1642-4e8a-a843-503928ef8154"),
+                            ActivePropertyKeys = "[]",
                             Description = "Electronics category",
                             IconName = "computer",
                             ImageUrl = "https://example.com/images/electronics.jpg",
@@ -134,6 +144,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         new
                         {
                             Id = new Guid("d2deb989-35c5-4ca1-a748-12411d3ac3a4"),
+                            ActivePropertyKeys = "[]",
                             Description = "Smartphones category",
                             ImageUrl = "https://example.com/images/smartphones.jpg",
                             Name = "Smartphones",
@@ -145,6 +156,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         new
                         {
                             Id = new Guid("22e7ee0d-8962-482b-857d-43ba828de1ff"),
+                            ActivePropertyKeys = "[]",
                             Description = "Laptops category",
                             ImageUrl = "https://example.com/images/laptops.jpg",
                             Name = "Laptops",
@@ -156,6 +168,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         new
                         {
                             Id = new Guid("8fc8707d-97d7-41a1-9c31-50f07b8466f4"),
+                            ActivePropertyKeys = "[]",
                             Description = "Cameras category",
                             ImageUrl = "https://example.com/images/cameras.jpg",
                             Name = "Cameras",
@@ -167,6 +180,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         new
                         {
                             Id = new Guid("c1cd879d-175e-4ff5-b354-054f9f82ce98"),
+                            ActivePropertyKeys = "[]",
                             Description = "Audio Devices category",
                             ImageUrl = "https://example.com/images/audio_devices.jpg",
                             Name = "Audio Devices",
@@ -178,6 +192,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         new
                         {
                             Id = new Guid("8980e70c-3345-4885-8518-cfcda95b3078"),
+                            ActivePropertyKeys = "[]",
                             Description = "Household category",
                             IconName = "cleaning-spray",
                             ImageUrl = "https://example.com/images/household.jpg",
@@ -189,6 +204,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         new
                         {
                             Id = new Guid("0e6feb3f-f795-4541-8cc6-7d7047951eb9"),
+                            ActivePropertyKeys = "[]",
                             Description = "Kitchen Appliances category",
                             ImageUrl = "https://example.com/images/kitchen_appliances.jpg",
                             Name = "Kitchen Appliances",
@@ -200,6 +216,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         new
                         {
                             Id = new Guid("1b6f5f96-233d-4b82-b30f-27643f6b62eb"),
+                            ActivePropertyKeys = "[]",
                             Description = "Cleaning Supplies category",
                             ImageUrl = "https://example.com/images/cleaning_supplies.jpg",
                             Name = "Cleaning Supplies",
@@ -211,6 +228,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         new
                         {
                             Id = new Guid("d94af679-24f4-4ab2-ae1e-ba3689143579"),
+                            ActivePropertyKeys = "[]",
                             Description = "Storage category",
                             ImageUrl = "https://example.com/images/storage.jpg",
                             Name = "Storage",
@@ -222,6 +240,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         new
                         {
                             Id = new Guid("2f4f0438-f456-4770-9d49-1a46ed4ec88a"),
+                            ActivePropertyKeys = "[]",
                             Description = "Bathroom category",
                             ImageUrl = "https://example.com/images/bathroom.jpg",
                             Name = "Bathroom",
@@ -233,6 +252,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         new
                         {
                             Id = new Guid("0dfa0836-09c9-4a2d-b74a-9b2085976dcf"),
+                            ActivePropertyKeys = "[]",
                             Description = "Furniture category",
                             IconName = "sofa",
                             ImageUrl = "https://example.com/images/furniture.jpg",
@@ -244,6 +264,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         new
                         {
                             Id = new Guid("68ae1c83-85c1-4002-bb32-d00ac9b3a1bb"),
+                            ActivePropertyKeys = "[]",
                             Description = "Living Room category",
                             ImageUrl = "https://example.com/images/living_room.jpg",
                             Name = "Living Room",
@@ -255,6 +276,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         new
                         {
                             Id = new Guid("c9f81657-73a1-4b53-bf80-b59121eae433"),
+                            ActivePropertyKeys = "[]",
                             Description = "Bedroom category",
                             ImageUrl = "https://example.com/images/bedroom.jpg",
                             Name = "Bedroom",
@@ -266,6 +288,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         new
                         {
                             Id = new Guid("2f3ad03d-c8a3-4c12-bf7c-db764e634fc4"),
+                            ActivePropertyKeys = "[]",
                             Description = "Office Furniture category",
                             ImageUrl = "https://example.com/images/office_furniture.jpg",
                             Name = "Office Furniture",
@@ -277,6 +300,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         new
                         {
                             Id = new Guid("7f3e369a-0b7d-4178-84bf-e4194fac9ed2"),
+                            ActivePropertyKeys = "[]",
                             Description = "Outdoor category",
                             ImageUrl = "https://example.com/images/outdoor.jpg",
                             Name = "Outdoor",
@@ -288,6 +312,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         new
                         {
                             Id = new Guid("cc9bf323-2160-49b2-ae79-340781163eb2"),
+                            ActivePropertyKeys = "[]",
                             Description = "Work tools category",
                             IconName = "hammer",
                             ImageUrl = "https://example.com/images/worktools.jpg",
@@ -299,6 +324,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         new
                         {
                             Id = new Guid("834ba378-fe57-4702-b85c-4cb0431d1909"),
+                            ActivePropertyKeys = "[]",
                             Description = "Hand Tools category",
                             ImageUrl = "https://example.com/images/hand_tools.jpg",
                             Name = "Hand Tools",
@@ -310,6 +336,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         new
                         {
                             Id = new Guid("1c9d0336-9ac8-440a-b6b6-3698940f608c"),
+                            ActivePropertyKeys = "[]",
                             Description = "Power Tools category",
                             ImageUrl = "https://example.com/images/power_tools.jpg",
                             Name = "Power Tools",
@@ -321,6 +348,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         new
                         {
                             Id = new Guid("18710447-a260-44f2-9a4b-77c0b246bbc5"),
+                            ActivePropertyKeys = "[]",
                             Description = "Safety Gear category",
                             ImageUrl = "https://example.com/images/safety_gear.jpg",
                             Name = "Safety Gear",
@@ -332,6 +360,7 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                         new
                         {
                             Id = new Guid("158ebe6b-0e3d-48da-8893-5e3621dd2c4b"),
+                            ActivePropertyKeys = "[]",
                             Description = "Tool Storage category",
                             ImageUrl = "https://example.com/images/tool_storage.jpg",
                             Name = "Tool Storage",

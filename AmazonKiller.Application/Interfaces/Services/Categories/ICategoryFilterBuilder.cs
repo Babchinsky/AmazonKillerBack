@@ -2,5 +2,8 @@
 
 public interface ICategoryFilterBuilder
 {
-    Task<Dictionary<string, List<string>>> BuildFiltersAsync(IEnumerable<Guid> categoryIds, CancellationToken ct);
+    Task<Dictionary<string, List<string>>> BuildFiltersAsync(
+        IEnumerable<Guid> categoryIds,
+        CancellationToken ct,
+        IEnumerable<string>? allowedKeys = null);
 }
