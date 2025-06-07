@@ -4,6 +4,7 @@ using AmazonKiller.Application.Features.Categories.Public.Queries.GetAllCategori
 using AmazonKiller.Application.Features.Categories.Public.Queries.GetCategoryById;
 using AmazonKiller.Application.Features.Categories.Public.Queries.GetCategoryFilters;
 using AmazonKiller.Application.Features.Categories.Public.Queries.GetCategoryTree;
+using AmazonKiller.Application.Features.Categories.Public.Queries.GetRootCategories;
 using AmazonKiller.Application.Features.Categories.Public.Queries.IsCategoryExists;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -24,6 +25,13 @@ public class CategoriesController(IMediator mediator) : ControllerBase
     public Task<List<CategoryTreeDto>> GetTree(CancellationToken ct)
     {
         return mediator.Send(new GetCategoryTreeQuery(), ct);
+    }
+
+    [HttpGet("roots")]
+    public async Task<IActionResult> GetRootCategories(CancellationToken ct)
+    {
+        var result = await mediator.Send(new GetRootCategoriesQuery(), ct);
+        return Ok(result);
     }
 
     [HttpGet("{id:guid}")]

@@ -1906,6 +1906,25 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "Get Roots Categories",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/categories/roots",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"categories",
+										"roots"
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				}
