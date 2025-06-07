@@ -16,7 +16,11 @@ public static class ReviewsSeed
                 Article = "Excellent phone",
                 Message = "Battery lasts all day. The screen is incredibly bright and vivid.",
                 Rating = 5.0m,
-                ImageUrls = [],
+                ImageUrls =
+                [
+                    "https://www.trustedreviews.com/wp-content/uploads/sites/7/2023/02/Samsung-Galaxy-S23-review-4-scaled.jpg",
+                    "https://cdn.mos.cms.futurecdn.net/qUaKQ3tLp9kz77mNJswNw5.jpg"
+                ],
                 Tags = ["battery", "screen"]
             },
             new Review
@@ -38,7 +42,10 @@ public static class ReviewsSeed
                 Article = "Top sound quality",
                 Message = "Perfect for flights. Noise cancelling works like magic.",
                 Rating = 5.0m,
-                ImageUrls = [],
+                ImageUrls =
+                [
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMqiHMcxsM6_WGsFNyUeOmRJiA8m4PXYlu0w&s"
+                ],
                 Tags = ["sound", "noise cancelling"]
             },
             new Review
@@ -49,7 +56,7 @@ public static class ReviewsSeed
                 Article = "Comfortable",
                 Message = "Long usage with no discomfort. Battery could be better though.",
                 Rating = 4.2m,
-                ImageUrls = [],
+                ImageUrls = ["https://cdn.mos.cms.futurecdn.net/LaM4xHqeVEorNnR6MbW4d5.jpg"],
                 Tags = ["comfort", "battery"]
             },
             new Review
@@ -71,7 +78,7 @@ public static class ReviewsSeed
                 Article = "Beast of a drill",
                 Message = "Very powerful and long-lasting battery. Great for home use.",
                 Rating = 5.0m,
-                ImageUrls = [],
+                ImageUrls = ["https://cdn.mos.cms.futurecdn.net/5aEmPbsS9hkZXAdX8SLkZN.jpg"],
                 Tags = ["power", "performance"]
             },
             new Review
@@ -93,7 +100,11 @@ public static class ReviewsSeed
                 Article = "Impressive cleaning",
                 Message = "Powerful suction and laser feature is actually helpful.",
                 Rating = 4.8m,
-                ImageUrls = [],
+                ImageUrls =
+                [
+                    "https://i.rtings.com/assets/products/qh2fKaXG/dyson-v15s-detect-submarine/design-medium.jpg?format=auto",
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6Dl9H-VVAlhTl4IORL2MROelfDITfUl1v2A&s"
+                ],
                 Tags = ["vacuum", "laser"]
             },
             new Review

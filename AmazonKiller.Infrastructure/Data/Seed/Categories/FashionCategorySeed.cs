@@ -16,7 +16,7 @@ public static class FashionCategorySeed
                 Name = "Fashion",
                 Status = CategoryStatus.Active,
                 Description = "Fashion category",
-                ImageUrl = "https://example.com/images/fashion.jpg",
+                ImageUrl = "https://theplanetapp.com/wp-content/uploads/2022/08/fast-fashion-1-scaled-1-scaled.webp",
                 IconName = "hanger"
             },
             new Category
@@ -25,7 +25,7 @@ public static class FashionCategorySeed
                 Name = "Men's Clothing",
                 Status = CategoryStatus.Active,
                 Description = "Men's Clothing category",
-                ImageUrl = "https://example.com/images/mens_clothing.jpg",
+                ImageUrl = "https://www.ernest.ca/cdn/shop/articles/Guide_Vestimentaire_3.png?v=1667419005&width=2048",
                 ParentId = rootId
             },
             new Category
@@ -34,7 +34,7 @@ public static class FashionCategorySeed
                 Name = "Women's Clothing",
                 Status = CategoryStatus.Active,
                 Description = "Women's Clothing category",
-                ImageUrl = "https://example.com/images/womens_clothing.jpg",
+                ImageUrl = "https://www.reiss.com/cms/resource/blob/976838/78c7ee422947a53d786b8deb107425fe/nybg-1-data.jpg",
                 ParentId = rootId
             },
             new Category
@@ -43,7 +43,7 @@ public static class FashionCategorySeed
                 Name = "Shoes",
                 Status = CategoryStatus.Active,
                 Description = "Shoes category",
-                ImageUrl = "https://example.com/images/shoes.jpg",
+                ImageUrl = "https://d1nymbkeomeoqg.cloudfront.net/photos/28/73/408849_7358_XL.jpg",
                 ParentId = rootId
             },
             new Category
@@ -52,7 +52,7 @@ public static class FashionCategorySeed
                 Name = "Accessories",
                 Status = CategoryStatus.Active,
                 Description = "Accessories category",
-                ImageUrl = "https://example.com/images/accessories.jpg",
+                ImageUrl = "https://i0.wp.com/ordnur.com/wp-content/uploads/2023/06/Accessories-for-a-Trendy-Wardrobe.webp?ssl=1",
                 ParentId = rootId
             }
         );

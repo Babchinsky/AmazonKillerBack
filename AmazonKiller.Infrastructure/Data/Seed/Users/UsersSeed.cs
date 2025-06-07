@@ -17,7 +17,7 @@ public static class UsersSeed
                 Status = UserStatus.Active,
                 FirstName = "Kathy",
                 LastName = "Thomas",
-                ImageUrl = null
+                ImageUrl = "https://static.vecteezy.com/system/resources/thumbnails/038/962/461/small/ai-generated-caucasian-successful-confident-young-businesswoman-ceo-boss-bank-employee-worker-manager-with-arms-crossed-in-formal-wear-isolated-in-white-background-photo.jpg"
             },
             new User
             {
@@ -28,7 +28,7 @@ public static class UsersSeed
                 Status = UserStatus.Active,
                 FirstName = "Amanda",
                 LastName = "Decker",
-                ImageUrl = null
+                ImageUrl = "https://media.istockphoto.com/id/1326417862/ru/%D1%84%D0%BE%D1%82%D0%BE/%D0%BC%D0%BE%D0%BB%D0%BE%D0%B4%D0%B0%D1%8F-%D0%B6%D0%B5%D0%BD%D1%89%D0%B8%D0%BD%D0%B0-%D1%81%D0%BC%D0%B5%D0%B5%D1%82%D1%81%D1%8F-%D0%B2%D0%BE-%D0%B2%D1%80%D0%B5%D0%BC%D1%8F-%D0%BE%D1%82%D0%B4%D1%8B%D1%85%D0%B0-%D0%B4%D0%BE%D0%BC%D0%B0.jpg?s=612x612&w=0&k=20&c=S5kj1xMVROvdovQaZ2zkL5ydZM0M32V7lBpe86VVuNQ="
             },
             new User
             {
@@ -39,7 +39,7 @@ public static class UsersSeed
                 Status = UserStatus.Active,
                 FirstName = "Samantha",
                 LastName = "Moore",
-                ImageUrl = null
+                ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Woman_at_Lover%27s_Bridge_Tanjung_Sepat_%28cropped%29.jpg/1200px-Woman_at_Lover%27s_Bridge_Tanjung_Sepat_%28cropped%29.jpg"
             },
             new User
             {
@@ -50,7 +50,7 @@ public static class UsersSeed
                 Status = UserStatus.Active,
                 FirstName = "Brittany",
                 LastName = "Edwards",
-                ImageUrl = null
+                ImageUrl = "https://discoverymood.com/wp-content/uploads/2020/04/Mental-Strong-Women-min-480x340.jpg"
             },
             new User
             {
@@ -61,7 +61,7 @@ public static class UsersSeed
                 Status = UserStatus.Active,
                 FirstName = "Jennifer",
                 LastName = "Delacruz",
-                ImageUrl = null
+                ImageUrl = "https://img.freepik.com/free-photo/young-beautiful-woman-pink-warm-sweater-natural-look-smiling-portrait-isolated-long-hair_285396-896.jpg?semt=ais_hybrid&w=740"
             },
             new User
             {
@@ -72,7 +72,7 @@ public static class UsersSeed
                 Status = UserStatus.Active,
                 FirstName = "Daniel",
                 LastName = "Kaiser",
-                ImageUrl = null
+                ImageUrl = "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
             },
             new User
             {
@@ -94,7 +94,7 @@ public static class UsersSeed
                 Status = UserStatus.Active,
                 FirstName = "Charles",
                 LastName = "Cook",
-                ImageUrl = null
+                ImageUrl = "https://static.vecteezy.com/system/resources/thumbnails/005/346/410/small_2x/close-up-portrait-of-smiling-handsome-young-caucasian-man-face-looking-at-camera-on-isolated-light-gray-studio-background-photo.jpg"
             },
             new User
             {
@@ -105,7 +105,7 @@ public static class UsersSeed
                 Status = UserStatus.Active,
                 FirstName = "Christopher",
                 LastName = "Salazar",
-                ImageUrl = null
+                ImageUrl = "https://media.istockphoto.com/id/1388648617/photo/confident-caucasian-young-man-in-casual-denim-clothes-with-arms-crossed-looking-at-camera.jpg?s=612x612&w=0&k=20&c=YxctPklAOJMmy6Tolyvn45rJL3puk5RlKt39FO46ZeA="
             },
             new User
             {
@@ -116,7 +116,7 @@ public static class UsersSeed
                 Status = UserStatus.Active,
                 FirstName = "Jason",
                 LastName = "Meza",
-                ImageUrl = null
+                ImageUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHg0mkcVvR4xO0RpIJfAzLmfC5QE52D9mIAA&s"
             }
         );
     }

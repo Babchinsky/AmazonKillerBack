@@ -413,11 +413,11 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                 columns: new[] { "Id", "ActivePropertyKeys", "Description", "IconName", "ImageUrl", "Name", "ParentId", "PropertyKeys", "Status" },
                 values: new object[,]
                 {
-                    { new Guid("0dfa0836-09c9-4a2d-b74a-9b2085976dcf"), "[]", "Furniture category", "sofa", "https://example.com/images/furniture.jpg", "Furniture", null, "[]", 0 },
-                    { new Guid("49595c91-f315-4b2e-af8a-0f09c3145c03"), "[]", "Fashion category", "hanger", "https://example.com/images/fashion.jpg", "Fashion", null, "[]", 0 },
-                    { new Guid("7ad3d843-1642-4e8a-a843-503928ef8154"), "[]", "Electronics category", "computer", "https://example.com/images/electronics.jpg", "Electronics", null, "[]", 0 },
-                    { new Guid("8980e70c-3345-4885-8518-cfcda95b3078"), "[]", "Household category", "cleaning-spray", "https://example.com/images/household.jpg", "Household", null, "[]", 0 },
-                    { new Guid("cc9bf323-2160-49b2-ae79-340781163eb2"), "[]", "Work tools category", "hammer", "https://example.com/images/worktools.jpg", "Work tools", null, "[]", 0 }
+                    { new Guid("0dfa0836-09c9-4a2d-b74a-9b2085976dcf"), "[]", "Furniture category", "sofa", "https://www.livingdesignsfurniture.com/wp-content/uploads/2022/03/shutterstock_1929872735-1.webp", "Furniture", null, "[]", 0 },
+                    { new Guid("49595c91-f315-4b2e-af8a-0f09c3145c03"), "[]", "Fashion category", "hanger", "https://theplanetapp.com/wp-content/uploads/2022/08/fast-fashion-1-scaled-1-scaled.webp", "Fashion", null, "[]", 0 },
+                    { new Guid("7ad3d843-1642-4e8a-a843-503928ef8154"), "[]", "Electronics category", "computer", "https://hpp.arkema.com/files/live/sites/shared_arkema/files/images/markets/Electronics%20electrical/electronics.jpg", "Electronics", null, "[]", 0 },
+                    { new Guid("8980e70c-3345-4885-8518-cfcda95b3078"), "[]", "Household category", "cleaning-spray", "https://t3.ftcdn.net/jpg/01/91/32/34/360_F_191323402_W2ATUPr8dGHALHrvyX4WVlEDz4qXmmd9.jpg", "Household", null, "[]", 0 },
+                    { new Guid("cc9bf323-2160-49b2-ae79-340781163eb2"), "[]", "Work tools category", "hammer", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwO5jLC0Dtm27AcDKo8DAt57_M3tSpZCOmxA&s", "Work tools", null, "[]", 0 }
                 });
 
             migrationBuilder.InsertData(
@@ -425,16 +425,16 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                 columns: new[] { "Id", "Email", "FirstName", "ImageUrl", "LastName", "PasswordHash", "Role", "Status" },
                 values: new object[,]
                 {
-                    { new Guid("0986d7ae-31ff-42d8-a9d4-450625e8dd76"), "hallshaun8@example.com", "Charles", null, "Cook", "$2b$12$B./Bh7QhdcmttuAWXIt8dOp5Hul0w7YjOCMBCnGUfHQV4NvKfQ8Xe", 0, 0 },
-                    { new Guid("2583c105-264b-45ee-a535-3b939f4dd428"), "suzannegonzalez5@example.com", "Jennifer", null, "Delacruz", "$2b$12$bUoOhVkj0HkDTCZlh8/n9O2m7s7.FwtwsJYj4fiR4OnZN2cKl9S9K", 0, 0 },
+                    { new Guid("0986d7ae-31ff-42d8-a9d4-450625e8dd76"), "hallshaun8@example.com", "Charles", "https://static.vecteezy.com/system/resources/thumbnails/005/346/410/small_2x/close-up-portrait-of-smiling-handsome-young-caucasian-man-face-looking-at-camera-on-isolated-light-gray-studio-background-photo.jpg", "Cook", "$2b$12$B./Bh7QhdcmttuAWXIt8dOp5Hul0w7YjOCMBCnGUfHQV4NvKfQ8Xe", 0, 0 },
+                    { new Guid("2583c105-264b-45ee-a535-3b939f4dd428"), "suzannegonzalez5@example.com", "Jennifer", "https://img.freepik.com/free-photo/young-beautiful-woman-pink-warm-sweater-natural-look-smiling-portrait-isolated-long-hair_285396-896.jpg?semt=ais_hybrid&w=740", "Delacruz", "$2b$12$bUoOhVkj0HkDTCZlh8/n9O2m7s7.FwtwsJYj4fiR4OnZN2cKl9S9K", 0, 0 },
                     { new Guid("4f33466b-00cd-424d-9c5a-2356d9fc179d"), "eric737@example.com", "John", null, "Hernandez", "$2b$12$hZMooIIRDBrx/2SZ9FbS9uuT/M4esP1.z1UFFvLHfKrcLYLccRTz6", 0, 0 },
-                    { new Guid("741ddf70-bcb9-44ba-a666-246072dd8c82"), "kimberly906@example.com", "Daniel", null, "Kaiser", "$2b$12$zhpKLnHJl9jZxDcwwGhbyO8yDViIlu0E.WrbucVxYqfSvZxJqIMzm", 0, 0 },
-                    { new Guid("7a612c2e-ebc1-4a30-ac54-cccb566a1086"), "michaelterrell1@example.com", "Kathy", null, "Thomas", "$2b$12$JthvV5eK9b0BX972kty2PuNuUd4Nk3wGLklIlj0HX2wInNS/78H7u", 0, 0 },
-                    { new Guid("82bf572a-ab40-4571-b1a2-ec9dcf9ccb7d"), "mjones3@example.com", "Samantha", null, "Moore", "$2b$12$XL/cSsxTSvYunP0ws3PTfOowebceqDPLauAE1qJcpljQwPgXXvTIG", 0, 0 },
-                    { new Guid("9f73b2c1-71c7-434b-8fcd-b3ca7a6eae98"), "cannonkelly9@example.com", "Christopher", null, "Salazar", "$2b$12$r9HYkq1hv0wiwZh05W6fq.6b3qoZxXrOfr/xrFSA//x69Qu77mOJO", 0, 0 },
-                    { new Guid("a4f0b9c1-47e8-46ff-a9e5-d388693cffef"), "nparrish10@example.com", "Jason", null, "Meza", "$2b$12$ix2jyWO01HHxwhtmLFIFXO/JbQ8eqT.IaJw5xrGAgcXbN/HL7ZIZO", 0, 0 },
-                    { new Guid("b116a743-b108-494a-abb5-a0c9673edbef"), "heather934@example.com", "Brittany", null, "Edwards", "$2b$12$KPKg2yfoi0KQriKvrpKtYe3lGI67jJMkfncwg79HN1K0ln/PQwkym", 0, 0 },
-                    { new Guid("fa67eef0-62a7-4e61-83ef-5a054e84ce41"), "april992@example.com", "Amanda", null, "Decker", "$2b$12$smw9z353sKgENxXVnQs6g.1EHa6UYkFh9jpq/ILRjrzDzY5lS9Nxa", 0, 0 }
+                    { new Guid("741ddf70-bcb9-44ba-a666-246072dd8c82"), "kimberly906@example.com", "Daniel", "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500", "Kaiser", "$2b$12$zhpKLnHJl9jZxDcwwGhbyO8yDViIlu0E.WrbucVxYqfSvZxJqIMzm", 0, 0 },
+                    { new Guid("7a612c2e-ebc1-4a30-ac54-cccb566a1086"), "michaelterrell1@example.com", "Kathy", "https://static.vecteezy.com/system/resources/thumbnails/038/962/461/small/ai-generated-caucasian-successful-confident-young-businesswoman-ceo-boss-bank-employee-worker-manager-with-arms-crossed-in-formal-wear-isolated-in-white-background-photo.jpg", "Thomas", "$2b$12$JthvV5eK9b0BX972kty2PuNuUd4Nk3wGLklIlj0HX2wInNS/78H7u", 0, 0 },
+                    { new Guid("82bf572a-ab40-4571-b1a2-ec9dcf9ccb7d"), "mjones3@example.com", "Samantha", "https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Woman_at_Lover%27s_Bridge_Tanjung_Sepat_%28cropped%29.jpg/1200px-Woman_at_Lover%27s_Bridge_Tanjung_Sepat_%28cropped%29.jpg", "Moore", "$2b$12$XL/cSsxTSvYunP0ws3PTfOowebceqDPLauAE1qJcpljQwPgXXvTIG", 0, 0 },
+                    { new Guid("9f73b2c1-71c7-434b-8fcd-b3ca7a6eae98"), "cannonkelly9@example.com", "Christopher", "https://media.istockphoto.com/id/1388648617/photo/confident-caucasian-young-man-in-casual-denim-clothes-with-arms-crossed-looking-at-camera.jpg?s=612x612&w=0&k=20&c=YxctPklAOJMmy6Tolyvn45rJL3puk5RlKt39FO46ZeA=", "Salazar", "$2b$12$r9HYkq1hv0wiwZh05W6fq.6b3qoZxXrOfr/xrFSA//x69Qu77mOJO", 0, 0 },
+                    { new Guid("a4f0b9c1-47e8-46ff-a9e5-d388693cffef"), "nparrish10@example.com", "Jason", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHg0mkcVvR4xO0RpIJfAzLmfC5QE52D9mIAA&s", "Meza", "$2b$12$ix2jyWO01HHxwhtmLFIFXO/JbQ8eqT.IaJw5xrGAgcXbN/HL7ZIZO", 0, 0 },
+                    { new Guid("b116a743-b108-494a-abb5-a0c9673edbef"), "heather934@example.com", "Brittany", "https://discoverymood.com/wp-content/uploads/2020/04/Mental-Strong-Women-min-480x340.jpg", "Edwards", "$2b$12$KPKg2yfoi0KQriKvrpKtYe3lGI67jJMkfncwg79HN1K0ln/PQwkym", 0, 0 },
+                    { new Guid("fa67eef0-62a7-4e61-83ef-5a054e84ce41"), "april992@example.com", "Amanda", "https://media.istockphoto.com/id/1326417862/ru/%D1%84%D0%BE%D1%82%D0%BE/%D0%BC%D0%BE%D0%BB%D0%BE%D0%B4%D0%B0%D1%8F-%D0%B6%D0%B5%D0%BD%D1%89%D0%B8%D0%BD%D0%B0-%D1%81%D0%BC%D0%B5%D0%B5%D1%82%D1%81%D1%8F-%D0%B2%D0%BE-%D0%B2%D1%80%D0%B5%D0%BC%D1%8F-%D0%BE%D1%82%D0%B4%D1%8B%D1%85%D0%B0-%D0%B4%D0%BE%D0%BC%D0%B0.jpg?s=612x612&w=0&k=20&c=S5kj1xMVROvdovQaZ2zkL5ydZM0M32V7lBpe86VVuNQ=", "Decker", "$2b$12$smw9z353sKgENxXVnQs6g.1EHa6UYkFh9jpq/ILRjrzDzY5lS9Nxa", 0, 0 }
                 });
 
             migrationBuilder.InsertData(
@@ -442,26 +442,26 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                 columns: new[] { "Id", "ActivePropertyKeys", "Description", "IconName", "ImageUrl", "Name", "ParentId", "PropertyKeys", "Status" },
                 values: new object[,]
                 {
-                    { new Guid("0e6feb3f-f795-4541-8cc6-7d7047951eb9"), "[]", "Kitchen Appliances category", null, "https://example.com/images/kitchen_appliances.jpg", "Kitchen Appliances", new Guid("8980e70c-3345-4885-8518-cfcda95b3078"), "[]", 0 },
-                    { new Guid("158ebe6b-0e3d-48da-8893-5e3621dd2c4b"), "[]", "Tool Storage category", null, "https://example.com/images/tool_storage.jpg", "Tool Storage", new Guid("cc9bf323-2160-49b2-ae79-340781163eb2"), "[]", 0 },
-                    { new Guid("18710447-a260-44f2-9a4b-77c0b246bbc5"), "[]", "Safety Gear category", null, "https://example.com/images/safety_gear.jpg", "Safety Gear", new Guid("cc9bf323-2160-49b2-ae79-340781163eb2"), "[]", 0 },
-                    { new Guid("1b6f5f96-233d-4b82-b30f-27643f6b62eb"), "[]", "Cleaning Supplies category", null, "https://example.com/images/cleaning_supplies.jpg", "Cleaning Supplies", new Guid("8980e70c-3345-4885-8518-cfcda95b3078"), "[]", 0 },
-                    { new Guid("1c9d0336-9ac8-440a-b6b6-3698940f608c"), "[]", "Power Tools category", null, "https://example.com/images/power_tools.jpg", "Power Tools", new Guid("cc9bf323-2160-49b2-ae79-340781163eb2"), "[]", 0 },
-                    { new Guid("22e7ee0d-8962-482b-857d-43ba828de1ff"), "[]", "Laptops category", null, "https://example.com/images/laptops.jpg", "Laptops", new Guid("7ad3d843-1642-4e8a-a843-503928ef8154"), "[]", 0 },
-                    { new Guid("2f3ad03d-c8a3-4c12-bf7c-db764e634fc4"), "[]", "Office Furniture category", null, "https://example.com/images/office_furniture.jpg", "Office Furniture", new Guid("0dfa0836-09c9-4a2d-b74a-9b2085976dcf"), "[]", 0 },
-                    { new Guid("2f4f0438-f456-4770-9d49-1a46ed4ec88a"), "[]", "Bathroom category", null, "https://example.com/images/bathroom.jpg", "Bathroom", new Guid("8980e70c-3345-4885-8518-cfcda95b3078"), "[]", 0 },
-                    { new Guid("3b464a7d-878c-4b8b-b44f-c78a2b59be3a"), "[]", "Accessories category", null, "https://example.com/images/accessories.jpg", "Accessories", new Guid("49595c91-f315-4b2e-af8a-0f09c3145c03"), "[]", 0 },
-                    { new Guid("68ae1c83-85c1-4002-bb32-d00ac9b3a1bb"), "[]", "Living Room category", null, "https://example.com/images/living_room.jpg", "Living Room", new Guid("0dfa0836-09c9-4a2d-b74a-9b2085976dcf"), "[]", 0 },
-                    { new Guid("69f22c76-7202-44e6-9132-09fd09c55632"), "[]", "Women's Clothing category", null, "https://example.com/images/womens_clothing.jpg", "Women's Clothing", new Guid("49595c91-f315-4b2e-af8a-0f09c3145c03"), "[]", 0 },
-                    { new Guid("7eb489f4-2f55-4510-8e49-3965370c4989"), "[]", "Men's Clothing category", null, "https://example.com/images/mens_clothing.jpg", "Men's Clothing", new Guid("49595c91-f315-4b2e-af8a-0f09c3145c03"), "[]", 0 },
-                    { new Guid("7f3e369a-0b7d-4178-84bf-e4194fac9ed2"), "[]", "Outdoor category", null, "https://example.com/images/outdoor.jpg", "Outdoor", new Guid("0dfa0836-09c9-4a2d-b74a-9b2085976dcf"), "[]", 0 },
-                    { new Guid("834ba378-fe57-4702-b85c-4cb0431d1909"), "[]", "Hand Tools category", null, "https://example.com/images/hand_tools.jpg", "Hand Tools", new Guid("cc9bf323-2160-49b2-ae79-340781163eb2"), "[]", 0 },
-                    { new Guid("8fc8707d-97d7-41a1-9c31-50f07b8466f4"), "[]", "Cameras category", null, "https://example.com/images/cameras.jpg", "Cameras", new Guid("7ad3d843-1642-4e8a-a843-503928ef8154"), "[]", 0 },
-                    { new Guid("be4e31b6-3b78-4d99-a3fa-7cb8a7bc4a8b"), "[]", "Shoes category", null, "https://example.com/images/shoes.jpg", "Shoes", new Guid("49595c91-f315-4b2e-af8a-0f09c3145c03"), "[]", 0 },
-                    { new Guid("c1cd879d-175e-4ff5-b354-054f9f82ce98"), "[]", "Audio Devices category", null, "https://example.com/images/audio_devices.jpg", "Audio Devices", new Guid("7ad3d843-1642-4e8a-a843-503928ef8154"), "[]", 0 },
-                    { new Guid("c9f81657-73a1-4b53-bf80-b59121eae433"), "[]", "Bedroom category", null, "https://example.com/images/bedroom.jpg", "Bedroom", new Guid("0dfa0836-09c9-4a2d-b74a-9b2085976dcf"), "[]", 0 },
-                    { new Guid("d2deb989-35c5-4ca1-a748-12411d3ac3a4"), "[]", "Smartphones category", null, "https://example.com/images/smartphones.jpg", "Smartphones", new Guid("7ad3d843-1642-4e8a-a843-503928ef8154"), "[]", 0 },
-                    { new Guid("d94af679-24f4-4ab2-ae1e-ba3689143579"), "[]", "Storage category", null, "https://example.com/images/storage.jpg", "Storage", new Guid("8980e70c-3345-4885-8518-cfcda95b3078"), "[]", 0 }
+                    { new Guid("0e6feb3f-f795-4541-8cc6-7d7047951eb9"), "[]", "Kitchen Appliances category", null, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ45ouTZfVpls_4kIUvr3-TvaJZUg6_OhRrDg&s", "Kitchen Appliances", new Guid("8980e70c-3345-4885-8518-cfcda95b3078"), "[]", 0 },
+                    { new Guid("158ebe6b-0e3d-48da-8893-5e3621dd2c4b"), "[]", "Tool Storage category", null, "https://m.media-amazon.com/images/I/81fEQF48dIL.jpg", "Tool Storage", new Guid("cc9bf323-2160-49b2-ae79-340781163eb2"), "[]", 0 },
+                    { new Guid("18710447-a260-44f2-9a4b-77c0b246bbc5"), "[]", "Safety Gear category", null, "https://www.build-review.com/wp-content/uploads/2021/04/PPE.jpg", "Safety Gear", new Guid("cc9bf323-2160-49b2-ae79-340781163eb2"), "[]", 0 },
+                    { new Guid("1b6f5f96-233d-4b82-b30f-27643f6b62eb"), "[]", "Cleaning Supplies category", null, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-HIah6yp0_WEhhmZjZeHwdFh5PA5geutGcw&s", "Cleaning Supplies", new Guid("8980e70c-3345-4885-8518-cfcda95b3078"), "[]", 0 },
+                    { new Guid("1c9d0336-9ac8-440a-b6b6-3698940f608c"), "[]", "Power Tools category", null, "https://ik.imagekit.io/fepy/cdn/magefan_blog/2023/08/best_power_tool_sets_hero_image-scaled.jpeg.optimal.jpeg", "Power Tools", new Guid("cc9bf323-2160-49b2-ae79-340781163eb2"), "[]", 0 },
+                    { new Guid("22e7ee0d-8962-482b-857d-43ba828de1ff"), "[]", "Laptops category", null, "https://cdn.thewirecutter.com/wp-content/media/2024/07/laptopstopicpage-2048px-3685-3x2-1.jpg?auto=webp&quality=75&crop=1.91:1&width=1200", "Laptops", new Guid("7ad3d843-1642-4e8a-a843-503928ef8154"), "[]", 0 },
+                    { new Guid("2f3ad03d-c8a3-4c12-bf7c-db764e634fc4"), "[]", "Office Furniture category", null, "https://smartspace.com.ua/userfls/shop/categori_id/3276_mebel-dlya-ofisa.webp", "Office Furniture", new Guid("0dfa0836-09c9-4a2d-b74a-9b2085976dcf"), "[]", 0 },
+                    { new Guid("2f4f0438-f456-4770-9d49-1a46ed4ec88a"), "[]", "Bathroom category", null, "https://orion180.com/wp-content/uploads/2023/06/AdobeStock_394532332.jpeg", "Bathroom", new Guid("8980e70c-3345-4885-8518-cfcda95b3078"), "[]", 0 },
+                    { new Guid("3b464a7d-878c-4b8b-b44f-c78a2b59be3a"), "[]", "Accessories category", null, "https://i0.wp.com/ordnur.com/wp-content/uploads/2023/06/Accessories-for-a-Trendy-Wardrobe.webp?ssl=1", "Accessories", new Guid("49595c91-f315-4b2e-af8a-0f09c3145c03"), "[]", 0 },
+                    { new Guid("68ae1c83-85c1-4002-bb32-d00ac9b3a1bb"), "[]", "Living Room category", null, "https://hgtvhome.sndimg.com/content/dam/images/hgtv/fullset/2023/7/19/3/DOTY2023_Dramatic-Before-And-Afters_Hidden-Hills-11.jpg.rend.hgtvcom.1280.720.85.suffix/1689786863909.webp", "Living Room", new Guid("0dfa0836-09c9-4a2d-b74a-9b2085976dcf"), "[]", 0 },
+                    { new Guid("69f22c76-7202-44e6-9132-09fd09c55632"), "[]", "Women's Clothing category", null, "https://www.reiss.com/cms/resource/blob/976838/78c7ee422947a53d786b8deb107425fe/nybg-1-data.jpg", "Women's Clothing", new Guid("49595c91-f315-4b2e-af8a-0f09c3145c03"), "[]", 0 },
+                    { new Guid("7eb489f4-2f55-4510-8e49-3965370c4989"), "[]", "Men's Clothing category", null, "https://www.ernest.ca/cdn/shop/articles/Guide_Vestimentaire_3.png?v=1667419005&width=2048", "Men's Clothing", new Guid("49595c91-f315-4b2e-af8a-0f09c3145c03"), "[]", 0 },
+                    { new Guid("7f3e369a-0b7d-4178-84bf-e4194fac9ed2"), "[]", "Outdoor category", null, "https://media.johnlewiscontent.com/i/JohnLewis/outdoors-outdoorfurniture-inspire-gb-200223?fmt=auto", "Outdoor", new Guid("0dfa0836-09c9-4a2d-b74a-9b2085976dcf"), "[]", 0 },
+                    { new Guid("834ba378-fe57-4702-b85c-4cb0431d1909"), "[]", "Hand Tools category", null, "", "Hand Tools", new Guid("cc9bf323-2160-49b2-ae79-340781163eb2"), "[]", 0 },
+                    { new Guid("8fc8707d-97d7-41a1-9c31-50f07b8466f4"), "[]", "Cameras category", null, "https://i.rtings.com/assets/pages/GnRRKSpc/best-cameras-for-photography-20230911-medium.jpg?format=auto", "Cameras", new Guid("7ad3d843-1642-4e8a-a843-503928ef8154"), "[]", 0 },
+                    { new Guid("be4e31b6-3b78-4d99-a3fa-7cb8a7bc4a8b"), "[]", "Shoes category", null, "https://d1nymbkeomeoqg.cloudfront.net/photos/28/73/408849_7358_XL.jpg", "Shoes", new Guid("49595c91-f315-4b2e-af8a-0f09c3145c03"), "[]", 0 },
+                    { new Guid("c1cd879d-175e-4ff5-b354-054f9f82ce98"), "[]", "Audio Devices category", null, "https://o.aolcdn.com/hss/storage/midas/9bba15694f672222afc0741fe8c6011b/201309450/audio.png", "Audio Devices", new Guid("7ad3d843-1642-4e8a-a843-503928ef8154"), "[]", 0 },
+                    { new Guid("c9f81657-73a1-4b53-bf80-b59121eae433"), "[]", "Bedroom category", null, "https://www.thespruce.com/thmb/HrWPmUEjB_yA71L6OJjiQPPvov4=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/master-bedroom-in-new-luxury-home-with-chandelier-and-large-bank-of-windows-with-view-of-trees-1222623844-212940f4f89e4b69b6ce56fd968e9351.jpg", "Bedroom", new Guid("0dfa0836-09c9-4a2d-b74a-9b2085976dcf"), "[]", 0 },
+                    { new Guid("d2deb989-35c5-4ca1-a748-12411d3ac3a4"), "[]", "Smartphones category", null, "https://cdn.mos.cms.futurecdn.net/M4nigVN3vvA5EEnNX9atxY-1200-80.jpg", "Smartphones", new Guid("7ad3d843-1642-4e8a-a843-503928ef8154"), "[]", 0 },
+                    { new Guid("d94af679-24f4-4ab2-ae1e-ba3689143579"), "[]", "Storage category", null, "https://www.veegaland.com/wp-content/uploads/2021/10/EFFICIENT-HOME-STORAGE-IDEAS-AND-TIPS-FOR-A-WELL-ORGANIZED-INTERIOR.jpg", "Storage", new Guid("8980e70c-3345-4885-8518-cfcda95b3078"), "[]", 0 }
                 });
 
             migrationBuilder.InsertData(
@@ -469,8 +469,8 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                 columns: new[] { "Id", "CategoryId", "ImageUrl", "IsActive", "MaxPrice", "MinPrice", "Title" },
                 values: new object[,]
                 {
-                    { new Guid("10000000-0000-0000-0000-000000000004"), new Guid("0dfa0836-09c9-4a2d-b74a-9b2085976dcf"), "https://example.com/collections/tables.jpg", true, 160m, 120m, "Modern Coffee Tables" },
-                    { new Guid("10000000-0000-0000-0000-000000000005"), new Guid("cc9bf323-2160-49b2-ae79-340781163eb2"), "https://example.com/collections/makita.jpg", true, 250m, 200m, "Makita Power Tools" }
+                    { new Guid("10000000-0000-0000-0000-000000000004"), new Guid("0dfa0836-09c9-4a2d-b74a-9b2085976dcf"), "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnroSazOZgAVDY26rzWBoIGhKhi7s5JDOgAw&s", true, 160m, 120m, "Modern Coffee Tables" },
+                    { new Guid("10000000-0000-0000-0000-000000000005"), new Guid("cc9bf323-2160-49b2-ae79-340781163eb2"), "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-kEDvzQ7aygIbrsTVd6vMex27pGFF1nj_Og&s", true, 250m, 200m, "Makita Power Tools" }
                 });
 
             migrationBuilder.InsertData(
@@ -511,9 +511,9 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                 columns: new[] { "Id", "CategoryId", "ImageUrl", "IsActive", "MaxPrice", "MinPrice", "Title" },
                 values: new object[,]
                 {
-                    { new Guid("10000000-0000-0000-0000-000000000001"), new Guid("d2deb989-35c5-4ca1-a748-12411d3ac3a4"), "https://example.com/collections/galaxy.jpg", true, 1300m, 1000m, "Galaxy Highlights" },
-                    { new Guid("10000000-0000-0000-0000-000000000002"), new Guid("c1cd879d-175e-4ff5-b354-054f9f82ce98"), "https://example.com/collections/sony.jpg", true, 400m, 300m, "Sony Audio Bestsellers" },
-                    { new Guid("10000000-0000-0000-0000-000000000003"), new Guid("7eb489f4-2f55-4510-8e49-3965370c4989"), "https://example.com/collections/denim.jpg", true, 100m, 50m, "Denim Essentials" }
+                    { new Guid("10000000-0000-0000-0000-000000000001"), new Guid("d2deb989-35c5-4ca1-a748-12411d3ac3a4"), "https://www.sammyfans.com/wp-content/uploads/2025/03/one-ui-7-intuitive-img.jpg", true, 1300m, 1000m, "Galaxy Highlights" },
+                    { new Guid("10000000-0000-0000-0000-000000000002"), new Guid("c1cd879d-175e-4ff5-b354-054f9f82ce98"), "https://cdn.shopify.com/s/files/1/0340/3975/8907/products/WH1000XM5B_1.jpg?v=1652359353&width=364", true, 400m, 300m, "Sony Audio Bestsellers" },
+                    { new Guid("10000000-0000-0000-0000-000000000003"), new Guid("7eb489f4-2f55-4510-8e49-3965370c4989"), "https://www.thefactshop.com/wp-content/uploads/2016/11/denim-jeans-facts.jpg", true, 100m, 50m, "Denim Essentials" }
                 });
 
             migrationBuilder.InsertData(
@@ -608,8 +608,8 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                 values: new object[,]
                 {
                     { new Guid("00000000-0000-0000-0000-000000000005"), "Stylish and solid", "[]", "Looks very elegant and feels sturdy. Love the natural finish.", new Guid("74a46f1c-1054-408d-89dc-8ca00285660f"), 4.7m, "[\"design\",\"durability\"]", new Guid("2583c105-264b-45ee-a535-3b939f4dd428") },
-                    { new Guid("00000000-0000-0000-0000-000000000006"), "Beast of a drill", "[]", "Very powerful and long-lasting battery. Great for home use.", new Guid("4c73d114-2aa1-4f4c-aa7a-48038f1f95fc"), 5.0m, "[\"power\",\"performance\"]", new Guid("741ddf70-bcb9-44ba-a666-246072dd8c82") },
-                    { new Guid("00000000-0000-0000-0000-000000000008"), "Impressive cleaning", "[]", "Powerful suction and laser feature is actually helpful.", new Guid("a055168e-3130-4b0a-8495-60e25d62e057"), 4.8m, "[\"vacuum\",\"laser\"]", new Guid("0986d7ae-31ff-42d8-a9d4-450625e8dd76") },
+                    { new Guid("00000000-0000-0000-0000-000000000006"), "Beast of a drill", "[\"https://cdn.mos.cms.futurecdn.net/5aEmPbsS9hkZXAdX8SLkZN.jpg\"]", "Very powerful and long-lasting battery. Great for home use.", new Guid("4c73d114-2aa1-4f4c-aa7a-48038f1f95fc"), 5.0m, "[\"power\",\"performance\"]", new Guid("741ddf70-bcb9-44ba-a666-246072dd8c82") },
+                    { new Guid("00000000-0000-0000-0000-000000000008"), "Impressive cleaning", "[\"https://i.rtings.com/assets/products/qh2fKaXG/dyson-v15s-detect-submarine/design-medium.jpg?format=auto\",\"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6Dl9H-VVAlhTl4IORL2MROelfDITfUl1v2A\\u0026s\"]", "Powerful suction and laser feature is actually helpful.", new Guid("a055168e-3130-4b0a-8495-60e25d62e057"), 4.8m, "[\"vacuum\",\"laser\"]", new Guid("0986d7ae-31ff-42d8-a9d4-450625e8dd76") },
                     { new Guid("00000000-0000-0000-0000-000000000009"), "Simple and elegant", "[]", "Easy to assemble, light weight, looks clean and modern.", new Guid("74a46f1c-1054-408d-89dc-8ca00285660f"), 4.6m, "[\"design\",\"assembly\"]", new Guid("9f73b2c1-71c7-434b-8fcd-b3ca7a6eae98") }
                 });
 
@@ -850,10 +850,10 @@ namespace AmazonKiller.Infrastructure.Data.Migrations
                 columns: new[] { "Id", "Article", "ImageUrls", "Message", "ProductId", "Rating", "Tags", "UserId" },
                 values: new object[,]
                 {
-                    { new Guid("00000000-0000-0000-0000-000000000001"), "Excellent phone", "[]", "Battery lasts all day. The screen is incredibly bright and vivid.", new Guid("3c5a4868-3b2d-4352-9e12-502a56bce48a"), 5.0m, "[\"battery\",\"screen\"]", new Guid("7a612c2e-ebc1-4a30-ac54-cccb566a1086") },
+                    { new Guid("00000000-0000-0000-0000-000000000001"), "Excellent phone", "[\"https://www.trustedreviews.com/wp-content/uploads/sites/7/2023/02/Samsung-Galaxy-S23-review-4-scaled.jpg\",\"https://cdn.mos.cms.futurecdn.net/qUaKQ3tLp9kz77mNJswNw5.jpg\"]", "Battery lasts all day. The screen is incredibly bright and vivid.", new Guid("3c5a4868-3b2d-4352-9e12-502a56bce48a"), 5.0m, "[\"battery\",\"screen\"]", new Guid("7a612c2e-ebc1-4a30-ac54-cccb566a1086") },
                     { new Guid("00000000-0000-0000-0000-000000000002"), "Good but expensive", "[]", "Features are great, but the price is a bit high.", new Guid("3c5a4868-3b2d-4352-9e12-502a56bce48a"), 4.0m, "[\"price\"]", new Guid("fa67eef0-62a7-4e61-83ef-5a054e84ce41") },
-                    { new Guid("00000000-0000-0000-0000-000000000003"), "Top sound quality", "[]", "Perfect for flights. Noise cancelling works like magic.", new Guid("a2c28a83-cfea-46ee-87e3-906f9e90f1aa"), 5.0m, "[\"sound\",\"noise cancelling\"]", new Guid("82bf572a-ab40-4571-b1a2-ec9dcf9ccb7d") },
-                    { new Guid("00000000-0000-0000-0000-000000000004"), "Comfortable", "[]", "Long usage with no discomfort. Battery could be better though.", new Guid("a2c28a83-cfea-46ee-87e3-906f9e90f1aa"), 4.2m, "[\"comfort\",\"battery\"]", new Guid("b116a743-b108-494a-abb5-a0c9673edbef") },
+                    { new Guid("00000000-0000-0000-0000-000000000003"), "Top sound quality", "[\"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMqiHMcxsM6_WGsFNyUeOmRJiA8m4PXYlu0w\\u0026s\"]", "Perfect for flights. Noise cancelling works like magic.", new Guid("a2c28a83-cfea-46ee-87e3-906f9e90f1aa"), 5.0m, "[\"sound\",\"noise cancelling\"]", new Guid("82bf572a-ab40-4571-b1a2-ec9dcf9ccb7d") },
+                    { new Guid("00000000-0000-0000-0000-000000000004"), "Comfortable", "[\"https://cdn.mos.cms.futurecdn.net/LaM4xHqeVEorNnR6MbW4d5.jpg\"]", "Long usage with no discomfort. Battery could be better though.", new Guid("a2c28a83-cfea-46ee-87e3-906f9e90f1aa"), 4.2m, "[\"comfort\",\"battery\"]", new Guid("b116a743-b108-494a-abb5-a0c9673edbef") },
                     { new Guid("00000000-0000-0000-0000-000000000007"), "Classic style", "[]", "Fits perfectly and looks good with anything. My go-to jacket.", new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b"), 4.9m, "[\"fit\",\"style\"]", new Guid("4f33466b-00cd-424d-9c5a-2356d9fc179d") },
                     { new Guid("00000000-0000-0000-0000-000000000010"), "Camera is next level", "[]", "200MP might be overkill, but wow, it delivers detail.", new Guid("3c5a4868-3b2d-4352-9e12-502a56bce48a"), 4.9m, "[\"camera\"]", new Guid("a4f0b9c1-47e8-46ff-a9e5-d388693cffef") },
                     { new Guid("00000000-0000-0000-0000-000000000011"), "Good value", "[]", "High-quality fabric, didn’t expect it for this price.", new Guid("b416e570-f438-4c53-9dd1-1b8388dd181b"), 4.4m, "[\"value\",\"material\"]", new Guid("2583c105-264b-45ee-a535-3b939f4dd428") },

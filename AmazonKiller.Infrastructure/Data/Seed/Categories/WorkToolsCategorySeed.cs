@@ -16,7 +16,7 @@ public static class WorkToolsCategorySeed
                 Name = "Work tools",
                 Status = CategoryStatus.Active,
                 Description = "Work tools category",
-                ImageUrl = "https://example.com/images/worktools.jpg",
+                ImageUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwO5jLC0Dtm27AcDKo8DAt57_M3tSpZCOmxA&s",
                 IconName = "hammer"
             },
             new Category
@@ -25,7 +25,7 @@ public static class WorkToolsCategorySeed
                 Name = "Hand Tools",
                 Status = CategoryStatus.Active,
                 Description = "Hand Tools category",
-                ImageUrl = "https://example.com/images/hand_tools.jpg",
+                ImageUrl = "",
                 ParentId = rootId
             },
             new Category
@@ -34,7 +34,7 @@ public static class WorkToolsCategorySeed
                 Name = "Power Tools",
                 Status = CategoryStatus.Active,
                 Description = "Power Tools category",
-                ImageUrl = "https://example.com/images/power_tools.jpg",
+                ImageUrl = "https://ik.imagekit.io/fepy/cdn/magefan_blog/2023/08/best_power_tool_sets_hero_image-scaled.jpeg.optimal.jpeg",
                 ParentId = rootId
             },
             new Category
@@ -43,7 +43,7 @@ public static class WorkToolsCategorySeed
                 Name = "Safety Gear",
                 Status = CategoryStatus.Active,
                 Description = "Safety Gear category",
-                ImageUrl = "https://example.com/images/safety_gear.jpg",
+                ImageUrl = "https://www.build-review.com/wp-content/uploads/2021/04/PPE.jpg",
                 ParentId = rootId
             },
             new Category
@@ -52,7 +52,7 @@ public static class WorkToolsCategorySeed
                 Name = "Tool Storage",
                 Status = CategoryStatus.Active,
                 Description = "Tool Storage category",
-                ImageUrl = "https://example.com/images/tool_storage.jpg",
+                ImageUrl = "https://m.media-amazon.com/images/I/81fEQF48dIL.jpg",
                 ParentId = rootId
             }
         );

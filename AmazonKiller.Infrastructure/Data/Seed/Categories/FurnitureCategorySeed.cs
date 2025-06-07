@@ -16,7 +16,7 @@ public static class FurnitureCategorySeed
                 Name = "Furniture",
                 Status = CategoryStatus.Active,
                 Description = "Furniture category",
-                ImageUrl = "https://example.com/images/furniture.jpg",
+                ImageUrl = "https://www.livingdesignsfurniture.com/wp-content/uploads/2022/03/shutterstock_1929872735-1.webp",
                 IconName = "sofa"
             },
             new Category
@@ -25,7 +25,7 @@ public static class FurnitureCategorySeed
                 Name = "Living Room",
                 Status = CategoryStatus.Active,
                 Description = "Living Room category",
-                ImageUrl = "https://example.com/images/living_room.jpg",
+                ImageUrl = "https://hgtvhome.sndimg.com/content/dam/images/hgtv/fullset/2023/7/19/3/DOTY2023_Dramatic-Before-And-Afters_Hidden-Hills-11.jpg.rend.hgtvcom.1280.720.85.suffix/1689786863909.webp",
                 ParentId = rootId
             },
             new Category
@@ -34,7 +34,7 @@ public static class FurnitureCategorySeed
                 Name = "Bedroom",
                 Status = CategoryStatus.Active,
                 Description = "Bedroom category",
-                ImageUrl = "https://example.com/images/bedroom.jpg",
+                ImageUrl = "https://www.thespruce.com/thmb/HrWPmUEjB_yA71L6OJjiQPPvov4=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/master-bedroom-in-new-luxury-home-with-chandelier-and-large-bank-of-windows-with-view-of-trees-1222623844-212940f4f89e4b69b6ce56fd968e9351.jpg",
                 ParentId = rootId
             },
             new Category
@@ -43,7 +43,7 @@ public static class FurnitureCategorySeed
                 Name = "Office Furniture",
                 Status = CategoryStatus.Active,
                 Description = "Office Furniture category",
-                ImageUrl = "https://example.com/images/office_furniture.jpg",
+                ImageUrl = "https://smartspace.com.ua/userfls/shop/categori_id/3276_mebel-dlya-ofisa.webp",
                 ParentId = rootId
             },
             new Category
@@ -52,7 +52,7 @@ public static class FurnitureCategorySeed
                 Name = "Outdoor",
                 Status = CategoryStatus.Active,
                 Description = "Outdoor category",
-                ImageUrl = "https://example.com/images/outdoor.jpg",
+                ImageUrl = "https://media.johnlewiscontent.com/i/JohnLewis/outdoors-outdoorfurniture-inspire-gb-200223?fmt=auto",
                 ParentId = rootId
             }
         );

@@ -20,6 +20,10 @@ public static class SeedData
     {
         // 1. Сидим продукты — они будут использоваться для анализа атрибутов
 
+        #region Products
+
+        #region Electronics
+
         Electronics_SamsungS23Ultra.Seed(modelBuilder);
         Electronics_SonyWH1000XM5.Seed(modelBuilder);
         Electronics_IPhone15ProMax.Seed(modelBuilder);
@@ -28,11 +32,19 @@ public static class SeedData
         Electronics_SonyCamera.Seed(modelBuilder);
         Electronics_SamsungTV.Seed(modelBuilder);
 
+        #endregion
+
+        #region Fashion
+
         Fashion_MensDenimJacket.Seed(modelBuilder);
         Fashion_ZaraFloralDress.Seed(modelBuilder);
         Fashion_WomensSneakers.Seed(modelBuilder);
         Fashion_WomensHat.Seed(modelBuilder);
         Fashion_MensLeatherJacket.Seed(modelBuilder);
+
+        #endregion
+
+        #region Furniture
 
         Furniture_ModernCoffeeTable.Seed(modelBuilder);
         Furniture_IkeaLackTable.Seed(modelBuilder);
@@ -40,11 +52,19 @@ public static class SeedData
         Furniture_OfficeChair.Seed(modelBuilder);
         Furniture_WoodenBookshelf.Seed(modelBuilder);
 
+        #endregion
+
+        #region Household
+
         Household_DysonV15.Seed(modelBuilder);
         Household_ToiletBrushSet.Seed(modelBuilder);
         Household_LaundryBasket.Seed(modelBuilder);
         Household_AirPurifier.Seed(modelBuilder);
         Household_WaterPurifier.Seed(modelBuilder);
+
+        #endregion
+
+        #region WorkTools
 
         WorkTools_DeWaltDrill.Seed(modelBuilder);
         WorkTools_MakitaDrill.Seed(modelBuilder);
@@ -52,21 +72,27 @@ public static class SeedData
         WorkTools_SafetyHelmet.Seed(modelBuilder);
         WorkTools_PortableDrill.Seed(modelBuilder);
 
-        // 3. Сидим категории с PropertyKeys
+        #endregion"
+
+        #endregion
+
+        #region Categories
+
         FashionCategorySeed.Seed(modelBuilder);
         ElectronicsCategorySeed.Seed(modelBuilder);
         HouseholdCategorySeed.Seed(modelBuilder);
         FurnitureCategorySeed.Seed(modelBuilder);
         WorkToolsCategorySeed.Seed(modelBuilder);
 
-        // 4. Остальные сиды
-        UsersSeed.Seed(modelBuilder);
-
-        ReviewsSeed.Seed(modelBuilder);
-        ReviewLikesSeed.Seed(modelBuilder);
+        #endregion
 
         CollectionsSeed.Seed(modelBuilder);
 
+        UsersSeed.Seed(modelBuilder);
+        
+        ReviewsSeed.Seed(modelBuilder);
+        ReviewLikesSeed.Seed(modelBuilder);
+        
         WishlistsSeed.Seed(modelBuilder);
 
         CartListSeed.Seed(modelBuilder);

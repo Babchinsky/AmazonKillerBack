@@ -16,7 +16,7 @@ public static class HouseholdCategorySeed
                 Name = "Household",
                 Status = CategoryStatus.Active,
                 Description = "Household category",
-                ImageUrl = "https://example.com/images/household.jpg",
+                ImageUrl = "https://t3.ftcdn.net/jpg/01/91/32/34/360_F_191323402_W2ATUPr8dGHALHrvyX4WVlEDz4qXmmd9.jpg",
                 IconName = "cleaning-spray"
             },
             new Category
@@ -25,7 +25,7 @@ public static class HouseholdCategorySeed
                 Name = "Kitchen Appliances",
                 Status = CategoryStatus.Active,
                 Description = "Kitchen Appliances category",
-                ImageUrl = "https://example.com/images/kitchen_appliances.jpg",
+                ImageUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ45ouTZfVpls_4kIUvr3-TvaJZUg6_OhRrDg&s",
                 ParentId = rootId
             },
             new Category
@@ -34,7 +34,7 @@ public static class HouseholdCategorySeed
                 Name = "Cleaning Supplies",
                 Status = CategoryStatus.Active,
                 Description = "Cleaning Supplies category",
-                ImageUrl = "https://example.com/images/cleaning_supplies.jpg",
+                ImageUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-HIah6yp0_WEhhmZjZeHwdFh5PA5geutGcw&s",
                 ParentId = rootId
             },
             new Category
@@ -43,7 +43,7 @@ public static class HouseholdCategorySeed
                 Name = "Storage",
                 Status = CategoryStatus.Active,
                 Description = "Storage category",
-                ImageUrl = "https://example.com/images/storage.jpg",
+                ImageUrl = "https://www.veegaland.com/wp-content/uploads/2021/10/EFFICIENT-HOME-STORAGE-IDEAS-AND-TIPS-FOR-A-WELL-ORGANIZED-INTERIOR.jpg",
                 ParentId = rootId
             },
             new Category
@@ -52,7 +52,7 @@ public static class HouseholdCategorySeed
                 Name = "Bathroom",
                 Status = CategoryStatus.Active,
                 Description = "Bathroom category",
-                ImageUrl = "https://example.com/images/bathroom.jpg",
+                ImageUrl = "https://orion180.com/wp-content/uploads/2023/06/AdobeStock_394532332.jpeg",
                 ParentId = rootId
             }
         );
