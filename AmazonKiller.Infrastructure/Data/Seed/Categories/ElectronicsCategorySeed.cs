@@ -16,7 +16,8 @@ public static class ElectronicsCategorySeed
                 Name = "Electronics",
                 Status = CategoryStatus.Active,
                 Description = "Electronics category",
-                ImageUrl = "https://hpp.arkema.com/files/live/sites/shared_arkema/files/images/markets/Electronics%20electrical/electronics.jpg",
+                ImageUrl =
+                    "https://hpp.arkema.com/files/live/sites/shared_arkema/files/images/markets/Electronics%20electrical/electronics.jpg",
                 IconName = "computer"
             },
             new Category
@@ -34,7 +35,8 @@ public static class ElectronicsCategorySeed
                 Name = "Laptops",
                 Status = CategoryStatus.Active,
                 Description = "Laptops category",
-                ImageUrl = "https://cdn.thewirecutter.com/wp-content/media/2024/07/laptopstopicpage-2048px-3685-3x2-1.jpg?auto=webp&quality=75&crop=1.91:1&width=1200",
+                ImageUrl =
+                    "https://cdn.thewirecutter.com/wp-content/media/2024/07/laptopstopicpage-2048px-3685-3x2-1.jpg?auto=webp&quality=75&crop=1.91:1&width=1200",
                 ParentId = rootId
             },
             new Category
@@ -43,7 +45,8 @@ public static class ElectronicsCategorySeed
                 Name = "Cameras",
                 Status = CategoryStatus.Active,
                 Description = "Cameras category",
-                ImageUrl = "https://i.rtings.com/assets/pages/GnRRKSpc/best-cameras-for-photography-20230911-medium.jpg?format=auto",
+                ImageUrl =
+                    "https://i.rtings.com/assets/pages/GnRRKSpc/best-cameras-for-photography-20230911-medium.jpg?format=auto",
                 ParentId = rootId
             },
             new Category
@@ -52,7 +55,8 @@ public static class ElectronicsCategorySeed
                 Name = "Audio Devices",
                 Status = CategoryStatus.Active,
                 Description = "Audio Devices category",
-                ImageUrl = "https://o.aolcdn.com/hss/storage/midas/9bba15694f672222afc0741fe8c6011b/201309450/audio.png",
+                ImageUrl =
+                    "https://o.aolcdn.com/hss/storage/midas/9bba15694f672222afc0741fe8c6011b/201309450/audio.png",
                 ParentId = rootId
             }
         );

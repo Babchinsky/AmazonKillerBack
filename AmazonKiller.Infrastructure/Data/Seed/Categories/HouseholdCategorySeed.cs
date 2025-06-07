@@ -25,7 +25,8 @@ public static class HouseholdCategorySeed
                 Name = "Kitchen Appliances",
                 Status = CategoryStatus.Active,
                 Description = "Kitchen Appliances category",
-                ImageUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ45ouTZfVpls_4kIUvr3-TvaJZUg6_OhRrDg&s",
+                ImageUrl =
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ45ouTZfVpls_4kIUvr3-TvaJZUg6_OhRrDg&s",
                 ParentId = rootId
             },
             new Category
@@ -34,7 +35,8 @@ public static class HouseholdCategorySeed
                 Name = "Cleaning Supplies",
                 Status = CategoryStatus.Active,
                 Description = "Cleaning Supplies category",
-                ImageUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-HIah6yp0_WEhhmZjZeHwdFh5PA5geutGcw&s",
+                ImageUrl =
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-HIah6yp0_WEhhmZjZeHwdFh5PA5geutGcw&s",
                 ParentId = rootId
             },
             new Category
@@ -43,7 +45,8 @@ public static class HouseholdCategorySeed
                 Name = "Storage",
                 Status = CategoryStatus.Active,
                 Description = "Storage category",
-                ImageUrl = "https://www.veegaland.com/wp-content/uploads/2021/10/EFFICIENT-HOME-STORAGE-IDEAS-AND-TIPS-FOR-A-WELL-ORGANIZED-INTERIOR.jpg",
+                ImageUrl =
+                    "https://www.veegaland.com/wp-content/uploads/2021/10/EFFICIENT-HOME-STORAGE-IDEAS-AND-TIPS-FOR-A-WELL-ORGANIZED-INTERIOR.jpg",
                 ParentId = rootId
             },
             new Category

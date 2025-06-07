@@ -16,11 +16,9 @@ public class StripePaymentService : IPaymentService
         _enabled = opts.UseStripe;
 
         if (_enabled)
-        {
             StripeConfiguration.ApiKey = !string.IsNullOrWhiteSpace(opts.SecretKey)
                 ? opts.SecretKey
                 : throw new AppException("Stripe is enabled but SecretKey is missing.");
-        }
     }
 
     public async Task<string> CreatePaymentIntentAsync(decimal amount, string? paymentMethodId)
@@ -40,7 +38,7 @@ public class StripePaymentService : IPaymentService
             {
                 Enabled = true,
                 AllowRedirects = "never"
-            },
+            }
         });
 
         return intent.Id; // или ClientSecret если фронту нужно

@@ -26,16 +26,44 @@ public static class Furniture_OfficeChair
         });
 
         modelBuilder.Entity<ProductAttribute>().HasData(
-            new ProductAttribute { Id = Guid.Parse("00000000-0000-0000-0000-000000000321"), ProductId = productId, Key = "Material", Value = "Mesh + Foam" },
-            new ProductAttribute { Id = Guid.Parse("00000000-0000-0000-0000-000000000322"), ProductId = productId, Key = "Color", Value = "Black" },
-            new ProductAttribute { Id = Guid.Parse("00000000-0000-0000-0000-000000000323"), ProductId = productId, Key = "Adjustable Height", Value = "Yes" },
-            new ProductAttribute { Id = Guid.Parse("00000000-0000-0000-0000-000000000324"), ProductId = productId, Key = "Max Weight", Value = "120 kg" }
+            new ProductAttribute
+            {
+                Id = Guid.Parse("00000000-0000-0000-0000-000000000321"), ProductId = productId, Key = "Material",
+                Value = "Mesh + Foam"
+            },
+            new ProductAttribute
+            {
+                Id = Guid.Parse("00000000-0000-0000-0000-000000000322"), ProductId = productId, Key = "Color",
+                Value = "Black"
+            },
+            new ProductAttribute
+            {
+                Id = Guid.Parse("00000000-0000-0000-0000-000000000323"), ProductId = productId,
+                Key = "Adjustable Height", Value = "Yes"
+            },
+            new ProductAttribute
+            {
+                Id = Guid.Parse("00000000-0000-0000-0000-000000000324"), ProductId = productId, Key = "Max Weight",
+                Value = "120 kg"
+            }
         );
 
         modelBuilder.Entity<ProductFeature>().HasData(
-            new ProductFeature { Id = Guid.Parse("00000000-0000-0000-0000-000000000421"), ProductId = productId, Name = "Ergonomic Design", Description = "Provides lumbar support and breathable mesh back" },
-            new ProductFeature { Id = Guid.Parse("00000000-0000-0000-0000-000000000422"), ProductId = productId, Name = "Mobility", Description = "360° swivel and smooth rolling wheels" },
-            new ProductFeature { Id = Guid.Parse("00000000-0000-0000-0000-000000000423"), ProductId = productId, Name = "Adjustability", Description = "Adjustable height and tilt tension" }
+            new ProductFeature
+            {
+                Id = Guid.Parse("00000000-0000-0000-0000-000000000421"), ProductId = productId,
+                Name = "Ergonomic Design", Description = "Provides lumbar support and breathable mesh back"
+            },
+            new ProductFeature
+            {
+                Id = Guid.Parse("00000000-0000-0000-0000-000000000422"), ProductId = productId, Name = "Mobility",
+                Description = "360° swivel and smooth rolling wheels"
+            },
+            new ProductFeature
+            {
+                Id = Guid.Parse("00000000-0000-0000-0000-000000000423"), ProductId = productId, Name = "Adjustability",
+                Description = "Adjustable height and tilt tension"
+            }
         );
     }
 }

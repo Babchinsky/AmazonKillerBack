@@ -28,17 +28,49 @@ public static class Electronics_SonyCamera
         });
 
         modelBuilder.Entity<ProductAttribute>().HasData(
-            new ProductAttribute { Id = Guid.Parse("00000000-0000-0000-0000-000000000101"), ProductId = productId, Key = "Resolution", Value = "24.2MP" },
-            new ProductAttribute { Id = Guid.Parse("00000000-0000-0000-0000-000000000102"), ProductId = productId, Key = "Sensor", Value = "APS-C CMOS" },
-            new ProductAttribute { Id = Guid.Parse("00000000-0000-0000-0000-000000000103"), ProductId = productId, Key = "Video", Value = "4K UHD" },
-            new ProductAttribute { Id = Guid.Parse("00000000-0000-0000-0000-000000000104"), ProductId = productId, Key = "Lens Mount", Value = "Sony E-mount" }
+            new ProductAttribute
+            {
+                Id = Guid.Parse("00000000-0000-0000-0000-000000000101"), ProductId = productId, Key = "Resolution",
+                Value = "24.2MP"
+            },
+            new ProductAttribute
+            {
+                Id = Guid.Parse("00000000-0000-0000-0000-000000000102"), ProductId = productId, Key = "Sensor",
+                Value = "APS-C CMOS"
+            },
+            new ProductAttribute
+            {
+                Id = Guid.Parse("00000000-0000-0000-0000-000000000103"), ProductId = productId, Key = "Video",
+                Value = "4K UHD"
+            },
+            new ProductAttribute
+            {
+                Id = Guid.Parse("00000000-0000-0000-0000-000000000104"), ProductId = productId, Key = "Lens Mount",
+                Value = "Sony E-mount"
+            }
         );
 
         modelBuilder.Entity<ProductFeature>().HasData(
-            new ProductFeature { Id = Guid.Parse("00000000-0000-0000-0000-000000000201"), ProductId = productId, Name = "Autofocus", Description = "425 phase-detection points" },
-            new ProductFeature { Id = Guid.Parse("00000000-0000-0000-0000-000000000202"), ProductId = productId, Name = "Screen", Description = "180° tiltable LCD" },
-            new ProductFeature { Id = Guid.Parse("00000000-0000-0000-0000-000000000203"), ProductId = productId, Name = "Connectivity", Description = "Wi-Fi, NFC, Bluetooth" },
-            new ProductFeature { Id = Guid.Parse("00000000-0000-0000-0000-000000000204"), ProductId = productId, Name = "Build", Description = "Magnesium alloy body" }
+            new ProductFeature
+            {
+                Id = Guid.Parse("00000000-0000-0000-0000-000000000201"), ProductId = productId, Name = "Autofocus",
+                Description = "425 phase-detection points"
+            },
+            new ProductFeature
+            {
+                Id = Guid.Parse("00000000-0000-0000-0000-000000000202"), ProductId = productId, Name = "Screen",
+                Description = "180° tiltable LCD"
+            },
+            new ProductFeature
+            {
+                Id = Guid.Parse("00000000-0000-0000-0000-000000000203"), ProductId = productId, Name = "Connectivity",
+                Description = "Wi-Fi, NFC, Bluetooth"
+            },
+            new ProductFeature
+            {
+                Id = Guid.Parse("00000000-0000-0000-0000-000000000204"), ProductId = productId, Name = "Build",
+                Description = "Magnesium alloy body"
+            }
         );
     }
 }

@@ -11,7 +11,7 @@ public static class CategoryQueryExtensions
     {
         var sortMap = new Dictionary<string, Expression<Func<Category, object>>>
         {
-            ["name"] = c => c.Name,
+            ["name"] = c => c.Name
         };
 
         return query.ApplySorting(parameters, sortMap);

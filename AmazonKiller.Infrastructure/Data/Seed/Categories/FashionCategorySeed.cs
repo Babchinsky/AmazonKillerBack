@@ -34,7 +34,8 @@ public static class FashionCategorySeed
                 Name = "Women's Clothing",
                 Status = CategoryStatus.Active,
                 Description = "Women's Clothing category",
-                ImageUrl = "https://www.reiss.com/cms/resource/blob/976838/78c7ee422947a53d786b8deb107425fe/nybg-1-data.jpg",
+                ImageUrl =
+                    "https://www.reiss.com/cms/resource/blob/976838/78c7ee422947a53d786b8deb107425fe/nybg-1-data.jpg",
                 ParentId = rootId
             },
             new Category
@@ -52,7 +53,8 @@ public static class FashionCategorySeed
                 Name = "Accessories",
                 Status = CategoryStatus.Active,
                 Description = "Accessories category",
-                ImageUrl = "https://i0.wp.com/ordnur.com/wp-content/uploads/2023/06/Accessories-for-a-Trendy-Wardrobe.webp?ssl=1",
+                ImageUrl =
+                    "https://i0.wp.com/ordnur.com/wp-content/uploads/2023/06/Accessories-for-a-Trendy-Wardrobe.webp?ssl=1",
                 ParentId = rootId
             }
         );

@@ -25,16 +25,44 @@ public static class WorkTools_SafetyHelmet
         });
 
         modelBuilder.Entity<ProductAttribute>().HasData(
-            new ProductAttribute { Id = Guid.Parse("00000000-0000-0000-0000-000000000141"), ProductId = productId, Key = "Material", Value = "High-Density Polyethylene" },
-            new ProductAttribute { Id = Guid.Parse("00000000-0000-0000-0000-000000000142"), ProductId = productId, Key = "Suspension", Value = "4-point ratchet" },
-            new ProductAttribute { Id = Guid.Parse("00000000-0000-0000-0000-000000000143"), ProductId = productId, Key = "Ventilation", Value = "Yes" },
-            new ProductAttribute { Id = Guid.Parse("00000000-0000-0000-0000-000000000144"), ProductId = productId, Key = "Standard", Value = "ANSI/ISEA Z89.1-2014" }
+            new ProductAttribute
+            {
+                Id = Guid.Parse("00000000-0000-0000-0000-000000000141"), ProductId = productId, Key = "Material",
+                Value = "High-Density Polyethylene"
+            },
+            new ProductAttribute
+            {
+                Id = Guid.Parse("00000000-0000-0000-0000-000000000142"), ProductId = productId, Key = "Suspension",
+                Value = "4-point ratchet"
+            },
+            new ProductAttribute
+            {
+                Id = Guid.Parse("00000000-0000-0000-0000-000000000143"), ProductId = productId, Key = "Ventilation",
+                Value = "Yes"
+            },
+            new ProductAttribute
+            {
+                Id = Guid.Parse("00000000-0000-0000-0000-000000000144"), ProductId = productId, Key = "Standard",
+                Value = "ANSI/ISEA Z89.1-2014"
+            }
         );
 
         modelBuilder.Entity<ProductFeature>().HasData(
-            new ProductFeature { Id = Guid.Parse("00000000-0000-0000-0000-000000000241"), ProductId = productId, Name = "Comfort", Description = "Soft brow pad and adjustable fit" },
-            new ProductFeature { Id = Guid.Parse("00000000-0000-0000-0000-000000000242"), ProductId = productId, Name = "Durability", Description = "Impact-resistant outer shell" },
-            new ProductFeature { Id = Guid.Parse("00000000-0000-0000-0000-000000000243"), ProductId = productId, Name = "Compatibility", Description = "Accessory slots for face shields and earmuffs" }
+            new ProductFeature
+            {
+                Id = Guid.Parse("00000000-0000-0000-0000-000000000241"), ProductId = productId, Name = "Comfort",
+                Description = "Soft brow pad and adjustable fit"
+            },
+            new ProductFeature
+            {
+                Id = Guid.Parse("00000000-0000-0000-0000-000000000242"), ProductId = productId, Name = "Durability",
+                Description = "Impact-resistant outer shell"
+            },
+            new ProductFeature
+            {
+                Id = Guid.Parse("00000000-0000-0000-0000-000000000243"), ProductId = productId, Name = "Compatibility",
+                Description = "Accessory slots for face shields and earmuffs"
+            }
         );
     }
 }

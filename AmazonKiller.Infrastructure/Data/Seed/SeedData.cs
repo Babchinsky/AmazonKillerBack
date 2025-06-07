@@ -89,10 +89,10 @@ public static class SeedData
         CollectionsSeed.Seed(modelBuilder);
 
         UsersSeed.Seed(modelBuilder);
-        
+
         ReviewsSeed.Seed(modelBuilder);
         ReviewLikesSeed.Seed(modelBuilder);
-        
+
         WishlistsSeed.Seed(modelBuilder);
 
         CartListSeed.Seed(modelBuilder);

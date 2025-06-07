@@ -22,7 +22,7 @@ public static class Electronics_BoseQCUltra
                 "https://content2.rozetka.com.ua/goods/images/big/382915623.jpg",
                 "https://content1.rozetka.com.ua/goods/images/big/382915624.jpg",
                 "https://content1.rozetka.com.ua/goods/images/big/382915625.jpg",
-                "https://content.rozetka.com.ua/goods/images/big/382915629.jpg",
+                "https://content.rozetka.com.ua/goods/images/big/382915629.jpg"
             ]
         });
 

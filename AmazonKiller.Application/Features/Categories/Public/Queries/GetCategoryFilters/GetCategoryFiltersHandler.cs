@@ -18,7 +18,7 @@ public class GetCategoryFiltersHandler(
         var descendantIds = await categoryQueryService.GetDescendantCategoryIdsAsync(q.CategoryId, ct);
         descendantIds.Add(q.CategoryId);
 
-        var result = await filterBuilder.BuildFiltersAsync(descendantIds, ct, allowedKeys: category.ActivePropertyKeys);
+        var result = await filterBuilder.BuildFiltersAsync(descendantIds, ct, category.ActivePropertyKeys);
         return new CategoryFiltersDto { Filters = result };
     }
 }

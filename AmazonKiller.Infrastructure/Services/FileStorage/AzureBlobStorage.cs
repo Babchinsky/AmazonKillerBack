@@ -11,16 +11,19 @@ public class AzureBlobStorage(IOptions<BlobStorageOptions> options) : IFileStora
         options.Value.ConnectionString,
         options.Value.ContainerName);
 
-    private static string GetContentType(string ext) => ext.ToLower() switch
+    private static string GetContentType(string ext)
     {
-        ".jpg" or ".jpeg" => "image/jpeg",
-        ".png" => "image/png",
-        ".gif" => "image/gif",
-        ".webp" => "image/webp",
-        ".bmp" => "image/bmp",
-        ".svg" => "image/svg+xml",
-        _ => "application/octet-stream"
-    };
+        return ext.ToLower() switch
+        {
+            ".jpg" or ".jpeg" => "image/jpeg",
+            ".png" => "image/png",
+            ".gif" => "image/gif",
+            ".webp" => "image/webp",
+            ".bmp" => "image/bmp",
+            ".svg" => "image/svg+xml",
+            _ => "application/octet-stream"
+        };
+    }
 
     public async Task<string> SaveAsync(Stream src, string ext, CancellationToken ct = default)
     {
@@ -50,7 +53,6 @@ public class AzureBlobStorage(IOptions<BlobStorageOptions> options) : IFileStora
     public async Task DeleteBatchSafeAsync(List<string> urls, CancellationToken ct = default)
     {
         foreach (var url in urls.Distinct(StringComparer.OrdinalIgnoreCase))
-        {
             try
             {
                 await DeleteAsync(url, ct);
@@ -59,6 +61,5 @@ public class AzureBlobStorage(IOptions<BlobStorageOptions> options) : IFileStora
             {
                 /* log if needed */
             }
-        }
     }
 }

@@ -16,7 +16,8 @@ public static class WorkToolsCategorySeed
                 Name = "Work tools",
                 Status = CategoryStatus.Active,
                 Description = "Work tools category",
-                ImageUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwO5jLC0Dtm27AcDKo8DAt57_M3tSpZCOmxA&s",
+                ImageUrl =
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwO5jLC0Dtm27AcDKo8DAt57_M3tSpZCOmxA&s",
                 IconName = "hammer"
             },
             new Category
@@ -34,7 +35,8 @@ public static class WorkToolsCategorySeed
                 Name = "Power Tools",
                 Status = CategoryStatus.Active,
                 Description = "Power Tools category",
-                ImageUrl = "https://ik.imagekit.io/fepy/cdn/magefan_blog/2023/08/best_power_tool_sets_hero_image-scaled.jpeg.optimal.jpeg",
+                ImageUrl =
+                    "https://ik.imagekit.io/fepy/cdn/magefan_blog/2023/08/best_power_tool_sets_hero_image-scaled.jpeg.optimal.jpeg",
                 ParentId = rootId
             },
             new Category

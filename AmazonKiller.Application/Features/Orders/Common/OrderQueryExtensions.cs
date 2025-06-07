@@ -37,17 +37,15 @@ public static class OrderQueryExtensions
 
         return query.Where(o =>
             (q.Status == null || o.Status == q.Status.Value) &&
-            (string.IsNullOrWhiteSpace(term) || (
-                o.OrderNumber.ToLower().Contains(term) ||
-                o.User.Email.ToLower().Contains(term) ||
-                o.Info.Delivery.Email.ToLower().Contains(term) ||
-                o.Info.Delivery.FirstName.ToLower().Contains(term) ||
-                o.Info.Delivery.LastName.ToLower().Contains(term) ||
-                (o.Info.Delivery.Address.Country + o.Info.Delivery.Address.State + o.Info.Delivery.Address.City +
-                 o.Info.Delivery.Address.Street + o.Info.Delivery.Address.HouseNumber).ToLower().Contains(term) ||
-                o.Status.ToString().ToLower().Contains(term) ||
-                o.Id.ToString().ToLower().Contains(term)
-            )));
+            (string.IsNullOrWhiteSpace(term) || o.OrderNumber.ToLower().Contains(term) ||
+             o.User.Email.ToLower().Contains(term) ||
+             o.Info.Delivery.Email.ToLower().Contains(term) ||
+             o.Info.Delivery.FirstName.ToLower().Contains(term) ||
+             o.Info.Delivery.LastName.ToLower().Contains(term) ||
+             (o.Info.Delivery.Address.Country + o.Info.Delivery.Address.State + o.Info.Delivery.Address.City +
+              o.Info.Delivery.Address.Street + o.Info.Delivery.Address.HouseNumber).ToLower().Contains(term) ||
+             o.Status.ToString().ToLower().Contains(term) ||
+             o.Id.ToString().ToLower().Contains(term)));
     }
 
     public static IQueryable<Order> ApplySorting(this IQueryable<Order> query, QueryParameters parameters)
