@@ -40,6 +40,7 @@ builder.Services
 builder.Services.Configure<NovaPoshtaOptions>(builder.Configuration.GetSection("NovaPoshta"));
 builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("Email"));
 builder.Services.Configure<StripeSettingsOptions>(builder.Configuration.GetSection("Stripe"));
+builder.Services.Configure<BlobStorageOptions>(builder.Configuration.GetSection("BlobStorage"));
 
 // ---------- JWT ----------
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -102,6 +103,9 @@ builder.Services.AddCors(p => p
         b.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
 
 // ---------- App ----------
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+
 var app = builder.Build();
 
 // --- Автоматическая миграция БД ---
@@ -141,6 +145,9 @@ app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+
+app.Logger.LogInformation("✅ AmazonKiller API started");
+Console.WriteLine("🚀 App started OK");
 
 app.Run();
 

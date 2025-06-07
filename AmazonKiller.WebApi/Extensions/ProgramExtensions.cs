@@ -1,6 +1,4 @@
-﻿// namespace подобран так, чтобы совпадать с другими WebApi-расширениями
-
-namespace AmazonKiller.WebApi.Extensions;
+﻿namespace AmazonKiller.WebApi.Extensions;
 
 using Microsoft.AspNetCore.StaticFiles;
 

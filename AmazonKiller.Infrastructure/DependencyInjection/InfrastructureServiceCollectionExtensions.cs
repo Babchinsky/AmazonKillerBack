@@ -11,6 +11,7 @@ using AmazonKiller.Application.Interfaces.Services.Auth;
 using AmazonKiller.Application.Interfaces.Services.Categories;
 using AmazonKiller.Application.Interfaces.Services.Products;
 using AmazonKiller.Application.Interfaces.Services.Recalculation;
+using AmazonKiller.Application.Options;
 using AmazonKiller.Infrastructure.Repositories.Account;
 using AmazonKiller.Infrastructure.Repositories.Admin.Users;
 using AmazonKiller.Infrastructure.Repositories.Auth;
@@ -27,9 +28,12 @@ using AmazonKiller.Infrastructure.Services.FileStorage;
 using AmazonKiller.Infrastructure.Services.Orders;
 using AmazonKiller.Infrastructure.Services.Products;
 using AmazonKiller.Infrastructure.Services.Recalculation;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace AmazonKiller.Infrastructure.DependencyInjection;
 
@@ -37,6 +41,16 @@ public static class InfrastructureServiceCollectionExtensions
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services)
     {
+        services.AddHttpContextAccessor();
+
+        services.AddScoped<IFileStorage>(sp =>
+        {
+            var env = sp.GetRequiredService<IWebHostEnvironment>();
+            return env.IsDevelopment()
+                ? new LocalFileStorage(env, sp.GetRequiredService<ILogger<LocalFileStorage>>())
+                : new AzureBlobStorage(sp.GetRequiredService<IOptions<BlobStorageOptions>>());
+        });
+
         // Services
         services.TryAddSingleton<IPasswordService, PasswordService>();
         services.TryAddScoped<IAuthService, AuthService>();
@@ -53,8 +67,6 @@ public static class InfrastructureServiceCollectionExtensions
         services.AddHttpClient<INovaPoshtaService, NovaPoshtaService>();
 
         // Infrastructure
-        services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-        services.TryAddScoped<IFileStorage, LocalFileStorage>();
         services.TryAddScoped<IPropertyKeyUpdater, PropertyKeyUpdater>();
 
         // Repositories

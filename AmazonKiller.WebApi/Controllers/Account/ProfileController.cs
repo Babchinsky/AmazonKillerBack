@@ -48,7 +48,7 @@ public class ProfileController(IMediator mediator) : ControllerBase
     public async Task<ActionResult<string>> ChangePhoto([FromForm] ChangePhotoCommand cmd, CancellationToken ct)
     {
         var imageUrl = await mediator.Send(cmd, ct);
-        return Ok($"{Request.Scheme}://{Request.Host}/uploads/{imageUrl}");
+        return Ok(imageUrl);
     }
 
     [HttpPost("logout")]

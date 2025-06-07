@@ -1,15 +1,20 @@
-﻿using AmazonKiller.Application.Interfaces.Repositories.Account;
+﻿using AmazonKiller.Application.Common.Helpers;
+using AmazonKiller.Application.Interfaces.Repositories.Account;
 using AmazonKiller.Application.Interfaces.Services;
 using AmazonKiller.Domain.Entities.Users;
 using AmazonKiller.Shared.Exceptions;
 using MediatR;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Hosting;
 
 namespace AmazonKiller.Application.Features.Profile.Commands.ChangePhoto;
 
 public class ChangePhotoHandler(
     IAccountRepository accountRepo,
     ICurrentUserService currentUserService,
-    IFileStorage storage
+    IFileStorage storage,
+    IHttpContextAccessor httpContextAccessor,
+    IHostEnvironment env
 ) : IRequestHandler<ChangePhotoCommand, string>
 {
     public async Task<string> Handle(ChangePhotoCommand cmd, CancellationToken ct)
@@ -28,7 +33,7 @@ public class ChangePhotoHandler(
         var newPath = await storage.SaveAsync(stream, ext, ct);
 
         // обновляем URL
-        typeof(User).GetProperty(nameof(User.ImageUrl))!.SetValue(user, newPath); // обход readonly setter
+        typeof(User).GetProperty(nameof(User.ImageUrl))!.SetValue(user, newPath);
 
         await accountRepo.SaveChangesAsync(ct);
 
@@ -36,6 +41,8 @@ public class ChangePhotoHandler(
         if (!string.IsNullOrWhiteSpace(oldPhoto))
             await storage.DeleteAsync(oldPhoto, ct);
 
-        return newPath;
+        // ✅ Возвращаем абсолютный URL
+        var absoluteUrl = ImageUrlHelper.ToAbsoluteUrl(newPath, httpContextAccessor.HttpContext?.Request, env);
+        return absoluteUrl;
     }
 }
