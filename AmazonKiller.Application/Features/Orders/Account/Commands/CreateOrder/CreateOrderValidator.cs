@@ -1,7 +1,7 @@
 ﻿using AmazonKiller.Domain.Entities.Orders;
 using FluentValidation;
 
-namespace AmazonKiller.Application.Features.Orders.Public.Commands.CreateOrder;
+namespace AmazonKiller.Application.Features.Orders.Account.Commands.CreateOrder;
 
 public class CreateOrderValidator : AbstractValidator<CreateOrderCommand>
 {

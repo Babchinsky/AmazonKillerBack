@@ -6,7 +6,7 @@ using AmazonKiller.Domain.Entities.Orders;
 using AmazonKiller.Shared.Exceptions;
 using MediatR;
 
-namespace AmazonKiller.Application.Features.Orders.Public.Commands.CreateOrder;
+namespace AmazonKiller.Application.Features.Orders.Account.Commands.CreateOrder;
 
 public class CreateOrderHandler(
     IOrderRepository orderRepo,

@@ -4,19 +4,20 @@ using AmazonKiller.Application.Interfaces.Services;
 using AmazonKiller.Shared.Exceptions;
 using MediatR;
 
-namespace AmazonKiller.Application.Features.Orders.Public.Queries.GetOrderDetails;
+namespace AmazonKiller.Application.Features.Orders.Account.Queries.GetUserOrderDetails;
 
-public class GetOrderDetailsHandler(
+public class GetUserOrderDetailsHandler(
     IOrderRepository repo,
     ICurrentUserService currentUserService,
     IAccountRepository accountRepo)
-    : IRequestHandler<GetOrderDetailsQuery, OrderDetailsDto>
+    : IRequestHandler<GetUserOrderDetailsQuery, OrderDetailsDto>
 {
-    public async Task<OrderDetailsDto> Handle(GetOrderDetailsQuery request, CancellationToken ct)
+    public async Task<OrderDetailsDto> Handle(GetUserOrderDetailsQuery request, CancellationToken ct)
     {
         var userId = currentUserService.UserId;
         await accountRepo.ThrowIfDeletedAsync(userId, ct);
-        var result = await repo.GetOrderDetailsAsync(userId, request.OrderId, ct);
+
+        var result = await repo.GetOrderDetailsForUserAsync(userId, request.OrderId, ct);
         return result ?? throw new NotFoundException("Order not found");
     }
 }

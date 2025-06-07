@@ -1164,7 +1164,8 @@
 										{
 											"key": "ParentId",
 											"value": "{{categoryParentId}}",
-											"type": "text"
+											"type": "text",
+											"disabled": true
 										},
 										{
 											"key": "IconName",
@@ -1173,7 +1174,7 @@
 										},
 										{
 											"key": "ActivePropertyKeys[0]",
-											"value": "Display",
+											"value": "Chip",
 											"type": "text"
 										},
 										{
@@ -4137,6 +4138,163 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "Get All Orders by Filters",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const orders = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status is 200\", function () {\r",
+											"    pm.expect(pm.response.code).to.equal(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{adminAccessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/admin/orders",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"orders"
+									],
+									"query": [
+										{
+											"key": "UserId",
+											"value": "28d9cd55-6a39-8e45-71b6-46fe31461ce7",
+											"disabled": true
+										},
+										{
+											"key": "SearchTerm",
+											"value": "California23",
+											"disabled": true
+										},
+										{
+											"key": "Status",
+											"value": "0",
+											"disabled": true
+										},
+										{
+											"key": "Parameters.Page",
+											"value": "42575479",
+											"disabled": true
+										},
+										{
+											"key": "Parameters.PageSize",
+											"value": "42575479",
+											"disabled": true
+										},
+										{
+											"key": "Parameters.SortBy",
+											"value": "in nisi sunt",
+											"disabled": true
+										},
+										{
+											"key": "Parameters.SortOrder",
+											"value": "in nisi sunt",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Order by Id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const body = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status is 200\", function () {\r",
+											"    pm.expect(pm.response.code).to.equal(200);\r",
+											"});\r",
+											"\r",
+											"// Сохраняем order info в переменные окружения\r",
+											"pm.environment.set(\"orderPrice\", body.price);\r",
+											"pm.environment.set(\"orderStatus\", body.status);\r",
+											"pm.environment.set(\"orderRecipient\", body.recipient);\r",
+											"pm.environment.set(\"orderPaymentType\", body.paymentType);\r",
+											"pm.environment.set(\"orderAddress\", body.address);\r",
+											"pm.environment.set(\"orderCreatedAt\", body.orderedAt);\r",
+											"\r",
+											"// Сохраняем первый товар\r",
+											"if (body.items && body.items.length > 0) {\r",
+											"    const item = body.items[0];\r",
+											"    pm.environment.set(\"orderItemId\", item.id);\r",
+											"    pm.environment.set(\"orderItemName\", item.name);\r",
+											"    pm.environment.set(\"orderItemImage\", item.imageUrl || item.imageUrl || item.image || \"\");\r",
+											"    pm.environment.set(\"orderItemQuantity\", item.quantity);\r",
+											"    pm.environment.set(\"orderItemPrice\", item.price);\r",
+											"}\r",
+											"\r",
+											"// Лог в консоль\r",
+											"console.log(\"🧾 Order loaded:\", body);\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{adminAccessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/admin/orders/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"orders",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "8d39ee25-6be0-46aa-8a1f-75407bd3fa0d",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				},
@@ -4234,7 +4392,84 @@
 							"response": []
 						},
 						{
-							"name": "Get Order by Id",
+							"name": "Get User Orders by Filters",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const orders = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status is 200\", function () {\r",
+											"    pm.expect(pm.response.code).to.equal(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/account/orders",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"account",
+										"orders"
+									],
+									"query": [
+										{
+											"key": "SearchTerm",
+											"value": "California23",
+											"disabled": true
+										},
+										{
+											"key": "Status",
+											"value": "0",
+											"disabled": true
+										},
+										{
+											"key": "Parameters.Page",
+											"value": "42575479",
+											"disabled": true
+										},
+										{
+											"key": "Parameters.PageSize",
+											"value": "42575479",
+											"disabled": true
+										},
+										{
+											"key": "Parameters.SortBy",
+											"value": "in nisi sunt",
+											"disabled": true
+										},
+										{
+											"key": "Parameters.SortOrder",
+											"value": "in nisi sunt",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get User Order by Id",
 							"event": [
 								{
 									"listen": "test",
@@ -4300,7 +4535,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "{{lastOrderId}}",
+											"value": "4b1e3002-816c-4cef-2cf8-08dda5a7ea64",
 											"description": "(Required) "
 										}
 									]
@@ -4309,17 +4544,39 @@
 							"response": []
 						},
 						{
-							"name": "Get Orders by Filters",
+							"name": "Get User Order by Id Copy",
 							"event": [
 								{
 									"listen": "test",
 									"script": {
 										"exec": [
-											"const orders = pm.response.json();\r",
+											"const body = pm.response.json();\r",
 											"\r",
 											"pm.test(\"Status is 200\", function () {\r",
 											"    pm.expect(pm.response.code).to.equal(200);\r",
-											"});"
+											"});\r",
+											"\r",
+											"// Сохраняем order info в переменные окружения\r",
+											"pm.environment.set(\"orderPrice\", body.price);\r",
+											"pm.environment.set(\"orderStatus\", body.status);\r",
+											"pm.environment.set(\"orderRecipient\", body.recipient);\r",
+											"pm.environment.set(\"orderPaymentType\", body.paymentType);\r",
+											"pm.environment.set(\"orderAddress\", body.address);\r",
+											"pm.environment.set(\"orderCreatedAt\", body.orderedAt);\r",
+											"\r",
+											"// Сохраняем первый товар\r",
+											"if (body.items && body.items.length > 0) {\r",
+											"    const item = body.items[0];\r",
+											"    pm.environment.set(\"orderItemId\", item.id);\r",
+											"    pm.environment.set(\"orderItemName\", item.name);\r",
+											"    pm.environment.set(\"orderItemImage\", item.imageUrl || item.imageUrl || item.image || \"\");\r",
+											"    pm.environment.set(\"orderItemQuantity\", item.quantity);\r",
+											"    pm.environment.set(\"orderItemPrice\", item.price);\r",
+											"}\r",
+											"\r",
+											"// Лог в консоль\r",
+											"console.log(\"🧾 Order loaded:\", body);\r",
+											""
 										],
 										"type": "text/javascript",
 										"packages": {}
@@ -4340,50 +4597,21 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/api/account/orders",
+									"raw": "{{baseUrl}}/api/account/orders/:id",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"api",
 										"account",
-										"orders"
+										"orders",
+										":id"
 									],
-									"query": [
+									"variable": [
 										{
-											"key": "UserId",
-											"value": "28d9cd55-6a39-8e45-71b6-46fe31461ce7",
-											"disabled": true
-										},
-										{
-											"key": "SearchTerm",
-											"value": "California23",
-											"disabled": true
-										},
-										{
-											"key": "Status",
-											"value": "0",
-											"disabled": true
-										},
-										{
-											"key": "Parameters.Page",
-											"value": "42575479",
-											"disabled": true
-										},
-										{
-											"key": "Parameters.PageSize",
-											"value": "42575479",
-											"disabled": true
-										},
-										{
-											"key": "Parameters.SortBy",
-											"value": "in nisi sunt",
-											"disabled": true
-										},
-										{
-											"key": "Parameters.SortOrder",
-											"value": "in nisi sunt",
-											"disabled": true
+											"key": "id",
+											"value": "4b1e3002-816c-4cef-2cf8-08dda5a7ea64",
+											"description": "(Required) "
 										}
 									]
 								}

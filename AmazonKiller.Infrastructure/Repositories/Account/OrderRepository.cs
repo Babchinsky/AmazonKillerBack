@@ -10,6 +10,26 @@ namespace AmazonKiller.Infrastructure.Repositories.Account;
 
 public class OrderRepository(AmazonDbContext db, IMapper mapper) : IOrderRepository
 {
+    private OrderDetailsDto MapToDetailsDto(Order order)
+    {
+        var items = mapper.Map<List<OrderItemDto>>(order.Items);
+        var d = order.Info.Delivery;
+
+        return new OrderDetailsDto
+        {
+            Id = order.Id,
+            Price = order.TotalPrice,
+            Status = order.Status.ToString(),
+            OrderedAt = order.Info.OrderedAt,
+            Address =
+                $"{d.Address.Country}, {d.Address.State}, {d.Address.City}, {d.Address.Street}, {d.Address.HouseNumber}",
+            Recipient = $"{d.FirstName} {d.LastName}",
+            PaymentType = order.Info.Payment.PaymentType.ToString(),
+            Items = items,
+            OrderNumber = order.OrderNumber
+        };
+    }
+
     private IQueryable<Order> QueryOrderWithAllIncludes()
     {
         return db.Orders
@@ -41,31 +61,20 @@ public class OrderRepository(AmazonDbContext db, IMapper mapper) : IOrderReposit
             .Include(o => o.User);
     }
 
-    public async Task<OrderDetailsDto> GetOrderDetailsAsync(Guid userId, Guid orderId, CancellationToken ct)
+    public async Task<OrderDetailsDto?> GetOrderDetailsForUserAsync(Guid userId, Guid orderId, CancellationToken ct)
     {
         var order = await QueryOrderWithAllIncludes()
             .FirstOrDefaultAsync(o => o.Id == orderId && o.UserId == userId, ct);
 
-        if (order is null)
-            throw new NotFoundException("Order not found");
+        return order is null ? null : MapToDetailsDto(order);
+    }
 
-        var items = mapper.Map<List<OrderItemDto>>(order.Items);
+    public async Task<OrderDetailsDto?> GetOrderDetailsForAdminAsync(Guid orderId, CancellationToken ct)
+    {
+        var order = await QueryOrderWithAllIncludes()
+            .FirstOrDefaultAsync(o => o.Id == orderId, ct);
 
-        var d = order.Info.Delivery;
-
-        return new OrderDetailsDto
-        {
-            Id = order.Id,
-            Price = order.TotalPrice,
-            Status = order.Status.ToString(),
-            OrderedAt = order.Info.OrderedAt,
-            Address =
-                $"{d.Address.Country}, {d.Address.State}, {d.Address.City}, {d.Address.Street}, {d.Address.HouseNumber}",
-            Recipient = $"{d.FirstName} {d.LastName}",
-            PaymentType = order.Info.Payment.PaymentType.ToString(),
-            Items = items,
-            OrderNumber = order.OrderNumber
-        };
+        return order is null ? null : MapToDetailsDto(order);
     }
 
     public async Task<Guid> CreateOrderAsync(Order order, CancellationToken ct)

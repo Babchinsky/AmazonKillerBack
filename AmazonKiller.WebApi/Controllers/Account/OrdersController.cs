@@ -1,6 +1,6 @@
-﻿using AmazonKiller.Application.Features.Orders.Public.Commands.CreateOrder;
-using AmazonKiller.Application.Features.Orders.Public.Queries.GetAllOrders;
-using AmazonKiller.Application.Features.Orders.Public.Queries.GetOrderDetails;
+﻿using AmazonKiller.Application.Features.Orders.Account.Commands.CreateOrder;
+using AmazonKiller.Application.Features.Orders.Account.Queries.GetUserOrderDetails;
+using AmazonKiller.Application.Features.Orders.Account.Queries.GetUserOrders;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,7 +13,7 @@ namespace AmazonKiller.WebApi.Controllers.Account;
 public class OrdersController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
-    public async Task<IActionResult> GetAll([FromQuery] GetAllOrdersQuery q, CancellationToken ct)
+    public async Task<IActionResult> GetAll([FromQuery] GetUserOrdersQuery q, CancellationToken ct)
     {
         var list = await mediator.Send(q, ct);
         return Ok(list);
@@ -22,7 +22,7 @@ public class OrdersController(IMediator mediator) : ControllerBase
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetById(Guid id, CancellationToken ct)
     {
-        var details = await mediator.Send(new GetOrderDetailsQuery(id), ct);
+        var details = await mediator.Send(new GetUserOrderDetailsQuery(id), ct);
         return Ok(details);
     }
 
