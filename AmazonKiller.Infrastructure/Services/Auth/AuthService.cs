@@ -3,15 +3,21 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using AmazonKiller.Application.Interfaces.Services.Auth;
+using AmazonKiller.Application.Options;
 using AmazonKiller.Domain.Entities.Users;
 using AmazonKiller.Infrastructure.Data;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 namespace AmazonKiller.Infrastructure.Services.Auth;
 
-public class AuthService(AmazonDbContext db, IConfiguration cfg) : IAuthService
+public class AuthService(
+    AmazonDbContext db,
+    IOptions<JwtOptions> jwtOptionsAccessor
+) : IAuthService
 {
+    private readonly JwtOptions _jwt = jwtOptionsAccessor.Value;
+
     public Task<string> GenerateJwtTokenAsync(User u)
     {
         return Task.FromResult(GenerateJwt(u));
@@ -33,23 +39,20 @@ public class AuthService(AmazonDbContext db, IConfiguration cfg) : IAuthService
         return rt.Token;
     }
 
-    // -- helpers --------------------------------------------------
     private string GenerateJwt(User u)
     {
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(cfg["Jwt:Key"]!));
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwt.Key));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
         var claims = new List<Claim>
         {
             new(ClaimTypes.NameIdentifier, u.Id.ToString()),
-            new(ClaimTypes.Email, u.Email),
-            new(ClaimTypes.Role, u.Role.ToString()),
-            new("status", u.Status.ToString()) // 👈 добавляем статус
+            new(ClaimTypes.Role, u.Role.ToString())
         };
 
         var token = new JwtSecurityToken(
-            cfg["Jwt:Issuer"],
-            cfg["Jwt:Audience"],
+            _jwt.Issuer,
+            _jwt.Audience,
             claims,
             expires: DateTime.UtcNow.AddMinutes(10),
             signingCredentials: creds);

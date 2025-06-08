@@ -1,17 +1,22 @@
 ﻿using AmazonKiller.Application.Interfaces.Repositories.Auth;
+using AmazonKiller.Application.Options;
 using AmazonKiller.Domain.Entities.Users;
 using AmazonKiller.Infrastructure.Data;
 using AmazonKiller.Shared.Constants;
 using AmazonKiller.Shared.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace AmazonKiller.Infrastructure.Repositories.Auth;
 
-public class EmailVerificationRepository(AmazonDbContext db, IConfiguration config) : IEmailVerificationRepository
+public class EmailVerificationRepository(
+    AmazonDbContext db,
+    IOptions<VerificationOptions> optsAccessor
+) : IEmailVerificationRepository
 {
-    private readonly bool _useFixedCode = config.GetValue<bool>("Verification:UseFixedCode");
-    private readonly string? _fixedCode = config.GetValue<string>("Verification:FixedCodeValue");
+    private readonly bool _useFixedCode = optsAccessor.Value.UseFixedCode;
+    private readonly string? _fixedCode = optsAccessor.Value.FixedCodeValue;
 
     private async Task DeleteByEmailAndTypeAsync(string email, VerificationType type, CancellationToken ct)
     {

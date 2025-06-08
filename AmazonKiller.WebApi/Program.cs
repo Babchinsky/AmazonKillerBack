@@ -1,16 +1,16 @@
-using System.Text;
 using AmazonKiller.Application.DependencyInjection;
 using AmazonKiller.Application.Interfaces.Services.Recalculation;
 using AmazonKiller.Application.Options;
 using AmazonKiller.Infrastructure.Data;
 using AmazonKiller.Infrastructure.DependencyInjection;
 using AmazonKiller.Infrastructure.Middleware;
+using AmazonKiller.WebApi.Configuration;
 using AmazonKiller.WebApi.Extensions;
 using AmazonKiller.WebApi.Filters;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Scalar.AspNetCore;
 
@@ -37,28 +37,21 @@ builder.Services
     .AddInfrastructure() // Репозитории/сервисы
     .AddApplication(); // MediatR / AutoMapper / валидаторы
 
+builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("Jwt"));
+builder.Services.Configure<AdminOptions>(builder.Configuration.GetSection("Admin"));
 builder.Services.Configure<NovaPoshtaOptions>(builder.Configuration.GetSection("NovaPoshta"));
 builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("Email"));
 builder.Services.Configure<StripeSettingsOptions>(builder.Configuration.GetSection("Stripe"));
 builder.Services.Configure<BlobStorageOptions>(builder.Configuration.GetSection("BlobStorage"));
+builder.Services.Configure<GmailSettings>(builder.Configuration.GetSection("Gmail"));
+builder.Services.Configure<VerificationOptions>(builder.Configuration.GetSection("Verification"));
 
-// ---------- JWT ----------
+
+builder.Services.AddSingleton<IConfigureOptions<JwtBearerOptions>, ConfigureJwtBearerOptions>();
+
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
-    {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuerSigningKey = true,
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)),
-            ValidIssuer = builder.Configuration["Jwt:Issuer"],
-            ValidAudience = builder.Configuration["Jwt:Audience"]
-        };
-    });
-
+    .AddJwtBearer();
 builder.Services.AddAuthorization();
 
 // ---------- Swagger / Scalar ----------
@@ -127,7 +120,7 @@ app.UseForwardedHeaders();
 
 // --- Middleware ---
 app.UseMiddleware<ExceptionHandlingMiddleware>();
-StaticFilesConfiguration.ConfigureStaticFiles(app);
+app.ConfigureStaticFiles();
 
 // --- Swagger/Scalar UI ---
 if (app.Environment.IsDevelopment())

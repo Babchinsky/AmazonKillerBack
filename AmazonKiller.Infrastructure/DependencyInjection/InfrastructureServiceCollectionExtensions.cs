@@ -82,7 +82,7 @@ public static class InfrastructureServiceCollectionExtensions
         services.TryAddScoped<IWishlistRepository, WishlistRepository>();
         services.TryAddScoped<ICartRepository, CartRepository>();
         services.TryAddScoped<ICollectionRepository, CollectionRepository>();
-
+        
         // Helpers
         services.TryAddScoped<ICurrentUserService, CurrentUserService>();
         services.TryAddScoped<IAdminSecretValidator, AdminSecretValidator>();
