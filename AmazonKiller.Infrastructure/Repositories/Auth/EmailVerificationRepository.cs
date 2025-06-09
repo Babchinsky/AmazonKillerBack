@@ -5,7 +5,6 @@ using AmazonKiller.Infrastructure.Data;
 using AmazonKiller.Shared.Constants;
 using AmazonKiller.Shared.Exceptions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 
 namespace AmazonKiller.Infrastructure.Repositories.Auth;

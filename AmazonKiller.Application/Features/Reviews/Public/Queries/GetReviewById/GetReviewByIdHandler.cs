@@ -1,12 +1,11 @@
 using AmazonKiller.Application.DTOs.Reviews;
 using AmazonKiller.Application.Interfaces.Repositories.Reviews;
 using AmazonKiller.Shared.Exceptions;
-using AutoMapper;
 using MediatR;
 
 namespace AmazonKiller.Application.Features.Reviews.Public.Queries.GetReviewById;
 
-public class GetReviewByIdHandler(IReviewRepository repo, IMapper mapper)
+public class GetReviewByIdHandler(IReviewRepository repo)
     : IRequestHandler<GetReviewByIdQuery, ReviewDto>
 {
     public async Task<ReviewDto> Handle(

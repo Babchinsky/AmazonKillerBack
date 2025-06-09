@@ -9,9 +9,10 @@
       - db
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection=Server=db;Database=amazonkillerdb;User Id=sa;Password=YourStrong@Password1;Encrypt=False
     networks:
       - app-network
+    env_file:
+      - ./AmazonKiller.WebApi/.env
 
   db:
     image: mcr.microsoft.com/mssql/server:2022-latest

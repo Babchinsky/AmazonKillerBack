@@ -1,13 +1,11 @@
 ﻿using AmazonKiller.Application.Interfaces.Repositories.Collections;
-using AmazonKiller.Application.Interfaces.Services;
 using AmazonKiller.Shared.Exceptions;
 using MediatR;
 
 namespace AmazonKiller.Application.Features.Collections.Admin.Commands.DeleteCollection;
 
 public class DeleteCollectionHandler(
-    ICollectionRepository repo,
-    IFileStorage fileStorage
+    ICollectionRepository repo
 ) : IRequestHandler<DeleteCollectionCommand>
 {
     public async Task Handle(DeleteCollectionCommand request, CancellationToken ct)

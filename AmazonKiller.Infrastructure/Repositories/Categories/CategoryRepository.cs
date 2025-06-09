@@ -51,6 +51,7 @@ public class CategoryRepository(AmazonDbContext db, IFileStorage fileStorage) : 
         var imageUrls = enumerable
             .Select(c => c.ImageUrl)
             .Where(url => !string.IsNullOrWhiteSpace(url))
+            .Select(url => url!)
             .ToList();
 
         db.Categories.RemoveRange(enumerable);

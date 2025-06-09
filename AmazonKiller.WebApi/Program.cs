@@ -1,3 +1,4 @@
+using System.Collections;
 using AmazonKiller.Application.DependencyInjection;
 using AmazonKiller.Application.Interfaces.Services.Recalculation;
 using AmazonKiller.Application.Options;
@@ -15,6 +16,17 @@ using Microsoft.OpenApi.Models;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+foreach (var (key, value) in Environment.GetEnvironmentVariables().Cast<DictionaryEntry>())
+{
+    var envKey = key.ToString();
+    if (envKey is not null && envKey.Contains('-'))
+    {
+        var convertedKey = envKey.Replace("-", "__");
+        Environment.SetEnvironmentVariable(convertedKey, value?.ToString());
+    }
+}
+
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
 {
     options.ForwardedHeaders =
@@ -46,6 +58,7 @@ builder.Services.Configure<BlobStorageOptions>(builder.Configuration.GetSection(
 builder.Services.Configure<GmailSettings>(builder.Configuration.GetSection("Gmail"));
 builder.Services.Configure<VerificationOptions>(builder.Configuration.GetSection("Verification"));
 
+Console.WriteLine($"🔐 Jwt:Key = {builder.Configuration["Jwt:Key"]}");
 
 builder.Services.AddSingleton<IConfigureOptions<JwtBearerOptions>, ConfigureJwtBearerOptions>();
 
