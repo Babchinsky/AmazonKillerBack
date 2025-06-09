@@ -17,22 +17,6 @@ using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-Console.WriteLine("Env keys:");
-foreach (var (key, value) in Environment.GetEnvironmentVariables().Cast<DictionaryEntry>())
-{
-    var envKey = key.ToString();
-    Console.WriteLine($"{envKey} = {value}");
-    // if (envKey is not null)
-    // {
-    //     var convertedKey = envKey
-    //         .Replace("-", "__")
-    //         .Replace("_", "__");
-    //
-    //     if (convertedKey != envKey)
-    //         Environment.SetEnvironmentVariable(convertedKey, value?.ToString());
-    // }
-}
-
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
 {
     options.ForwardedHeaders =
@@ -63,8 +47,6 @@ builder.Services.Configure<StripeSettingsOptions>(builder.Configuration.GetSecti
 builder.Services.Configure<BlobStorageOptions>(builder.Configuration.GetSection("BlobStorage"));
 builder.Services.Configure<GmailSettings>(builder.Configuration.GetSection("Gmail"));
 builder.Services.Configure<VerificationOptions>(builder.Configuration.GetSection("Verification"));
-
-Console.WriteLine($"🔐 Jwt:Key = {builder.Configuration["Jwt:Key"]}");
 
 builder.Services.AddSingleton<IConfigureOptions<JwtBearerOptions>, ConfigureJwtBearerOptions>();
 
