@@ -1,7 +1,14 @@
 # AmazonKillerBack
+Backend for **Amazon Killer** app written in **ASP.NET Core 9.0**, following **Clean Architecture** and **Vertical Slice** pattern.
 
-Backend for **Amazon Killer** app written in **ASP.NET Core 9.0**, following **Clean Architecture** and **Vertical Slice
-** pattern.
+---
+
+## 🌐 Live Deployment
+
+App is live at:  
+🔗 https://amazonkiller-api.greenriver-0a1c5aba.westeurope.azurecontainerapps.io
+
+
 
 ---
 
@@ -19,6 +26,9 @@ Backend for **Amazon Killer** app written in **ASP.NET Core 9.0**, following **C
 - AutoMapper for object mapping
 - FluentValidation for request validation
 - Scalar (OpenAPI UI) for API documentation
+- Azure Container Apps deployment support
+- CI/CD via GitHub Actions
+- Environment secrets via Azure App Settings
 
 ---
 
@@ -54,12 +64,15 @@ This will:
 
 ```
 AmazonKillerBack/
-├── AmazonKiller.Application/           # CQRS features, DTOs, interfaces, validators
-├── AmazonKiller.Domain/                # Domain entities and enums
-├── AmazonKiller.Infrastructure/        # EF Core DbContext, repository implementations
-├── AmazonKiller.IntegrationTests/      # Integration tests for API endpoints
-├── AmazonKiller.Shared/                # Shared code (constants, extensions, helpers)
-├── AmazonKiller.WebApi/                # API controllers, Program.cs, Startup logic
+├── AmazonKiller.Application/       # CQRS features, DTOs, interfaces, validators
+├── AmazonKiller.Domain/            # Domain entities and enums
+├── AmazonKiller.Infrastructure/    # EF Core DbContext, repositories, services
+├── AmazonKiller.Shared/            # Constants, exceptions, helpers
+├── AmazonKiller.WebApi/            # Web API entrypoint, Program.cs, controllers
+├── Postman/                        # Postman collection and environments
+├── docker-compose.yml              # Local dev environment
+└── Dockerfile                      # Docker build for Azure
+
 ```
 
 ---
@@ -162,6 +175,52 @@ dotnet ef database update -p AmazonKiller.Infrastructure -s AmazonKiller.WebApi
 
 ---
 
+## 🔐 Azure App Configuration & Secrets
+
+When deploying to **Azure Container Apps**, environment variables are injected using **double underscores (`__`)** to
+represent nested keys in `appsettings.json`.  
+Example mapping:
+
+| appsettings.json Key                  | Azure Env Name                         |
+|---------------------------------------|----------------------------------------|
+| `Jwt:Key`                             | `Jwt__Key`                             |
+| `Stripe:SecretKey`                    | `Stripe__SecretKey`                    |
+| `ConnectionStrings:DefaultConnection` | `ConnectionStrings__DefaultConnection` |
+
+Secrets can be configured under the **"Environment Variables"** section of the Container App settings.
+
+---
+
+## 🚀 CI/CD with GitHub Actions
+
+You can automate builds and deployment to Azure Container Registry (ACR):
+
+```yaml
+name: Deploy to ACR
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Login to Azure Container Registry
+        uses: azure/docker-login@v1
+        with:
+          login-server: amazonkillerregistry.azurecr.io
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+
+      - name: Build and Push Docker Image
+        run: |
+          docker build -t amazonkillerregistry.azurecr.io/amazonkiller-api:v1 .
+          docker push amazonkillerregistry.azurecr.io/amazonkiller-api:v1
+```
+---
 ## 👤 Authors
 
 **Oleksii Babchynskyi**  
