@@ -20,10 +20,14 @@ var builder = WebApplication.CreateBuilder(args);
 foreach (var (key, value) in Environment.GetEnvironmentVariables().Cast<DictionaryEntry>())
 {
     var envKey = key.ToString();
-    if (envKey is not null && envKey.Contains('-'))
+    if (envKey is not null)
     {
-        var convertedKey = envKey.Replace("-", "__");
-        Environment.SetEnvironmentVariable(convertedKey, value?.ToString());
+        var convertedKey = envKey
+            .Replace("-", "__")
+            .Replace("_", "__");
+
+        if (convertedKey != envKey)
+            Environment.SetEnvironmentVariable(convertedKey, value?.ToString());
     }
 }
 
