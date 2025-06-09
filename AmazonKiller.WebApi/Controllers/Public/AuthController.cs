@@ -4,6 +4,10 @@ using AmazonKiller.Application.Features.Auth.Commands.RegisterAdmin;
 using AmazonKiller.Application.Features.Auth.Commands.Registration.CompleteRegistration;
 using AmazonKiller.Application.Features.Auth.Commands.Registration.ConfirmRegistration;
 using AmazonKiller.Application.Features.Auth.Commands.Registration.StartRegistration;
+using AmazonKiller.Application.Features.Auth.Commands.ResendVerificationCode;
+using AmazonKiller.Application.Features.Auth.Commands.ResetPassword.StartResetPassword;
+using AmazonKiller.Application.Features.Auth.Commands.ResetPassword.ConfirmResetPassword;
+using AmazonKiller.Application.Features.Auth.Commands.ResetPassword.CompleteResetPassword;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -34,6 +38,12 @@ public class AuthController(IMediator mediator) : ControllerBase
         return Ok(result);
     }
 
+    [HttpPost("register/admin")]
+    public async Task<IActionResult> RegisterAdmin([FromBody] RegisterAdminCommand command, CancellationToken ct)
+    {
+        return Ok(await mediator.Send(command, ct));
+    }
+
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginUserCommand cmd, CancellationToken ct)
     {
@@ -47,9 +57,32 @@ public class AuthController(IMediator mediator) : ControllerBase
         return Ok(await mediator.Send(cmd, ct));
     }
 
-    [HttpPost("register/admin")]
-    public async Task<IActionResult> RegisterAdmin([FromBody] RegisterAdminCommand command, CancellationToken ct)
+    [HttpPost("reset-password/start")]
+    public async Task<IActionResult> StartResetPassword([FromBody] StartResetPasswordCommand cmd, CancellationToken ct)
     {
-        return Ok(await mediator.Send(command, ct));
+        await mediator.Send(cmd, ct);
+        return NoContent();
+    }
+
+    [HttpPost("reset-password/confirm")]
+    public async Task<IActionResult> ConfirmResetPassword([FromBody] ConfirmResetCodeCommand cmd, CancellationToken ct)
+    {
+        await mediator.Send(cmd, ct);
+        return NoContent();
+    }
+
+    [HttpPost("reset-password/complete")]
+    public async Task<IActionResult> CompleteResetPassword([FromBody] CompleteResetPasswordCommand cmd,
+        CancellationToken ct)
+    {
+        var result = await mediator.Send(cmd, ct);
+        return Ok(result);
+    }
+
+    [HttpPost("resend-code")]
+    public async Task<IActionResult> ResendCode([FromBody] ResendVerificationCodeCommand cmd, CancellationToken ct)
+    {
+        await mediator.Send(cmd, ct);
+        return NoContent();
     }
 }

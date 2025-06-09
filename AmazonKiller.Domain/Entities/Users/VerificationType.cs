@@ -3,5 +3,6 @@
 public enum VerificationType
 {
     Registration,
-    EmailChange
+    EmailChange,
+    PasswordReset
 }

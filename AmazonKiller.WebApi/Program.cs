@@ -1,4 +1,3 @@
-using System.Collections;
 using AmazonKiller.Application.DependencyInjection;
 using AmazonKiller.Application.Interfaces.Services.Recalculation;
 using AmazonKiller.Application.Options;

@@ -9,4 +9,5 @@ public interface IUserRepository
     Task ChangeEmailAsync(Guid userId, string newEmail, CancellationToken ct);
     Task<User?> GetUserByEmailAsync(string email, CancellationToken ct);
     Task RemoveRefreshTokensForDeviceAsync(Guid userId, string deviceId, CancellationToken ct);
+    Task SaveAsync(CancellationToken ct);
 }

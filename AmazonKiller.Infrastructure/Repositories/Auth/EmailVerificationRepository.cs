@@ -17,15 +17,6 @@ public class EmailVerificationRepository(
     private readonly bool _useFixedCode = optsAccessor.Value.UseFixedCode;
     private readonly string? _fixedCode = optsAccessor.Value.FixedCodeValue;
 
-    private async Task DeleteByEmailAndTypeAsync(string email, VerificationType type, CancellationToken ct)
-    {
-        var old = db.EmailVerifications
-            .Where(ev => ev.Email == email && ev.Type == type);
-
-        db.EmailVerifications.RemoveRange(old);
-        await db.SaveChangesAsync(ct);
-    }
-
     private static string GenerateRandomCode()
     {
         var rnd = new Random();
@@ -67,23 +58,35 @@ public class EmailVerificationRepository(
         Guid? userId,
         CancellationToken ct)
     {
-        await DeleteByEmailAndTypeAsync(email, type, ct);
-
         var code = _useFixedCode ? _fixedCode ?? VerificationDefaults.DefaultFixedCode : GenerateRandomCode();
 
-        var entry = new EmailVerification
+        var existing = await db.EmailVerifications
+            .Where(ev => ev.Email == email && ev.Type == type)
+            .OrderByDescending(ev => ev.ExpiresAt)
+            .FirstOrDefaultAsync(ct);
+
+        if (existing is not null)
         {
-            Email = email,
-            Code = code,
-            ExpiresAt = DateTime.UtcNow.AddMinutes(10),
-            TempPasswordHash = tempPasswordHash,
-            Type = type,
-            UserId = userId
-        };
+            // обновляем код и срок действия, но сохраняем старый хеш если не передан новый
+            existing.Code = code;
+            existing.ExpiresAt = DateTime.UtcNow.AddMinutes(10);
+            existing.TempPasswordHash = tempPasswordHash ?? existing.TempPasswordHash;
+            existing.IsConfirmed = false;
+        }
+        else
+        {
+            db.EmailVerifications.Add(new EmailVerification
+            {
+                Email = email,
+                Code = code,
+                ExpiresAt = DateTime.UtcNow.AddMinutes(10),
+                TempPasswordHash = tempPasswordHash,
+                Type = type,
+                UserId = userId
+            });
+        }
 
-        db.EmailVerifications.Add(entry);
         await db.SaveChangesAsync(ct);
-
         return code;
     }
 
@@ -98,5 +101,14 @@ public class EmailVerificationRepository(
 
         entry.IsConfirmed = true;
         await db.SaveChangesAsync(ct);
+    }
+
+    public Task<EmailVerification?> GetLatestEntryByUserIdAsync(Guid userId, VerificationType type,
+        CancellationToken ct)
+    {
+        return db.EmailVerifications
+            .Where(e => e.UserId == userId && e.Type == type)
+            .OrderByDescending(e => e.ExpiresAt)
+            .FirstOrDefaultAsync(ct);
     }
 }

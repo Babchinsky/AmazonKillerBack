@@ -84,7 +84,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\"\n}",
+									"raw": "{\n  \"email\": \"alexseyb62@gmail.com\",\n  \"password\": \"Qwerty123\"\n}",
 									"options": {
 										"raw": {
 											"headerFamily": "json",
@@ -144,7 +144,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"email\": \"{{email}}\",\n  \"code\": \"{{verificationCode}}\"\n}",
+									"raw": "{\n  \"email\": \"alexseyb62@gmail.com\",\n  \"code\": \"514180\"\n}",
 									"options": {
 										"raw": {
 											"headerFamily": "json",
@@ -226,7 +226,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"email\": \"{{email}}\",\n  \"code\": \"{{verificationCode}}\",\n  \"firstName\": \"{{firstName}}\",\n  \"lastName\": \"{{lastName}}\",\n  \"deviceId\": \"{{deviceId}}\"\n}",
+									"raw": "{\n  \"email\": \"alexseyb62@gmail.com\",\n  \"code\": \"514180\",\n  \"firstName\": \"Oleksii\",\n  \"lastName\": \"Babchynskyi\",\n  \"deviceId\": \"{{deviceId}}\"\n}",
 									"options": {
 										"raw": {
 											"headerFamily": "json",
@@ -250,6 +250,219 @@
 							"response": []
 						}
 					]
+				},
+				{
+					"name": "Reset Password",
+					"item": [
+						{
+							"name": "Start Reset Password",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code 204\", function () {\r",
+											"    pm.response.to.have.status(204);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"alexseyb62@gmail.com\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/auth/reset-password/start",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"reset-password",
+										"start"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Confirm Reset Password",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code 204\", function () {\r",
+											"    pm.response.to.have.status(204);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"alexseyb62@gmail.com\",\n  \"code\": \"601418\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/auth/reset-password/confirm",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"reset-password",
+										"confirm"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Complete Reset Password",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// ==== deviceId ==================================================\r",
+											"// {{$guid}} -> встроенный генератор Postman\r",
+											"const deviceId = pm.variables.replaceIn('{{$guid}}');\r",
+											"pm.environment.set('deviceId', deviceId);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"alexseyb62@gmail.com\",\n  \"code\": \"601418\",\n  \"newPassword\": \"Qwerty123@\",\n  \"deviceId\": \"{{deviceId}}\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/auth/reset-password/complete",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"reset-password",
+										"complete"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Resend Verification Code (Registration / Password Reset)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code 204', () => {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"changeduser+1749499287534@example.com\",\n  \"type\": 1\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/resend-code",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"resend-code"
+							]
+						}
+					},
+					"response": []
 				},
 				{
 					"name": "Register Admin",
@@ -285,7 +498,7 @@
 									"const firstName = `Admin${rand(100, 999)}`;\r",
 									"const lastName = `Test${rand(100, 999)}`;\r",
 									"const email = `admin_${pm.variables.replaceIn('{{$timestamp}}')}@mail.com`;\r",
-									"const secret = pm.environment.get(\"adminSecret\") || \"REMOVED_ADMIN_SECRET\";\r",
+									"const secret = pm.environment.get(\"adminSecret\") || \"my-super-secret-key\";\r",
 									"\r",
 									"// Генерация deviceId\r",
 									"const deviceId = crypto.randomUUID();  // встроено в Postman\r",
@@ -396,7 +609,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\",\n  \"deviceId\": \"{{deviceId}}\"\n}",
+							"raw": "{\n  \"email\": \"alexseyb62@gmail.com\",\n  \"password\": \"Qwerty123\",\n  \"deviceId\": \"{{deviceId}}\"\n}",
 							"options": {
 								"raw": {
 									"headerFamily": "json",
@@ -617,8 +830,118 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "Resend Verification Code",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test('Status code 204', () => {\r",
+											"    pm.response.to.have.status(204);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/account/profile/email-change/resend",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"account",
+										"profile",
+										"email-change",
+										"resend"
+									]
+								}
+							},
+							"response": []
 						}
 					]
+				},
+				{
+					"name": "Get Me",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "text/plain"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/account/users/me",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"users",
+								"me"
+							]
+						}
+					},
+					"response": []
 				},
 				{
 					"name": "Change Name",
@@ -832,7 +1155,7 @@
 								{
 									"key": "Photo",
 									"type": "file",
-									"src": "/C:/Users/alexs/OneDrive/Desktop/Postman/user1.jpg"
+									"src": "/C:/Users/alexs/OneDrive/Desktop/Postman/review2.jpg"
 								}
 							]
 						},
@@ -1081,7 +1404,7 @@
 										{
 											"key": "Image",
 											"type": "file",
-											"src": "/C:/Users/alexs/OneDrive/Desktop/Postman/product2_photo.jpg"
+											"src": "/C:/Users/alexs/OneDrive/Desktop/Postman/category2.jpeg"
 										}
 									]
 								},
@@ -1137,7 +1460,7 @@
 									"formdata": [
 										{
 											"key": "Id",
-											"value": "7ad3d843-1642-4e8a-a843-503928ef8154",
+											"value": "{{categoryId}}",
 											"type": "text"
 										},
 										{
@@ -1175,7 +1498,8 @@
 										{
 											"key": "ActivePropertyKeys[0]",
 											"value": "Chip",
-											"type": "text"
+											"type": "text",
+											"disabled": true
 										},
 										{
 											"key": "ActivePropertyKeys[1]",
@@ -1186,7 +1510,7 @@
 										{
 											"key": "Image",
 											"type": "file",
-											"src": "/C:/Users/alexs/OneDrive/Desktop/category2.jpeg"
+											"src": "/C:/Users/alexs/OneDrive/Desktop/Postman/category1.jpg"
 										}
 									]
 								},
@@ -1204,7 +1528,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "7ad3d843-1642-4e8a-a843-503928ef8154",
+											"value": "{{categoryId}}",
 											"description": "(Required) "
 										}
 									]
@@ -5018,61 +5342,6 @@
 											"key": "id",
 											"value": "77777777-7777-7777-7777-777777777777"
 										}
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Account",
-					"item": [
-						{
-							"name": "Get Me",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 200\", function () {\r",
-											"    pm.response.to.have.status(200);\r",
-											"});\r",
-											""
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								}
-							],
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{accessToken}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "text/plain"
-									}
-								],
-								"url": {
-									"raw": "{{baseUrl}}/api/account/users/me",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"api",
-										"account",
-										"users",
-										"me"
 									]
 								}
 							},

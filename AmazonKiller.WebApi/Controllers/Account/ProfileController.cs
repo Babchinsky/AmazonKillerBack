@@ -1,4 +1,5 @@
 ﻿using AmazonKiller.Application.Features.Profile.Commands.ChangeEmail.ConfirmEmailChange;
+using AmazonKiller.Application.Features.Profile.Commands.ChangeEmail.ResendEmailChangeCode;
 using AmazonKiller.Application.Features.Profile.Commands.ChangeEmail.StartEmailChange;
 using AmazonKiller.Application.Features.Profile.Commands.ChangeName;
 using AmazonKiller.Application.Features.Profile.Commands.ChangePassword;
@@ -30,6 +31,13 @@ public class ProfileController(IMediator mediator) : ControllerBase
         return NoContent();
     }
 
+    [HttpPost("email-change/resend")]
+    public async Task<IActionResult> ResendEmailChangeCode(CancellationToken ct)
+    {
+        await mediator.Send(new ResendEmailChangeCodeCommand(), ct);
+        return NoContent();
+    }
+    
     [HttpPut("name")]
     public async Task<IActionResult> ChangeName([FromBody] ChangeNameCommand cmd, CancellationToken ct)
     {

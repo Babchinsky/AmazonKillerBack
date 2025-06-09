@@ -13,4 +13,5 @@ public interface IEmailVerificationRepository
         CancellationToken ct);
 
     Task MarkAsConfirmedAsync(string email, string code, CancellationToken ct);
+    Task<EmailVerification?> GetLatestEntryByUserIdAsync(Guid userId, VerificationType type, CancellationToken ct);
 }

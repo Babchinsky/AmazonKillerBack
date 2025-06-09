@@ -40,4 +40,9 @@ public class UserRepository(AmazonDbContext db) : IUserRepository
         db.RefreshTokens.RemoveRange(tokens);
         await db.SaveChangesAsync(ct);
     }
+
+    public async Task SaveAsync(CancellationToken ct)
+    {
+        await db.SaveChangesAsync(ct);
+    }
 }
