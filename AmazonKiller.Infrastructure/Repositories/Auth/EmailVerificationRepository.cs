@@ -39,9 +39,9 @@ public class EmailVerificationRepository(
                 x.Email == email && x.Code == code && x.ExpiresAt > DateTime.UtcNow, ct);
     }
 
-    public Task<bool> IsEmailTakenAsync(string email, CancellationToken ct)
+    public Task<User?> GetUserByEmailAsync(string email, CancellationToken ct)
     {
-        return db.Users.AnyAsync(u => u.Email == email, ct);
+        return db.Users.FirstOrDefaultAsync(u => u.Email == email, ct);
     }
 
     public Task DeleteAsync(EmailVerification entry, CancellationToken ct)

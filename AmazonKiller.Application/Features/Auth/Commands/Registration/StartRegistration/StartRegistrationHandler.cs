@@ -15,8 +15,16 @@ public class StartRegistrationHandler(
 {
     public async Task Handle(StartRegistrationCommand cmd, CancellationToken ct)
     {
-        if (await repo.IsEmailTakenAsync(cmd.Email, ct))
+        var existingUser = await repo.GetUserByEmailAsync(cmd.Email, ct);
+
+        if (existingUser is not null)
+        {
+            if (existingUser.Status == UserStatus.Deleted)
+                throw new AppException(
+                    "This account was previously deleted. Please contact support or try to restore it.");
+
             throw new AppException("Email is already taken");
+        }
 
         var hashedPassword = passwordService.HashPassword(cmd.Password);
 
