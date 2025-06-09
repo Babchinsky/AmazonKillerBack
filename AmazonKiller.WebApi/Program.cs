@@ -21,7 +21,7 @@ Console.WriteLine("Env keys:");
 foreach (var (key, value) in Environment.GetEnvironmentVariables().Cast<DictionaryEntry>())
 {
     var envKey = key.ToString();
-    Console.WriteLine(envKey);
+    Console.WriteLine($"{envKey} = {value}");
     // if (envKey is not null)
     // {
     //     var convertedKey = envKey
