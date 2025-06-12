@@ -9,7 +9,7 @@ public static class ImageUrlHelper
     {
         return url.StartsWith("http://", StringComparison.OrdinalIgnoreCase) ||
                url.StartsWith("https://", StringComparison.OrdinalIgnoreCase) ||
-               url.StartsWith("data:", StringComparison.OrdinalIgnoreCase); // для base64
+               url.StartsWith("data:", StringComparison.OrdinalIgnoreCase); // for base64
     }
 
     public static string ToAbsoluteUrl(string relUrl, HttpRequest? req, IHostEnvironment? env = null)
@@ -17,17 +17,17 @@ public static class ImageUrlHelper
         if (string.IsNullOrWhiteSpace(relUrl))
             return string.Empty;
 
-        // already absolute (http, https, data:) — return as is
-        if (IsAbsoluteUrl(relUrl))
+        if (IsAbsoluteUrl(relUrl) || req is null)
             return relUrl;
 
-        // if no request (e.g., background service) — return relative path
-        if (req is null)
-            return relUrl;
+        // ⚠️ Добавим префикс "/uploads/" если его нет
+        var relativePath = relUrl.StartsWith("uploads/")
+            ? relUrl
+            : $"uploads/{relUrl.TrimStart('/')}";
 
         // If Development, prepend local uploads path
         return env?.IsDevelopment() == true
-            ? $"{req.Scheme}://{req.Host}/uploads/{relUrl.TrimStart('/')}"
-            : relUrl; // In Production — assume relUrl is already correct
+            ? $"{req.Scheme}://{req.Host}/{relativePath}"
+            : relativePath; // в проде пусть остаётся относительным или уже Azure URL
     }
 }
