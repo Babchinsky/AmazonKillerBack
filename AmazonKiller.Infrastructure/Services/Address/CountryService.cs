@@ -6,6 +6,6 @@ public class CountryService : ICountryService
 {
     public Task<List<string>> GetCountriesAsync(CancellationToken ct)
     {
-        return Task.FromResult(new List<string> { "Україна" });
+        return Task.FromResult(new List<string> { "Ukraine" });
     }
 }

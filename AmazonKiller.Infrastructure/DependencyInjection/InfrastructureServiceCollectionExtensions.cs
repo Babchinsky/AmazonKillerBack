@@ -63,9 +63,6 @@ public static class InfrastructureServiceCollectionExtensions
         services.TryAddScoped<IProductRatingService, ProductRatingService>();
         services.TryAddScoped<ICategoryFilterService, CategoryFilterService>();
 
-        // External integrations
-        services.AddHttpClient<INovaPoshtaService, NovaPoshtaService>();
-
         // Infrastructure
         services.TryAddScoped<IPropertyKeyUpdater, PropertyKeyUpdater>();
 
