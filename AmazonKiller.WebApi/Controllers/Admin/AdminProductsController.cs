@@ -36,7 +36,6 @@ public class AdminProductsController(IMediator mediator) : ControllerBase
     }
 
     [HttpPost]
-    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Create([FromForm] CreateProductCommand cmd, CancellationToken ct)
     {
         var result = await mediator.Send(cmd, ct);
@@ -44,7 +43,6 @@ public class AdminProductsController(IMediator mediator) : ControllerBase
     }
 
     [HttpPut("{id:guid}")]
-    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Update(Guid id, [FromForm] UpdateProductCommand cmd, CancellationToken ct)
     {
         if (id != cmd.Id) return Problem("ID mismatch");
@@ -54,7 +52,6 @@ public class AdminProductsController(IMediator mediator) : ControllerBase
     }
 
     [HttpPost("delete-many")]
-    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> BulkDelete([FromBody] BulkDeleteProductsCommand cmd, CancellationToken ct)
     {
         var result = await mediator.Send(cmd, ct);
