@@ -1,19 +1,16 @@
-using AmazonKiller.Application.DTOs.Categories;
 using AmazonKiller.Application.Interfaces.Repositories.Products;
 using AmazonKiller.Application.Interfaces.Services;
 using AmazonKiller.Domain.Entities.Categories;
 using AmazonKiller.Shared.Exceptions;
-using AutoMapper;
 using MediatR;
 
 namespace AmazonKiller.Application.Features.Categories.Admin.Commands.CreateUpdateCategory.CreateCategory;
 
 public class CreateCategoryHandler(
     ICategoryRepository repo,
-    IFileStorage fileStorage,
-    IMapper mapper) : IRequestHandler<CreateCategoryCommand, CategoryDto>
+    IFileStorage fileStorage) : IRequestHandler<CreateCategoryCommand, Guid>
 {
-    public async Task<CategoryDto> Handle(CreateCategoryCommand request, CancellationToken ct)
+    public async Task<Guid> Handle(CreateCategoryCommand request, CancellationToken ct)
     {
         if (request.ParentId is not null)
         {
@@ -43,6 +40,6 @@ public class CreateCategoryHandler(
         };
 
         await repo.AddAsync(category, ct);
-        return mapper.Map<CategoryDto>(category);
+        return category.Id;
     }
 }

@@ -39,16 +39,20 @@ public class AdminCategoriesController(IMediator mediator) : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create([FromForm] CreateCategoryCommand cmd, CancellationToken ct)
     {
-        var result = await mediator.Send(cmd, ct);
-        return CreatedAtAction("GetById", "Categories", new { id = result.Id }, result);
+        var id = await mediator.Send(cmd, ct);
+        var dto = await mediator.Send(new GetCategoryByIdAdminQuery(id), ct);
+        
+        return CreatedAtAction(nameof(GetById), new { id }, dto);
     }
 
     [HttpPut("{id:guid}")]
     public async Task<IActionResult> Update(Guid id, [FromForm] UpdateCategoryCommand cmd, CancellationToken ct)
     {
         if (id != cmd.Id) return Problem("ID mismatch");
-        var updated = await mediator.Send(cmd, ct);
-        return Ok(updated);
+
+        var resultId = await mediator.Send(cmd, ct);
+        var updatedDto = await mediator.Send(new GetCategoryByIdAdminQuery(resultId), ct);
+        return Ok(updatedDto);
     }
 
     [HttpPost("delete-many")]

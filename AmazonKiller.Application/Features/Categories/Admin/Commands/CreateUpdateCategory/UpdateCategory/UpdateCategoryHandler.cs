@@ -1,9 +1,7 @@
-using AmazonKiller.Application.DTOs.Categories;
 using AmazonKiller.Application.Interfaces.Repositories.Products;
 using AmazonKiller.Application.Interfaces.Services;
 using AmazonKiller.Application.Interfaces.Services.Categories;
 using AmazonKiller.Shared.Exceptions;
-using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,11 +10,10 @@ namespace AmazonKiller.Application.Features.Categories.Admin.Commands.CreateUpda
 public class UpdateCategoryHandler(
     ICategoryRepository repo,
     ICategoryQueryService categoryQueryService,
-    IFileStorage fileStorage,
-    IMapper mapper
-) : IRequestHandler<UpdateCategoryCommand, CategoryDto>
+    IFileStorage fileStorage
+) : IRequestHandler<UpdateCategoryCommand, Guid>
 {
-    public async Task<CategoryDto> Handle(UpdateCategoryCommand request, CancellationToken ct)
+    public async Task<Guid> Handle(UpdateCategoryCommand request, CancellationToken ct)
     {
         var category = await repo.GetByIdAsync(request.Id, ct)
                        ?? throw new NotFoundException("Category not found");
@@ -89,6 +86,6 @@ public class UpdateCategoryHandler(
         if (imageChanged && updateSucceeded && oldImageUrl != null)
             await fileStorage.DeleteAsync(oldImageUrl, ct);
 
-        return mapper.Map<CategoryDto>(category);
+        return category.Id;
     }
 }

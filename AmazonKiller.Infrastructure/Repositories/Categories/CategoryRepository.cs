@@ -85,13 +85,27 @@ public class CategoryRepository(AmazonDbContext db, IFileStorage fileStorage) : 
             return;
         }
 
-        // Получаем всех потомков
+        // 1️⃣ Сначала обновляем саму категорию через tracking
+        var original = await db.Categories.FindAsync([updatedCategory.Id, ct], cancellationToken: ct);
+        if (original is null) return;
+
+        // Обновляем только нужные поля
+        original.Name = updatedCategory.Name;
+        original.Description = updatedCategory.Description;
+        original.ParentId = updatedCategory.ParentId;
+        original.ImageUrl = updatedCategory.ImageUrl;
+        original.IconName = updatedCategory.IconName;
+        original.ActivePropertyKeys = updatedCategory.ActivePropertyKeys;
+        original.RowVersion = updatedCategory.RowVersion;
+        db.Entry(original).Property(c => c.Status).IsModified = false;
+
+        await db.SaveChangesAsync(ct);
+
+        // 2️⃣ Массово обновляем только Status (через ExecuteUpdate)
         var allCategories = await db.Categories.ToListAsync(ct);
         var affectedIds = new List<Guid> { updatedCategory.Id };
-
         Collect(updatedCategory.Id);
 
-        // Массовое обновление
         await db.Categories
             .Where(c => affectedIds.Contains(c.Id))
             .ExecuteUpdateAsync(set => set
