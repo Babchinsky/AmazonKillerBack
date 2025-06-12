@@ -18,7 +18,6 @@ public class GetCartHandler(
         await accountRepo.ThrowIfDeletedAsync(userId, ct);
         var cartItems = await cartRepo.GetCartItemsWithProductsAsync(userId, ct);
 
-        return mapper.Map<List<CartItemDto>>(
-            cartItems.Select(c => (c.Product, c.Quantity)).ToList());
+        return mapper.Map<List<CartItemDto>>(cartItems);
     }
 }

@@ -84,7 +84,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"email\": \"alexseyb62@gmail.com\",\n  \"password\": \"Qwerty123\"\n}",
+									"raw": "{\n  \"email\": \"alexseyb64@gmail.com\",\n  \"password\": \"Qwerty123\"\n}",
 									"options": {
 										"raw": {
 											"headerFamily": "json",
@@ -144,7 +144,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"email\": \"alexseyb62@gmail.com\",\n  \"code\": \"514180\"\n}",
+									"raw": "{\n  \"email\": \"alexseyb64@gmail.com\",\n  \"code\": \"979781\"\n}",
 									"options": {
 										"raw": {
 											"headerFamily": "json",
@@ -226,7 +226,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"email\": \"alexseyb62@gmail.com\",\n  \"code\": \"514180\",\n  \"firstName\": \"Oleksii\",\n  \"lastName\": \"Babchynskyi\",\n  \"deviceId\": \"{{deviceId}}\"\n}",
+									"raw": "{\n  \"email\": \"alexseyb64@gmail.com\",\n  \"code\": \"979781\",\n  \"firstName\": \"Oleksii\",\n  \"lastName\": \"Babchynskyi\",\n  \"deviceId\": \"{{deviceId}}\"\n}",
 									"options": {
 										"raw": {
 											"headerFamily": "json",
@@ -329,7 +329,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"email\": \"alexseyb62@gmail.com\",\n  \"code\": \"601418\"\n}",
+									"raw": "{\n  \"email\": \"alexseyb62@gmail.com\",\n  \"code\": \"691957\"\n}",
 									"options": {
 										"raw": {
 											"headerFamily": "json",
@@ -391,7 +391,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"email\": \"alexseyb62@gmail.com\",\n  \"code\": \"601418\",\n  \"newPassword\": \"Qwerty123@\",\n  \"deviceId\": \"{{deviceId}}\"\n}",
+									"raw": "{\n  \"email\": \"alexseyb62@gmail.com\",\n  \"code\": \"691957\",\n  \"newPassword\": \"Qwerty123@\",\n  \"deviceId\": \"{{deviceId}}\"\n}",
 									"options": {
 										"raw": {
 											"headerFamily": "json",
@@ -785,6 +785,16 @@
 										"type": "text/javascript",
 										"packages": {}
 									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
 								}
 							],
 							"request": {
@@ -807,7 +817,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"code\": \"{{verificationCode}}\"\n}",
+									"raw": "{\n  \"code\": \"337109\"\n}",
 									"options": {
 										"raw": {
 											"headerFamily": "json",
@@ -1470,7 +1480,7 @@
 										},
 										{
 											"key": "Name",
-											"value": "{{categoryName}}",
+											"value": "Consoles2",
 											"type": "text"
 										},
 										{
@@ -1685,7 +1695,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "7ad3d843-1642-4e8a-a843-503928ef8154",
+											"value": "22741d2d-f334-457e-8740-68cbefef828f",
 											"description": "(Required) "
 										}
 									]
@@ -1791,7 +1801,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "7ad3d843-1642-4e8a-a843-503928ef8154",
+											"value": "c9f81657-73a1-4b53-bf80-b59121eae433",
 											"description": "(Required) "
 										}
 									]
@@ -1999,7 +2009,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "7ad3d843-1642-4e8a-a843-503928ef8154",
+											"value": "c9f81657-73a1-4b53-bf80-b59121eae433",
 											"description": "(Required) "
 										}
 									]
@@ -2082,7 +2092,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "7ad3d843-1642-4e8a-a843-503928ef8154",
+											"value": "22741d2d-f334-457e-8740-68cbefef828f",
 											"description": "(Required) "
 										}
 									]
@@ -2417,10 +2427,7 @@
 										{
 											"key": "Images",
 											"type": "file",
-											"src": [
-												"/C:/Users/alexs/OneDrive/Desktop/Postman/review1.jpg",
-												"/C:/Users/alexs/OneDrive/Desktop/Postman/review2.jpg"
-											]
+											"src": "/C:/Users/alexs/OneDrive/Desktop/Postman/product4.jpg"
 										},
 										{
 											"key": "Attributes",
@@ -2720,7 +2727,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/api/admin/products?CategoryId=f9545813-aa3f-40b6-a6cc-4335fdae06d3",
+									"raw": "{{baseUrl}}/api/admin/products?CategoryId=7ad3d843-1642-4e8a-a843-503928ef8154",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -2737,7 +2744,7 @@
 										},
 										{
 											"key": "CategoryId",
-											"value": "f9545813-aa3f-40b6-a6cc-4335fdae06d3"
+											"value": "7ad3d843-1642-4e8a-a843-503928ef8154"
 										},
 										{
 											"key": "Filters[{{productFilterSizeKey}}]",
@@ -2750,8 +2757,8 @@
 											"disabled": true
 										},
 										{
-											"key": "Filters[commodo__d1]",
-											"value": "proident officia sunt",
+											"key": "Filters[Charging]",
+											"value": "USB-C Fast Charging",
 											"disabled": true
 										},
 										{
@@ -3069,7 +3076,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/api/products?CategoryId=f9545813-aa3f-40b6-a6cc-4335fdae06d3",
+									"raw": "{{baseUrl}}/api/products?CategoryId=7ad3d843-1642-4e8a-a843-503928ef8154",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -3085,11 +3092,11 @@
 										},
 										{
 											"key": "CategoryId",
-											"value": "f9545813-aa3f-40b6-a6cc-4335fdae06d3"
+											"value": "7ad3d843-1642-4e8a-a843-503928ef8154"
 										},
 										{
-											"key": "Filters[proidente24]",
-											"value": "minim consectetur",
+											"key": "Filters[Charging]",
+											"value": "USB-C Fast Charging",
 											"disabled": true
 										},
 										{
@@ -3189,7 +3196,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "7ad3d843-1642-4e8a-a843-503928ef8154",
+											"value": "12a5f27a-59d1-4961-86d7-14a787f8eec8",
 											"description": "(Required) "
 										}
 									]
@@ -4176,12 +4183,8 @@
 									"listen": "test",
 									"script": {
 										"exec": [
-											"pm.test(\"✔ Status code is 204 No Content\", function () {\r",
-											"    pm.response.to.have.status(204);\r",
-											"});\r",
-											"\r",
-											"pm.test(\"✔ Response body is empty\", function () {\r",
-											"    pm.expect(pm.response.text()).to.eql('');\r",
+											"pm.test(\"✔ Status code is 200 Ok\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
 											"});\r",
 											"\r",
 											"console.log(\"🛒 Product successfully added to cart.\");\r",
@@ -4212,7 +4215,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"productId\": \"3c5a4868-3b2d-4352-9e12-502a56bce48a\",\n  \"quantity\": 5\n}",
+									"raw": "{\n  \"productId\": \"12a5f27a-59d1-4961-86d7-14a787f8eec8\",\n  \"quantity\": 1\n}",
 									"options": {
 										"raw": {
 											"headerFamily": "json",
@@ -4241,12 +4244,8 @@
 									"listen": "test",
 									"script": {
 										"exec": [
-											"pm.test(\"✔ Status code is 204 No Content\", function () {\r",
-											"    pm.response.to.have.status(204);\r",
-											"});\r",
-											"\r",
-											"pm.test(\"✔ Response body is empty\", function () {\r",
-											"    pm.expect(pm.response.text()).to.eql('');\r",
+											"pm.test(\"✔ Status code is 200 Ok\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
 											"});\r",
 											"\r",
 											"console.log(\"🛒 Product quantity successfully updated in cart.\");\r",
@@ -4277,7 +4276,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"productId\": \"{{lastProductId}}\",\n  \"quantity\": 5\n}",
+									"raw": "{\n  \"productId\": \"12a5f27a-59d1-4961-86d7-14a787f8eec8\",\n  \"quantity\": 1\n}",
 									"options": {
 										"raw": {
 											"headerFamily": "json",
@@ -4370,14 +4369,9 @@
 									"listen": "test",
 									"script": {
 										"exec": [
-											"pm.test(\"✔ Status code is 204 No Content\", function () {\r",
-											"    pm.response.to.have.status(204);\r",
-											"});\r",
-											"\r",
-											"pm.test(\"✔ Response body is empty\", function () {\r",
-											"    pm.expect(pm.response.text()).to.be.empty;\r",
-											"});\r",
-											""
+											"pm.test(\"✔ Status code is 200 Ok\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
 										],
 										"type": "text/javascript",
 										"packages": {}
@@ -4411,7 +4405,7 @@
 									"variable": [
 										{
 											"key": "productId",
-											"value": "{{lastProductId}}",
+											"value": "12a5f27a-59d1-4961-86d7-14a787f8eec8",
 											"description": "(Required) "
 										}
 									]
