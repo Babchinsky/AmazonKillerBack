@@ -3,6 +3,8 @@ using AmazonKiller.Application.Features.Reviews.Account.Commands.CreateUpdateRev
 using AmazonKiller.Application.Features.Reviews.Account.Commands.CreateUpdateReview.UpdateReview;
 using AmazonKiller.Application.Features.Reviews.Account.Commands.DeleteOwnReview;
 using AmazonKiller.Application.Features.Reviews.Account.Commands.LikeReview;
+using AmazonKiller.Application.Features.Reviews.Public.Queries.GetReviewById;
+using AmazonKiller.WebApi.Controllers.Public;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -17,13 +19,23 @@ public class AccountReviewsController(IMediator mediator) : ControllerBase
     [HttpPost]
     public async Task<ActionResult<ReviewDto>> Create([FromForm] CreateReviewCommand cmd, CancellationToken ct)
     {
-        return Ok(await mediator.Send(cmd, ct));
+        var id = await mediator.Send(cmd, ct);
+        var dto = await mediator.Send(new GetReviewByIdQuery(id), ct);
+        return CreatedAtAction(
+            actionName: nameof(ReviewsController.GetById),
+            controllerName: "Reviews",
+            routeValues: new { id },
+            value: dto);
     }
 
     [HttpPut("{id:guid}")]
     public async Task<ActionResult<ReviewDto>> Update(Guid id, [FromForm] UpdateReviewCommand cmd, CancellationToken ct)
     {
-        return id != cmd.Id ? Problem("ID mismatch") : Ok(await mediator.Send(cmd, ct));
+        if (id != cmd.Id) return Problem("ID mismatch");
+
+        var updatedId = await mediator.Send(cmd, ct);
+        var dto = await mediator.Send(new GetReviewByIdQuery(updatedId), ct);
+        return Ok(dto);
     }
 
     [HttpDelete("{id:guid}")]

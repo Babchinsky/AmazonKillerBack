@@ -1,23 +1,19 @@
-using AmazonKiller.Application.DTOs.Reviews;
 using AmazonKiller.Application.Interfaces.Repositories.Account;
 using AmazonKiller.Application.Interfaces.Repositories.Reviews;
 using AmazonKiller.Application.Interfaces.Services;
 using AmazonKiller.Domain.Entities.Reviews;
-using AutoMapper;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace AmazonKiller.Application.Features.Reviews.Account.Commands.CreateUpdateReview.CreateReview;
 
 public class CreateReviewHandler(
     IReviewRepository reviewRepo,
-    IMapper mapper,
     ICurrentUserService currentUserService,
     IAccountRepository accountRepo,
     IFileStorage fileStorage
-) : IRequestHandler<CreateReviewCommand, ReviewDto>
+) : IRequestHandler<CreateReviewCommand, Guid>
 {
-    public async Task<ReviewDto> Handle(CreateReviewCommand r, CancellationToken ct)
+    public async Task<Guid> Handle(CreateReviewCommand r, CancellationToken ct)
     {
         var currentUserId = currentUserService.UserId;
         await accountRepo.ThrowIfDeletedAsync(currentUserId, ct);
@@ -43,14 +39,6 @@ public class CreateReviewHandler(
         };
 
         await reviewRepo.AddAsync(review, ct);
-
-        // ⬇️ Загрузи сущность с User и Product
-        var fullReview = await reviewRepo.Queryable()
-            .Include(r => r.User)
-            .Include(r => r.Product)
-            .Include(r => r.LikesFromUsers)
-            .FirstAsync(r => r.Id == review.Id, ct);
-
-        return mapper.Map<ReviewDto>(fullReview);
+        return review.Id;
     }
 }

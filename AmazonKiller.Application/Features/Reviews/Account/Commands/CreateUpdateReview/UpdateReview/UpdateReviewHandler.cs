@@ -1,10 +1,8 @@
-using AmazonKiller.Application.DTOs.Reviews;
 using AmazonKiller.Application.Interfaces.Repositories.Account;
 using AmazonKiller.Application.Interfaces.Repositories.Reviews;
 using AmazonKiller.Application.Interfaces.Services;
 using AmazonKiller.Domain.Entities.Reviews;
 using AmazonKiller.Shared.Exceptions;
-using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,13 +10,12 @@ namespace AmazonKiller.Application.Features.Reviews.Account.Commands.CreateUpdat
 
 public class UpdateReviewHandler(
     IReviewRepository reviewRepo,
-    IMapper mapper,
     ICurrentUserService currentUserService,
     IAccountRepository accountRepo,
     IFileStorage fileStorage
-) : IRequestHandler<UpdateReviewCommand, ReviewDto>
+) : IRequestHandler<UpdateReviewCommand, Guid>
 {
-    public async Task<ReviewDto> Handle(UpdateReviewCommand r, CancellationToken ct)
+    public async Task<Guid> Handle(UpdateReviewCommand r, CancellationToken ct)
     {
         var currentUserId = currentUserService.UserId;
         await accountRepo.ThrowIfDeletedAsync(currentUserId, ct);
@@ -65,12 +62,6 @@ public class UpdateReviewHandler(
         var imagesToDelete = oldReview.ImageUrls.Except(uploadedPaths, StringComparer.OrdinalIgnoreCase);
         await fileStorage.DeleteBatchSafeAsync(imagesToDelete.ToList(), ct);
 
-        var entity = await reviewRepo.Queryable()
-            .Include(x => x.Product)
-            .Include(x => x.User)
-            .Include(x => x.LikesFromUsers)
-            .FirstAsync(x => x.Id == r.Id, ct);
-
-        return mapper.Map<ReviewDto>(entity);
+        return review.Id;
     }
 }
