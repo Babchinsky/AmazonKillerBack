@@ -49,6 +49,7 @@ public class UpdateCollectionHandler(
 
         await collections.UpdateAsync(current, ct);
 
-        return mapper.Map<CollectionDetailsDto>(current);
+        var saved = await collections.GetByIdAsync(current.Id, ct);
+        return mapper.Map<CollectionDetailsDto>(saved);
     }
 }

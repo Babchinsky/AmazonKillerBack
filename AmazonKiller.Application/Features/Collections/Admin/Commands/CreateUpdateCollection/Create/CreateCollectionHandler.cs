@@ -43,8 +43,8 @@ public class CreateCollectionHandler(
 
         await collections.AddAsync(entity, ct);
 
-        /* — fetch fresh version with nav-props & return dto — */
+        /* — fetch a fresh version with nav-props and return dto — */
         var saved = await collections.GetByIdAsync(entity.Id, ct);
-        return mapper.Map<CollectionDetailsDto>(saved!);
+        return mapper.Map<CollectionDetailsDto>(saved);
     }
 }
