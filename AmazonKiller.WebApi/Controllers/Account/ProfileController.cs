@@ -1,4 +1,5 @@
-﻿using AmazonKiller.Application.Features.Profile.Commands.ChangeEmail.ConfirmEmailChange;
+﻿using AmazonKiller.Application.DTOs.Users;
+using AmazonKiller.Application.Features.Profile.Commands.ChangeEmail.ConfirmEmailChange;
 using AmazonKiller.Application.Features.Profile.Commands.ChangeEmail.ResendEmailChangeCode;
 using AmazonKiller.Application.Features.Profile.Commands.ChangeEmail.StartEmailChange;
 using AmazonKiller.Application.Features.Profile.Commands.ChangeName;
@@ -6,6 +7,7 @@ using AmazonKiller.Application.Features.Profile.Commands.ChangePassword;
 using AmazonKiller.Application.Features.Profile.Commands.ChangePhoto;
 using AmazonKiller.Application.Features.Profile.Commands.DeleteAccount;
 using AmazonKiller.Application.Features.Profile.Commands.Logout;
+using AmazonKiller.Application.Features.Users.Account.Queries.GetCurrentUser;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -17,6 +19,13 @@ namespace AmazonKiller.WebApi.Controllers.Account;
 [Authorize]
 public class ProfileController(IMediator mediator) : ControllerBase
 {
+    [HttpGet("me")]
+    public async Task<ActionResult<UserInfoDto>> GetMe(CancellationToken ct)
+    {
+        var result = await mediator.Send(new GetCurrentUserQuery(), ct);
+        return Ok(result);
+    }
+
     [HttpPost("email-change/start")]
     public async Task<IActionResult> StartEmailChange([FromBody] StartEmailChangeCommand cmd, CancellationToken ct)
     {
@@ -37,7 +46,7 @@ public class ProfileController(IMediator mediator) : ControllerBase
         await mediator.Send(new ResendEmailChangeCodeCommand(), ct);
         return NoContent();
     }
-    
+
     [HttpPut("name")]
     public async Task<IActionResult> ChangeName([FromBody] ChangeNameCommand cmd, CancellationToken ct)
     {

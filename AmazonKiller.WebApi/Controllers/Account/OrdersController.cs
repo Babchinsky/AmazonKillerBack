@@ -30,6 +30,11 @@ public class OrdersController(IMediator mediator) : ControllerBase
     public async Task<IActionResult> Create([FromBody] CreateOrderCommand command, CancellationToken ct)
     {
         var id = await mediator.Send(command, ct);
-        return Ok(id);
+        var details = await mediator.Send(new GetUserOrderDetailsQuery(id), ct);
+
+        return CreatedAtAction(
+            actionName: nameof(GetById),
+            routeValues: new { id },
+            value: details);
     }
 }

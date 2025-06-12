@@ -939,14 +939,14 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/api/account/users/me",
+							"raw": "{{baseUrl}}/api/account/profile/me",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"api",
 								"account",
-								"users",
+								"profile",
 								"me"
 							]
 						}
