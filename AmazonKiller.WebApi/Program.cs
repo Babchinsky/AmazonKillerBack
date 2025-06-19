@@ -106,13 +106,13 @@ using (var scope = app.Services.CreateScope())
     var db = scope.ServiceProvider.GetRequiredService<AmazonDbContext>();
     db.Database.Migrate();
 
-    // рейтинги
-    await scope.ServiceProvider.GetRequiredService<IProductRatingService>()
-        .RecalculateAsync();
-
-    // фильтры категорий
-    await scope.ServiceProvider.GetRequiredService<ICategoryFilterService>()
-        .RecalculateAsync(true);
+    // // рейтинги
+    // await scope.ServiceProvider.GetRequiredService<IProductRatingService>()
+    //     .RecalculateAsync();
+    //
+    // // фильтры категорий
+    // await scope.ServiceProvider.GetRequiredService<ICategoryFilterService>()
+    //     .RecalculateAsync();
 }
 
 app.UseForwardedHeaders();
