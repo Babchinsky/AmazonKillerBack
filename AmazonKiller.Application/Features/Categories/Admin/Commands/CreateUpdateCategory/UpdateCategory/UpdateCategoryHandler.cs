@@ -58,7 +58,12 @@ public class UpdateCategoryHandler(
         category.ParentId = request.ParentId;
         category.Description = request.Description;
         category.IconName = request.ParentId == null ? request.IconName : null;
-        category.ActivePropertyKeys = request.ActivePropertyKeys ?? [];
+        
+        if (request.ActivePropertyKeys is not null)
+        {
+            category.ActivePropertyKeys = request.ActivePropertyKeys;
+        }
+        
         category.ImageUrl = newImageUrl;
 
         var imageChanged = request.Image != null && newImageUrl != oldImageUrl;

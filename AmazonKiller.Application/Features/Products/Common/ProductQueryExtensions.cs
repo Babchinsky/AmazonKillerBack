@@ -21,7 +21,6 @@ public static class ProductQueryExtensions
                 p.Id.ToString().ToLower().Contains(term));
         }
 
-        // ✅ Новая логика: если переданы категории
         if (categoryIds is not null && categoryIds.Count > 0)
             query = query.Where(p => categoryIds.Contains(p.CategoryId));
         else if (q.CategoryId.HasValue) query = query.Where(p => p.CategoryId == q.CategoryId.Value);
