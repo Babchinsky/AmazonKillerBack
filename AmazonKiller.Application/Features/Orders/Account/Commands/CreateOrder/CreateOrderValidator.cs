@@ -52,7 +52,8 @@ public class CreateOrderValidator : AbstractValidator<CreateOrderCommand>
         {
             RuleFor(x => x.CardNumber)
                 .NotEmpty().WithMessage("Card number is required.")
-                .CreditCard().WithMessage("Invalid card number.");
+                // .CreditCard().WithMessage("Invalid card number.") Luna algorithm
+                .Matches(@"^\d{16}$").WithMessage("Card number must be exactly 16 digits.");
 
             RuleFor(x => x.ExpirationDate)
                 .NotEmpty().WithMessage("Expiration date is required.")
