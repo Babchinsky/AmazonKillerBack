@@ -18,6 +18,7 @@
         </PackageReference>
         <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.4"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.4"/>
+        <PackageReference Include="Microsoft.SqlServer.DacFx" Version="170.0.94" />
         <PackageReference Include="RestSharp" Version="112.1.0"/>
         <PackageReference Include="Stripe.net" Version="48.2.0"/>
     </ItemGroup>

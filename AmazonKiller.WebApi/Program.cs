@@ -103,8 +103,30 @@ var app = builder.Build();
 // --- Автоматическая миграция БД ---
 using (var scope = app.Services.CreateScope())
 {
-    var db = scope.ServiceProvider.GetRequiredService<AmazonDbContext>();
-    db.Database.Migrate();
+    var env = app.Environment;
+
+    // Путь к .bacpac (например, в корне проекта или в wwwroot)
+    var bacpacPath = Path.Combine(env.ContentRootPath, "Backup", "amazonkiller.bacpac");
+
+    if (File.Exists(bacpacPath))
+    {
+        app.Logger.LogInformation("📦 Импорт базы из BACPAC: {path}", bacpacPath);
+        
+        BacpacImporter.ReplaceDatabaseFromBacpac(
+            server: "db", // или "db", если в контейнере
+            user: "sa",
+            password: "YourStrong@Password1",
+            bacpacPath: bacpacPath,
+            databaseName: "amazonkillerdb"
+        );
+    }
+    else
+    {
+        app.Logger.LogWarning("❗️Файл BACPAC не найден, используется EF миграция.");
+        // fallback: EF миграция
+        var db = scope.ServiceProvider.GetRequiredService<AmazonDbContext>();
+        db.Database.Migrate();
+    }
 
     // // рейтинги
     // await scope.ServiceProvider.GetRequiredService<IProductRatingService>()
