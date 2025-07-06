@@ -144,7 +144,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"email\": \"alexseyb64@gmail.com\",\n  \"code\": \"979781\"\n}",
+									"raw": "{\n  \"email\": \"alexseyb64@gmail.com\",\n  \"code\": \"795926\"\n}",
 									"options": {
 										"raw": {
 											"headerFamily": "json",
@@ -226,7 +226,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"email\": \"alexseyb64@gmail.com\",\n  \"code\": \"979781\",\n  \"firstName\": \"Oleksii\",\n  \"lastName\": \"Babchynskyi\",\n  \"deviceId\": \"{{deviceId}}\"\n}",
+									"raw": "{\n  \"email\": \"alexseyb64@gmail.com\",\n  \"code\": \"795926\",\n  \"firstName\": \"Oleksii\",\n  \"lastName\": \"Babchynskyi\",\n  \"deviceId\": \"{{deviceId}}\"\n}",
 									"options": {
 										"raw": {
 											"headerFamily": "json",
@@ -480,38 +480,38 @@
 									"const digits = '0123456789';\r",
 									"const all = upper + lower + digits;\r",
 									"\r",
-									"// Гарантируем хотя бы по одному символу из каждой группы\r",
 									"let password = \r",
 									"    getRandomChar(upper) + \r",
 									"    getRandomChar(lower) + \r",
 									"    getRandomChar(digits);\r",
 									"\r",
-									"// Остальные символы (до 12)\r",
 									"for (let i = 3; i < 12; i++) {\r",
 									"  password += getRandomChar(all);\r",
 									"}\r",
 									"\r",
-									"// Перемешаем символы\r",
 									"password = password.split('').sort(() => 0.5 - Math.random()).join('');\r",
 									"\r",
-									"// Имя, фамилия, email\r",
-									"const firstName = `Admin${rand(100, 999)}`;\r",
-									"const lastName = `Test${rand(100, 999)}`;\r",
-									"const email = `admin_${pm.variables.replaceIn('{{$timestamp}}')}@mail.com`;\r",
+									"\r",
+									"// const firstName = `Admin${rand(100, 999)}`;\r",
+									"// const lastName = `Test${rand(100, 999)}`;\r",
+									"// const email = `admin_${pm.variables.replaceIn('{{$timestamp}}')}@mail.com`;\r",
+									"\r",
+									"const firstName = `Admin`;\r",
+									"const lastName = `Test 2`;\r",
+									"const email = `admin2@mail.com`;\r",
 									"const secret = pm.environment.get(\"adminSecret\") || \"my-super-secret-key\";\r",
 									"\r",
-									"// Генерация deviceId\r",
-									"const deviceId = crypto.randomUUID();  // встроено в Postman\r",
+									"const deviceId = crypto.randomUUID();  \r",
 									"\r",
-									"// Сохраняем переменные\r",
+									"\r",
 									"pm.environment.set(\"adminEmail\", email);\r",
 									"pm.environment.set(\"adminPassword\", password);\r",
 									"pm.environment.set(\"adminFirstName\", firstName);\r",
 									"pm.environment.set(\"adminLastName\", lastName);\r",
 									"pm.environment.set(\"adminSecret\", secret);\r",
-									"pm.environment.set(\"deviceId3\", deviceId); // 👈 добавляем deviceId3\r",
+									"pm.environment.set(\"deviceId3\", deviceId); \r",
 									"\r",
-									"// Лог\r",
+									"\r",
 									"console.log({ email, password, firstName, lastName, secret, deviceId });\r",
 									""
 								],
@@ -1165,7 +1165,7 @@
 								{
 									"key": "Photo",
 									"type": "file",
-									"src": "/C:/Users/alexs/OneDrive/Desktop/Postman/review2.jpg"
+									"src": "/C:/Users/alexs/OneDrive/Desktop/images.jpg"
 								}
 							]
 						},
@@ -1801,7 +1801,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "c9f81657-73a1-4b53-bf80-b59121eae433",
+											"value": "d2deb989-35c5-4ca1-a748-12411d3ac3a4",
 											"description": "(Required) "
 										}
 									]
@@ -2727,7 +2727,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/api/admin/products?CategoryId=7ad3d843-1642-4e8a-a843-503928ef8154",
+									"raw": "{{baseUrl}}/api/admin/products",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -2744,7 +2744,8 @@
 										},
 										{
 											"key": "CategoryId",
-											"value": "7ad3d843-1642-4e8a-a843-503928ef8154"
+											"value": "7ad3d843-1642-4e8a-a843-503928ef8154",
+											"disabled": true
 										},
 										{
 											"key": "Filters[{{productFilterSizeKey}}]",
@@ -3076,7 +3077,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/api/products?CategoryId=7ad3d843-1642-4e8a-a843-503928ef8154",
+									"raw": "{{baseUrl}}/api/products?CategoryId=d2deb989-35c5-4ca1-a748-12411d3ac3a4",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -3087,12 +3088,12 @@
 									"query": [
 										{
 											"key": "SearchTerm",
-											"value": "ut laboris sit mollit",
+											"value": "Samsung",
 											"disabled": true
 										},
 										{
 											"key": "CategoryId",
-											"value": "7ad3d843-1642-4e8a-a843-503928ef8154"
+											"value": "d2deb989-35c5-4ca1-a748-12411d3ac3a4"
 										},
 										{
 											"key": "Filters[Charging]",
@@ -3105,18 +3106,18 @@
 											"disabled": true
 										},
 										{
-											"key": "Filters[nisi8ae]",
-											"value": "laboris",
+											"key": "Filters[Camera]",
+											"value": "200MP Quad Lens",
 											"disabled": true
 										},
 										{
 											"key": "MinPrice",
-											"value": "-12930565.462214977",
+											"value": "1199",
 											"disabled": true
 										},
 										{
 											"key": "MaxPrice",
-											"value": "-12930565.462214977",
+											"value": "1400",
 											"disabled": true
 										},
 										{
@@ -4215,7 +4216,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"productId\": \"12a5f27a-59d1-4961-86d7-14a787f8eec8\",\n  \"quantity\": 1\n}",
+									"raw": "{\n  \"productId\": \"3c5a4868-3b2d-4352-9e12-502a56bce48a\",\n  \"quantity\": 1\n}",
 									"options": {
 										"raw": {
 											"headerFamily": "json",
@@ -5841,143 +5842,6 @@
 							"path": [
 								"api",
 								"countries"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Regions",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Response status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});\r",
-									"\r",
-									"\r",
-									"pm.test(\"Response has content type 'application/json'\", function () {\r",
-									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
-									"});\r",
-									"\r",
-									"\r",
-									"pm.test(\"Response body is an array\", function () {\r",
-									"    const responseData = pm.response.json();\r",
-									"    \r",
-									"    pm.expect(responseData).to.be.an('array');\r",
-									"});\r",
-									"\r",
-									"\r",
-									"pm.test(\"Response body array is not empty\", function () {\r",
-									"    const responseData = pm.response.json();\r",
-									"    \r",
-									"    pm.expect(responseData).to.be.an('array').that.is.not.empty;\r",
-									"});\r",
-									"\r",
-									"\r",
-									"pm.test(\"Ответ содержит массив строк с названиями регионов\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"    \r",
-									"    const data = pm.response.json();\r",
-									"    pm.expect(data).to.be.an(\"array\");\r",
-									"    pm.expect(data.length).to.be.above(0);\r",
-									"    pm.expect(data[0]).to.be.a(\"string\");\r",
-									"});\r",
-									"\r",
-									"const regions = pm.response.json();\r",
-									"const randomRegion = regions[Math.floor(Math.random() * regions.length)];\r",
-									"\r",
-									"pm.environment.set(\"region\", randomRegion);\r",
-									"console.log(\"Выбранный регион:\", randomRegion);\r",
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/api/nova-poshta/regions",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"api",
-								"nova-poshta",
-								"regions"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Cities",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"// Проверка кода ответа\r",
-									"pm.test(\"Response status code is 200\", function () {\r",
-									"    pm.expect(pm.response.code).to.equal(200);\r",
-									"});\r",
-									"\r",
-									"// Проверка Content-Type\r",
-									"pm.test(\"Content type is application/json\", function () {\r",
-									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
-									"});\r",
-									"\r",
-									"// Проверка, что тело — массив\r",
-									"const responseData = pm.response.json();\r",
-									"pm.test(\"Response is an array\", function () {\r",
-									"    pm.expect(responseData).to.be.an('array');\r",
-									"});\r",
-									"\r",
-									"// Проверка наличия параметра region\r",
-									"pm.test(\"Region parameter is present in the request URL\", function () {\r",
-									"    const regionParam = pm.request.url.query.find(q => q.key === \"region\");\r",
-									"    pm.expect(regionParam).to.not.be.undefined;\r",
-									"    pm.expect(regionParam.value).to.be.a('string').and.not.empty;\r",
-									"});\r",
-									"\r",
-									"// Информативно: есть ли данные\r",
-									"pm.test(\"Response array is not empty\", function () {\r",
-									"    if (responseData.length === 0) {\r",
-									"        console.warn(\"❗Города не найдены для региона:\", pm.environment.get(\"region\"));\r",
-									"    } else {\r",
-									"        pm.expect(responseData.length).to.be.above(0);\r",
-									"    }\r",
-									"});\r",
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/api/nova-poshta/cities?region={{region}}",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"api",
-								"nova-poshta",
-								"cities"
-							],
-							"query": [
-								{
-									"key": "region",
-									"value": "{{region}}"
-								}
 							]
 						}
 					},
